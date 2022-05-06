@@ -10,9 +10,11 @@ export default function Sidebar() {
   return (
     <SidebarView economiaDrawer={economiaDrawer} modalOpen={viewModal} >
       <div className='hamburger' onClick={() => setViewModal(!viewModal)} >
-        <Image src='/assets/hamburgerModal.svg' width={100} height={100} />
+        <Image src='/assets/hamburgerModal.svg' width={25} height={25} />
       </div>
-      <Image src='/assets/logo.svg' width={100} height={100} className='imageNext' />
+      <div className='imageNext'>
+        <Image src='/assets/logo.svg' width={100} height={100} />
+      </div>
       <ul>
         <li>{'Visão Geral'}</li>
         <li>{'Consumo'}</li>

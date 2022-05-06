@@ -16,10 +16,7 @@ export const DashboardView = styled.main`
 
   width: 100%;
 
-  margin: 0 0 0 20rem;
-
-  padding-left: 30px;
-  padding-right: 30px;
+  padding: 30px;
 
   span {
     font-family: 'Poppins';
@@ -72,34 +69,46 @@ export const DashboardView = styled.main`
   .dashboard {
     display: grid;
 
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 100%;
+    grid-template-columns: 50% 50% 100%;
+    grid-template-rows: 50% 50%;
 
-    gap: 40px;
+    gap: 30px;
 
     width: 99%;
 
-    /* flex-wrap: wrap; */
+    padding-right: 20px;
+
+    .footerGraph {
+      grid-row-start: 2;
+
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
   }
 
   @media (max-width: 1195px) {
+    /* align-items: center; */
+    width: 100%;
+    padding: 30px;
     margin: 0;
-    margin-top: 80px;
-    margin-left: 20px;
-  }
 
-  @media (max-width: 1195px) {
     .dashboard {
-      display: grid;
+      display: flex;
 
-      grid-template-columns: 100%;
-      grid-template-rows: 50% 50%;
+      padding: 0;
+      margin: 0;
 
-      gap: 40px;
+      justify-content: center;
+      align-items: center;
+
+      flex-wrap: wrap;
+
+      grid-template-columns: 50% 50%;
+
+      grid-auto-rows: 1;
+      grid-auto-columns: 1;
 
       width: 100%;
-
-      /* flex-wrap: wrap; */
     }
   }
 `

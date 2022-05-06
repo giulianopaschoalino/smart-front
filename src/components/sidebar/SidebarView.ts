@@ -6,15 +6,15 @@ interface SidebarViewInterface {
 }
 
 export const SidebarView = styled.nav<SidebarViewInterface>`
-  position: fixed;
+  position: relative;
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 
   flex-direction: column;
 
-  width: 20rem;
+  width: 20%;
 
   margin: 0;
   padding: 0;
@@ -35,13 +35,16 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     width: 100%;
 
     li {
-      width: 100%;
-      height: 67px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
 
-      font-family: 'Poppins';
+      width: 100%;
+      height: 60px;
+
       font-style: normal;
       font-weight: 500;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 27px;
       /* identical to box height */
 
@@ -106,25 +109,18 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
   @media (max-width: 1196px) {
     align-items: flex-start;
 
-    width: 20rem;
+    width: 100%;
+    /* height: 0%; */
     /* height: ${props => props.modalOpen? '100%' : null}; */
 
-    padding-top: 20px;
-    padding-left: 20px;
+    padding: 18px;
 
-    /* background-color: ${props => props.modalOpen? '#FFF' : 'transparent'}; */
+    border-bottom: solid black 1px;
 
     z-index: 2;
 
     .hamburger {
-      position: fixed;
-      top: 20px;
-
-      display: inherit;
-      width: 40px;
-      height: 40px;
-
-      /* background-color: black; */
+      display: flex;
 
       cursor: pointer;
 
@@ -132,7 +128,6 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     }
     .imageNext {
       display: none;
-      opacity: 0;
     }
     ul {
       display: ${props => props.modalOpen? 'block' : 'none'};
