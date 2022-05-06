@@ -3,24 +3,37 @@ import styled from 'styled-components';
 export const LoginView = styled.main`
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-left: 10rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  width: 100%;
+  min-height: fit-content;
+  height: 100vh;
+  background-color: #f9f9f9;
+
+
 
   .container{
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #F9F9F9;
-    height: 34rem;
-    width: 49rem;
-    margin-left: 10rem;
-    margin-top:4rem;
-    color: #092C4C;
+    background-color: #FFFFFF;
+    height: 33rem;
     text-align: center;
     border-radius: 4px;
+    width: 100%;
+    max-width: 30rem;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-left: 8rem;
+
 
   }
+  @media screen and (max-width: 1008px) {
+   justify-content: center;
+  .container {
+    margin: 0;
+  }
+}
   h1{
     margin-bottom:5px;
     color: #092C4C;
@@ -32,17 +45,18 @@ export const LoginView = styled.main`
     color: #092C4C;
   }
   input{
-    width: 30rem;
+
+    width: 100%;
     height: 15rem;
     border-radius: 5px;
     margin-bottom: 10px;
     border-style: none;
     border: solid #D0D0D0 1px;
-
   }
 
+
   button{
-    width: 30rem;
+    width: 100%;
     height: 18rem;
     background-image: linear-gradient(to right, #254F7F 10%, #888888 100%);
     color: white;
@@ -55,8 +69,10 @@ export const LoginView = styled.main`
     color: #ABB3BB;
     font-size: 12px;
   }
+
+
   span{
-    margin-left: 23rem;
+
     font-size: 12px;
     color: #254F7F;
 
@@ -79,7 +95,7 @@ export const LoginView = styled.main`
     border-right: none;
     display: block;
     text-align: center;
-    width: 30rem;
+    width: 100%;
 
 
   }
@@ -88,17 +104,26 @@ export const LoginView = styled.main`
       color: #ABB3BB;
       font-size: 14px;
   }
-  img{
-    /* background-color: black; */
-    display: none;
+
+
+
+
+
+/* .app {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;;
+}
+.password-field{
+     padding: 0.5rem 1rem;
   }
 
-
-
-  @media (max-width: 1150px) {
-  img{visibility:hidden }
-  }
-
+  .btnClick{
+    padding: 1px;
+    font-size: 1.2rem;
+    outline: none;
+    border: none;
+  } */
 
 
 
