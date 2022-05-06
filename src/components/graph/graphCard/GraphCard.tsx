@@ -9,10 +9,11 @@ import { GraphCardView } from './GraphCardView';
 interface GraphCardInterface {
   title: string,
   subtitle: string,
-  consumption?: number
+  consumption?: number,
+  className?: string
 }
 
-export default function GraphCard({ title, subtitle, consumption }: GraphCardInterface) {
+export default function GraphCard({ title, subtitle, consumption, className }: GraphCardInterface) {
   const [timeCourse, setTimeCourse] = React.useState<string | null>('left');
 
   const handleAlignment = (
@@ -23,7 +24,7 @@ export default function GraphCard({ title, subtitle, consumption }: GraphCardInt
   };
 
   return (
-    <GraphCardView>
+    <GraphCardView className={className} >
       <div className='content' >
         <div className='header'>
           <div>

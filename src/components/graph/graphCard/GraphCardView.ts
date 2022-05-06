@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const GraphCardView = styled.article`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
 
   flex-direction: column;
@@ -10,21 +10,23 @@ export const GraphCardView = styled.article`
   width: 100%;
   /* max-width: ; */
   height: fit-content;
-  min-height: 40rem;
-  max-height: fit-content;
+  min-height: 34.5rem;
 
-  padding: 30px;
-
-  box-shadow: 0px 12px 23px rgba(62, 73, 84, 0.04);
+  background: #F8F8F8;
+	box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+	-webkit-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+	-moz-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
   border-radius: 20px;
 
   background-color: #FFFFFF;
 
   .graph {
-    width: 100%;
-    height: 396px;
+    width: 90%;
+    min-height: 300px;
 
     background-color: black;
+
+    margin-bottom: 20px;
   }
 
   a {
@@ -49,7 +51,9 @@ export const GraphCardView = styled.article`
   }
 
   .content {
-    width: 100%;
+    width: 90%;
+
+    margin-top: 20px;
   }
 
   .header {
