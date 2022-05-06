@@ -5,14 +5,15 @@ export const BasicButtonView = styled.button`
   justify-content: center;
   align-items: center;
 
+  width: 120px;
+  height: 45px;
+
   background: #254F7F;
   border-radius: 8px;
+  border-style: none;
 
   font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
   font-size: 16px;
-  line-height: 24px;
   /* identical to box height */
 
 

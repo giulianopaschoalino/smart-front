@@ -10,8 +10,8 @@ export const MapCardView = styled.figure`
   margin-right: 25px;
 
   span {
-      margin-bottom: 25px;
-    }
+    margin-bottom: 25px;
+  }
 
   div {
     display: flex;
