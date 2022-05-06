@@ -3,13 +3,23 @@ import styled from 'styled-components'
 export const DashboardView = styled.main`
   * {
     margin: 0;
+    padding: 0;
   }
+
   display: flex;
   justify-content: center;
   align-items: flex-start;
+
+  flex-wrap: wrap;
+
   flex-direction: column;
 
-  margin: 60px;
+  width: 100%;
+
+  margin: 0 0 0 20rem;
+
+  padding-left: 30px;
+  padding-right: 30px;
 
   span {
     font-family: 'Poppins';
@@ -43,24 +53,11 @@ export const DashboardView = styled.main`
     line-height: 24px;
   }
 
-  .graph {
-    width: 42rem;
-    height: 310px;
-
-    background-color: grey
-  }
-
-  .graphBig {
-    width: 90rem;
-    height: 310px;
-
-    background-color: grey
-  }
-
-  .cardSection {
+  .cardsSection {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+
     flex-wrap: wrap;
 
     box-shadow: 0px 0px 15px -3px rgba(0,0,0,0.1);
@@ -70,129 +67,39 @@ export const DashboardView = styled.main`
     height: fit-content;
 
     margin: 2rem 0 2rem 0;
-
-    span {
-      margin-bottom: 25px;
-    }
-
-    figure {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      flex-direction: row;
-
-      margin-right: 25px;
-
-
-
-      :first-child {
-        margin-right: 95px;
-      }
-
-      div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        flex-direction: column;
-
-        figure {
-          margin: 0;
-          align-items: flex-start;
-        }
-      }
-    }
   }
 
   .dashboard {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
 
-    flex-wrap: wrap;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
 
-    article {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
+    gap: 40px;
 
-      flex-direction: column;
+    width: 99%;
 
-      max-width: 120rem;
-      min-width: fit-content;
+    /* flex-wrap: wrap; */
+  }
 
-      min-height: 30rem;
+  @media (max-width: 1195px) {
+    margin: 0;
+    margin-top: 80px;
+    margin-left: 20px;
+  }
 
-      margin-bottom: 30px;
+  @media (max-width: 1195px) {
+    .dashboard {
+      display: grid;
 
-      padding: 30px;
+      grid-template-columns: 100%;
+      grid-template-rows: 50% 50%;
 
-      /* border: solid black 1px; */
-      box-shadow: 0px 0px 15px -3px rgba(0,0,0,0.1);
-      border-radius: 10px;
-    }
+      gap: 40px;
 
-    .asideConsumo {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      width: 100%;
 
-      flex-direction: row;
-
-      width: 32rem;
-      height: 4rem;
-
-      margin: 30px 0 30px 0;
-
-      border-radius: 12px;
-
-      padding: 0 12px 0 12px;
-
-      background-color: #E9FFEF;
-
-      a {
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 24px;
-        /* identical to box height */
-
-
-        color: #2F4CDD;
-      }
-
-      .asideConsumoContent {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        width: 40%;
-
-        .count {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          width: 87px;
-          height: 44px;
-
-          border-radius: 12px;
-
-          background-color: #2BC155;
-          color: white;
-        }
-      }
-    }
-    .statusDot {
-      max-width: 11px;
-      max-height: 11px;
-      min-width: 11px;
-      min-height: 11px;
-
-      border-radius: 100%;
-
-      background-color: #2BC155;
+      /* flex-wrap: wrap; */
     }
   }
 `
