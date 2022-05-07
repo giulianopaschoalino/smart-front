@@ -1,0 +1,142 @@
+import styled from 'styled-components'
+
+interface SidebarViewInterface {
+  economiaDrawer: boolean | null,
+  modalOpen: boolean | null
+}
+
+export const SidebarView = styled.nav<SidebarViewInterface>`
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  flex-direction: column;
+
+  width: 20%;
+
+  margin: 0;
+  padding: 0;
+
+  box-shadow: 18px 4px 35px rgba(0, 0, 0, 0.02);
+
+  background-color: #FFFFFF;
+
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+
+    list-style: none;
+
+    width: 100%;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      width: 100%;
+      height: 60px;
+
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 27px;
+      /* identical to box height */
+
+      color: #969BA0;
+
+      cursor: pointer;
+    }
+
+    .economiaDrawer {
+      display: ${props => props.economiaDrawer? 'block' : 'none'};
+    }
+  }
+
+  aside {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    width: 90%;
+    height: 190px;
+
+    background: linear-gradient(155.54deg, #254F7F 15.63%, #9C9C9C 136.34%);
+    border-radius: 26px;
+
+    p {
+      text-align: center;
+      width: 80%;
+
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 21px;
+      text-align: center;
+
+      color: #FFFFFF;
+    }
+
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 80%;
+      height: 60px;
+
+      background: #FFFFFF;
+      border-radius: 8px;
+    }
+  }
+
+  .drawer {
+    margin-left: 20px;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  @media (max-width: 1196px) {
+    align-items: flex-start;
+
+    width: 100%;
+    /* height: 0%; */
+    /* height: ${props => props.modalOpen? '100%' : null}; */
+
+    padding: 18px;
+
+    border-bottom: solid black 1px;
+
+    z-index: 2;
+
+    .hamburger {
+      display: flex;
+
+      cursor: pointer;
+
+      z-index: 2;
+    }
+    .imageNext {
+      display: none;
+    }
+    ul {
+      display: ${props => props.modalOpen? 'block' : 'none'};
+      min-height: 100vh;
+
+      background-color: #FFF;
+    }
+    aside {
+      display: none;
+    }
+  }
+`
