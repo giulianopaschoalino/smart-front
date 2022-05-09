@@ -4,16 +4,16 @@ import Link from 'next/link';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-import { GraphCardView } from './GraphCardView';
+import { ChartCardView } from './ChartCardView';
 
-interface GraphCardInterface {
+interface ChartCardInterface {
   title: string,
   subtitle: string,
   consumption?: number,
   className?: string
 }
 
-export default function GraphCard({ title, subtitle, consumption, className }: GraphCardInterface) {
+export default function ChartCard({ title, subtitle, consumption, className }: ChartCardInterface) {
   const [timeCourse, setTimeCourse] = React.useState<string | null>('left');
 
   const handleAlignment = (
@@ -24,7 +24,7 @@ export default function GraphCard({ title, subtitle, consumption, className }: G
   };
 
   return (
-    <GraphCardView className={className} >
+    <ChartCardView className={className} >
       <div className='content' >
         <div className='header'>
           <div>
@@ -64,6 +64,6 @@ export default function GraphCard({ title, subtitle, consumption, className }: G
         }
       </div>
       <div className='graph' />
-    </GraphCardView>
+    </ChartCardView>
   )
 }

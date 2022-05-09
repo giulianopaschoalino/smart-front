@@ -1,11 +1,17 @@
-import Image from 'next/image'
 import React, { useState } from 'react'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+
 import { SidebarView } from './SidebarView'
 
 export default function Sidebar() {
   const [ economiaDrawer, setEconomiaDrawer ] = useState(false)
 
   const [ viewModal, setViewModal ] = useState(false)
+
+  const router = useRouter()
+
+  console.log(router.pathname)
 
   return (
     <SidebarView economiaDrawer={economiaDrawer} modalOpen={viewModal} >
@@ -16,8 +22,8 @@ export default function Sidebar() {
         <Image src='/assets/logo.svg' width={100} height={100} />
       </div>
       <ul>
-        <li>{'Visão Geral'}</li>
-        <li>{'Consumo'}</li>
+        <li className={router.pathname=='/dashboard'? 'actualPath' : null} >{'Visão Geral'}</li>
+        <li className={router.pathname=='/consumption'? 'actualPath' : null} >{'Consumo'}</li>
         <li>{'Resumo de Op. >'}</li>
         <li onClick={() => setEconomiaDrawer(!economiaDrawer)} >{'Economia >'}</li>
         <div className='economiaDrawer drawer' >

@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from '../src/components/sidebar/Sidebar';
 
-import { TableView} from  '../styles/layouts/ResumoOperacao/ResumoOperacaoView';
+import { TableView} from  '../styles/layouts/resumoOperacao/ResumoOperacaoView';
 
 
 
@@ -10,7 +10,6 @@ export default function ResumoOperacao() {
 
 
     <TableView>
-      <Sidebar />
       <h1>Resumo de Operaçoes</h1>
       <h2>Operações detalhadas</h2>
       <h3>Seletor Mês</h3>

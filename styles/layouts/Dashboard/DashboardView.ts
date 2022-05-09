@@ -16,8 +16,6 @@ export const DashboardView = styled.main`
 
   width: 100%;
 
-  padding: 30px;
-
   span {
     font-family: 'Poppins';
     font-style: normal;
