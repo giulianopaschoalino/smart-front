@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const LoginView = styled.main`
+export const LoginView = styled.main<{auth: string}>`
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -10,7 +10,7 @@ export const LoginView = styled.main`
   height: 100vh;
   background-color: #f9f9f9;
 
-
+  display: ${props => props.auth == '/'? null : 'none'};
 
   .container{
     display: flex;
@@ -25,19 +25,20 @@ export const LoginView = styled.main`
     padding-left: 50px;
     padding-right: 50px;
     margin-left: 8rem;
-
-
   }
+
   @media screen and (max-width: 1008px) {
-   justify-content: center;
-  .container {
-    margin: 0;
+    justify-content: center;
+    .container {
+      margin: 0;
+    }
   }
-}
+
   h1{
     margin-bottom:5px;
     color: #092C4C;
   }
+
   h2{
     font-weight: 5;
     font-size: 21px;
@@ -65,27 +66,21 @@ export const LoginView = styled.main`
     border: 0;
     margin-top: 2.5rem;
   }
+
   input::placeholder {
     color: #ABB3BB;
     font-size: 12px;
   }
 
-
-  span{
-
+  span {
     font-size: 12px;
     color: #254F7F;
-
-
   }
-  p{
+
+  p {
     color:#8B8B8B;
     font-size: 12px;
     margin-bottom: 22px;
-
-
-
-
   }
 
   fieldset {
@@ -96,35 +91,11 @@ export const LoginView = styled.main`
     display: block;
     text-align: center;
     width: 100%;
-
-
   }
+
   fieldset legend {
       padding: 19px 56px;
       color: #ABB3BB;
       font-size: 14px;
   }
-
-
-
-
-
-/* .app {
-  display: grid;
-  place-items: center;
-  min-height: 100vh;;
-}
-.password-field{
-     padding: 0.5rem 1rem;
-  }
-
-  .btnClick{
-    padding: 1px;
-    font-size: 1.2rem;
-    outline: none;
-    border: none;
-  } */
-
-
-
 `;

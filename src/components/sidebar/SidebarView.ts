@@ -23,6 +23,11 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
 
   background-color: #FFFFFF;
 
+  .actualPath {
+    border-left: #254F7F solid 8px;
+    background-color: #FAFBFF;
+  }
+
   ul {
     display: flex;
     justify-content: center;
@@ -33,6 +38,8 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     list-style: none;
 
     width: 100%;
+
+    padding: 0;
 
     li {
       display: flex;
@@ -51,6 +58,10 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
       color: #969BA0;
 
       cursor: pointer;
+
+      padding-left: 40px;
+
+
     }
 
     .economiaDrawer {
@@ -78,11 +89,15 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
       font-family: 'Poppins';
       font-style: normal;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 90%;
       line-height: 21px;
       text-align: center;
 
       color: #FFFFFF;
+    }
+
+    h3 {
+      font-size: 90%;
     }
 
     div {

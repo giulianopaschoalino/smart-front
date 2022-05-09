@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const GraphCardView = styled.article`
+export const ChartCardView = styled.article`
   display: flex;
   align-items: center;
   justify-content: space-between;

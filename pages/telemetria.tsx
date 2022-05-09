@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import BasicButton from '../src/components/buttons/basicButton/BasicButton'
 
-import { TelemetriaView} from  '../styles/layouts/Telemetria/TelemetriaView';
+import { TelemetriaView} from  '../styles/layouts/telemetria/TelemetriaView';
 
 
 
