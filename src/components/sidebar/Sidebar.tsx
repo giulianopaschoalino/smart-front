@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { SidebarView } from './SidebarView'
+import Link from 'next/link'
 
 export default function Sidebar() {
   const [ economiaDrawer, setEconomiaDrawer ] = useState(false)
@@ -22,22 +23,22 @@ export default function Sidebar() {
         <Image src='/assets/logo.svg' width={100} height={100} />
       </div>
       <ul>
-        <li className={router.pathname=='/dashboard'? 'actualPath' : null} >{'Visão Geral'}</li>
-        <li className={router.pathname=='/consumption'? 'actualPath' : null} >{'Consumo'}</li>
-        <li>{'Resumo de Op. >'}</li>
-        <li onClick={() => setEconomiaDrawer(!economiaDrawer)} >{'Economia >'}</li>
+        <Link href='/dashboard'><li className={router.pathname=='/dashboard'? 'actualPath' : null} >{'Visão Geral'}</li></Link>
+        <Link href='/consumption'><li className={router.pathname=='/consumption'? 'actualPath' : null} >{'Consumo'}</li></Link>
+        <Link href='/resumoOperacao'><li className={router.pathname=='/resumoOperacao'? 'actualPath' : null} >{'Resumo de Op. '}</li></Link>
+        <li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/grossSavings' || router.pathname=='/accumulatedSavings' || router.pathname=='/estimatedCost' || router.pathname=='/costIndicator' ? 'actualPath' : null } >{'Economia >'}</li>
         <div className='economiaDrawer drawer' >
-          <li>Economia Bruta</li>
-          <li>Economia Acumulada</li>
-          <li>Custo Estimado</li>
-          <li>Custo R/MWh</li>
+        <Link href='/grossSavings'><li>Economia Bruta</li></Link>
+        <Link href='/accumulatedSavings'><li>Economia Acumulada</li></Link>
+        <Link href='/estimatedCost'><li>Custo Estimado</li></Link>
+        <Link href='/costIndicator'><li>Custo R/MWh</li></Link>
         </div>
-        <li>{'Notícias >'}</li>
-        <li>{'Info Setorial >'}</li>
-        <li>{'SAQ >'}</li>
-        <li>{'Sobre Nós >'}</li>
-        <li>{'Notificação >'}</li>
-        <li>{'Telemetria >'}</li>
+        <Link href='#'><li className={router.pathname=='/news'? 'actualPath' : null}>{'Notícias >'}</li></Link>
+        <Link href='#'><li className={router.pathname=='/sectorialInfo'? 'actualPath' : null}>{'Info Setorial >'}</li></Link>
+        <Link href='#'><li className={router.pathname=='/saq'? 'actualPath' : null}>{'SAQ >'}</li></Link>
+        <Link href='#'><li className={router.pathname=='/aboutus'? 'actualPath' : null}>{'Sobre Nós >'}</li></Link>
+        <Link href='#'><li className={router.pathname=='/notification'? 'actualPath' : null}>{'Notificação >'}</li></Link>
+        <Link href='#'><li className={router.pathname=='/telemetry'? 'actualPath' : null}>{'Telemetria >'}</li></Link>
       </ul>
       <aside>
         <p>Nossos Gerentes estão prontos para atendê-los</p>

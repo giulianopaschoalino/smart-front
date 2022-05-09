@@ -7,7 +7,7 @@ export const HeaderView = styled.header`
 
   flex-direction: row;
 
-  height: 5rem;
+  height: 10rem;
 
   section {
     display: flex;

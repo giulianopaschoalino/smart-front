@@ -13,76 +13,70 @@ export default function ResumoOperacao() {
       <h1>Resumo de Operaçoes</h1>
       <h2>Operações detalhadas</h2>
       <h3>Seletor Mês</h3>
-      <table className='tg' >
-        <colgroup>
-          <col style={{width: "106px"}}/>
-          <col style={{width: "16px"}}/>
-          <col style={{width: "119px"}}/>
-          <col style={{width: "334px"}}/>
-          <col style={{width: "111px"}}/>
-          <col style={{width: "146px"}}/>
-        </colgroup>
 
-        <thead>
-          <tr>
-            <th className='tg-baqh'>Unidade</th>
-            <th className='tg-baqh'>Operação</th>
-            <th className='tg-baqh'>Montante(MWh)</th>
-            <th className='tg-baqh'>Contraparte</th>
-            <th className='tg-baqh'>Preço(R$/MWh)</th>
-            <th className='tg-0lax'>Valor NF/Crédito (R$)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className='tg-womg'>Unidade-19888</td>
-            <td className='tg-womg'>comprar</td>
-            <td className='tg-womg'>122.269</td>
-            <td className='tg-womg'>COPEL COM I5</td>
-            <td className='tg-womg'>234,67</td>
-            <td className='tg-womg'>38.257,15</td>
-          </tr>
-          <tr>
-            <th className='tg-baqh'>Unidade-19888</th>
-            <th className='tg-baqh'>Comprar</th>
-            <th className='tg-baqh'>122.269</th>
-            <th className='tg-baqh'>PACTO COMERCIALIZADORA I5</th>
-            <th className='tg-baqh'>234,67</th>
-            <th className='tg-baqh'>38.257,15</th>
-          </tr>
+      <table className="tg">
+<thead>
+  <tr>
+    <th className='tg-8oo6'>Unidade </th>
+    <th className='tg-8oo6'>Operação</th>
+    <th className='tg-8oo6'>Montante (MWh)</th>
+    <th className='tg-8oo6'>Contraparte</th>
+    <th className='tg-8oo6'>Preço(R$/MWh)</th>
+    <th className='tg-8oo6'>ValorNF/Crédito(R$)</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td className='tg-gceh'>Unidade - 9500130</td>
+    <td className='tg-uulg'>Compra</td>
+    <td className='tg-gceh'>122,269</td>
+    <td className='tg-gceh'>COPEL COM I5</td>
+    <td className='tg-uulg'>234,67</td>
+    <td className='tg-gceh'>38.257,15</td>
+  </tr>
+  <tr>
+    <td className='tg-hq65'>Unidade - 9500130</td>
+    <td className='tg-0tzy'>Compra</td>
+    <td className='tg-hq65'>110,348</td>
+    <td className='tg-hq65'>EMEWE I5</td>
+    <td className='tg-0tzy'>190,16</td>
+    <td className='tg-hq65'>27.978,37</td>
+  </tr>
+  <tr>
+    <td className="tg-gceh">Unidade - 9500130</td>
+    <td className="tg-uulg">Compra</td>
+    <td className="tg-gceh">13,074</td>
+    <td className="tg-gceh">PACTO COMERCIALIZADORA I5</td>
+    <td className="tg-gceh">300,36</td>
+    <td className="tg-gceh">5.235,88</td>
+  </tr>
+  <tr>
+    <td className='tg-hq65'>Unidade - 9500130</td>
+    <td className='tg-0tzy'>Compra</td>
+    <td className='tg-hq65'>133,117</td>
+    <td className='tg-hq65'>COPEL COM I5</td>
+    <td className='tg-0tzy'>300,36</td>
+    <td className='tg-hq65'>41.651,42</td>
+  </tr>
+  <tr>
+    <td className='tg-gceh'>Unidade - 9500130</td>
+    <td className='tg-uulg'>Compra</td>
+    <td className='tg-gceh'>120,138</td>
+    <td className='tg-gceh'>EMEWE I5</td>
+    <td className='tg-uulg'>234,67</td>
+    <td className='tg-gceh'>30.460,59</td>
+  </tr>
+  <tr>
+    <td className='tg-hq65'>Unidade - 9500130</td>
+    <td className='tg-0tzy'>Compra</td>
+    <td className='tg-hq65'>14,897</td>
+    <td className='tg-hq65'>PACTO COMERCIALIZADORA I5</td>
+    <td className='tg-0tzy'>300,36</td>
+    <td className='tg-hq65'>5.965,95</td>
+  </tr>
+</tbody>
+</table>
 
-          <tr>
-            <td className='tg-womg'>Unidade-19888</td>
-            <td className='tg-womg'>Comprar</td>
-            <td className='tg-womg'>122.269</td>
-            <td className='tg-womg'>PACTO COMERCIALIZADORA I5</td>
-            <td className='tg-womg'>234,67</td>
-            <td className='tg-womg'>38.257,15</td>
-          </tr>
-
-          <tr>
-            <td className='tg-baqh'>Unidade-19888</td>
-            <td className='tg-baqh'>Comprar</td>
-            <td className='tg-baqh'>122.269</td>
-            <td className='tg-baqh'>PACTO COMERCIALIZADORA I5</td>
-            <td className='tg-baqh'>234,67</td>
-            <td className='tg-baqh'>38.257,15</td>
-          </tr>
-
-          <tr>
-            <td className='tg-womg'>Unidade-19888</td>
-            <td className='tg-womg'>Comprar</td>
-            <td className='tg-womg'>122.269</td>
-            <td className='tg-womg'>PACTO COMERCIALIZADORA I5</td>
-            <td className='tg-womg'>234,67</td>
-            <td className='tg-womg'>38.257,15</td>
-          </tr>
-
-
-        </tbody>
-
-
-        </table >
 
     </TableView>
 
