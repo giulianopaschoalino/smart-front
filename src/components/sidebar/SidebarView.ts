@@ -26,6 +26,17 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
   .actualPath {
     border-left: #254F7F solid 8px;
     background-color: #FAFBFF;
+
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+
+    color: #254F7F;
+
+    stop-color: #254F7F;
+    .svg {
+      background-color: red;
+    }
   }
 
   ul {
@@ -49,19 +60,18 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
       width: 100%;
       height: 60px;
 
+      gap: 15px;
+
       font-style: normal;
       font-weight: 500;
       font-size: 16px;
       line-height: 27px;
-      /* identical to box height */
 
       color: #969BA0;
 
       cursor: pointer;
 
       padding-left: 40px;
-
-
     }
 
     .economiaDrawer {
