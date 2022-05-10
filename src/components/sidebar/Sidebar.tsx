@@ -25,22 +25,22 @@ export default function Sidebar() {
         <Image src='/assets/logo.svg' width={100} height={100} />
       </div>
       <ul>
-        <Link href='/dashboard'><li className={router.pathname=='/dashboard'? 'actualPath' : null} >{'Visão Geral'}</li></Link>
-        <Link href='/consumption'><li className={router.pathname=='/consumption'? 'actualPath' : null} >{'Consumo'}</li></Link>
-        <Link href='/resumoOperacao'><li className={router.pathname=='/resumoOperacao'? 'actualPath' : null} >{'Resumo de Op. '}</li></Link>
-        <li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/grossSavings' || router.pathname=='/accumulatedSavings' || router.pathname=='/estimatedCost' || router.pathname=='/costIndicator' ? 'actualPath' : null } >{'Economia >'}</li>
+        <Link href='/dashboard'><li className={router.pathname=='/dashboard'? 'actualPath' : null} ><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Visão Geral'}</li></Link>
+        <Link href='/consumption'><li className={router.pathname=='/consumption'? 'actualPath' : null} ><Image src='/assets/sidebar/consumptionIcon.svg' width={25} height={25} />{'Consumo'}</li></Link>
+        <Link href='/resumoOperacao'><li className={router.pathname=='/resumoOperacao'? 'actualPath' : null} ><Image src='/assets/sidebar/summaryOperationsIcon.svg' width={25} height={25} />{'Resumo de Op. '}</li></Link>
+        <li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/grossSavings' || router.pathname=='/accumulatedSavings' || router.pathname=='/estimatedCost' || router.pathname=='/costIndicator' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Economia >'}</li>
         <div className='economiaDrawer drawer' >
         <Link href='/grossSavings'><li>Economia Bruta</li></Link>
         <Link href='/accumulatedSavings'><li>Economia Acumulada</li></Link>
         <Link href='/estimatedCost'><li>Custo Estimado</li></Link>
         <Link href='/costIndicator'><li>Custo R/MWh</li></Link>
         </div>
-        <Link href='#'><li className={router.pathname=='/news'? 'actualPath' : null}>{'Notícias >'}</li></Link>
-        <Link href='#'><li className={router.pathname=='/sectorialInfo'? 'actualPath' : null}>{'Info Setorial >'}</li></Link>
-        <Link href='#'><li className={router.pathname=='/saq'? 'actualPath' : null}>{'SAQ >'}</li></Link>
-        <Link href='#'><li className={router.pathname=='/aboutus'? 'actualPath' : null}>{'Sobre Nós >'}</li></Link>
-        <Link href='#'><li className={router.pathname=='/notification'? 'actualPath' : null}>{'Notificação >'}</li></Link>
-        <Link href='/telemetria'><li className={router.pathname=='/telemetry'? 'actualPath' : null}>{'Telemetria >'}</li></Link>
+        <Link href='#'><li className={router.pathname=='/news'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'Notícias >'}</li></Link>
+        <Link href='#'><li className={router.pathname=='/sectorialInfo'? 'actualPath' : null}><Image src='/assets/sidebar/sectorialInfoIcon.svg' width={25} height={25} />{'Info Setorial >'}</li></Link>
+        <Link href='#'><li className={router.pathname=='/saq'? 'actualPath' : null}><Image src='/assets/sidebar/saqIcon.svg' width={25} height={25} />{'SAQ >'}</li></Link>
+        <Link href='#'><li className={router.pathname=='/aboutus'? 'actualPath' : null}><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Sobre Nós >'}</li></Link>
+        <Link href='#'><li className={router.pathname=='/notification'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificação >'}</li></Link>
+        <Link href='/telemetria'><li className={router.pathname=='/telemetry'? 'actualPath' : null}><Image src='/assets/sidebar/telemetryIcon.svg' width={25} height={25} />{'Telemetria >'}</li></Link>
       </ul>
       <aside>
         <p>Nossos Gerentes estão prontos para atendê-los</p>
