@@ -3,9 +3,23 @@ import styled from 'styled-components';
 
 
 export const TelemetriaView = styled.main`
-   padding: 20px ;
-   width: 100%;
+  padding: 20px ;
+  width: 100%;
 
+  .title{
+    color: black;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  span{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #667085;
+  }
 
 
 `;
@@ -14,10 +28,9 @@ export const Buttons = styled.div`
    display: flex;
    min-width: 10rem;
    cursor: pointer;
-   margin-top: 8rem;
+   margin-top: 5rem;
    justify-content: space-around;
    flex-direction: row;
-
    height: 6rem;
    /* flex-direction: column; */
 /*
@@ -29,7 +42,7 @@ export const Buttons = styled.div`
    } */
 
    .btnGrafico {
-	box-shadow:inset 0px 34px 0px -15px #F48665;
+    box-shadow:inset 0px 34px 0px -15px #F48665;
 	background-color:#F48665;
 	border:none;
   border-radius: 2px;
@@ -45,7 +58,14 @@ export const Buttons = styled.div`
 	text-shadow:0px -1px 0px #7a2a1d;
 
 }
-p{
+.btnTitle{
+  font-size: 15px;
+  margin-bottom: 1px;
+
+
+}
+
+.title{
   font-size:20px;
 }
 .myButton:hover {

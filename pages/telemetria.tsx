@@ -1,13 +1,7 @@
 import React from 'react';
-
 import Banner from '../src/components/banner/Banner';
-
  import { TelemetriaView, Buttons} from '../styles/layouts/Telemetria/TelemetriaView';
-
-
-
 import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
@@ -34,16 +28,16 @@ export default function Telemetria() {
               - Distribuidora.' imgSource='/assets/graphical.png' />
 
 
-      <FormControl sx={{  width: 250,  mt:10 , pl:8}} style={{}}>
-      <FormHelperText   style={{}}>Unidade</FormHelperText>
+      <FormControl  size="small" sx={{  width: 240,  mt:10 , pl:4 }} style={{}}>
+      <p className='title'>Unidade</p>
         <Select
           value={age}
           onChange={handleChange}
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
         >
-          <MenuItem value="">
-            <em>Filial 3</em>
+          <MenuItem value="" style={{color:'primary'}}>
+           teste
           </MenuItem>
           <MenuItem value={10}>Filial 3</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
@@ -52,8 +46,8 @@ export default function Telemetria() {
 
       </FormControl>
 
-      <FormControl sx={{ width: 240, mt:10 , pl:8}} >
-        <FormHelperText>Data Final</FormHelperText>
+      <FormControl size="small" sx={{ width: 260, mt:10 , pl:5}} >
+      <p className='title'>Data Inicial</p>
         <Select
           value={age}
           onChange={handleChange}
@@ -61,7 +55,7 @@ export default function Telemetria() {
           inputProps={{ 'aria-label': 'Without label' }}
          >
           <MenuItem value="">
-            <em>07/09/2021</em>
+            07/09/2021
           </MenuItem>
           <MenuItem value={10}>Filial 3</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
@@ -69,8 +63,8 @@ export default function Telemetria() {
         </Select>
       </FormControl>
 
-      <FormControl sx={{ width: 240, mt:10 , pl:8}} >
-        <FormHelperText>Data Final</FormHelperText>
+      <FormControl size="small" sx={{ width: 260, mt:10 , pl:5, }} >
+      <p className='title'>Data Final</p>
         <Select
           value={age}
           onChange={handleChange}
@@ -78,7 +72,7 @@ export default function Telemetria() {
           inputProps={{ 'aria-label': 'Without label' }}
          >
           <MenuItem value="">
-            <em>07/09/2021</em>
+            07/09/2021
           </MenuItem>
           <MenuItem value={10}>Filial 3</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
@@ -86,8 +80,8 @@ export default function Telemetria() {
         </Select>
       </FormControl>
 
-      <FormControl sx={{ width: 240, mt:10 , pl:8}} >
-        <FormHelperText  >Discretização</FormHelperText>
+      <FormControl  size="small" sx={{ width: 270, mt:10 , pl:5}} >
+      <p className='title'>Discretização</p>
         <Select
           value={age}
           onChange={handleChange}
@@ -95,7 +89,7 @@ export default function Telemetria() {
           inputProps={{ 'aria-label': 'Without label' }}
          >
           <MenuItem value="">
-            <em>60 min</em>
+            60 min
           </MenuItem>
           <MenuItem value={10}>Filial 3</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
@@ -104,8 +98,8 @@ export default function Telemetria() {
       </FormControl>
 
         <Buttons>
-           <button className='btnGrafico'> <p>GRÁFICOS</p> <br /> GERAR GRÁFICOS COM OS DADOS SELECIONADOS</button>
-           <button className='btndownload'> <p>DOWNLOADS</p> <br /> DADOS BRUTOS SELECIONADOS</button>
+          <button className='btnGrafico'> <p className='btnTitle'>GRÁFICOS</p> <br /> GERAR GRÁFICOS COM OS DADOS SELECIONADOS</button>
+          <button className='btndownload'> <p>DOWNLOADS</p> <br /> DADOS BRUTOS SELECIONADOS</button>
             <button className='btnDados'> <p>DADOS</p> <br /> HORÁRIOS DO MÊS ATUAL</button>
         </Buttons>
     </TelemetriaView>
