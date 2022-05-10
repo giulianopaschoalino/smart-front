@@ -9,6 +9,7 @@ import { GlobalStyle } from '../styles/globals'
 import { AppView } from '../styles/app/AppView'
 import Home from '.'
 
+
 function MyApp({ Component, pageProps }: AppProps) {
   const [ auth, setAuth ] = useState(false)
 
