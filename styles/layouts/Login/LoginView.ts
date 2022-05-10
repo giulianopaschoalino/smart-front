@@ -9,6 +9,8 @@ export const LoginView = styled.main<{auth: string}>`
   min-height: fit-content;
   height: 100vh;
   background-color: #f9f9f9;
+  padding: 0;
+  overflow: hidden;
 
   display: ${props => props.auth == '/'? null : 'none'};
 
@@ -21,10 +23,8 @@ export const LoginView = styled.main<{auth: string}>`
     text-align: center;
     border-radius: 4px;
     width: 100%;
-    max-width: 30rem;
-    padding-left: 50px;
-    padding-right: 50px;
-    margin-left: 8rem;
+    max-width: 34rem;
+    margin-left: 13rem;
   }
 
   @media screen and (max-width: 1008px) {
@@ -46,41 +46,57 @@ export const LoginView = styled.main<{auth: string}>`
     color: #092C4C;
   }
   input{
-
-    width: 100%;
-    height: 15rem;
+    font-size: 1rem;
+    width: 90%;
+    height: 18rem;
     border-radius: 5px;
     margin-bottom: 10px;
     border-style: none;
     border: solid #D0D0D0 1px;
+    padding: 9px 20px;
+
+  }
+  input::placeholder {
+    color: #ABB3BB;
+    font-size: 12px;
+    padding: 10px;
+  }
+  input:hover
+  {
+      border: 1px solid #254F7F;
+  }
+  .IconButton{
+    width: 10px;
   }
 
 
-  button{
-    width: 100%;
-    height: 18rem;
+  .button{
+    width: 90%;
+    height: 24rem;
     background-image: linear-gradient(to right, #254F7F 10%, #888888 100%);
     color: white;
     font-size: 15px;
     border-radius: 5px;
     border: 0;
     margin-top: 2.5rem;
+    cursor: pointer;
+
+
   }
 
-  input::placeholder {
-    color: #ABB3BB;
-    font-size: 12px;
-  }
+
 
   span {
     font-size: 12px;
     color: #254F7F;
+    margin-left: 23rem;
+    cursor: pointer;
   }
 
   p {
     color:#8B8B8B;
     font-size: 12px;
-    margin-bottom: 22px;
+    margin-top: 3px;
   }
 
   fieldset {
@@ -90,7 +106,7 @@ export const LoginView = styled.main<{auth: string}>`
     border-right: none;
     display: block;
     text-align: center;
-    width: 100%;
+    width: 90%;
   }
 
   fieldset legend {
@@ -98,4 +114,32 @@ export const LoginView = styled.main<{auth: string}>`
       color: #ABB3BB;
       font-size: 14px;
   }
+  .input-element-wrapper{
+    display:flex;
+    margin-top: 5px;
+  }
+
+  .password-field{
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+
+
+  }
+    .btnInput{
+      color: #ABB3BB;
+      font-size: 20px;
+      background-color: transparent;
+      border: none;
+      display: flex;
+      position: absolute;
+      justify-content: center;
+      height: 64px;
+      margin-left: 26rem;
+      margin-top: 16rem;
+      cursor: pointer;
+
+      }
+
+
+
 `;
