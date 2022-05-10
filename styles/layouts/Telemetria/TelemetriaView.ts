@@ -21,6 +21,14 @@ export const TelemetriaView = styled.main`
     color: #667085;
   }
 
+  .titleMenuItem{
+    color: #667085;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+
+  }
+
 
 `;
 

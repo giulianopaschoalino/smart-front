@@ -34,10 +34,10 @@ export default function Telemetria() {
           value={age}
           onChange={handleChange}
           displayEmpty
-          inputProps={{ 'aria-label': 'Without label' }}
+
         >
-          <MenuItem value="" style={{color:'primary'}}>
-           teste
+          <MenuItem value="">
+          <span className='titleMenuItem'>Filial 3</span>
           </MenuItem>
           <MenuItem value={10}>Filial 3</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
@@ -52,10 +52,10 @@ export default function Telemetria() {
           value={age}
           onChange={handleChange}
           displayEmpty
-          inputProps={{ 'aria-label': 'Without label' }}
-         >
+
+        >
           <MenuItem value="">
-            07/09/2021
+          <span className='titleMenuItem'>07/09/2021</span>
           </MenuItem>
           <MenuItem value={10}>Filial 3</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
@@ -70,9 +70,9 @@ export default function Telemetria() {
           onChange={handleChange}
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
-         >
+        >
           <MenuItem value="">
-            07/09/2021
+          <span className='titleMenuItem'>30/06/2000</span>
           </MenuItem>
           <MenuItem value={10}>Filial 3</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
@@ -89,7 +89,7 @@ export default function Telemetria() {
           inputProps={{ 'aria-label': 'Without label' }}
          >
           <MenuItem value="">
-            60 min
+            <span className='titleMenuItem'>60 min</span>
           </MenuItem>
           <MenuItem value={10}>Filial 3</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
