@@ -17,10 +17,12 @@ export const GrossSavingsView = styled.main`
   }
 
   section {
-    margin-bottom: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     canvas {
-      max-height: 30rem;
+      margin: 160px 0 0 0;
     }
   }
 `

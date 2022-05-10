@@ -121,7 +121,7 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     display: none;
   }
 
-  @media (max-width: 1196px) {
+  @media (max-width: 1548px) {
     align-items: flex-start;
 
     width: 100%;
