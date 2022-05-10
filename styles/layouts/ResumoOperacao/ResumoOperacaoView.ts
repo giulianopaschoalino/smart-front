@@ -76,11 +76,11 @@ display: flex;
   vertical-align:top
 }
 
-h1{
+/* h1{
     color: #000;
     font-family: Poppins;
     font-size: 15px;
-  }
+  } */
   /* .tg td{
     border-color:black;
     border-style:solid;
@@ -117,7 +117,7 @@ h1{
     text-align:center;
     vertical-align:top
   }
-
+/*
   h1{
     color: #000;
     font-family: Poppins;
@@ -129,13 +129,14 @@ h1{
     font-size: 11px;
     font-weight: 400;
     margin-top: 1px;
-  }
+  }*/
 
 
   h3{
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 54px;
+
     color: #254F7F;
-    font-family: Poppins;
-    font-size: 15px;
-    margin-top: 5rem;
     }
 `;

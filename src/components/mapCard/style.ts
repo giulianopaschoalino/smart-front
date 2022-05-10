@@ -9,6 +9,11 @@ export const MapCardView = styled.figure`
 
   margin-right: 25px;
 
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
   span {
     margin-bottom: 25px;
   }

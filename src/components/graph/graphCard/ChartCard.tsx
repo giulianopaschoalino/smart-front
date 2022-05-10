@@ -5,6 +5,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 import { ChartCardView } from './ChartCardView';
+import Chart from '../Chart';
 
 interface ChartCardInterface {
   title: string,
@@ -28,7 +29,7 @@ export default function ChartCard({ title, subtitle, consumption, className }: C
       <div className='content' >
         <div className='header'>
           <div>
-            <h4>{title}</h4>
+            <h2>{title}</h2>
             <span>{subtitle}</span>
           </div>
           <ToggleButtonGroup
@@ -63,7 +64,7 @@ export default function ChartCard({ title, subtitle, consumption, className }: C
             <></>
         }
       </div>
-      <div className='graph' />
+      <Chart title='' />
     </ChartCardView>
   )
 }
