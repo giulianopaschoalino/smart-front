@@ -1,4 +1,5 @@
 import React from 'react';
+import BasicButton from '../src/components/buttons/basicButton/BasicButton';
 import Sidebar from '../src/components/sidebar/Sidebar';
 
 import { TableView} from  '../styles/layouts/resumoOperacao/ResumoOperacaoView';
@@ -77,8 +78,11 @@ export default function ResumoOperacao() {
 </tbody>
 </table>
 
+<BasicButton title='Enviar PDF' />
+<p>Mostando de 1 a 10 de 30 Entradas</p>
 
     </TableView>
+
 
   )
 }
