@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import Image from 'next/image'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
+import Link from 'next/link'
 
 import { SidebarView } from './SidebarView'
-import Link from 'next/link'
 
 export default function Sidebar() {
   const [ economiaDrawer, setEconomiaDrawer ] = useState(false)
@@ -12,7 +12,9 @@ export default function Sidebar() {
 
   const router = useRouter()
 
-  console.log(router.pathname)
+  useEffect(() => {
+    setViewModal(false)
+  }, [router.pathname])
 
   return (
     <SidebarView economiaDrawer={economiaDrawer} modalOpen={viewModal} >
@@ -38,7 +40,7 @@ export default function Sidebar() {
         <Link href='#'><li className={router.pathname=='/saq'? 'actualPath' : null}>{'SAQ >'}</li></Link>
         <Link href='#'><li className={router.pathname=='/aboutus'? 'actualPath' : null}>{'Sobre Nós >'}</li></Link>
         <Link href='#'><li className={router.pathname=='/notification'? 'actualPath' : null}>{'Notificação >'}</li></Link>
-        <Link href='#'><li className={router.pathname=='/telemetry'? 'actualPath' : null}>{'Telemetria >'}</li></Link>
+        <Link href='/telemetria'><li className={router.pathname=='/telemetry'? 'actualPath' : null}>{'Telemetria >'}</li></Link>
       </ul>
       <aside>
         <p>Nossos Gerentes estão prontos para atendê-los</p>

@@ -2,22 +2,22 @@ import styled from "styled-components";
 
 export const HeaderView = styled.header`
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  flex-direction: row;
 
-  height: 10rem;
+  margin: 0 0 75px 0;
+
+  width: 100%;
 
   section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 30%;
 
-    margin: 0;
-    padding: 0;
 
-    :first-child {
-      width: 30%;
+    :last-child {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      height: fit-content;
     }
   }
 
@@ -29,7 +29,7 @@ export const HeaderView = styled.header`
     justify-content: center;
 
     width: 150px;
-    height: 43px;
+    height: 40px;
 
     border-radius: 8px;
 
@@ -41,11 +41,20 @@ export const HeaderView = styled.header`
     ::after {
       content: "";
       position: relative;
-      left: 40px;
-      background-color: #FFF;
+      left: 2.5rem;
+      background-color: #fff;
       width: 45px;
       height: 45px;
-      border-radius: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  @media (max-width: 1020px) {
+    .icon {
+      display: none;
+    }
+    section {
+      width: 50%;
     }
   }
 `
