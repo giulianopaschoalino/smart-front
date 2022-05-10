@@ -26,6 +26,12 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
   .actualPath {
     border-left: #254F7F solid 8px;
     background-color: #FAFBFF;
+
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+
+    color: #254F7F;
   }
 
   ul {
