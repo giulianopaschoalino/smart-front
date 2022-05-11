@@ -1,47 +1,94 @@
 import React, { useState } from 'react'
-import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
-import { LoginView} from  '../styles/layouts/Login/LoginView';
 
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import LoginButton from '../src/components/buttons/loginButton/LoginButton';
+import FormControl from '@mui/material/FormControl';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+
+import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai';
+
+import { LoginView, LoginContainer} from  '../styles/layouts/Login/LoginView';
 
 export default function Home() {
-
   const [state, setstate]=useState(false);
   const toggleBtn = ()=> {
     setstate(prevState => !prevState);
   }
+  const [values, setValues] = React.useState({
+    amount: '',
+    password: '',
+    weight: '',
+    weightRange: '',
+    showPassword: false,
+  });
+
   const router = useRouter()
   const rota = router.pathname
 
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <LoginView auth={rota} >
-      <Image src='/assets/marca1.svg' width={500} height={600}/>
-        <section className="container">
-          <h1>Bem-Vindo</h1>
-          <h2>Estratégias Inteligentes em<br /> Gestão de Energia</h2>
+      <Image src='/assets/marca1.svg' width={500} height={500} />
+      <LoginContainer>
+        <h1>Bem-Vindo</h1>
+        <h2>Estratégias Inteligentes em<br /> Gestão de Energia</h2>
 
-          <input type="text" placeholder='Login'/>
-          <input className="password-field" type={state?"text":"password"} placeholder= "Senha" />
-          <button className='btnInput' onClick={toggleBtn}>
-              {state ? <AiOutlineEyeInvisible /> :
-                <AiOutlineEye />
-              }
-          </button>
-          <span>Esqueceu a senha ?</span>
+        <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }}label="Login" variant="outlined" />
+        <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={values.showPassword ? 'text' : 'password'}
+            value={values.password}
+            onChange={handleChange('password')}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {values.showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+        </FormControl>
+        <span>Esqueceu a senha ?</span>
+
         <Link href='/dashboard' >
-          <button className='button'>ENTRAR</button>
+          <LoginButton title='ENTRAR' />
         </Link>
 
-        <fieldset>
-          <legend>Ou</legend>
+        <fieldset className="line">
+          <legend className="text">Ou</legend>
         </fieldset>
 
-        <p>+55(41) 3012-5900
-        <br /> www.energiasmart.com.br</p>
+        <p>+55(41) 3012-5900<br/>www.energiasmart.com.br</p>
 
-      </section>
+      </LoginContainer>
     </LoginView>
   )
 }
