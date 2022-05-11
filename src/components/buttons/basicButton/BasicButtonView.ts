@@ -13,7 +13,7 @@ export const BasicButtonView = styled.button`
   border-style: none;
 
   font-family: 'Poppins';
-  font-size: 16px;
+  font-size: 90%;
   /* identical to box height */
 
 

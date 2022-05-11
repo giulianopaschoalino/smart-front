@@ -7,7 +7,7 @@ export const AboutUsView = styled.main`
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 300;
-    font-size: 17px;
+    font-size: 80%;
     line-height: 26px;
   }
 
@@ -17,6 +17,8 @@ export const AboutUsView = styled.main`
     li {
       display: flex;
       margin-bottom: 8px;
+
+      font-size: 98.98%;
     }
   }
 
@@ -35,6 +37,16 @@ export const AboutUsView = styled.main`
 
         flex-direction: column;
       }
+    }
+  }
+
+  @media (max-width: 1008px) {
+    li {
+      font-size: 170%!important;
+    }
+
+    img {
+      width: 200px;
     }
   }
 `
