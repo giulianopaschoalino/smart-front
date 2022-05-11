@@ -1,11 +1,6 @@
 import styled from 'styled-components'
 
 export const DashboardView = styled.main`
-  * {
-    margin: 0;
-    padding: 0;
-  }
-
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -15,38 +10,6 @@ export const DashboardView = styled.main`
   flex-direction: column;
 
   width: 100%;
-
-  span {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  h4 {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 21px;
-    line-height: 32px;
-  }
-
-  h1 {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 28px;
-    line-height: 42px;
-  }
-
-  p {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-  }
 
   .cardsSection {
     display: flex;

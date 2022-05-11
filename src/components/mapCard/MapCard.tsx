@@ -5,7 +5,7 @@ import { MapCardView } from './style'
 interface MapCardInterface {
   title: string,
   subtitle: string,
-  statistic: string,
+  statistic?: string,
   imgSource: string,
 }
 
@@ -18,8 +18,15 @@ export default function MapCard({ title, subtitle, statistic, imgSource }: MapCa
         <h4>{title}</h4>
         <span>{subtitle}</span>
         <article>
-          <Image src="/graphLineIcon.svg" width={20} height={20} />
-          <p>{statistic}</p>
+          {
+            statistic?
+              <>
+                <Image src="/graphLineIcon.svg" width={20} height={20} />
+                <p>{statistic}</p>
+              </>
+              :
+              null
+          }
         </article>
       </div>
     </MapCardView>

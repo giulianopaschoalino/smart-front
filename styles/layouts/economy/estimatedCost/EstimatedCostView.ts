@@ -6,21 +6,13 @@ export const EstimatedCostView = styled.main`
 
   width: 100%;
 
-  span {
-    color: #969BA0;
-
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-  }
-
   section {
-    margin-bottom: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     canvas {
-      max-height: 30rem;
+      margin: 160px 0 0 0;
     }
   }
 `
