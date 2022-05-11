@@ -18,13 +18,16 @@ export const BannerView = styled.div`
 
   .text {
     position: relative;
-    margin: 82px 0 0 20px;
-
+    margin:  90px 30px;
     font-family: 'Poppins';
+    font-size:19px;
     font-style: normal;
-
     color: white;
-
+    padding-top:45px;
     z-index: 2;
   }
+
+
+
+
 `

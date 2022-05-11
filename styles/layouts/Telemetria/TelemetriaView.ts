@@ -37,10 +37,11 @@ export const Buttons = styled.div`
    min-width: 10rem;
    cursor: pointer;
    margin-top: 5rem;
+   padding: 1px 60px;
    justify-content: space-around;
    flex-direction: row;
    height: 6rem;
-   /* flex-direction: column; */
+
 /*
    .btnSucess{
      font-size: 10px;
@@ -49,7 +50,7 @@ export const Buttons = styled.div`
      border: none;
    } */
 
-   .btnGrafico {
+   /* .btnGrafico {
     box-shadow:inset 0px 34px 0px -15px #F48665;
 	background-color:#F48665;
 	border:none;
@@ -110,7 +111,7 @@ p{
 .myButton:active {
 	position:relative;
   /* justify-content: space-between; */
-	top:1px;
+	/* top:1px;
 
 
 }
@@ -119,8 +120,8 @@ p{
   box-shadow:inset 100% #23BDB8;
 	background-color:#23BDB8;
 	border:none;
-  border-radius: 2px;
-	display:inline-block;
+  border-radius: 2px; */
+	/* display:inline-block;
   width: 17rem;
 	cursor:pointer;
 	color:#ffffff;
@@ -140,9 +141,9 @@ p{
 }
 .myButton:active {
 	position:relative;
-  /* justify-content: space-between; */
-	top:1px;
-}
+ justify-content: space-between;
+ top:1px;
+ }  */
 
 
 `;

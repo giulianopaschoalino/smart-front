@@ -6,16 +6,19 @@ export const GradientButtonView = styled.button`
   align-items: center;
 
   flex-direction: column;
+  border-radius: 2px;
 
-  width: 30%;
-  height: 150px;
+  width: 25%;
+  height: 110px;
+  margin-bottom: 25px;
 
   font-family: 'Poppins';
+  font-size: 10px;
 
   color: #FFFFFF;
 
   background: ${ props => props.color==='orange'?
-  'linear-gradient(200.86deg, #F48665 8.03%, #F48665 91.97%, #FDA23F 91.97%), #FFFFFF'
+  'linear-gradient(200.86deg, #F48665 8.03%, #F48665  91.97%), #FFFFFF'
   :
   props.color === 'purple'?
   'linear-gradient(200.69deg, #9A56FF 8.53%, #D78AFD 91.47%), #FFFFFF'
