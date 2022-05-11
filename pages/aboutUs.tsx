@@ -24,13 +24,13 @@ export default function aboutUs() {
           aplicamos as mesmas premissas a favor dos Consumidores, disponibilizando assim um diferencial único para a tomada de decisão e elaboração das estratégias de
           contratação de energia.</p>
         <ul>
-          <li><Image src='/assets/listIcon.svg' width={25} height={25} />Informação</li>
-          <li><Image src='/assets/listIcon.svg' width={25} height={25} />Economia</li>
-          <li><Image src='/assets/listIcon.svg' width={25} height={25} />Gestão de Energia</li>
-          <li><Image src='/assets/listIcon.svg' width={25} height={25} />Imparcialidade</li>
-          <li><Image src='/assets/listIcon.svg' width={25} height={25} />Previsão de Custos</li>
-          <li><Image src='/assets/listIcon.svg' width={25} height={25} />Experiência</li>
-          <li><Image src='/assets/listIcon.svg' width={25} height={25} />Relacionamento</li>
+          <li><Image src='/assets/listIcon.svg' width={25} height={25} />{'Informação'}</li>
+          <li><Image src='/assets/listIcon.svg' width={25} height={25} />{'Economia'}</li>
+          <li><Image src='/assets/listIcon.svg' width={25} height={25} />{'Gestão de Energia'}</li>
+          <li><Image src='/assets/listIcon.svg' width={25} height={25} />{'Imparcialidade'}</li>
+          <li><Image src='/assets/listIcon.svg' width={25} height={25} />{'Previsão de Custos'}</li>
+          <li><Image src='/assets/listIcon.svg' width={25} height={25} />{'Experiência'}</li>
+          <li><Image src='/assets/listIcon.svg' width={25} height={25} />{'Relacionamento'}</li>
         </ul>
 
         <article>

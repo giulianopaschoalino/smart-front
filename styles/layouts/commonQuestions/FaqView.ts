@@ -10,7 +10,7 @@ export const FaqView = styled.main`
 
   h1 {
     font-weight: 700;
-    font-size: 48px;
+    font-size: calc(90% + 2rem);
     line-height: 72px;
     text-align: center;
     letter-spacing: 0.5px;
@@ -18,7 +18,7 @@ export const FaqView = styled.main`
 
   p {
     font-weight: 400;
-    font-size: 14px;
+    font-size: 99.98%;
     line-height: 21px;
     text-align: center;
     letter-spacing: 0.5px;

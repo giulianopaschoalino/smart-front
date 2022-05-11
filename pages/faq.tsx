@@ -1,5 +1,5 @@
 import React from 'react'
-import CommonQuestionsCard from '../src/components/commonQuestionsCard/FaqQuestionsCard'
+import CommonQuestionsCard from '../src/components/faqQuestionsCard/FaqQuestionsCard'
 import Header from '../src/components/header/Header'
 import { FaqView } from '../styles/layouts/commonQuestions/FaqView'
 
