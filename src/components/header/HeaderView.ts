@@ -14,7 +14,7 @@ export const HeaderView = styled.header`
 
     :last-child {
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: flex-start;
 
       height: fit-content;

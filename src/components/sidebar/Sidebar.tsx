@@ -19,7 +19,7 @@ export default function Sidebar() {
   return (
     <SidebarView economiaDrawer={economiaDrawer} modalOpen={viewModal} >
       <div className='hamburger' onClick={() => setViewModal(!viewModal)} >
-        <Image src='/assets/hamburgerModal.svg' width={25} height={25} />
+        <Image src='/assets/hamburgerModal.svg' width={60} height={60} />
       </div>
       <div className='imageNext'>
         <Image src='/assets/logo.svg' width={100} height={100} />
@@ -28,7 +28,7 @@ export default function Sidebar() {
         <Link href='/dashboard'><li className={router.pathname=='/dashboard'? 'actualPath' : null} ><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Visão Geral'}</li></Link>
         <Link href='/consumption'><li className={router.pathname=='/consumption'? 'actualPath' : null} ><Image src='/assets/sidebar/consumptionIcon.svg' width={25} height={25} />{'Consumo'}</li></Link>
         <Link href='/resumoOperacao'><li className={router.pathname=='/resumoOperacao'? 'actualPath' : null} ><Image src='/assets/sidebar/summaryOperationsIcon.svg' width={25} height={25} />{'Resumo de Op. '}</li></Link>
-        <li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/grossSavings' || router.pathname=='/accumulatedSavings' || router.pathname=='/estimatedCost' || router.pathname=='/costIndicator' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Economia >'}</li>
+        <li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/grossSavings' || router.pathname=='/accumulatedSavings' || router.pathname=='/estimatedCost' || router.pathname=='/costIndicator' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Economia'}</li>
         <div className='economiaDrawer drawer' >
         <Link href='/grossSavings'><li>Economia Bruta</li></Link>
         <Link href='/accumulatedSavings'><li>Economia Acumulada</li></Link>

@@ -15,6 +15,7 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
   flex-direction: column;
 
   width: 20%;
+  min-width: 15rem;
 
   margin: 0;
   padding: 0;
@@ -27,16 +28,7 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     border-left: #254F7F solid 8px;
     background-color: #FAFBFF;
 
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 27px;
-
     color: #254F7F;
-
-    stop-color: #254F7F;
-    .svg {
-      background-color: red;
-    }
   }
 
   ul {
@@ -64,7 +56,6 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
 
       font-style: normal;
       font-weight: 500;
-      font-size: 16px;
       line-height: 27px;
 
       color: #969BA0;
@@ -131,7 +122,7 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     display: none;
   }
 
-  @media (max-width: 1548px) {
+  @media (max-width: 1008px) {
     align-items: flex-start;
 
     width: 100%;
@@ -150,15 +141,22 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
       cursor: pointer;
 
       z-index: 2;
+
+      height: 5rem;
     }
     .imageNext {
       display: none;
     }
     ul {
       display: ${props => props.modalOpen? 'block' : 'none'};
-      min-height: 100vh;
+      min-height: 85vh;
 
       background-color: #FFF;
+
+      li {
+        height: 7rem;
+        font-size: 170%;
+      }
     }
     aside {
       display: none;

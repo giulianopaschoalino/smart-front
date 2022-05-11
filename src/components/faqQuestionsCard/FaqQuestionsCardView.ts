@@ -28,11 +28,18 @@ export const FaqQuestionsCardBody = styled.div<CardBodyInterface>`
 
   p {
     font-weight: 400;
-    font-size: 14px;
-    line-height: 12px;
+    font-size: 99%;
 
     letter-spacing: 0.5px;
 
     color: rgba(0, 0, 0, 0.6);
+
+    text-align: left;
+  }
+
+  @media (max-width: 1008px) {
+    p {
+      text-align: left;
+    }
   }
 `
