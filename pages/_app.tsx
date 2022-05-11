@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
-import NProgress from 'nprogress'
+// import NProgress from 'nprogress'
 
 
 import Sidebar from '../src/components/sidebar/Sidebar'
