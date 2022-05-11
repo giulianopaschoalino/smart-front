@@ -37,7 +37,7 @@ export default function Sidebar() {
         </div>
         <Link href='#'><li className={router.pathname=='/news'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'Notícias >'}</li></Link>
         <Link href='#'><li className={router.pathname=='/sectorialInfo'? 'actualPath' : null}><Image src='/assets/sidebar/sectorialInfoIcon.svg' width={25} height={25} />{'Info Setorial >'}</li></Link>
-        <Link href='#'><li className={router.pathname=='/saq'? 'actualPath' : null}><Image src='/assets/sidebar/saqIcon.svg' width={25} height={25} />{'SAQ >'}</li></Link>
+        <Link href='/faq'><li className={router.pathname=='/faq'? 'actualPath' : null}><Image src='/assets/sidebar/saqIcon.svg' width={25} height={25} />{'FAQ >'}</li></Link>
         <Link href='/aboutUs'><li className={router.pathname=='/aboutUs'? 'actualPath' : null}><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Sobre Nós >'}</li></Link>
         <Link href='#'><li className={router.pathname=='/notification'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificação >'}</li></Link>
         <Link href='/telemetria'><li className={router.pathname=='/telemetry'? 'actualPath' : null}><Image src='/assets/sidebar/telemetryIcon.svg' width={25} height={25} />{'Telemetria >'}</li></Link>
