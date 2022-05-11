@@ -1,9 +1,8 @@
 import React from 'react';
 import Header from '../src/components/header/Header';
 import PageTitle from '../src/components/pageTitle/PageTitle';
-import Sidebar from '../src/components/sidebar/Sidebar';
 import BasicButton from '../src/components/buttons/basicButton/BasicButton';
-import { TableView } from '../styles/layouts/ResumoOperacao/ResumoOperacaoView';
+import { TableView, Pagination } from '../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 
 export default function ResumoOperacao() {
   return(
@@ -72,14 +71,15 @@ export default function ResumoOperacao() {
             <td className='tg-0tzy'>300,36</td>
             <td className='tg-hq65'>5.965,95</td>
           </tr>
-          <BasicButton title='Enviar PDF' />
-            <p>Mostando de 1 a 10 de 30 Entradas</p>
-            {/* <div className=''>
-              <p>Anterior 01 02 ... Proxima</p>
-            </div> */}
-
         </tbody>
       </table>
+      <BasicButton title='Baixar PDF' />
+
+      <Pagination>
+      <p>Mostrando 1 a 10 de 30 Entradas</p>
+      <p >Anterior <span className='number'>01</span>     <span className='numberColor'>02  ..  05</span>  <span className='number'>Proxima</span> </p>
+      </Pagination>
+
     </TableView>
   )
 }

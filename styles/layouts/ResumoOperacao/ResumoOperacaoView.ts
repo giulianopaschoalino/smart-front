@@ -139,4 +139,25 @@ display: flex;
 
     color: #254F7F;
     }
+
+    .pagination{
+
+    }
 `;
+
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  .number{
+    color: #2E5581;
+  }
+  .numberColor{
+    color: #ABAFB3;
+;
+  }
+
+`;
+

@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import React from 'react'
 import Banner from '../src/components/banner/Banner'
 import Header from '../src/components/header/Header'
