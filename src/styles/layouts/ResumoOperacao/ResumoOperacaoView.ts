@@ -76,34 +76,6 @@ export const TableView = styled.div`
   vertical-align:top
 }
 
-/* h1{
-    color: #000;
-    font-family: Poppins;
-    font-size: 15px;
-  } */
-  /* .tg td{
-    border-color:black;
-    border-style:solid;
-    border-width:1px;
-    font-family:Arial, sans-serif;
-    font-size:14px;
-    overflow:hidden;
-    padding:10px 5px;
-    word-break:normal;
-
-  }
-  .tg th{
-    border-color:black;
-    border-style:solid;
-    border-width:1px;
-    font-family:Arial, sans-serif;
-    font-size:14px;
-    font-weight:normal;
-    overflow:hidden;
-    padding:10px 5px;
-    word-break:normal;
-  } */
-
   .tg .tg-baqh{
     text-align:center;
     vertical-align:top
@@ -117,20 +89,6 @@ export const TableView = styled.div`
     text-align:center;
     vertical-align:top
   }
-/*
-  h1{
-    color: #000;
-    font-family: Poppins;
-    font-size: 15px
-  }
-  h2{
-    color: #969BA0;
-    font-family: Poppins;
-    font-size: 11px;
-    font-weight: 400;
-    margin-top: 1px;
-  }*/
-
 
   h3{
     font-weight: 600;

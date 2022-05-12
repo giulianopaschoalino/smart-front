@@ -1,8 +1,8 @@
 import React from 'react';
-import Banner from '../src/components/banner/Banner';
+import Banner from '../components/banner/Banner';
 import { TelemetriaView, Buttons} from '../styles/layouts/Telemetria/TelemetriaView';
-import GradientButton from '../src/components/buttons/gradientButton/GradientButton'
-import Header from '../src/components/header/Header';
+import GradientButton from '../components/buttons/gradientButton/GradientButton'
+import Header from '../components/header/Header';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';

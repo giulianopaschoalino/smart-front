@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
-import Banner from '../src/components/banner/Banner'
-import Header from '../src/components/header/Header'
+import Banner from '../components/banner/Banner'
+import Header from '../components/header/Header'
 import { AboutUsView } from '../styles/layouts/aboutUs/AboutUsView'
 
 export default function aboutUs() {

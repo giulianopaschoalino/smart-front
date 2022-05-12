@@ -2,10 +2,10 @@ import React from 'react'
 
 import { DashboardView } from '../styles/layouts/dashboard/DashboardView'
 
-import MapCard from '../src/components/mapCard/MapCard'
-import GraphCard from '../src/components/graph/graphCard/ChartCard'
-import Header from '../src/components/header/Header'
-import PageTitle from '../src/components/pageTitle/PageTitle'
+import MapCard from '../components/mapCard/MapCard'
+import GraphCard from '../components/graph/graphCard/ChartCard'
+import Header from '../components/header/Header'
+import PageTitle from '../components/pageTitle/PageTitle'
 
 export default function Dashboard() {
   return (

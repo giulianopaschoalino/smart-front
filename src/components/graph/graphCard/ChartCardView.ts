@@ -8,7 +8,6 @@ export const ChartCardView = styled.article`
   flex-direction: column;
 
   width: 100%;
-  /* max-width: ; */
   height: fit-content;
   min-height: 34.5rem;
 

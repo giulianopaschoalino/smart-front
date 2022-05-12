@@ -4,7 +4,7 @@ import { AppProps } from 'next/app'
 import NProgress from 'nprogress'
 
 
-import Sidebar from '../src/components/sidebar/Sidebar'
+import Sidebar from '../components/sidebar/Sidebar'
 import { GlobalStyle } from '../styles/globals'
 import { AppView } from '../styles/app/AppView'
 import '../styles/nprogress/nprogress.css'

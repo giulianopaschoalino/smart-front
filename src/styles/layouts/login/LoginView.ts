@@ -37,8 +37,6 @@ export const LoginContainer = styled.section`
   width: 40%;
   margin-left: 60px;
 
-  /* padding: 0 0 px 0; */
-
   border-radius: 10px;
 
   background-color: #FFF;

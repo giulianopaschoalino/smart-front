@@ -1,7 +1,7 @@
 import React from 'react'
-import Banner from '../src/components/banner/Banner'
-import Header from '../src/components/header/Header'
-import BasicButton from '../src/components/buttons/basicButton/BasicButton';
+import Banner from '../components/banner/Banner'
+import Header from '../components/header/Header'
+import BasicButton from '../components/buttons/basicButton/BasicButton';
 import { NewsView, Button } from '../styles/layouts/news/NewsView'
 
 export default function aboutUs() {
