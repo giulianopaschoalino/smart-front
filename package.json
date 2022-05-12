@@ -67,5 +67,13 @@
       "eslint",
       "prettier --write"
     ]
+  },
+  "optimization": {
+    "scripts": true,
+    "styles": {
+      "minify": false,
+      "inlineCritical": false
+    },
+    "fonts": true
   }
 }
