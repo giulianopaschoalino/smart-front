@@ -37,12 +37,11 @@ export default function areaTest() {
       showPassword: !values.showPassword,
     });
   };
- const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
   return (
-    // <Graph title='Indicador de custo' />
     <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
           <InputLabel htmlFor="outlined-ad
           ornment-password">Password</InputLabel>
