@@ -6,6 +6,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 import { ChartCardView } from './ChartCardView';
 import Chart from '../Chart';
+import ButtonGroup from '../../buttonGroup/ButtonGroup';
 
 interface ChartCardInterface {
   title: string,
@@ -32,23 +33,7 @@ export default function ChartCard({ title, subtitle, consumption, className }: C
             <h2>{title}</h2>
             <span>{subtitle}</span>
           </div>
-          <ToggleButtonGroup
-            value={timeCourse}
-            exclusive
-            onChange={handleAlignment}
-            aria-label="text alignment"
-            className='groupButton'
-          >
-            <ToggleButton value="left" aria-label="left aligned">
-              Mensal
-            </ToggleButton>
-            <ToggleButton value="center" aria-label="centered">
-              Semanal
-            </ToggleButton>
-            <ToggleButton value="right" aria-label="right aligned">
-              Hoje
-            </ToggleButton>
-          </ToggleButtonGroup>
+          <ButtonGroup />
         </div>
         {
           consumption?

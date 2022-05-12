@@ -45,8 +45,4 @@ export const BannerView = styled.div`
   @media (max-width: 1008px) {
     font-size: 170%;
   }
-
-
-
-
 `
