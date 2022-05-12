@@ -1,10 +1,7 @@
 import React from 'react'
+import Image from 'next/image'
 import BasicButton from '../src/components/buttons/basicButton/BasicButton'
-<<<<<<< HEAD
-import Image from 'next/image';
-=======
 import GradientButton from '../src/components/buttons/gradientButton/GradientButton'
->>>>>>> d76992f98de0130492c71a92530d12b04793ecac
 import Graph from '../src/components/graph/Chart'
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -45,7 +42,6 @@ export default function areaTest() {
   };
 
   return (
-<<<<<<< HEAD
     // <Graph title='Indicador de custo' />
     <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
           <InputLabel htmlFor="outlined-ad
@@ -71,11 +67,5 @@ export default function areaTest() {
           />
         </FormControl>
 
-=======
-    <>
-      <Graph title='Indicador de custo' />
-      <GradientButton title='GRÁFICO' description='Gerar gráficos com os dados selecionados' orange />
-    </>
->>>>>>> d76992f98de0130492c71a92530d12b04793ecac
   )
 }

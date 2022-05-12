@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="viewport-fit=cover" />
       </Head>
-      <Home auth={rota} />
+      <Home />
       <GlobalStyle />
       {
         rota != '/'?
