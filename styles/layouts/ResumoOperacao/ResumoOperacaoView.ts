@@ -156,7 +156,6 @@ export const Pagination = styled.div`
   }
   .numberColor{
     color: #ABAFB3;
-;
   }
 
 `;

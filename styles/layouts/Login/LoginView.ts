@@ -1,38 +1,47 @@
+
 import styled from 'styled-components';
 
 export const LoginView = styled.main<{auth: string}>`
   display: flex;
-  align-items: center;
+  display: ${props => props.auth == '/'? null : 'none'};
   justify-content: flex-end;
-  flex-wrap: wrap;
+  align-items: center;
+
   width: 100%;
-  min-height: fit-content;
   height: 100vh;
+
   background-color: #f9f9f9;
 
-  display: ${props => props.auth == '/'? null : 'none'};
+  padding: 0;
 
-  .container{
-    display: flex;
-    align-items: center;
+  @media (max-width: 1196px) {
     flex-direction: column;
-    background-color: #FFFFFF;
-    height: 33rem;
-    text-align: center;
-    border-radius: 4px;
-    width: 100%;
-    max-width: 30rem;
-    padding-left: 50px;
-    padding-right: 50px;
-    margin-left: 8rem;
-  }
-
-  @media screen and (max-width: 1008px) {
     justify-content: center;
-    .container {
-      margin: 0;
-    }
+    align-items: center;
+
+    height: 100%;
+
+    padding: 20px;
+
+
   }
+`;
+
+export const LoginContainer = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
+
+  width: 40%;
+  margin-left: 60px;
+
+  /* padding: 0 0 px 0; */
+
+  border-radius: 10px;
+
+  background-color: #FFF;
 
   h1{
     margin-bottom:5px;
@@ -44,58 +53,45 @@ export const LoginView = styled.main<{auth: string}>`
     font-size: 21px;
     margin-bottom: 3rem;
     color: #092C4C;
-  }
-  input{
-
-    width: 100%;
-    height: 15rem;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    border-style: none;
-    border: solid #D0D0D0 1px;
+    font-weight: 300;
+    text-align: center;
   }
 
-
-  button{
-    width: 100%;
-    height: 18rem;
-    background-image: linear-gradient(to right, #254F7F 10%, #888888 100%);
-    color: white;
-    font-size: 15px;
-    border-radius: 5px;
-    border: 0;
-    margin-top: 2.5rem;
-  }
-
-  input::placeholder {
-    color: #ABB3BB;
-    font-size: 12px;
-  }
-
-  span {
-    font-size: 12px;
-    color: #254F7F;
-  }
-
-  p {
-    color:#8B8B8B;
-    font-size: 12px;
-    margin-bottom: 22px;
-  }
-
-  fieldset {
+  .line {
     border-top: 0.7px solid #E1E1E1;
     border-bottom: none;
     border-left: none;
     border-right: none;
     display: block;
     text-align: center;
-    width: 100%;
+    width: 90%;
   }
 
-  fieldset legend {
+  .line .text {
       padding: 19px 56px;
       color: #ABB3BB;
       font-size: 14px;
   }
+  span{
+    display: flex;
+    align-self: flex-end;
+    margin-right: 5%;
+    justify-content: flex-end;
+    cursor: pointer;
+  }
+  p{
+    color: #8B8B8B;
+    text-align: center;
+    margin-top: 1px;
+  }
+
+  @media (max-width: 1196px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    margin: 0;
+  }
+
 `;

@@ -54,12 +54,12 @@ export default function Chart({ title }: ChartInterface) {
         {
           label: '2020',
           data: labels.map(() => faker.datatype.number({ min: 0, max: 1200 })),
-          backgroundColor: 'rgba(53, 162, 235, 5)',
+          backgroundColor: '#C2D5FB',
         },
         {
           label: '2021',
           data: labels.map(() => faker.datatype.number({ min: 0, max: 1200 })),
-          backgroundColor: 'rgba(0, 81, 255, 1)',
+          backgroundColor: '#255488',
         },
       ],
     })
