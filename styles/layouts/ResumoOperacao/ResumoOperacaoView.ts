@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 
 export const TableView = styled.div`
-display: flex;
+    display: flex;
     padding: 2.5rem;
     justify-content: center;
     flex-direction: column;
@@ -139,4 +139,9 @@ display: flex;
 
     color: #254F7F;
     }
+  p{
+    margin-top: 4rem;
+  }
+
+
 `;
