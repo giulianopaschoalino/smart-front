@@ -1,5 +1,7 @@
 import React from 'react';
 import BasicButton from '../src/components/buttons/basicButton/BasicButton';
+import Header from '../src/components/header/Header';
+import PageTitle from '../src/components/pageTitle/PageTitle';
 import Sidebar from '../src/components/sidebar/Sidebar';
 
 import { TableView } from '../styles/layouts/ResumoOperacao/ResumoOperacaoView';
