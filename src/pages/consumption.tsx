@@ -1,7 +1,7 @@
 import React from 'react'
-import Chart from '../src/components/graph/Chart'
-import Header from '../src/components/header/Header'
-import PageTitle from '../src/components/pageTitle/PageTitle'
+import Chart from '../components/graph/Chart'
+import Header from '../components/header/Header'
+import PageTitle from '../components/pageTitle/PageTitle'
 import { ConsumptionView } from '../styles/layouts/consumption/ConsumptionView'
 
 export default function Consumption() {

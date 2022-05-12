@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from '../src/components/header/Header';
-import PageTitle from '../src/components/pageTitle/PageTitle';
-import BasicButton from '../src/components/buttons/basicButton/BasicButton';
-import Sidebar from '../src/components/sidebar/Sidebar';
+import Header from '../components/header/Header';
+import PageTitle from '../components/pageTitle/PageTitle';
+import BasicButton from '../components/buttons/basicButton/BasicButton';
+import Sidebar from '../components/sidebar/Sidebar';
 
 import { Pagination, TableView } from '../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 
