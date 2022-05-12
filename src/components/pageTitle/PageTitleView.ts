@@ -19,7 +19,7 @@ p {
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 99%;
   line-height: 27px;
 
   color: #969BA0;
