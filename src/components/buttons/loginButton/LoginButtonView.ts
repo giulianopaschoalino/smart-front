@@ -20,5 +20,4 @@ export const LoginButtonView = styled.button`
   cursor: pointer;
 
   color: #FFFFFF;
-
 `

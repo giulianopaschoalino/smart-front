@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { MapCardView } from './style'
+import { MapCardView } from './MapCardView'
 
 interface MapCardInterface {
   title: string,

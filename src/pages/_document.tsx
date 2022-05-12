@@ -5,21 +5,31 @@ import { ServerStyleSheet } from 'styled-components';
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 export default class MyDocument extends Document {
-  // static getInitialProps({ renderPage }) {
-  //   // Step 1: Create an instance of ServerStyleSheet
-  //   const sheet = new ServerStyleSheet();
+  static async GetInitialProps(ctx) {
+    const sheet = new ServerStyleSheet();
+    const originalRenderPage = ctx.renderPage;
 
-  //   // Step 2: Retrieve styles from components in the page
-  //   const page = renderPage((App) => (props) =>
-  //     sheet.collectStyles(<App {...props} />),
-  //   );
+    try {
+      ctx.renderPage = () =>
+      originalRenderPage({
+        enhanceApp: App => props => sheet.collectStyles(<App {...props} />)
+      });
 
-  //   // Step 3: Extract the styles as <style> tags
-  //   const styleTags = sheet.getStyleElement();
+      const initialProps = await Document.getInitialProps(ctx);
+      return {
+      ...initialProps,
+      styles: (
+        <>
+          {initialProps.styles}
+          {sheet.getStyleElement()}
+        </>
+      )
+      };
+      } finally {
+        sheet.seal();
+      }
+  }
 
-  //   // Step 4: Pass styleTags as a prop
-  //   return { ...page, styleTags };
-  // }
 
     render() {
       return (
@@ -27,7 +37,7 @@ export default class MyDocument extends Document {
           <Head>
             <link rel="preconnect" href="https://fonts.googleapis.com"/>
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='true' />
-            <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet"></link>
+            <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet"/>
             <link rel="preconnect" href="https://fonts.googleapis.com"/>
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='true' />
 

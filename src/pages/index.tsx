@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import LoginButton from '../src/components/buttons/loginButton/LoginButton';
+import LoginButton from '../components/buttons/loginButton/LoginButton';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';

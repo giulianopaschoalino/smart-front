@@ -1,8 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
-import BasicButton from '../src/components/buttons/basicButton/BasicButton'
-import GradientButton from '../src/components/buttons/gradientButton/GradientButton'
-import Graph from '../src/components/graph/Chart'
+import BasicButton from '../components/buttons/basicButton/BasicButton'
+import GradientButton from '../components/buttons/gradientButton/GradientButton'
+import Graph from '../components/graph/Chart'
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
@@ -37,12 +37,11 @@ export default function areaTest() {
       showPassword: !values.showPassword,
     });
   };
- const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
   return (
-    // <Graph title='Indicador de custo' />
     <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
           <InputLabel htmlFor="outlined-ad
           ornment-password">Password</InputLabel>

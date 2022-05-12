@@ -1,6 +1,6 @@
 import React from 'react'
-import CommonQuestionsCard from '../src/components/faqQuestionsCard/FaqQuestionsCard'
-import Header from '../src/components/header/Header'
+import CommonQuestionsCard from '../components/faqQuestionsCard/FaqQuestionsCard'
+import Header from '../components/header/Header'
 import { FaqView } from '../styles/layouts/commonQuestions/FaqView'
 
 export default function commonQuestions() {
