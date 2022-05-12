@@ -11,7 +11,6 @@ import '../styles/nprogress/nprogress.css'
 import '../styles/globals.ts'
 
 import Home from '.'
-
 import Head from 'next/head'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -58,4 +57,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   )
 }
 
-export default MyApp
+export default MyApp;
