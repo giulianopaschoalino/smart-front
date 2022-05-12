@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 
 export const TableView = styled.div`
-display: flex;
+    display: flex;
     padding: 2.5rem;
     justify-content: center;
     flex-direction: column;

@@ -81,5 +81,7 @@ export default function ResumoOperacao() {
       </Pagination>
 
     </TableView>
+
+
   )
 }
