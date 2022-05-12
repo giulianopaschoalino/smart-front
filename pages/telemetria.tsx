@@ -23,7 +23,7 @@ export default function Telemetria() {
   return(
 
     <TelemetriaView>
-<Header name='' />
+      <Header name='' />
       <Banner title ='Telemetria' subtitle='Dados Coletados do Sistema de Coleta de Dados de Energia -
               SCDE da Câmara de Comercialização de Energia Elétrica - CCEE,
               sendo que as quantidades aqui informadas são de responsabilidade do agente de medição
