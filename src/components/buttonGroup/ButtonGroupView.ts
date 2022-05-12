@@ -1,6 +1,11 @@
+import { ButtonBaseClassKey } from "@mui/material";
 import styled from "styled-components";
 
-export const ButtonGroupView = styled.div`
+interface ButtonGroupViewInterface {
+  timeCourse: string | any;
+}
+
+export const ButtonGroupView = styled.div<ButtonGroupViewInterface>`
   background-color: #F4F5F9;
   border-radius: 10px;
   .switch {
