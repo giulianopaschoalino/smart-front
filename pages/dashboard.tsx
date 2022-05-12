@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { DashboardView } from '../styles/layouts/dashboard/DashboardView'
+
 import MapCard from '../src/components/mapCard/MapCard'
 import GraphCard from '../src/components/graph/graphCard/ChartCard'
 import Header from '../src/components/header/Header'
