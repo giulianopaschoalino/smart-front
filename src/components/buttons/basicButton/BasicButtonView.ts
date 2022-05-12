@@ -4,8 +4,9 @@ export const BasicButtonView = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
 
-  width: 120px;
+  width: 140px;
   height: 45px;
   cursor: pointer;
   background: #254F7F;

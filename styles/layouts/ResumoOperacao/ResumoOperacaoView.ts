@@ -139,9 +139,25 @@ export const TableView = styled.div`
 
     color: #254F7F;
     }
-  p{
-    margin-top: 4rem;
+
+    .pagination{
+
+    }
+`;
+
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  .number{
+    color: #2E5581;
+  }
+  .numberColor{
+    color: #ABAFB3;
+;
   }
 
-
 `;
+
