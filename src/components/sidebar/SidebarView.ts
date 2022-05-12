@@ -126,8 +126,6 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     align-items: flex-start;
 
     width: 100%;
-    /* height: 0%; */
-    /* height: ${props => props.modalOpen? '100%' : null}; */
 
     padding: 18px;
 

@@ -12,7 +12,6 @@ interface BannerInterface {
 export default function Banner({ title, subtitle, imgSource }: BannerInterface) {
   return (
     <BannerView>
-      {/* <Image src={imgSource} width={1458} height={302} layout='intrinsic' /> */}
       <Image src={imgSource} layout='fill' />
       <div className='gradient' />
       <div className='text'>
