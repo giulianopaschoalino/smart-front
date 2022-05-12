@@ -53,7 +53,7 @@ export default function Header({ name }: headerInterface) {
         />
       </section>
       <section>
-        <Image src='/copel.svg' width={150} height={150} />
+        <Image src='/assets/png/copel.png' width={170} height={50} />
         <div className='icon' >
           olá, {'josé'}
         </div>

@@ -3,9 +3,31 @@ import styled from 'styled-components';
 
 
 export const TelemetriaView = styled.main`
-   padding: 20px ;
-   width: 100%;
+  padding: 20px ;
+  width: 100%;
 
+  .title{
+    color: black;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  span{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #667085;
+  }
+
+  .titleMenuItem{
+    color: #667085;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+
+  }
 
 
 `;
@@ -14,12 +36,12 @@ export const Buttons = styled.div`
    display: flex;
    min-width: 10rem;
    cursor: pointer;
-   margin-top: 8rem;
+   margin-top: 5rem;
+   padding: 1px 60px;
    justify-content: space-around;
    flex-direction: row;
-
    height: 6rem;
-   /* flex-direction: column; */
+
 /*
    .btnSucess{
      font-size: 10px;
@@ -28,8 +50,8 @@ export const Buttons = styled.div`
      border: none;
    } */
 
-   .btnGrafico {
-	box-shadow:inset 0px 34px 0px -15px #F48665;
+   /* .btnGrafico {
+    box-shadow:inset 0px 34px 0px -15px #F48665;
 	background-color:#F48665;
 	border:none;
   border-radius: 2px;
@@ -45,7 +67,14 @@ export const Buttons = styled.div`
 	text-shadow:0px -1px 0px #7a2a1d;
 
 }
-p{
+.btnTitle{
+  font-size: 15px;
+  margin-bottom: 1px;
+
+
+}
+
+.title{
   font-size:20px;
 }
 .myButton:hover {
@@ -82,7 +111,7 @@ p{
 .myButton:active {
 	position:relative;
   /* justify-content: space-between; */
-	top:1px;
+	/* top:1px;
 
 
 }
@@ -91,8 +120,8 @@ p{
   box-shadow:inset 100% #23BDB8;
 	background-color:#23BDB8;
 	border:none;
-  border-radius: 2px;
-	display:inline-block;
+  border-radius: 2px; */
+	/* display:inline-block;
   width: 17rem;
 	cursor:pointer;
 	color:#ffffff;
@@ -112,9 +141,9 @@ p{
 }
 .myButton:active {
 	position:relative;
-  /* justify-content: space-between; */
-	top:1px;
-}
+ justify-content: space-between;
+ top:1px;
+ }  */
 
 
 `;

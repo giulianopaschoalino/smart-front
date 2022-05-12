@@ -2,19 +2,15 @@ import React from 'react';
 import BasicButton from '../src/components/buttons/basicButton/BasicButton';
 import Sidebar from '../src/components/sidebar/Sidebar';
 
-import { TableView} from  '../styles/layouts/resumoOperacao/ResumoOperacaoView';
-
-
+import { TableView } from '../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 
 export default function ResumoOperacao() {
   return(
-
-
     <TableView>
-      <h1>Resumo de Operaçoes</h1>
-      <h2>Operações detalhadas</h2>
-      <h3>Seletor Mês</h3>
+      <Header name='' />
+      <PageTitle title='Resumo de Operaçoes' subtitle='Operações detalhadas' />
 
+      <h3>Seletor Mês</h3>
       <table className="tg">
 <thead>
   <tr>

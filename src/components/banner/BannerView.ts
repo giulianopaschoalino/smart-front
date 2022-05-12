@@ -2,6 +2,10 @@ import styled from 'styled-components'
 
 export const BannerView = styled.div`
   position: relative;
+
+  display: flex;
+  align-items: center;
+
   width: 100%;
   height: 19rem;
 
@@ -18,13 +22,31 @@ export const BannerView = styled.div`
 
   .text {
     position: relative;
-    margin: 82px 0 0 20px;
+    margin: 0 0 0 20px;
 
     font-family: 'Poppins';
+    font-size:19px;
     font-style: normal;
-
     color: white;
-
+    padding-top:45px;
     z-index: 2;
+
+    overflow: hidden;
+
+    p {
+      font-size: 30px;
+    }
+
+    * {
+      margin: 0;
+    }
   }
+
+  @media (max-width: 1008px) {
+    font-size: 170%;
+  }
+
+
+
+
 `
