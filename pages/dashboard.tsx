@@ -1,6 +1,6 @@
 import React from 'react'
 
-// import { DashboardView } from '../styles/layouts/dashboard/DashboardView'
+import { DashboardView } from '../styles/layouts/dashboard/DashboardView'
 
 import MapCard from '../src/components/mapCard/MapCard'
 import GraphCard from '../src/components/graph/graphCard/ChartCard'
@@ -9,7 +9,7 @@ import PageTitle from '../src/components/pageTitle/PageTitle'
 
 export default function Dashboard() {
   return (
-    <main>
+    <DashboardView>
       <Header name='' />
       <PageTitle title='Visão Geral' subtitle='Bem Vindo a Smart Energia' />
       <section className="cardsSection" >
@@ -25,6 +25,6 @@ export default function Dashboard() {
         <GraphCard title='Consumo' subtitle='Gráfico de Consumo' />
         <GraphCard title='Consumo' subtitle='Gráfico de Consumo' className='footerGraph' />
       </section>
-    </main>
+    </DashboardView>
   )
 }
