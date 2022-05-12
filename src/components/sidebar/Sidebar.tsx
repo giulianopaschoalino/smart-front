@@ -35,7 +35,7 @@ export default function Sidebar() {
         <Link href='/estimatedCost'><li>Custo Estimado</li></Link>
         <Link href='/costIndicator'><li>Custo R/MWh</li></Link>
         </div>
-        <Link href='#'><li className={router.pathname=='/news'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'Notícias >'}</li></Link>
+        <Link href='/news'><li className={router.pathname=='/news'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'Notícias >'}</li></Link>
         <Link href='#'><li className={router.pathname=='/sectorialInfo'? 'actualPath' : null}><Image src='/assets/sidebar/sectorialInfoIcon.svg' width={25} height={25} />{'Info Setorial >'}</li></Link>
         <Link href='/faq'><li className={router.pathname=='/faq'? 'actualPath' : null}><Image src='/assets/sidebar/saqIcon.svg' width={25} height={25} />{'FAQ >'}</li></Link>
         <Link href='/aboutUs'><li className={router.pathname=='/aboutUs'? 'actualPath' : null}><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Sobre Nós >'}</li></Link>

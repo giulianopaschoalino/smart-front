@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 import { LoginButtonView } from './LoginButtonView'
 
@@ -7,8 +8,10 @@ interface LoginButtonInterface {
 
 export default function LoginButton({ title }: LoginButtonInterface) {
   return (
-    <LoginButtonView>
-      {title}
-    </LoginButtonView>
+    <Link href='/dashboard' >
+      <LoginButtonView>
+          {title}
+      </LoginButtonView>
+    </Link>
   )
 }

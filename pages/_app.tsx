@@ -11,14 +11,7 @@ import '../styles/nprogress/nprogress.css'
 import '../styles/globals.ts'
 
 import Home from '.'
-
-<<<<<<< HEAD
-
-function MyApp({ Component, pageProps }: AppProps) {
-  const [ auth, setAuth ] = useState(false)
-=======
 import Head from 'next/head'
->>>>>>> d76992f98de0130492c71a92530d12b04793ecac
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -64,4 +57,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   )
 }
 
-export default MyApp
+export default MyApp;

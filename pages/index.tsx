@@ -13,18 +13,16 @@ import TextField from '@mui/material/TextField';
 
 import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai';
 
-import { LoginView, LoginContainer} from  '../styles/layouts/Login/LoginView';
+import { LoginView, LoginContainer } from  '../styles/layouts/login/LoginView';
 
 export default function Home() {
   const [state, setstate]=useState(false);
+
   const toggleBtn = ()=> {
     setstate(prevState => !prevState);
   }
   const [values, setValues] = React.useState({
-    amount: '',
     password: '',
-    weight: '',
-    weightRange: '',
     showPassword: false,
   });
 
@@ -78,9 +76,7 @@ export default function Home() {
         </FormControl>
         <span>Esqueceu a senha ?</span>
 
-        <Link href='/dashboard' >
           <LoginButton title='ENTRAR' />
-        </Link>
 
         <fieldset className="line">
           <legend className="text">Ou</legend>
