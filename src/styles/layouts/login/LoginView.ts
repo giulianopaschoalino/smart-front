@@ -10,20 +10,17 @@ export const LoginView = styled.main<{auth: string}>`
   width: 100%;
   height: 100vh;
 
-  background-color: #f9f9f9;
-
   padding: 0;
+  margin: 0;
 
   @media (max-width: 1196px) {
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 
     height: 100%;
 
-    padding: 20px;
-
-
+    padding: 100px;
   }
 `;
 
@@ -66,10 +63,11 @@ export const LoginContainer = styled.section`
   }
 
   .line .text {
-      padding: 19px 56px;
-      color: #ABB3BB;
-      font-size: 14px;
+    padding: 19px 56px;
+    color: #ABB3BB;
+    font-size: 14px;
   }
+
   span{
     display: flex;
     align-self: flex-end;
@@ -77,6 +75,7 @@ export const LoginContainer = styled.section`
     justify-content: flex-end;
     cursor: pointer;
   }
+
   p{
     color: #8B8B8B;
     text-align: center;
@@ -91,5 +90,4 @@ export const LoginContainer = styled.section`
     width: 100%;
     margin: 0;
   }
-
 `;
