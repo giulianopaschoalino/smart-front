@@ -5,6 +5,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-family: 'Poppins';
+    background-color: #f9f9f9;
   }
 
   main {
