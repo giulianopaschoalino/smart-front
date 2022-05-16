@@ -1,15 +1,7 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
-
-export const TableView = styled.div`
-  display: flex;
-  padding: 2.5rem;
-  justify-content: center;
-  flex-direction: column;
-  align-items: flex-start;
+export const PldTableView = styled.main`
   width: 100%;
-  height: 100%;
-
 
   .tg{
     border-collapse:collapse;
@@ -97,20 +89,96 @@ export const TableView = styled.div`
 
     color: #254F7F;
   }
-`;
 
-export const Pagination = styled.div`
+  .images {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    margin: 40px;
+  }
+
+  section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    article {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 40%;
+      height: 8rem;
+
+      margin: 40px;
+
+      border-radius: 20px;
+      box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+      -webkit-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+      -moz-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+      background: #F8F8F8;
+    }
+  }
+
+  footer {
+    label {
+      cursor: pointer;
+      margin: 20px;
+    }
+  }
+`
+
+export const PldGraphView = styled.main`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+
+  flex-direction: column;
+  flex-wrap: wrap;
+
   width: 100%;
 
-  .number{
-    color: #2E5581;
-  }
-  .numberColor{
-    color: #ABAFB3;
+  .select {
+    width: 20rem;
   }
 
-`;
+  input {
+    width: 20rem;
+    height: 3.5rem;
 
+    padding: 14px;
+
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+
+    border-radius: 6px;
+    border: solid gray 1px;
+
+    background-color: #F9F9F9;
+  }
+
+  section {
+    display: flex;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    :first-child {
+      justify-content: space-around;
+    }
+    :nth-child(2) {
+      margin-top: 50px;
+      justify-content: space-evenly;
+    }
+
+    width: 100%;
+  }
+
+  footer {
+    label {
+      cursor: pointer;
+      margin: 20px;
+    }
+  }
+`
