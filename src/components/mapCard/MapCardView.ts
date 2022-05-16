@@ -9,8 +9,6 @@ export const MapCardView = styled.figure`
 
   margin-right: 25px;
 
-  cursor: pointer;
-
   * {
     margin: 0;
     padding: 0;

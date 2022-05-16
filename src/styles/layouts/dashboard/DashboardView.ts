@@ -27,6 +27,8 @@ export const DashboardView = styled.main`
 
     box-shadow: 0px 0px 15px -3px rgba(0,0,0,0.1);
     border-radius: 10px;
+
+    cursor: pointer;
   }
 
   .dashboard {

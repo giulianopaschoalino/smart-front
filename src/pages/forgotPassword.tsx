@@ -25,8 +25,8 @@ export default function ForgotPassword() {
       <h1>Bem-Vindo</h1>
       <h2>Estratégias Inteligentes em<br /> Gestão de Energia</h2>
 
-      <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }} label="Senha" onChange={value => setPassword(value.target.value)} variant="outlined"/>
-      <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }} label="Confirmar Senha" onChange={value => setConfirmPassword(value.target.value)} variant="outlined"/>
+      <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }} value={password} label="Senha" onChange={value => setPassword(value.target.value)} variant="outlined"/>
+      <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }} value={confirmPassword} label="Confirmar Senha" onChange={value => setConfirmPassword(value.target.value)} variant="outlined"/>
 
       <LoginButton title='Redefinir Senha' onClick={() => router.push('/')} />
 

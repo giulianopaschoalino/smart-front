@@ -118,6 +118,8 @@ export const PldTableView = styled.main`
       -webkit-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
       -moz-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
       background: #F8F8F8;
+
+      cursor: pointer;
     }
   }
 
@@ -181,4 +183,8 @@ export const PldGraphView = styled.main`
       margin: 20px;
     }
   }
+`
+
+export const GoBack = styled.label`
+  cursor: pointer
 `

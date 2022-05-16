@@ -14,7 +14,6 @@ export default function MapCard({ title, subtitle, statistic, imgSource }: MapCa
   const route = title==='R$/MWh'? '/consumption': `pld/${title.slice(0,2).toLocaleLowerCase()}-${title.slice(3,5).toLocaleLowerCase()}`
 
   return (
-    <Link href={route} >
       <MapCardView>
         <Image src={imgSource} width={110} height={110}/>
         <div>
@@ -33,6 +32,5 @@ export default function MapCard({ title, subtitle, statistic, imgSource }: MapCa
           </article>
         </div>
       </MapCardView>
-    </Link>
   )
 }

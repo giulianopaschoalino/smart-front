@@ -130,7 +130,6 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     width: 10rem;
     height: 3rem;
 
-    background-color: red;
     border-style: none;
 
     border-radius: 6px;
@@ -138,7 +137,7 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     font-family: 'Poppins';
     font-weight: 600;
     font-size: 99.98%;
-    color: #fff;
+    color: #f00;
 
     cursor: pointer;
   }
