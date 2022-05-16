@@ -1,7 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
 import { MapCardView } from './MapCardView'
-import Link from 'next/link'
 
 interface MapCardInterface {
   title: string,
