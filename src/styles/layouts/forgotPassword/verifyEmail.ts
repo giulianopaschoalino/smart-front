@@ -1,9 +1,9 @@
 
 import styled from 'styled-components';
 
-export const LoginView = styled.main<{auth: string}>`
+export const VerifyEmailView = styled.main<{auth: string}>`
   display: flex;
-  display: ${props => props.auth == '/'? null : 'none'};
+  display: ${props => props.auth == '/verifyEmail'? null : 'none'};
   justify-content: flex-end;
   align-items: center;
 
@@ -24,7 +24,7 @@ export const LoginView = styled.main<{auth: string}>`
   }
 `;
 
-export const LoginContainer = styled.section`
+export const VerifyEmailContainer = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;

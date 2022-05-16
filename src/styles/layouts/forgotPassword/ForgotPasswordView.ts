@@ -1,9 +1,9 @@
 
 import styled from 'styled-components';
 
-export const LoginView = styled.main<{auth: string}>`
+export const ForgotPasswordView = styled.main<{auth: string}>`
   display: flex;
-  display: ${props => props.auth == '/'? null : 'none'};
+  display: ${props => props.auth == '/forgotPassword'? null : 'none'};
   justify-content: flex-end;
   align-items: center;
 
@@ -24,7 +24,7 @@ export const LoginView = styled.main<{auth: string}>`
   }
 `;
 
-export const LoginContainer = styled.section`
+export const ForgotPasswordContainer = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
