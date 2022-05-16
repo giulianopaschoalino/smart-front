@@ -1,10 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { MapCardView } from './MapCardView'
-<<<<<<< HEAD
 import Link from 'next/link'
-=======
->>>>>>> 704a063fab24d25c7fb5ae87eed00d7dfec73306
 
 interface MapCardInterface {
   title: string,
