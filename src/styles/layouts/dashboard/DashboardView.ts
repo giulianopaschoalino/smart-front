@@ -18,13 +18,17 @@ export const DashboardView = styled.main`
 
     flex-wrap: wrap;
 
-    box-shadow: 0px 0px 15px -3px rgba(0,0,0,0.1);
-    border-radius: 10px;
-
     width: 100%;
     height: fit-content;
 
     margin: 2rem 0 2rem 0;
+
+    background-color: #fff;
+
+    box-shadow: 0px 0px 15px -3px rgba(0,0,0,0.1);
+    border-radius: 10px;
+
+    cursor: pointer;
   }
 
   .dashboard {
