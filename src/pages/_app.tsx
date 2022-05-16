@@ -12,6 +12,8 @@ import '../styles/globals.ts'
 
 import Home from '.'
 import Head from 'next/head'
+import VerifyEmail from './verifyEmail'
+import ForgotPassword from './forgotPassword'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -43,9 +45,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="viewport-fit=cover" />
       </Head>
       <Home />
+      <VerifyEmail />
+      <ForgotPassword />
       <GlobalStyle />
       {
-        rota != '/'?
+        rota != '/' && rota != '/forgotPassword' && rota != '/verifyEmail'?
           <>
             <Sidebar />
             <Component {...pageProps} />

@@ -18,9 +18,6 @@ import { LoginView, LoginContainer } from  '../styles/layouts/login/LoginView';
 export default function Home() {
   const [state, setstate]=useState(false);
 
-  const toggleBtn = ()=> {
-    setstate(prevState => !prevState);
-  }
   const [values, setValues] = React.useState({
     password: '',
     showPassword: false,
@@ -74,9 +71,9 @@ export default function Home() {
             label="Password"
           />
         </FormControl>
-        <span>Esqueceu a senha ?</span>
+        <Link href='verifyEmail' >Esqueceu a senha ?</Link>
 
-          <LoginButton title='ENTRAR' />
+        <LoginButton title='ENTRAR' link />
 
         <fieldset className="line">
           <legend className="text">Ou</legend>
