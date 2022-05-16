@@ -41,6 +41,7 @@ export default function Sidebar() {
         <Link href='#'><li className={router.pathname=='/notification'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificação >'}</li></Link>
         <Link href='/aboutUs'><li className={router.pathname=='/aboutUs'? 'actualPath' : null}><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Sobre Nós >'}</li></Link>
         <Link href='/faq'><li className={router.pathname=='/faq'? 'actualPath' : null}><Image src='/assets/sidebar/saqIcon.svg' width={25} height={25} />{'FAQ >'}</li></Link>
+        <Link href='/'><button><Image src='/assets/logout.svg' width={25} height={25} />{'Sair'}</button></Link>
       </ul>
       <aside>
         <p>Nossos Gerentes estão prontos para atendê-los</p>

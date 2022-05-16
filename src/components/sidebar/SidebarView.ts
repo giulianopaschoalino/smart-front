@@ -122,6 +122,27 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     display: none;
   }
 
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 10rem;
+    height: 3rem;
+
+    background-color: red;
+    border-style: none;
+
+    border-radius: 6px;
+
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 99.98%;
+    color: #fff;
+
+    cursor: pointer;
+  }
+
   @media (max-width: 1008px) {
     align-items: flex-start;
 
