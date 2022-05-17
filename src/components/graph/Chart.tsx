@@ -15,7 +15,7 @@ import faker from 'faker'
 import { ChartView } from './ChartView';
 import RenderIf from '../../utils/renderIf';
 import ChartTitle from './ChartTitle';
-import { data } from './LineBarChart';
+// import { data } from './LineBarChart';
 
 ChartJS.register(
   CategoryScale,
