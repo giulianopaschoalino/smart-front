@@ -168,6 +168,7 @@ export const PldGraphView = styled.main`
 
     :first-child {
       justify-content: space-around;
+      margin-bottom: 50px;
     }
     :nth-child(2) {
       margin-top: 50px;

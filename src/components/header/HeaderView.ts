@@ -57,4 +57,9 @@ export const HeaderView = styled.header`
       width: 50%;
     }
   }
+  @media (max-width: 1640px) {
+    input {
+      height: 2rem;
+    }
+  }
 `

@@ -13,6 +13,7 @@ import Chart from '../../components/graph/Chart';
 import PageTitle from '../../components/pageTitle/PageTitle';
 import Link from 'next/link';
 import LineChart from '../../components/graph/LineChart';
+import { LineBarChart } from '../../components/graph/LineBarChart';
 
 export default function region() {
   const router = useRouter()
@@ -230,7 +231,7 @@ export default function region() {
             <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2015-08-09"/>
             <BasicButton title='Download (csv)' />
           </section>
-          <Chart title='' />
+          <LineBarChart />
         </PldGraphView>
       </RenderIf>
 

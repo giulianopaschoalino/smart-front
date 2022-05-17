@@ -26,7 +26,6 @@ export const TelemetriaView = styled.main`
     font-family: Inter;
     font-size: 14px;
     font-weight: 600;
-
   }
 
 

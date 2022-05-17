@@ -82,14 +82,14 @@ export default function Telemetria() {
         </Select>
       </FormControl>
 
-      <FormControl  size="small" sx={{ width: 280, mt:10 , pl:5}} >
+      <FormControl  size="small" sx={{ width: 280, mt:10 , pl:5, ml: 2}} >
       <p className='title'>Discretização</p>
         <Select
           value={age}
           onChange={handleChange}
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
-         >
+        >
           <MenuItem value="">
             <span className='titleMenuItem'>60 min</span>
           </MenuItem>
