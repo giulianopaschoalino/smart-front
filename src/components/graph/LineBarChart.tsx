@@ -38,7 +38,7 @@ export const data = {
     },
     {
       type: 'bar' as const,
-      label: 'Dataset 3',
+      label: 'Dataset 2',
       backgroundColor: '#255488',
       data: labels.map(() => faker.datatype.number({ min: 0, max: 140000 })),
     },

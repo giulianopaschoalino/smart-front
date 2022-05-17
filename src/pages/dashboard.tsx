@@ -7,6 +7,7 @@ import GraphCard from '../components/graph/graphCard/ChartCard'
 import Header from '../components/header/Header'
 import PageTitle from '../components/pageTitle/PageTitle'
 import Link from 'next/link'
+import LineChart from '../components/graph/LineChart'
 
 export default function Dashboard() {
 
@@ -25,9 +26,11 @@ export default function Dashboard() {
       </Link>
 
       <section className='dashboard'>
-        <GraphCard title='Consumo' subtitle='Gráfico de Consumo' consumption={25} line />
-        <GraphCard title='Consumo' subtitle='Gráfico de Consumo' />
-        <GraphCard title='Consumo' subtitle='Gráfico de Consumo' className='footerGraph' singleBar />
+        <GraphCard title='Consumo' subtitle='Gráfico de Consumo' consumption={25} line>
+          {/* <LineChart datas={dataEconomia} /> */}
+        </GraphCard>
+        <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh' />
+        <GraphCard title='Economia Acumulado' subtitle='Economia Acumulado' className='footerGraph' singleBar />
       </section>
     </DashboardView>
   )

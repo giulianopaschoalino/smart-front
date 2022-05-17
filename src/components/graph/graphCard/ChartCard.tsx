@@ -17,10 +17,11 @@ interface ChartCardInterface {
   consumption?: number,
   className?: string,
   line?: boolean | undefined,
-  singleBar?: any
+  singleBar?: any,
+  children?: any
 }
 
-export default function ChartCard({ title, subtitle, consumption, className, line, singleBar }: ChartCardInterface) {
+export default function ChartCard({ title, subtitle, consumption, className, line, singleBar, children }: ChartCardInterface) {
   const [timeCourse, setTimeCourse] = React.useState<string | null>('left');
 
   const handleAlignment = (
@@ -87,18 +88,7 @@ export default function ChartCard({ title, subtitle, consumption, className, lin
             <></>
         }
       </div>
-      <RenderIf isTrue={line? true : false}>
-        <LineChart title='' data={data}/>
-      </RenderIf>
-      <RenderIf isTrue={line? false : true}>
-        <RenderIf isTrue={singleBar? true : false}>
-          <SingleBar/>
-        </RenderIf>
-
-        <RenderIf isTrue={singleBar? false : true}>
-          <Chart title='' />
-        </RenderIf>
-      </RenderIf>
+      {children}
     </ChartCardView>
   )
 }
