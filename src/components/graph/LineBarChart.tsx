@@ -63,7 +63,7 @@ interface LineBarChartInterface {
   data1: any,
   data2: any,
   data3: any,
-  red: any
+  red?: any,
   label: any
 }
 
