@@ -107,11 +107,13 @@ export default function Telemetria() {
           <GradientButton title='DADOS' description='Gerar gráficos com os dados selecionados' green />
         </Buttons>
         <p className='paragraph'>
-          Fonte: Dados coletados do Sistema de Coleta de Dados
-          de Energia - SCDE da Câmara de Comercialização <br/>
-          Energia Elétrica – CCEE, sendo que as quantidades aqui
-          informadas são de responsabilidade <br/>do agente de
-          medição - Distribuidora.
+          <i>
+            Fonte: Dados coletados do Sistema de Coleta de Dados
+            de Energia - SCDE da Câmara de Comercialização <br/>
+            Energia Elétrica – CCEE, sendo que as quantidades aqui
+            informadas são de responsabilidade <br/>do agente de
+            medição - Distribuidora.
+          </i>
         </p>
 
     </TelemetriaView>

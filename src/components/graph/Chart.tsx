@@ -33,9 +33,11 @@ interface ChartInterface {
   data2: any,
   single?: any
   label: any,
+  dataset1?: string,
+  dataset2?: string
 }
 
-export default function Chart({ title, data1, data2, label, subtitle }: ChartInterface) {
+export default function Chart({ title, data1, data2, label, subtitle, dataset1, dataset2 }: ChartInterface) {
 
   const labels = label;
 
@@ -43,12 +45,12 @@ export default function Chart({ title, data1, data2, label, subtitle }: ChartInt
     labels,
     datasets: [
       {
-        label: '2020',
+        label: dataset1? dataset1 : '2020',
         data: data1.map(value => value),
         backgroundColor: '#C2D5FB',
       },
       {
-        label: '2021',
+        label: dataset2? dataset2 : '2021',
         data: data2.map(value => value),
         backgroundColor: '#255488',
       },

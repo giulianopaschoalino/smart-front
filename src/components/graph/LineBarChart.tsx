@@ -64,10 +64,13 @@ interface LineBarChartInterface {
   data2: any,
   data3: any,
   red?: any,
-  label: any
+  label: any,
+  dataset1?: string,
+  dataset2?: string,
+  dataset3?: string
 }
 
-export function LineBarChart({ title, subtitle, data1, data2, data3, label, red }: LineBarChartInterface) {
+export function LineBarChart({ title, subtitle, data1, data2, data3, label, red, dataset1, dataset2, dataset3 }: LineBarChartInterface) {
   const chartRef = useRef<ChartJS>(null);
 
   const labels = label
@@ -77,29 +80,21 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red 
     datasets: [
       {
         type: 'line' as const,
-        label: 'Dataset 1',
+        label: dataset1? dataset1 : 'Dataset 1',
         borderColor: red? '#f00' : '#0c9200',
         borderWidth: 2,
         fill: false,
         data: data1.map(value => value),
       },
-      // {
-      //   type: 'line' as const,
-      //   label: 'Dataset 1',
-      //   borderColor: '#f00',
-      //   borderWidth: 2,
-      //   fill: false,
-      //   data: data4.map(value => value),
-      // },
       {
         type: 'bar' as const,
-        label: 'Dataset 2',
+        label: dataset2? dataset2 : 'Dataset 2',
         backgroundColor: '#255488',
         data: data2.map(value => value),
       },
       {
         type: 'bar' as const,
-        label: 'Dataset 2',
+        label: dataset3? dataset3 : 'Dataset 2',
         backgroundColor: '#C2D5FB',
         data: data3.map(value => value),
       },
