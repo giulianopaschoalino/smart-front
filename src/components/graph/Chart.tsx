@@ -32,7 +32,7 @@ interface ChartInterface {
   data1: any,
   data2: any,
   single?: any
-  label: any
+  label: any,
 }
 
 export default function Chart({ title, data1, data2, label, subtitle }: ChartInterface) {
