@@ -13,6 +13,7 @@ import {
 
 import faker from 'faker'
 import { ChartView } from './ChartView';
+import RenderIf from '../../utils/renderIf';
 
 ChartJS.register(
   CategoryScale,
@@ -25,9 +26,11 @@ ChartJS.register(
 
 interface ChartInterface {
   title: string,
+  data?: any,
+  single?: any
 }
 
-export default function Chart({ title }: ChartInterface) {
+export default function Chart({ title, single, data }: ChartInterface) {
   const [ graphData, setGraphData ] = useState({
     labels: [],
     datasets: [],
@@ -68,6 +71,12 @@ export default function Chart({ title }: ChartInterface) {
 
   return (
     <ChartView>
+      <RenderIf isTrue={single? true : false} >
+        <Bar
+          options={options}
+          data={graphData}
+        />
+      </RenderIf>
       <Bar
         options={options}
         data={graphData}

@@ -180,4 +180,13 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
       display: none;
     }
   }
+
+  @media (max-width: 1640px) {
+    font-size: 14px;
+    ul {
+      li {
+        height: 3.5rem;
+      }
+    }
+  }
 `

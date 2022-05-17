@@ -43,7 +43,7 @@ export default function Home() {
 
   return (
     <LoginView auth={rota} >
-      <Image src='/assets/marca1.svg' width={500} height={500} />
+      <Image src='/assets/marca1.svg' width={350} height={350} />
       <LoginContainer>
         <h1>Bem-Vindo</h1>
         <h2>Estratégias Inteligentes em<br /> Gestão de Energia</h2>

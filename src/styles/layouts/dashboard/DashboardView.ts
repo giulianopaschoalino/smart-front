@@ -75,4 +75,5 @@ export const DashboardView = styled.main`
       width: 100%;
     }
   }
+
 `

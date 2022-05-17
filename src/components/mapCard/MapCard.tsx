@@ -14,7 +14,7 @@ export default function MapCard({ title, subtitle, statistic, imgSource }: MapCa
 
   return (
       <MapCardView>
-        <Image src={imgSource} width={110} height={110}/>
+        <Image src={imgSource} width={90} height={90}/>
         <div>
           <h4>{title}</h4>
           <span>{subtitle}</span>
@@ -22,7 +22,7 @@ export default function MapCard({ title, subtitle, statistic, imgSource }: MapCa
             {
               statistic?
                 <>
-                  <Image src="/graphLineIcon.svg" width={20} height={20} />
+                  <Image src="/graphLineIcon.svg" width={14} height={14} />
                   <p>{statistic}</p>
                 </>
                 :

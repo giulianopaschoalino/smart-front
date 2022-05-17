@@ -7,17 +7,21 @@ export const BannerView = styled.div`
   align-items: center;
 
   width: 100%;
-  height: 19rem;
+  height: 20%;
 
   .gradient {
     position: absolute;
     width: 100%;
-    height: 19rem;
+    height: 100%;
 
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(7, 23, 100, 0.6);
     opacity: 0.9;
 
     z-index: 1;
+  }
+
+  h1 {
+    font-size: 18px;
   }
 
   .text {
@@ -34,7 +38,7 @@ export const BannerView = styled.div`
     overflow: hidden;
 
     p {
-      font-size: 30px;
+      font-size: 70%;
     }
 
     * {
@@ -42,7 +46,12 @@ export const BannerView = styled.div`
     }
   }
 
+  @media (max-width: 1640px) {
+    font-size: 10px;
+  }
+
   @media (max-width: 1008px) {
     font-size: 170%;
   }
+
 `

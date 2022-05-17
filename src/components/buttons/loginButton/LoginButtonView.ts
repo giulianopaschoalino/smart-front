@@ -20,4 +20,9 @@ export const LoginButtonView = styled.button`
   cursor: pointer;
 
   color: #FFFFFF;
+
+  @media (max-width: 1640px) {
+    font-size: 18px;
+    width: 90%;
+  }
 `

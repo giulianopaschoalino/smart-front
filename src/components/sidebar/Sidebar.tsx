@@ -26,7 +26,7 @@ export default function Sidebar() {
       </div>
       <ul>
         <Link href='/dashboard'><li className={router.pathname=='/dashboard'? 'actualPath' : null} ><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Visão Geral'}</li></Link>
-        <li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/grossSavings' || router.pathname=='/accumulatedSavings' || router.pathname=='/estimatedCost' || router.pathname=='/costIndicator' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Economia'}</li>
+        <li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/grossSavings' || router.pathname=='/accumulatedSavings' || router.pathname=='/estimatedCost' || router.pathname=='/costIndicator' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Economia >'}</li>
           <div className='economiaDrawer drawer' >
           <Link href='/grossSavings'><li>Economia Bruta</li></Link>
           <Link href='/accumulatedSavings'><li>Economia Acumulada</li></Link>

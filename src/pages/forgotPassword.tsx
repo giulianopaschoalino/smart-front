@@ -5,6 +5,8 @@ import { useRouter } from 'next/router'
 import LoginButton from '../components/buttons/loginButton/LoginButton';
 import TextField from '@mui/material/TextField';
 import { ForgotPasswordContainer, ForgotPasswordView } from '../styles/layouts/forgotPassword/ForgotPasswordView';
+import RenderIf from '../utils/renderIf';
+import Alert from '@mui/material/Alert';
 
 export default function ForgotPassword() {
   const router = useRouter()
@@ -12,15 +14,34 @@ export default function ForgotPassword() {
 
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
+  const [same, setSame] = useState<boolean>(false)
 
   useEffect(() => {
     setPassword('')
     setConfirmPassword('')
+    setSame(false)
   }, [rota])
+
+  function handleChangePassword() {
+    if (same) {
+      router.push('/')
+    } else {
+      null
+    }
+  }
+
+  useEffect(() => {
+    if (password == confirmPassword && password != '') {
+      setSame(false)
+    } else {
+      setSame(true)
+    }
+  }, [password])
+
 
   return (
     <ForgotPasswordView auth={rota} >
-    <Image src='/assets/marca1.svg' width={500} height={500} />
+    <Image src='/assets/marca1.svg' width={350} height={350} />
     <ForgotPasswordContainer>
       <h1>Bem-Vindo</h1>
       <h2>Estratégias Inteligentes em<br /> Gestão de Energia</h2>
@@ -28,7 +49,7 @@ export default function ForgotPassword() {
       <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }} value={password} label="Senha" onChange={value => setPassword(value.target.value)} variant="outlined"/>
       <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }} value={confirmPassword} label="Confirmar Senha" onChange={value => setConfirmPassword(value.target.value)} variant="outlined"/>
 
-      <LoginButton title='Redefinir Senha' onClick={() => router.push('/')} />
+      <LoginButton title='Redefinir Senha' onClick={() => handleChangePassword()} />
 
       <fieldset className="line">
         <legend className="text">Ou</legend>

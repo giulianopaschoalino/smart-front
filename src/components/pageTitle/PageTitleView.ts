@@ -24,4 +24,8 @@ p {
 
   color: #969BA0;
 }
+
+  @media (max-width: 1640px) {
+    font-size: 15px;
+  }
 `

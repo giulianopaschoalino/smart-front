@@ -29,4 +29,9 @@ export const MapCardView = styled.figure`
       display: flex;
     }
   }
+
+  @media (max-width: 1640px) {
+    margin-right: 0px;
+    font-size: 14px;
+  }
 `

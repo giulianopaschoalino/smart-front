@@ -32,7 +32,7 @@ export default function VerifyEmail() {
   function verifyConfirmationCode() {
     if (code === '0000') {
       setTimeout(() => {
-        router.push('/')
+        router.push('/forgotPassword')
       }, 2500);
       setCodeStatus(true)
     } else {
@@ -42,7 +42,7 @@ export default function VerifyEmail() {
 
   return (
     <VerifyEmailView auth={rota} >
-      <Image src='/assets/marca1.svg' width={500} height={500} />
+      <Image src='/assets/marca1.svg' width={350} height={350} />
       <VerifyEmailContainer>
         <h1>Bem-Vindo</h1>
         <h2>Estratégias Inteligentes em<br /> Gestão de Energia</h2>

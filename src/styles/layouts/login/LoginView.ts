@@ -98,4 +98,14 @@ export const LoginContainer = styled.section`
     width: 100%;
     margin: 0;
   }
+  @media (max-width: 1640px) {
+    font-size: 80%;
+    h2 {
+      font-size: 16px;
+    }
+
+    input {
+      height: 1.5rem;
+    }
+  }
 `;

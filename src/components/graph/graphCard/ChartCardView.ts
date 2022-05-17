@@ -104,4 +104,13 @@ export const ChartCardView = styled.article`
     }
   }
 
+  @media (max-width: 1640px) {
+    font-size: 13px;
+    min-height: 28rem;
+
+    .info {
+      max-width: 4rem;
+    }
+  }
+
 `

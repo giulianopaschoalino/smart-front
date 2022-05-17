@@ -9,6 +9,7 @@ import PageTitle from '../components/pageTitle/PageTitle'
 import Link from 'next/link'
 
 export default function Dashboard() {
+
   return (
     <DashboardView>
       <Header name='' />
@@ -24,9 +25,9 @@ export default function Dashboard() {
       </Link>
 
       <section className='dashboard'>
-        <GraphCard title='Consumo' subtitle='Gráfico de Consumo' consumption={25} />
+        <GraphCard title='Consumo' subtitle='Gráfico de Consumo' consumption={25} line />
         <GraphCard title='Consumo' subtitle='Gráfico de Consumo' />
-        <GraphCard title='Consumo' subtitle='Gráfico de Consumo' className='footerGraph' />
+        <GraphCard title='Consumo' subtitle='Gráfico de Consumo' className='footerGraph' singleBar />
       </section>
     </DashboardView>
   )
