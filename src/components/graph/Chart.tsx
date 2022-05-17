@@ -14,6 +14,8 @@ import {
 import faker from 'faker'
 import { ChartView } from './ChartView';
 import RenderIf from '../../utils/renderIf';
+import ChartTitle from './ChartTitle';
+import { data } from './LineBarChart';
 
 ChartJS.register(
   CategoryScale,
@@ -26,15 +28,33 @@ ChartJS.register(
 
 interface ChartInterface {
   title: string,
-  data?: any,
+  subtitle: string,
+  data1: any,
+  data2: any,
   single?: any
+  label: any
 }
 
-export default function Chart({ title, single, data }: ChartInterface) {
-  const [ graphData, setGraphData ] = useState({
-    labels: [],
-    datasets: [],
-  })
+export default function Chart({ title, data1, data2, label, subtitle }: ChartInterface) {
+
+  const labels = label;
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: '2020',
+        data: data1.map(value => value),
+        backgroundColor: '#C2D5FB',
+      },
+      {
+        label: '2021',
+        data: data2.map(value => value),
+        backgroundColor: '#255488',
+      },
+    ],
+  }
+
   const options = {
     responsive: true,
     plugins: {
@@ -43,43 +63,24 @@ export default function Chart({ title, single, data }: ChartInterface) {
       },
       title: {
         display: true,
-        text: title,
+        text: '',
       },
     },
   };
 
-  const labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'ago', 'set', 'out', 'nov', 'dez'];
-
-  useEffect(() => {
-    setGraphData({
-      labels,
-      datasets: [
-        {
-          label: '2020',
-          data: labels.map(() => faker.datatype.number({ min: 0, max: 1200 })),
-          backgroundColor: '#C2D5FB',
-        },
-        {
-          label: '2021',
-          data: labels.map(() => faker.datatype.number({ min: 0, max: 1200 })),
-          backgroundColor: '#255488',
-        },
-      ],
-    })
-  }, [])
-
 
   return (
     <ChartView>
-      <RenderIf isTrue={single? true : false} >
+      {/* <RenderIf isTrue={single? true : false} >
         <Bar
           options={options}
           data={graphData}
         />
-      </RenderIf>
+      </RenderIf> */}
+      <ChartTitle title={title} subtitle={subtitle} />
       <Bar
         options={options}
-        data={graphData}
+        data={data}
       />
     </ChartView>
   )

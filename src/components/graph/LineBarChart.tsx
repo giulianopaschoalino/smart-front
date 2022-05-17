@@ -12,6 +12,7 @@ import {
 import { Chart } from 'react-chartjs-2';
 import faker from 'faker';
 import { ChartView } from './ChartView';
+import ChartTitle from './ChartTitle';
 
 ChartJS.register(
   LinearScale,
@@ -22,28 +23,6 @@ ChartJS.register(
   Legend,
   Tooltip
 );
-
-const labels = ['1', '2', '3', '4', '5', '6', '7', '8', '8', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      type: 'line' as const,
-      label: 'Dataset 1',
-      borderColor: '#C2D5FB',
-      borderWidth: 2,
-      fill: false,
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 140000 })),
-    },
-    {
-      type: 'bar' as const,
-      label: 'Dataset 2',
-      backgroundColor: '#255488',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 140000 })),
-    },
-  ],
-};
 
 function triggerTooltip(chart: ChartJS | null) {
   const tooltip = chart?.tooltip;
@@ -78,8 +57,45 @@ function triggerTooltip(chart: ChartJS | null) {
   chart.update();
 }
 
-export function LineBarChart() {
+interface LineBarChartInterface {
+  title: string,
+  subtitle: string,
+  data1: any,
+  data2: any,
+  data3: any,
+  label: any
+}
+
+export function LineBarChart({ title, subtitle, data1, data2, data3, label }: LineBarChartInterface) {
   const chartRef = useRef<ChartJS>(null);
+
+  const labels = label
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        type: 'line' as const,
+        label: 'Dataset 1',
+        borderColor: '#0c9200',
+        borderWidth: 2,
+        fill: false,
+        data: data1.map(value => value),
+      },
+      {
+        type: 'bar' as const,
+        label: 'Dataset 2',
+        backgroundColor: '#255488',
+        data: data2.map(value => value),
+      },
+      {
+        type: 'bar' as const,
+        label: 'Dataset 2',
+        backgroundColor: '#C2D5FB',
+        data: data3.map(value => value),
+      },
+    ],
+  };
 
   useEffect(() => {
     const chart = chartRef.current;
@@ -89,6 +105,7 @@ export function LineBarChart() {
 
   return (
     <ChartView>
+      <ChartTitle title={title} subtitle={subtitle}/>
       <Chart ref={chartRef} type='bar' data={data} />
     </ChartView>
   )

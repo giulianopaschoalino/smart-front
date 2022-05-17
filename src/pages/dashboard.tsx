@@ -8,6 +8,12 @@ import Header from '../components/header/Header'
 import PageTitle from '../components/pageTitle/PageTitle'
 import Link from 'next/link'
 import LineChart from '../components/graph/LineChart'
+import { SingleBar } from '../components/graph/SingleBar'
+
+import { dataEconomiaBruta } from '../services/economiaBruta'
+import { dataEconomiaIndicador } from '../services/economiaIndicador'
+import { EconomiaAcumulada } from '../services/economiaAcumulada'
+import Chart from '../components/graph/Chart'
 
 export default function Dashboard() {
 
@@ -27,10 +33,14 @@ export default function Dashboard() {
 
       <section className='dashboard'>
         <GraphCard title='Consumo' subtitle='Gráfico de Consumo' consumption={25} line>
-          {/* <LineChart datas={dataEconomia} /> */}
+          <LineChart data1={EconomiaAcumulada.data2} data2={[]} data3={[]} data4={[]} title='Consumo Acumulado' subtitle='' label={EconomiaAcumulada.label1} />
         </GraphCard>
-        <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh' />
-        <GraphCard title='Economia Acumulado' subtitle='Economia Acumulado' className='footerGraph' singleBar />
+        <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh'>
+          <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)' data1={dataEconomiaIndicador.data1} data2={dataEconomiaIndicador.data2} label={dataEconomiaIndicador.labels} />
+        </GraphCard>
+        <GraphCard title='Economia Acumulado' subtitle='Economia Acumulado' className='footerGraph' singleBar>
+          <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$ mil)' label={EconomiaAcumulada.label1}  dataProps={EconomiaAcumulada.data2} />
+        </GraphCard>
       </section>
     </DashboardView>
   )

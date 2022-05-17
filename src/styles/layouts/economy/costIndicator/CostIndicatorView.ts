@@ -9,10 +9,6 @@ export const CostIndicatorView = styled.main`
   section {
     display: flex;
     justify-content: center;
-    align-items: center;
-
-    canvas {
-      margin: 160px 0 0 0;
-    }
+    align-items: center
   }
 `

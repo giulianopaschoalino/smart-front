@@ -14,6 +14,8 @@ import PageTitle from '../../components/pageTitle/PageTitle';
 import Link from 'next/link';
 import LineChart from '../../components/graph/LineChart';
 import { LineBarChart } from '../../components/graph/LineBarChart';
+import { EconomiaAcumulada } from '../../services/economiaAcumulada';
+import { EvolucaoPld } from '../../services/evolucaoPld';
 
 export default function region() {
   const router = useRouter()
@@ -29,39 +31,6 @@ export default function region() {
   useEffect(() => {
     console.log(page)
   }, [page])
-
-  const labels = ['0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8',];
-
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9],
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-      {
-        label: 'Dataset 2',
-        data: [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
-        borderColor: 'rgb(255, 114, 32)',
-        backgroundColor: 'rgba(255, 145, 0, 0.5)',
-      },
-      {
-        label: 'Dataset 3',
-        data: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-        borderColor: 'rgb(109, 109, 109)',
-        backgroundColor: 'rgba(90, 90, 90, 0.5)',
-      },
-      {
-        label: 'Dataset4',
-        data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        borderColor: 'rgb(255, 166, 0)',
-        backgroundColor: 'rgba(255, 187, 0, 0.5)',
-      },
-    ],
-  };
 
   return (
     <main style={{
@@ -231,7 +200,7 @@ export default function region() {
             <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2015-08-09"/>
             <BasicButton title='Download (csv)' />
           </section>
-          <LineBarChart />
+          <LineBarChart data1={EvolucaoPld.data} data2={EvolucaoPld.data1} data3={[]} label={EvolucaoPld.label} title='evolução pld' subtitle='' />
         </PldGraphView>
       </RenderIf>
 
@@ -243,7 +212,7 @@ export default function region() {
             <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2015-08-09"/>
             <BasicButton title='Download (csv)' />
           </section>
-          <LineChart title='' data={data}/>
+          <LineChart data1={EconomiaAcumulada.data3} data2={EconomiaAcumulada.data4} data3={EconomiaAcumulada.data5} data4={EconomiaAcumulada.data6} title='Consumo Acumulado' subtitle='' label={EconomiaAcumulada.label1} />
         </PldGraphView>
       </RenderIf>
     </main>

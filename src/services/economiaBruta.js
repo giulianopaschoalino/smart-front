@@ -1,1 +1,4 @@
-export const dataEconomiaBruta=[872, 1.615, 2.196, 3.838, 4.814, 5.853]
+export const dataEconomiaBruta = {
+  data: [872, 1615, 2196, 2930, 3838, 4814, 5853],
+  labels: ['até 2020', '2021', '2022', '2023', '2024', '2025', '2026']
+}

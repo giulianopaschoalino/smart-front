@@ -41,6 +41,7 @@ import {
 } from 'chart.js';
 // import { Line } from 'react-chartjs-2';
 import faker from 'faker';
+import ChartTitle from './ChartTitle';
 
 ChartJS.register(
   CategoryScale,
@@ -55,47 +56,15 @@ ChartJS.register(
 
 interface ChartInterface {
   title: string,
-  datas: any
+  subtitle: string,
+  data1: any,
+  data2?: any,
+  data3?: any,
+  data4?: any,
+  label: any,
 }
 
-export default function LineChart({ title, datas }: ChartInterface) {
-  // const [ graphData, setGraphData ] = useState({
-  //   labels: [],
-  //   datasets: [],
-  // })
-  // const options = {
-  //   responsive: true,
-  //   plugins: {
-  //     legend: {
-  //       position: 'bottom' as const,
-  //     },
-  //     title: {
-  //       display: true,
-  //       text: title,
-  //     },
-  //   },
-  // };
-
-  // const labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'ago', 'set', 'out', 'nov', 'dez'];
-
-  // useEffect(() => {
-  //   setGraphData({
-  //     labels,
-  //     datasets: [
-  //       {
-  //         label: '2020',
-  //         data: labels.map(() => faker.datatype.number({ min: 0, max: 1200 })),
-  //         backgroundColor: '#C2D5FB',
-  //       },
-  //       {
-  //         label: '2021',
-  //         data: labels.map(() => faker.datatype.number({ min: 0, max: 1200 })),
-  //         backgroundColor: '#255488',
-  //       },
-  //     ],
-  //   })
-  // }, [])
-
+export default function LineChart({ title, subtitle, data1, data2, data3, data4, label }: ChartInterface) {
   const options = {
     responsive: true,
     plugins: {
@@ -104,45 +73,46 @@ export default function LineChart({ title, datas }: ChartInterface) {
       },
       title: {
         display: true,
-        text: 'Chart.js Line Chart',
+        text: '',
       },
     },
   };
 
-  const labels = ['0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8', '0', '2', '4', '6', '8',];
+  const labels = label;
 
   const data = {
     labels,
     datasets: [
-      // {
-      //   label: 'Dataset 1',
-      //   data: [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9],
-      //   borderColor: 'rgb(53, 162, 235)',
-      //   backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      // },
-      // {
-      //   label: 'Dataset 2',
-      //   data: [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
-      //   borderColor: 'rgb(255, 114, 32)',
-      //   backgroundColor: 'rgba(255, 145, 0, 0.5)',
-      // },
+      {
+        label: 'Dataset 1',
+        data: data1.map(value => value),
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+      {
+        label: 'Dataset 2',
+        data: data2.map(value => value),
+        borderColor: 'rgb(255, 114, 32)',
+        backgroundColor: 'rgba(255, 145, 0, 0.5)',
+      },
       {
         label: 'Dataset 3',
-        data: datas,
+        data: data3.map(value => value),
         borderColor: 'rgb(109, 109, 109)',
         backgroundColor: 'rgba(90, 90, 90, 0.5)',
       },
-      // {
-      //   label: 'Dataset4',
-      //   data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      //   borderColor: 'rgb(255, 166, 0)',
-      //   backgroundColor: 'rgba(255, 187, 0, 0.5)',
-      // },
+      {
+        label: 'Dataset4',
+        data: data4.map(value => value),
+        borderColor: 'rgb(255, 166, 0)',
+        backgroundColor: 'rgba(255, 187, 0, 0.5)',
+      },
     ],
   };
 
   return (
     <ChartView>
+      <ChartTitle title={title} subtitle={subtitle} />
       <Line options={options} data={data} />
     </ChartView>
   )

@@ -11,8 +11,5 @@ export const ConsumptionView = styled.main`
     justify-content: center;
     align-items: center;
 
-    canvas {
-      margin: 160px 0 0 0
-    }
   }
 `

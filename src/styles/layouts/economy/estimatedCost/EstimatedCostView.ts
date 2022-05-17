@@ -12,7 +12,6 @@ export const EstimatedCostView = styled.main`
     align-items: center;
 
     canvas {
-      margin: 160px 0 0 0;
     }
   }
 `

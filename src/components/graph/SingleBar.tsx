@@ -11,6 +11,9 @@ import {
 import { Bar } from 'react-chartjs-2';
 import faker from 'faker';
 import { ChartView } from './ChartView';
+import ChartTitle from './ChartTitle';
+
+import { dataEconomiaBruta } from '../../services/economiaBruta'
 
 ChartJS.register(
   CategoryScale,
@@ -21,35 +24,42 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top' as const,
-    },
-    title: {
-      display: true,
-      text: 'Chart.js Bar Chart',
-    },
-  },
-};
+interface SingleBarInterface{
+  title: string,
+  subtitle: string,
+  dataProps: any,
+  label: any
+}
 
-const labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'ago', 'set', 'out', 'nov', 'dez'];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 2',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: '#255488',
+export function SingleBar({ title, subtitle, dataProps, label }: SingleBarInterface) {
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: '',
+      },
     },
-  ],
-};
+  };
 
-export function SingleBar() {
+  const labels = label;
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: 'Dataset 2',
+        data: dataProps.map(value => value),
+        backgroundColor: '#255488',
+      },
+    ],
+  };
   return (
     <ChartView>
+      <ChartTitle title={title} subtitle={subtitle} />
       <Bar options={options} data={data} />
     </ChartView>
   )
