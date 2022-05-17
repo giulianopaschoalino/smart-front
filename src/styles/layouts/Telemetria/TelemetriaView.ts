@@ -28,7 +28,11 @@ export const TelemetriaView = styled.main`
     font-weight: 600;
   }
 
-
+  .paragraph{
+    color: #22d1f0;
+    text-align: center;
+    margin-top: 20px;
+  }
 `;
 
 export const Buttons = styled.div`

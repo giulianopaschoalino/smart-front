@@ -37,7 +37,7 @@ export default function Sidebar() {
         <Link href='/resumoOperacao'><li className={router.pathname=='/resumoOperacao'? 'actualPath' : null} ><Image src='/assets/sidebar/summaryOperationsIcon.svg' width={25} height={25} />{'Resumo de Op. '}</li></Link>
         <Link href='/news'><li className={router.pathname=='/news'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'Notícias >'}</li></Link>
         <Link href='#'><li className={router.pathname=='/sectorialInfo'? 'actualPath' : null}><Image src='/assets/sidebar/sectorialInfoIcon.svg' width={25} height={25} />{'Info Setorial >'}</li></Link>
-        <Link href='/consumption'><li className={router.pathname=='/consumption'? 'actualPath' : null} ><Image src='/assets/sidebar/consumptionIcon.svg' width={25} height={25} />{'Consumo'}</li></Link>
+        {/* <Link href='/consumption'><li className={router.pathname=='/consumption'? 'actualPath' : null} ><Image src='/assets/sidebar/consumptionIcon.svg' width={25} height={25} />{'Consumo'}</li></Link> */}
         <Link href='/notifications'><li className={router.pathname=='/notification'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificação >'}</li></Link>
         <Link href='/aboutUs'><li className={router.pathname=='/aboutUs'? 'actualPath' : null}><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Sobre Nós >'}</li></Link>
         <Link href='/faq'><li className={router.pathname=='/faq'? 'actualPath' : null}><Image src='/assets/sidebar/saqIcon.svg' width={25} height={25} />{'FAQ >'}</li></Link>
@@ -45,7 +45,7 @@ export default function Sidebar() {
       </ul>
       <aside>
         <p>Nossos Gerentes estão prontos para atendê-los</p>
-        <div><h3>(xx) XXXX-XXXX</h3></div>
+        <div><h3>+55(41) 3012-5900</h3></div>
       </aside>
     </SidebarView>
   )

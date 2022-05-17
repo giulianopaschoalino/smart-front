@@ -78,12 +78,9 @@ export default function ResumoOperacao() {
       <BasicButton title='Baixar PDF' />
 
       <Pagination>
-      <p>Mostrando 1 a 10 de 30 Entradas</p>
-      <p >Anterior <span className='number'>01</span>     <span className='numberColor'>02  ..  05</span>  <span className='number'>Proxima</span> </p>
+        <p>Mostrando 1 a 10 de 30 Entradas</p>
+        <p >Anterior <span className='number'>01</span>     <span className='numberColor'>02  ..  05</span>  <span className='number'>Proxima</span> </p>
       </Pagination>
-
     </TableView>
-
-
   )
 }

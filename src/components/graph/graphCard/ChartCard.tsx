@@ -72,7 +72,7 @@ export default function ChartCard({ title, subtitle, consumption, className, lin
             <h2>{title}</h2>
             <span>{subtitle}</span>
           </div>
-          <ButtonGroup />
+          {/* <ButtonGroup /> */}
         </div>
         {
           consumption?
