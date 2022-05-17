@@ -21,7 +21,7 @@ export const DashboardView = styled.main`
     width: 100%;
     height: fit-content;
 
-    margin: 2rem 0 2rem 0;
+    margin: 2rem 0 2rem 0px;
 
     background-color: #fff;
 
@@ -29,6 +29,7 @@ export const DashboardView = styled.main`
     border-radius: 10px;
 
     cursor: pointer;
+
   }
 
   .dashboard {

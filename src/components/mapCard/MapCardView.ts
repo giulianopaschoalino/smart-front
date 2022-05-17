@@ -7,7 +7,7 @@ export const MapCardView = styled.figure`
 
   flex-direction: row;
 
-  margin-right: 25px;
+  margin-right: 2px;
 
   * {
     margin: 0;
@@ -31,7 +31,7 @@ export const MapCardView = styled.figure`
   }
 
   @media (max-width: 1640px) {
-    margin-right: 0px;
+    margin-left: 1px;
     font-size: 14px;
   }
 `
