@@ -1,4 +1,6 @@
 import React from 'react';
+import { useRouter } from 'next/router'
+
 import Banner from '../components/banner/Banner';
 import { TelemetriaView, Buttons} from '../styles/layouts/Telemetria/TelemetriaView';
 import GradientButton from '../components/buttons/gradientButton/GradientButton'
@@ -6,19 +8,19 @@ import Header from '../components/header/Header';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Link from 'next/link';
 
 
 
 
 export default function Telemetria() {
+  const router = useRouter()
 
   const [age, setAge] = React.useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value);
   };
-
-
 
   return(
 
@@ -100,9 +102,9 @@ export default function Telemetria() {
       </FormControl>
 
         <Buttons>
-        <GradientButton title='GRÁFICO' description='Gerar gráficos com os dados selecionados' orange />
-        <GradientButton title='DOWNLOADS' description='Gerar gráficos com os dados selecionados' purple />
-        <GradientButton title='DADOS' description='Gerar gráficos com os dados selecionados' green />
+          <GradientButton title='GRÁFICO' description='Gerar gráficos com os dados selecionados' orange link />
+          <GradientButton title='DOWNLOADS' description='Gerar gráficos com os dados selecionados' purple />
+          <GradientButton title='DADOS' description='Gerar gráficos com os dados selecionados' green />
         </Buttons>
     </TelemetriaView>
   )
