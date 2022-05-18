@@ -35,7 +35,7 @@ export default function Dashboard() {
 
       <section className='dashboard'>
         <GraphCard title='Consumo' subtitle='Gráfico de Consumo' consumption={25} line>
-          <LineChart data1={EconomiaAcumulada.data2} title='Economia Bruta' dataset1='Estimada' subtitle='' label={EconomiaAcumulada.label1} />
+          <SingleBar title='Economia Bruta Estimada e Acumulada Anual' subtitle='(Valores em R$ mil)' label={dataEconomiaBruta.labels} dataset='Consolidada' dataProps={dataEconomiaBruta.data} />
         </GraphCard>
         <GraphCard title='Economia Acumulado' subtitle='Economia Acumulado' singleBar>
           <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$ mil)' dataset='Acumulada' label={EconomiaAcumulada.label1}  dataProps={EconomiaAcumulada.data2} />
