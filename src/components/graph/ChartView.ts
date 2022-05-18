@@ -4,7 +4,7 @@ export const ChartView = styled.div`
   width: 90%;
 
   div{
-    margin-top: 32px;
+    /* margin-top: 10px; */
   }
 
   @media (max-width: 900px) {
