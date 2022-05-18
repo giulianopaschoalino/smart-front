@@ -81,7 +81,8 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
       {
         type: 'line' as const,
         label: dataset1? dataset1 : 'Dataset 1',
-        borderColor: red? '#f00' : '#0c9200',
+        borderColor: red?
+        '#f00' : '#0c9200',
         borderWidth: 2,
         fill: false,
         data: data1.map(value => value),
@@ -110,7 +111,9 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
   return (
     <ChartView>
       <ChartTitle title={title} subtitle={subtitle}/>
-      <Chart ref={chartRef} type='bar' data={data} />
+      <div>
+        <Chart ref={chartRef} type='bar' data={data} />
+      </div>
     </ChartView>
   )
 }
