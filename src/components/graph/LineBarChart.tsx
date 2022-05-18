@@ -61,7 +61,7 @@ interface LineBarChartInterface {
   title: string,
   subtitle: string,
   data1: any,
-  data2: any,
+  data2?: any,
   data3: any,
   red?: any,
   label: any,
@@ -75,7 +75,20 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
 
   const labels = label
 
-  const data = {
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'bottom' as const,
+      },
+      title: {
+        display: true,
+        text: '',
+      },
+    },
+  };
+
+  const data = data2? {
     labels,
     datasets: [
       {
@@ -90,13 +103,32 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
       {
         type: 'bar' as const,
         label: dataset2? dataset2 : 'Dataset 2',
-        backgroundColor: '#255488',
-        data: data2.map(value => value),
+        backgroundColor: '#C2D5FB',
+        data: data3.map(value => value),
       },
       {
         type: 'bar' as const,
         label: dataset3? dataset3 : 'Dataset 2',
-        backgroundColor: '#C2D5FB',
+        backgroundColor: '#255488',
+        data: data2.map(value => value),
+      },
+    ],
+  } : {
+    labels,
+    datasets: [
+      {
+        type: 'line' as const,
+        label: dataset1? dataset1 : 'Dataset 1',
+        borderColor: red?
+        '#f00' : '#0c9200',
+        borderWidth: 2,
+        fill: false,
+        data: data1.map(value => value),
+      },
+      {
+        type: 'bar' as const,
+        label: dataset3? dataset3 : 'Dataset 2',
+        backgroundColor: '#255488',
         data: data3.map(value => value),
       },
     ],
@@ -112,7 +144,7 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
     <ChartView>
       <ChartTitle title={title} subtitle={subtitle}/>
       <div>
-        <Chart ref={chartRef} type='bar' data={data} />
+        <Chart ref={chartRef} type='bar' options={options} data={data} />
       </div>
     </ChartView>
   )

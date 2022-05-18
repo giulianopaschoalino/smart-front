@@ -28,15 +28,16 @@ interface SingleBarInterface{
   title: string,
   subtitle: string,
   dataProps: any,
-  label: any
+  label: any,
+  dataset: string
 }
 
-export function SingleBar({ title, subtitle, dataProps, label }: SingleBarInterface) {
+export function SingleBar({ title, subtitle, dataProps, label, dataset }: SingleBarInterface) {
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: 'bottom' as const,
       },
       title: {
         display: true,
@@ -51,7 +52,7 @@ export function SingleBar({ title, subtitle, dataProps, label }: SingleBarInterf
     labels,
     datasets: [
       {
-        label: 'Dataset 2',
+        label: dataset,
         data: dataProps.map(value => value),
         backgroundColor: '#255488',
       },

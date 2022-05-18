@@ -62,10 +62,10 @@ interface ChartInterface {
   data3?: any,
   data4?: any,
   label: any,
-  dataset1: string,
-  dataset2: string,
-  dataset3: string,
-  dataset4: string
+  dataset1?: string,
+  dataset2?: string,
+  dataset3?: string,
+  dataset4?: string
 }
 
 export default function LineChart({ title, subtitle, data1, data2, data3, data4, label, dataset1, dataset2, dataset3, dataset4 }: ChartInterface) {
@@ -73,7 +73,7 @@ export default function LineChart({ title, subtitle, data1, data2, data3, data4,
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: 'bottom' as const,
       },
       title: {
         display: true,
@@ -84,7 +84,7 @@ export default function LineChart({ title, subtitle, data1, data2, data3, data4,
 
   const labels = label;
 
-  const data = {
+  const data = dataset4? {
     labels,
     datasets: [
       {
@@ -94,25 +94,73 @@ export default function LineChart({ title, subtitle, data1, data2, data3, data4,
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
       {
-        label: dataset2? dataset2 : 'Dataset 2',
+        label: dataset2? dataset2 : '',
         data: data2.map(value => value),
-        borderColor: 'rgb(255, 114, 32)',
-        backgroundColor: 'rgba(255, 145, 0, 0.5)',
+        borderColor: 'rgb(255, 114, 32)' ,
+        backgroundColor: 'rgba(255, 145, 0, 0.5)' ,
       },
       {
-        label: dataset3? dataset3 : 'Dataset 3',
+        label: dataset3? dataset3 : '',
         data: data3.map(value => value),
-        borderColor: 'rgb(109, 109, 109)',
+        borderColor: 'rgb(109, 109, 109)' ,
         backgroundColor: 'rgba(90, 90, 90, 0.5)',
       },
       {
-        label: dataset4? dataset4 : 'Dataset4',
+        label: dataset4? dataset4 : '',
         data: data4.map(value => value),
         borderColor: 'rgb(255, 166, 0)',
         backgroundColor: 'rgba(255, 187, 0, 0.5)',
       },
     ],
-  };
+  } : dataset3? {
+    labels,
+    datasets: [
+      {
+        label: dataset1? dataset1 : 'Dataset 1',
+        data: data1.map(value => value),
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+      {
+        label: dataset2? dataset2 : '',
+        data: data2.map(value => value),
+        borderColor: 'rgb(255, 114, 32)' ,
+        backgroundColor: 'rgba(255, 145, 0, 0.5)' ,
+      },
+      {
+        label: dataset3? dataset3 : '',
+        data: data3.map(value => value),
+        borderColor: 'rgb(109, 109, 109)' ,
+        backgroundColor: 'rgba(90, 90, 90, 0.5)',
+      },
+    ],
+  } : dataset2? {
+    labels,
+    datasets: [
+      {
+        label: dataset1? dataset1 : 'Dataset 1',
+        data: data1.map(value => value),
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+      {
+        label: dataset2? dataset2 : '',
+        data: data2.map(value => value),
+        borderColor: 'rgb(255, 114, 32)' ,
+        backgroundColor: 'rgba(255, 145, 0, 0.5)' ,
+      },
+    ],
+  } : {
+    labels,
+    datasets: [
+      {
+        label: dataset1? dataset1 : 'Dataset 1',
+        data: data1.map(value => value),
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+    ],
+  }
 
   return (
     <ChartView>

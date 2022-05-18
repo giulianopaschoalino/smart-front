@@ -200,7 +200,7 @@ export default function region() {
             <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2015-08-09"/>
             <BasicButton title='Download (csv)' />
           </section>
-          <LineBarChart data1={EvolucaoPld.data} data2={EvolucaoPld.data1} data3={[]} label={EvolucaoPld.label} title='evolução pld' subtitle='' />
+          <LineBarChart data1={EvolucaoPld.data} data3={EvolucaoPld.data1} dataset1={'line'} dataset2={'barra1'} dataset3={'2021'} label={EvolucaoPld.label} title='Evolução PLD (R$/MWh)' subtitle='' />
         </PldGraphView>
       </RenderIf>
 
@@ -209,10 +209,10 @@ export default function region() {
         <PldGraphView>
           <PageTitle title='Consumo por dia' subtitle=''/>
           <section className='toolsbar'>
-            <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2015-08-09"/>
+            <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2021-09-19"/>
             <BasicButton title='Download (csv)' />
           </section>
-          <LineChart data1={EconomiaAcumulada.data3} data2={EconomiaAcumulada.data4} data3={EconomiaAcumulada.data5} data4={EconomiaAcumulada.data6} title='Consumo Acumulado' subtitle='' label={EconomiaAcumulada.label1} />
+          <LineChart data1={EconomiaAcumulada.data3} data2={EconomiaAcumulada.data4} data3={EconomiaAcumulada.data5} data4={EconomiaAcumulada.data6} dataset1='NORDESTE' dataset2='NORTE' dataset3='SUDESTE' dataset4='SUL' title='PLD - 19/09/21' subtitle='' label={EconomiaAcumulada.label1} />
         </PldGraphView>
       </RenderIf>
     </main>

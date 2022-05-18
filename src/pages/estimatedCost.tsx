@@ -14,7 +14,7 @@ export default function EstimatedCost() {
       <Header name='' />
       <PageTitle title='Custos Estimados' subtitle='Comparativo de Custo Estimado' />
       <section>
-        <LineBarChart data1={ConsumoEstimado.data2} data2={ConsumoEstimado.data} data3={ConsumoEstimado.data1} label={ConsumoEstimado.label} title='evolução pld' subtitle='' />
+        <LineBarChart data1={ConsumoEstimado.data2} data2={ConsumoEstimado.data} data3={ConsumoEstimado.data1} label={ConsumoEstimado.label} title='Custo Estimado' subtitle='' />
       </section>
     </EstimatedCostView>
   )

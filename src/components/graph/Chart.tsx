@@ -40,6 +40,7 @@ interface ChartInterface {
 export default function Chart({ title, data1, data2, label, subtitle, dataset1, dataset2 }: ChartInterface) {
 
   const labels = label;
+  const empty = []
 
   const data = {
     labels,
@@ -49,11 +50,12 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
         data: data1.map(value => value),
         backgroundColor: '#C2D5FB',
       },
+      data2?
       {
         label: dataset2? dataset2 : '2021',
         data: data2.map(value => value),
         backgroundColor: '#255488',
-      },
+      } : null
     ],
   }
 

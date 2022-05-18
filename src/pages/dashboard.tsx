@@ -14,6 +14,8 @@ import { dataEconomiaBruta } from '../services/economiaBruta'
 import { dataEconomiaIndicador } from '../services/economiaIndicador'
 import { EconomiaAcumulada } from '../services/economiaAcumulada'
 import Chart from '../components/graph/Chart'
+import { LineBarChart } from '../components/graph/LineBarChart'
+import { ConsumoEstimado } from '../services/consumoEstimado'
 
 export default function Dashboard() {
 
@@ -33,13 +35,16 @@ export default function Dashboard() {
 
       <section className='dashboard'>
         <GraphCard title='Consumo' subtitle='Gráfico de Consumo' consumption={25} line>
-          <LineChart data1={EconomiaAcumulada.data2} data2={[]} data3={[]} data4={[]} title='Consumo Acumulado' subtitle='' label={EconomiaAcumulada.label1} />
+          <LineChart data1={EconomiaAcumulada.data2} title='Economia Bruta' dataset1='Estimada' subtitle='' label={EconomiaAcumulada.label1} />
+        </GraphCard>
+        <GraphCard title='Economia Acumulado' subtitle='Economia Acumulado' singleBar>
+          <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$ mil)' dataset='Acumulada' label={EconomiaAcumulada.label1}  dataProps={EconomiaAcumulada.data2} />
+        </GraphCard>
+        <GraphCard title='Custos Estimados' subtitle='Custos Estimados em R$/MWh' singleBar>
+          <LineBarChart data1={ConsumoEstimado.data2} data2={ConsumoEstimado.data} data3={ConsumoEstimado.data1} label={ConsumoEstimado.label} dataset1='Custo' dataset2='2020' dataset3='2021' title='Custo Estimado' subtitle='' />
         </GraphCard>
         <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh'>
           <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)' data1={dataEconomiaIndicador.data1} data2={dataEconomiaIndicador.data2} label={dataEconomiaIndicador.labels} />
-        </GraphCard>
-        <GraphCard title='Economia Acumulado' subtitle='Economia Acumulado' className='footerGraph' singleBar>
-          <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$ mil)' label={EconomiaAcumulada.label1}  dataProps={EconomiaAcumulada.data2} />
         </GraphCard>
       </section>
     </DashboardView>

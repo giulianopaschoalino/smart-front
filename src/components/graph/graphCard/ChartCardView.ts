@@ -106,7 +106,7 @@ export const ChartCardView = styled.article`
 
   @media (max-width: 1640px) {
     font-size: 13px;
-    min-height: 28rem;
+    min-height: 32rem;
 
     .info {
       max-width: 4rem;
