@@ -9,7 +9,6 @@ export const ChartCardView = styled.article`
 
   width: 100%;
   height: fit-content;
-  min-height: 41rem;
 
   background: #F8F8F8;
 	box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
