@@ -35,7 +35,7 @@ export const DashboardView = styled.main`
     display: grid;
 
     grid-template-columns: 50% 50%;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: 50% 50% 50%;
 
     gap: 30px;
 

@@ -9,11 +9,8 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import faker from 'faker';
 import { ChartView } from './ChartView';
 import ChartTitle from './ChartTitle';
-
-import { dataEconomiaBruta } from '../../services/economiaBruta'
 
 ChartJS.register(
   CategoryScale,

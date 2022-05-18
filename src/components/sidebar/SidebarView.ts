@@ -130,6 +130,9 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     width: 10rem;
     height: 3rem;
 
+    margin-top: 30px;
+    margin-bottom: 20px;
+
     border-style: none;
 
     border-radius: 6px;

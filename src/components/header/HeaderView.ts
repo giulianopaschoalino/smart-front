@@ -36,7 +36,7 @@ export const HeaderView = styled.header`
     background-color: #254F7F;
     color: white;
 
-    transform: translateX(20px);
+    transform: translateX(12%);
 
     ::after {
       content: "";
@@ -58,6 +58,9 @@ export const HeaderView = styled.header`
     }
   }
   @media (max-width: 1640px) {
+    .icon {
+      transform: translateX(6%);
+    }
     input {
       height: 2rem;
     }
