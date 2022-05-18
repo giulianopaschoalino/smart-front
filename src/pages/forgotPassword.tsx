@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import { ForgotPasswordContainer, ForgotPasswordView } from '../styles/layouts/forgotPassword/ForgotPasswordView';
 import RenderIf from '../utils/renderIf';
 import Alert from '@mui/material/Alert';
+import Head from 'next/head';
 
 export default function ForgotPassword() {
   const router = useRouter()
@@ -41,23 +42,26 @@ export default function ForgotPassword() {
 
   return (
     <ForgotPasswordView auth={rota} >
-    <Image src='/assets/marca1.svg' width={350} height={350} />
-    <ForgotPasswordContainer>
-      <h1>Bem-Vindo</h1>
-      <h2>Estratégias Inteligentes em<br /> Gestão de Energia</h2>
+      <Head>
+        <title>Smart Energia - Esqueceu a Senha</title>
+      </Head>
+      <Image src='/assets/marca1.svg' width={350} height={350} />
+      <ForgotPasswordContainer>
+        <h1>Bem-Vindo</h1>
+        <h2>Estratégias Inteligentes em<br /> Gestão de Energia</h2>
 
-      <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }} value={password} label="Senha" onChange={value => setPassword(value.target.value)} variant="outlined"/>
-      <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }} value={confirmPassword} label="Confirmar Senha" onChange={value => setConfirmPassword(value.target.value)} variant="outlined"/>
+        <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }} value={password} label="Senha" onChange={value => setPassword(value.target.value)} variant="outlined"/>
+        <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }} value={confirmPassword} label="Confirmar Senha" onChange={value => setConfirmPassword(value.target.value)} variant="outlined"/>
 
-      <LoginButton title='Redefinir Senha' onClick={() => handleChangePassword()} />
+        <LoginButton title='Redefinir Senha' onClick={() => handleChangePassword()} />
 
-      <fieldset className="line">
-        <legend className="text">Ou</legend>
-      </fieldset>
+        <fieldset className="line">
+          <legend className="text">Ou</legend>
+        </fieldset>
 
-      <p><a href='tel:+55(41) 3012-5900' >+55(41) 3012-5900</a><br/><a href='https://www.energiasmart.com.br' >www.energiasmart.com.br</a></p>
+        <p><a href='tel:+55(41) 3012-5900' >+55(41) 3012-5900</a><br/><a href='https://www.energiasmart.com.br' >www.energiasmart.com.br</a></p>
 
-    </ForgotPasswordContainer>
-  </ForgotPasswordView>
+      </ForgotPasswordContainer>
+    </ForgotPasswordView>
   )
 }

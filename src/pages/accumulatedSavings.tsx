@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import React from 'react'
 
 import Chart from '../components/graph/Chart'
@@ -11,6 +12,9 @@ import { AccumulatedSavingsView } from '../styles/layouts/economy/accumulatedSav
 export default function AccumulatedSavings() {
   return (
     <AccumulatedSavingsView>
+      <Head>
+        <title>Smart Energia - Economia Acumulada</title>
+      </Head>
       <Header name='' />
       <PageTitle title='Economia Acumulada' subtitle='Economia Bruta Estimada e Acumulada anual (Valores em R$ mil)' />
       <section>

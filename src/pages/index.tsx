@@ -14,6 +14,7 @@ import TextField from '@mui/material/TextField';
 import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai';
 
 import { LoginView, LoginContainer } from  '../styles/layouts/login/LoginView';
+import Head from 'next/head';
 
 export default function Home() {
   const [state, setstate]=useState(false);
@@ -43,6 +44,9 @@ export default function Home() {
 
   return (
     <LoginView auth={rota} >
+      <Head>
+        <title>Smart Energia - Login</title>
+      </Head>
       <Image src='/assets/marca1.svg' width={350} height={350} />
       <LoginContainer>
         <h1>Bem-Vindo</h1>

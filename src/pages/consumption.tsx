@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import React from 'react'
 import Chart from '../components/graph/Chart'
 import Header from '../components/header/Header'
@@ -8,6 +9,9 @@ import { ConsumptionView } from '../styles/layouts/consumption/ConsumptionView'
 export default function Consumption() {
   return (
     <ConsumptionView>
+      <Head>
+        <title>Smart Energia - Consumo</title>
+      </Head>
       <Header name='' />
       <PageTitle title='Consumo' subtitle='Análise de Consumo'/>
       <section>

@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import React from 'react'
 import CommonQuestionsCard from '../components/faqQuestionsCard/FaqQuestionsCard'
 import Header from '../components/header/Header'
@@ -6,6 +7,9 @@ import { FaqView } from '../styles/layouts/commonQuestions/FaqView'
 export default function commonQuestions() {
   return (
     <FaqView>
+      <Head>
+        <title>Smart Energia - FAQ</title>
+      </Head>
       <Header name='' />
       <h1>Perguntas Frequentes</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>

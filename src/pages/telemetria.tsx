@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Link from 'next/link';
+import Head from 'next/head';
 
 
 
@@ -23,8 +24,10 @@ export default function Telemetria() {
   };
 
   return(
-
     <TelemetriaView>
+      <Head>
+        <title>Smart Energia - Telemetria</title>
+      </Head>
       <Header name='' />
       <Banner title ='Telemetria' subtitle='Dados Coletados do Sistema de Coleta de Dados de Energia -
               SCDE da Câmara de Comercialização de Energia Elétrica - CCEE,

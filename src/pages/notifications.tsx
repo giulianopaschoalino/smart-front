@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import React from 'react'
 import CommonQuestionsCard from '../components/faqQuestionsCard/FaqQuestionsCard'
 import Header from '../components/header/Header'
@@ -7,6 +8,9 @@ import { FaqView } from '../styles/layouts/commonQuestions/FaqView'
 export default function Notifications() {
   return (
     <FaqView>
+      <Head>
+        <title>Smart Energia - Notificações</title>
+      </Head>
       <Header name='' />
       <PageTitle title='Notifications' subtitle='' />
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>

@@ -16,11 +16,15 @@ import { EconomiaAcumulada } from '../services/economiaAcumulada'
 import Chart from '../components/graph/Chart'
 import { LineBarChart } from '../components/graph/LineBarChart'
 import { ConsumoEstimado } from '../services/consumoEstimado'
+import Head from 'next/head'
 
 export default function Dashboard() {
 
   return (
     <DashboardView>
+      <Head>
+        <title>Smart Energia - Dashboard</title>
+      </Head>
       <Header name='' />
       <PageTitle title='Visão Geral' subtitle='Bem Vindo a Smart Energia' />
       <Link href={'pld'} >

@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import React from 'react'
 
 import Chart from '../components/graph/Chart'
@@ -11,6 +12,9 @@ import { EstimatedCostView } from '../styles/layouts/economy/estimatedCost/Estim
 export default function EstimatedCost() {
   return (
     <EstimatedCostView>
+      <Head>
+        <title>Smart Energia - Custos Estimados</title>
+      </Head>
       <Header name='' />
       <PageTitle title='Custos Estimados' subtitle='Comparativo de Custo Estimado' />
       <section>

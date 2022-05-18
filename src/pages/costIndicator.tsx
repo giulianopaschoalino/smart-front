@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import React from 'react'
 
 import Chart from '../components/graph/Chart'
@@ -11,6 +12,9 @@ import { CostIndicatorView } from '../styles/layouts/economy/costIndicator/CostI
 export default function CostIndicator() {
   return (
     <CostIndicatorView>
+      <Head>
+        <title>Smart Energia - Indicador de Custos</title>
+      </Head>
       <Header name='' />
       <PageTitle title='Indicador de Custo' subtitle='Valores em R$/MWh'/>
       <section>

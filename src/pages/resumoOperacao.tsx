@@ -5,10 +5,14 @@ import BasicButton from '../components/buttons/basicButton/BasicButton';
 import Sidebar from '../components/sidebar/Sidebar';
 
 import { Pagination, TableView } from '../styles/layouts/ResumoOperacao/ResumoOperacaoView';
+import Head from 'next/head';
 
 export default function ResumoOperacao() {
   return(
     <TableView>
+      <Head>
+        <title>Smart Energia - Resumo de Operação</title>
+      </Head>
       <Header name='' />
       <PageTitle title='Resumo de Operaçoes' subtitle='Operações detalhadas' />
 

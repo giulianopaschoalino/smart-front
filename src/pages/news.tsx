@@ -3,10 +3,14 @@ import Banner from '../components/banner/Banner'
 import Header from '../components/header/Header'
 import BasicButton from '../components/buttons/basicButton/BasicButton';
 import { NewsView, Button } from '../styles/layouts/news/NewsView'
+import Head from 'next/head';
 
 export default function aboutUs() {
   return (
     <NewsView>
+      <Head>
+        <title>Smart Energia - Noticias</title>
+      </Head>
       <Header name='' />
       <Banner title='Notícias' subtitle='Tudo de importante no setor de energia' imgSource='/assets/banners/news.png' />
 

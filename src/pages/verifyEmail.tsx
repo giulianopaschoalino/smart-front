@@ -9,6 +9,7 @@ import Alert from '@mui/material/Alert';
 
 import { VerifyEmailContainer, VerifyEmailView } from '../styles/layouts/forgotPassword/verifyEmail';
 import RenderIf from '../utils/renderIf';
+import Head from 'next/head';
 
 export default function VerifyEmail() {
   const [sent, setSent]=useState(false);
@@ -42,6 +43,9 @@ export default function VerifyEmail() {
 
   return (
     <VerifyEmailView auth={rota} >
+      <Head>
+        <title>Smart Energia - Verificar Email</title>
+      </Head>
       <Image src='/assets/marca1.svg' width={350} height={350} />
       <VerifyEmailContainer>
         <h1>Bem-Vindo</h1>

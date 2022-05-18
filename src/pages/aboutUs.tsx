@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Image from 'next/image'
 import React from 'react'
 import Banner from '../components/banner/Banner'
@@ -7,6 +8,9 @@ import { AboutUsView } from '../styles/layouts/aboutUs/AboutUsView'
 export default function aboutUs() {
   return (
     <AboutUsView>
+      <Head>
+        <title>Smart Energia - About Us</title>
+      </Head>
       <Header name='' />
       <Banner title='Quem Somos' subtitle='Soluções inteligentes em Gestão de Energia' imgSource='/assets/banners/aboutUsBanner.png' />
 

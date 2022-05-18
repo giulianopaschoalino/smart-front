@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import React from 'react'
 import BasicButton from '../components/buttons/basicButton/BasicButton'
 import Header from '../components/header/Header'
@@ -7,11 +8,14 @@ import { IndustryInfoView } from '../styles/layouts/industryInfo/IndustryInfoVie
 export default function industryInfo() {
   return (
     <IndustryInfoView>
-    <Header name='' />
-    <div className='title'>
-      <PageTitle title='Info Setorial' subtitle='info setorial' />
-    </div>
-    <BasicButton title='Baixar PDF' />
+      <Head>
+        <title>Smart Energia - Info de Setor</title>
+      </Head>
+      <Header name='' />
+      <div className='title'>
+        <PageTitle title='Info Setorial' subtitle='info setorial' />
+      </div>
+      <BasicButton title='Baixar PDF' />
     </IndustryInfoView>
   )
 }

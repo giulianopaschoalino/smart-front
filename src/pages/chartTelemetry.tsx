@@ -10,11 +10,15 @@ import LineChart from '../components/graph/LineChart'
 import { LineBarChart } from '../components/graph/LineBarChart'
 import Header from '../components/header/Header'
 import PageTitle from '../components/pageTitle/PageTitle'
+import Head from 'next/head'
 
 export default function chartTelemetry() {
 
   return (
     <ChatTelemetryView>
+      <Head>
+        <title>Smart Energia - Graficos Telemetria</title>
+      </Head>
       <Header name='' />
       <PageTitle title='Telemetria - Graficos' subtitle='Gráficos' />
       <section className='chartContainer' >
