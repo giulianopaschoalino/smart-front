@@ -16,6 +16,7 @@ import LineChart from '../../components/graph/LineChart';
 import { LineBarChart } from '../../components/graph/LineBarChart';
 import { EconomiaAcumulada } from '../../services/economiaAcumulada';
 import { EvolucaoPld } from '../../services/evolucaoPld';
+import Head from 'next/head';
 
 export default function region() {
   const router = useRouter()
@@ -36,6 +37,9 @@ export default function region() {
     <main style={{
       width: '100%',
     }}>
+      <Head>
+        <title>Smart Energia - PLD</title>
+      </Head>
       <Header name='' />
       <RenderIf isTrue={page==='table'? true : false}>
         <Link href='/dashboard' >{'< voltar para visão geral'}</Link>

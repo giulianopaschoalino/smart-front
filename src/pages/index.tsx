@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <LoginView auth={rota} >
       <Head>
-        <title>Smart Energia - Login</title>
+        <title>Smart Energia</title>
       </Head>
       <Image src='/assets/marca1.svg' width={350} height={350} />
       <LoginContainer>

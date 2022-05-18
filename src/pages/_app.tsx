@@ -42,6 +42,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AppView>
       <Head>
+        <link rel="icon" type="imagem/png" href="/assets/logose.png" />
         <meta name="viewport" content="viewport-fit=cover" />
       </Head>
       <Home />

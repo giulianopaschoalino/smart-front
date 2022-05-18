@@ -39,11 +39,10 @@ export default function ForgotPassword() {
     }
   }, [password])
 
-
   return (
     <ForgotPasswordView auth={rota} >
       <Head>
-        <title>Smart Energia - Esqueceu a Senha</title>
+        <title>Smart Energia</title>
       </Head>
       <Image src='/assets/marca1.svg' width={350} height={350} />
       <ForgotPasswordContainer>
