@@ -31,17 +31,18 @@ export const TelemetriaView = styled.main`
   .paragraph{
     color: #22d1f0;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 60px;
   }
 `;
 
 export const Buttons = styled.div`
   display: flex;
-  min-width: 10rem;
+  min-width: 14rem;
   cursor: pointer;
   margin-top: 5rem;
-  padding: 1px 60px;
-  justify-content: space-around;
+  padding-left: 100px;
+  padding-right: 100px;
+  justify-content: space-evenly;
   flex-direction: row;
   height: 6rem;
 `;

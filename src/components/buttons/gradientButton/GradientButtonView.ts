@@ -8,7 +8,7 @@ export const GradientButtonView = styled.button`
   flex-direction: column;
   border-radius: 2px;
 
-  width: 25%;
+  width: 30%;
   height: 110px;
   margin-bottom: 25px;
 
