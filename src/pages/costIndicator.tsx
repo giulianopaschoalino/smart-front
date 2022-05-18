@@ -18,7 +18,7 @@ export default function CostIndicator() {
       <Header name='' />
       <PageTitle title='Indicador de Custo' subtitle='Valores em R$/MWh'/>
       <section>
-        <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)' data1={dataEconomiaIndicador.data1} data2={dataEconomiaIndicador.data2} label={dataEconomiaIndicador.labels} />
+        <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)' data1={dataEconomiaIndicador.data1} data2={dataEconomiaIndicador.data2} label={dataEconomiaIndicador.labels} barLabel />
       </section>
     </CostIndicatorView>
   )

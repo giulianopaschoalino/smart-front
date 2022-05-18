@@ -30,6 +30,9 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
 
     color: #254F7F;
   }
+  .actualPathDrawer {
+    color: #254F7F;
+  }
 
   ul {
     display: flex;

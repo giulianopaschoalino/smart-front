@@ -9,6 +9,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ChartView } from './ChartView';
 import ChartTitle from './ChartTitle';
 
@@ -18,7 +19,8 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  ChartDataLabels
 );
 
 interface SingleBarInterface{
@@ -26,13 +28,23 @@ interface SingleBarInterface{
   subtitle: string,
   dataProps: any,
   label: any,
-  dataset: string
+  dataset: string,
+  barLabel?: boolean | undefined,
 }
 
-export function SingleBar({ title, subtitle, dataProps, label, dataset }: SingleBarInterface) {
-  const options = {
+export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel }: SingleBarInterface) {
+
+  const options: any = {
     responsive: true,
     plugins: {
+      datalabels: {
+        display: true,
+        color: barLabel? 'black' : "rgba(255, 255, 255, 0)",
+        formatter: Math.round,
+        anchor: "end",
+        offset: -20,
+        align: "start"
+      },
       legend: {
         position: 'bottom' as const,
       },
@@ -59,6 +71,7 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset }: Single
     <ChartView>
       <ChartTitle title={title} subtitle={subtitle} />
       <Bar options={options} data={data} />
+      {/* <Bar options={options} data={data} /> */}
     </ChartView>
   )
 }

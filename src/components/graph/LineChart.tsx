@@ -1,32 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
 import { Bar, Line } from 'react-chartjs-2';
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   BarElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-//   PointElement,
-//   registerables
-// } from 'chart.js'
 
-// import Chart from 'chart.js/auto'
-
-// import faker from 'faker'
 import { ChartView } from './ChartView';
-
-// ChartJS.register(
-//   CategoryScale,
-//   LinearScale,
-//   BarElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-//   PointElement,
-// )
 
 import {
   Chart as ChartJS,
@@ -39,8 +15,6 @@ import {
   Legend,
   ScatterDataPoint,
 } from 'chart.js';
-// import { Line } from 'react-chartjs-2';
-import faker from 'faker';
 import ChartTitle from './ChartTitle';
 
 ChartJS.register(
@@ -65,13 +39,22 @@ interface ChartInterface {
   dataset1?: string,
   dataset2?: string,
   dataset3?: string,
-  dataset4?: string
+  dataset4?: string,
+  barLabel?: boolean | undefined
 }
 
-export default function LineChart({ title, subtitle, data1, data2, data3, data4, label, dataset1, dataset2, dataset3, dataset4 }: ChartInterface) {
-  const options = {
+export default function LineChart({ title, subtitle, data1, data2, data3, data4, label, dataset1, dataset2, dataset3, dataset4, barLabel }: ChartInterface) {
+  const options: any = {
     responsive: true,
     plugins: {
+      datalabels: {
+        display: true,
+        color: barLabel? 'black' : "rgba(255, 255, 255, 0)",
+        formatter: Math.round,
+        anchor: "end",
+        offset: -20,
+        align: "start"
+      },
       legend: {
         position: 'bottom' as const,
       },

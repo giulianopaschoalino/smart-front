@@ -67,17 +67,26 @@ interface LineBarChartInterface {
   label: any,
   dataset1?: string,
   dataset2?: string,
-  dataset3?: string
+  dataset3?: string,
+  barLabel?: boolean | undefined
 }
 
-export function LineBarChart({ title, subtitle, data1, data2, data3, label, red, dataset1, dataset2, dataset3 }: LineBarChartInterface) {
+export function LineBarChart({ title, subtitle, data1, data2, data3, label, red, dataset1, dataset2, dataset3, barLabel }: LineBarChartInterface) {
   const chartRef = useRef<ChartJS>(null);
 
   const labels = label
 
-  const options = {
+  const options: any = {
     responsive: true,
     plugins: {
+      datalabels: {
+        display: true,
+        color: barLabel? 'black' : "rgba(255, 255, 255, 0)",
+        formatter: Math.round,
+        anchor: "end",
+        offset: -20,
+        align: "start"
+      },
       legend: {
         position: 'bottom' as const,
       },

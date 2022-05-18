@@ -28,6 +28,7 @@
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
     "chart.js": "^3.7.1",
+    "chartjs-plugin-datalabels": "^2.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslit": "^6.0.0",
     "faker": "5.5.3",

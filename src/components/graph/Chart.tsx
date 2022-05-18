@@ -34,10 +34,11 @@ interface ChartInterface {
   single?: any
   label: any,
   dataset1?: string,
-  dataset2?: string
+  dataset2?: string,
+  barLabel?: boolean | undefined
 }
 
-export default function Chart({ title, data1, data2, label, subtitle, dataset1, dataset2 }: ChartInterface) {
+export default function Chart({ title, data1, data2, label, subtitle, dataset1, dataset2, barLabel }: ChartInterface) {
 
   const labels = label;
   const empty = []
@@ -59,9 +60,17 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
     ],
   }
 
-  const options = {
+  const options: any = {
     responsive: true,
     plugins: {
+      datalabels: {
+        display: true,
+        color: barLabel? 'black' : "rgba(255, 255, 255, 0)",
+        formatter: Math.round,
+        anchor: "end",
+        offset: -20,
+        align: "start"
+      },
       legend: {
         position: 'bottom' as const,
       },
