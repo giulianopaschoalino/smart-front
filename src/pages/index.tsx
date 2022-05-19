@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
-import Footer from '../components/footer/footer'
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';

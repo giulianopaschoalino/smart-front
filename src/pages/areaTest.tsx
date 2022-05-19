@@ -14,11 +14,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import LineChart from '../components/graph/LineChart'
-import Footer from '../components/footer/footer'
-
-
-
-
+// import Footer from '../components/footer/footer'
 
 export default function areaTest() {
 
@@ -45,7 +41,7 @@ export default function areaTest() {
 
   return (
     <>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

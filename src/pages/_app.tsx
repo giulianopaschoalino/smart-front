@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
 import NProgress from 'nprogress'
 
-import Footer from '../components/footer/Footer'
+// import Footer from '../components/footer/Footer'
 import Sidebar from '../components/sidebar/Sidebar'
 import { GlobalStyle } from '../styles/globals'
 import { AppView } from '../styles/app/AppView'
