@@ -13,6 +13,7 @@ import { Chart } from 'react-chartjs-2';
 import faker from 'faker';
 import { ChartView } from './ChartView';
 import ChartTitle from './ChartTitle';
+import pattern from 'patternomaly'
 
 ChartJS.register(
   LinearScale,
@@ -68,11 +69,15 @@ interface LineBarChartInterface {
   dataset1?: string,
   dataset2?: string,
   dataset3?: string,
-  barLabel?: boolean | undefined
+  barLabel?: boolean | undefined,
+  hashurado?: boolean | undefined,
 }
 
-export function LineBarChart({ title, subtitle, data1, data2, data3, label, red, dataset1, dataset2, dataset3, barLabel }: LineBarChartInterface) {
+export function LineBarChart({ title, subtitle, data1, data2, data3, label, red, dataset1, dataset2, dataset3, barLabel, hashurado }: LineBarChartInterface) {
   const chartRef = useRef<ChartJS>(null);
+
+  const currentTime = new Date();
+
 
   const labels = label
 
@@ -112,13 +117,18 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
       {
         type: 'bar' as const,
         label: dataset2? dataset2 : 'Dataset 2',
-        backgroundColor: '#C2D5FB',
+        backgroundColor: (value, ctx) => {
+          return hashurado? parseInt(value.dataIndex+1) <= currentTime.getMonth()? '#C2D5FB' : pattern.draw('diagonal', '#C2D5FB') : '#C2D5FB'
+        },
         data: data3.map(value => value),
       },
       {
         type: 'bar' as const,
         label: dataset3? dataset3 : 'Dataset 2',
-        backgroundColor: '#255488',
+        // backgroundColor: '#255488',
+        backgroundColor: (value, ctx) => {
+          return hashurado? parseInt(value.dataIndex+1) <= currentTime.getMonth()? '#255488' : pattern.draw('diagonal', '#255488') : '#255488'
+        },
         data: data2.map(value => value),
       },
     ],

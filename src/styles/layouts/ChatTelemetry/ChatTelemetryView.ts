@@ -9,6 +9,8 @@ export const ChatTelemetryView = styled.main`
 
   width: 100%;
 
+  padding-top: 0px!important;
+
   .chartContainer {
     display: grid;
 

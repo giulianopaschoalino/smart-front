@@ -204,7 +204,7 @@ export default function region() {
             <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2015-08-09"/>
             <BasicButton title='Download (csv)' />
           </section>
-          <LineBarChart data1={EvolucaoPld.data} data3={EvolucaoPld.data1} dataset1={'line'} dataset2={'barra1'} dataset3={'2021'} label={EvolucaoPld.label} title='Evolução PLD (R$/MWh)' subtitle='' />
+          <LineBarChart data1={EvolucaoPld.data} data3={EvolucaoPld.data1} dataset1={'Economia'} dataset2={'barra1'} dataset3={'2021'} label={EvolucaoPld.label} title='Evolução PLD (R$/MWh)' subtitle='' />
         </PldGraphView>
       </RenderIf>
 

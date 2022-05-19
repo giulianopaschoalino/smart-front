@@ -18,7 +18,7 @@ export default function AccumulatedSavings() {
       <Header name='' />
       <PageTitle title='Economia Acumulada' subtitle='Economia Bruta Estimada e Acumulada anual (Valores em R$ mil)' />
       <section>
-        <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$ mil)' dataset='Consolidada' label={EconomiaAcumulada.label1}  dataProps={EconomiaAcumulada.data2} barLabel />
+        <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$ mil)' dataset='Consolidada' dataset1='Estimada' label={EconomiaAcumulada.label1}  dataProps={EconomiaAcumulada.data2} barLabel day/>
       </section>
     </AccumulatedSavingsView>
   )

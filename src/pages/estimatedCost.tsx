@@ -18,7 +18,7 @@ export default function EstimatedCost() {
       <Header name='' />
       <PageTitle title='Custos Estimados' subtitle='Comparativo de Custo Estimado' />
       <section>
-        <LineBarChart data1={ConsumoEstimado.data2} data2={ConsumoEstimado.data} data3={ConsumoEstimado.data1} dataset1="Economia (R$)" dataset2='Cativo' dataset3='Livre' label={ConsumoEstimado.label} title='Custo Estimado' subtitle='' barLabel />
+        <LineBarChart data1={ConsumoEstimado.data2} data2={ConsumoEstimado.data} data3={ConsumoEstimado.data1} dataset1="Economia (R$)" dataset2='Cativo' dataset3='Livre' label={ConsumoEstimado.label} title='Custo Estimado' subtitle='' barLabel hashurado />
       </section>
     </EstimatedCostView>
   )

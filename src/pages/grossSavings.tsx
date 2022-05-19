@@ -18,7 +18,7 @@ export default function GrossSavings() {
       <Header name='' />
       <PageTitle title='Economia Bruta' subtitle='Economia Bruta Estimada e Acumulada anual (Valores em R$ mil)' />
       <section>
-        <SingleBar title='Economia Bruta' subtitle='(Valores em R$ mil)' label={dataEconomiaBruta.labels} dataset='Consolidada' dataProps={dataEconomiaBruta.data} barLabel />
+        <SingleBar title='Economia Bruta' subtitle='(Valores em R$ mil)' label={dataEconomiaBruta.labels} dataset='Consolidada' dataset1='Estimada' dataProps={dataEconomiaBruta.data} barLabel year/>
       </section>
     </GrossSavingsView>
   )

@@ -39,16 +39,16 @@ export default function Dashboard() {
 
       <section className='dashboard'>
         <GraphCard title='Consumo' subtitle='Gráfico de Consumo'>
-          <SingleBar title='Economia Bruta' subtitle='(Valores em R$ mil)' label={dataEconomiaBruta.labels} dataset='Consolidada' dataProps={dataEconomiaBruta.data} />
+          <SingleBar title='Economia Bruta' subtitle='(Valores em R$ mil)' label={dataEconomiaBruta.labels} dataset='Consolidada' dataset1='Estimada' dataProps={dataEconomiaBruta.data} barLabel year/>
         </GraphCard>
         <GraphCard title='Economia Acumulado' subtitle='Economia Acumulado' singleBar>
-          <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$)' dataset='Acumulada' label={EconomiaAcumulada.label1}  dataProps={EconomiaAcumulada.data2} />
+          <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$)' dataset='Acumulada' dataset1='Estimado' label={EconomiaAcumulada.label1}  dataProps={EconomiaAcumulada.data2} barLabel day/>
         </GraphCard>
         <GraphCard title='Custos Estimados' subtitle='Custos Estimados em R$/MWh' singleBar>
-          <LineBarChart data1={ConsumoEstimado.data2} data2={ConsumoEstimado.data} data3={ConsumoEstimado.data1} label={ConsumoEstimado.label} dataset1='Custo' dataset2='2020' dataset3='2021' title='Custo Estimado' subtitle='(Valores em R$/MWh)' />
+          <LineBarChart data1={ConsumoEstimado.data2} data2={ConsumoEstimado.data} data3={ConsumoEstimado.data1} label={ConsumoEstimado.label} dataset1='Custo' dataset2='Cativo' dataset3='Livre' title='Custo Estimado' subtitle='(Valores em R$/MWh)' barLabel hashurado/>
         </GraphCard>
         <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh'>
-          <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)' data1={dataEconomiaIndicador.data1} data2={dataEconomiaIndicador.data2} label={dataEconomiaIndicador.labels} />
+          <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)' data1={dataEconomiaIndicador.data1} data2={dataEconomiaIndicador.data2} label={dataEconomiaIndicador.labels} barLabel/>
         </GraphCard>
       </section>
     </DashboardView>
