@@ -82,6 +82,22 @@ export const PldTableView = styled.main`
     vertical-align:top
   }
 
+  .green {
+    background-color: #00A934!important;
+  }
+
+  .dullGreen {
+    background-color: #AED094!important;
+  }
+
+  .red {
+    background-color: #FF5429!important;
+  }
+
+  .dullRed {
+    background-color: #FFAA95!important;
+  }
+
   h3{
     font-weight: 600;
     font-size: 22px;

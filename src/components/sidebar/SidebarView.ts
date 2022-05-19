@@ -83,6 +83,8 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     width: 90%;
     height: 190px;
 
+    margin-bottom: 40px;
+
     background: linear-gradient(155.54deg, #254F7F 15.63%, #9C9C9C 136.34%);
     border-radius: 26px;
 

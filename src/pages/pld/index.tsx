@@ -33,6 +33,20 @@ export default function region() {
     console.log(page)
   }, [page])
 
+  function handleGreen(minimo, mi, ma, maximo) {
+    if (minimo - mi >= 100 && minimo - mi < 200) {
+      return 'green'
+    } else if ( mi*2 >= 200 && mi*2 <250 ) {
+      return'dullGreen'
+    } else if ( (ma-mi)/2 >=250 && (ma-mi)/2 < 300 ) {
+      return 'white'
+    } else if ( ma/2 >= 300 && ma/2 < 600 ) {
+      return 'dullRed'
+    } else if ( maximo-ma > 600 ) {
+      return 'red'
+    }
+  }
+
   return (
     <main style={{
       width: '100%',
@@ -58,94 +72,94 @@ export default function region() {
             <tbody>
               <tr>
                 <td className='tg-gceh'>2101</td>
-                <td className='tg-uulg'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-uulg'>xxxx</td>
+                <td className='tg-uulg red'>xxxx</td>
+                <td className='tg-gceh dullRed'>xxxx</td>
+                <td className='tg-gceh dullGreen'>xxxx</td>
+                <td className='tg-uulg red'>xxxx</td>
               </tr>
               <tr>
                 <td className='tg-hq65'>2102</td>
-                <td className='tg-0tzy'>xxxx</td>
-                <td className='tg-hq65'>xxxx</td>
-                <td className='tg-hq65'>xxxx</td>
-                <td className='tg-0tzy'>xxxx</td>
+                <td className='tg-0tzy dullGreen'>xxxx</td>
+                <td className='tg-hq65 dullRed'>xxxx</td>
+                <td className='tg-hq65 dullGreen'>xxxx</td>
+                <td className='tg-0tzy dullGreen'>xxxx</td>
               </tr>
               <tr>
                 <td className="tg-gceh">2103</td>
-                <td className="tg-uulg">xxxx</td>
-                <td className="tg-gceh">xxxx</td>
-                <td className="tg-gceh">xxxx</td>
-                <td className="tg-gceh">xxxx</td>
+                <td className="tg-uulg red">xxxx</td>
+                <td className="tg-gceh dullGreen">xxxx</td>
+                <td className="tg-gceh dullRed">xxxx</td>
+                <td className="tg-gceh dullGreen">xxxx</td>
               </tr>
               <tr>
                 <td className='tg-hq65'>2104</td>
-                <td className='tg-0tzy'>xxxx</td>
-                <td className='tg-hq65'>xxxx</td>
-                <td className='tg-hq65'>xxxx</td>
-                <td className='tg-0tzy'>xxxx</td>
+                <td className='tg-0tzy dullGreen'>xxxx</td>
+                <td className='tg-hq65 dullRed'>xxxx</td>
+                <td className='tg-hq65 dullRed'>xxxx</td>
+                <td className='tg-0tzy dullGreen'>xxxx</td>
               </tr>
               <tr>
                 <td className='tg-gceh'>2105</td>
-                <td className='tg-uulg'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-uulg'>xxxx</td>
+                <td className='tg-uulg red'>xxxx</td>
+                <td className='tg-gceh dullGreen'>xxxx</td>
+                <td className='tg-gceh dullGreen'>xxxx</td>
+                <td className='tg-uulg red'>xxxx</td>
               </tr>
               <tr>
                 <td className='tg-hq65'>2106</td>
-                <td className='tg-0tzy'>xxxx</td>
-                <td className='tg-hq65'>xxxx</td>
-                <td className='tg-hq65'>xxxx</td>
-                <td className='tg-0tzy'>xxxx</td>
+                <td className='tg-0tzy dullGreen'>xxxx</td>
+                <td className='tg-hq65 dullRed'>xxxx</td>
+                <td className='tg-hq65 red'>xxxx</td>
+                <td className='tg-0tzy green'>xxxx</td>
               </tr>
               <tr>
                 <td className='tg-gceh'>2107</td>
-                <td className='tg-uulg'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-uulg'>xxxx</td>
+                <td className='tg-uulg red'>xxxx</td>
+                <td className='tg-gceh green'>xxxx</td>
+                <td className='tg-gceh dullRed'>xxxx</td>
+                <td className='tg-uulg red'>xxxx</td>
               </tr>
               <tr>
                 <td className='tg-hq65'>2108</td>
-                <td className='tg-0tzy'>xxxx</td>
-                <td className='tg-hq65'>xxxx</td>
-                <td className='tg-hq65'>xxxx</td>
-                <td className='tg-0tzy'>xxxx</td>
+                <td className='tg-0tzy dullGreen'>xxxx</td>
+                <td className='tg-hq65 dullGreen'>xxxx</td>
+                <td className='tg-hq65 green'>xxxx</td>
+                <td className='tg-0tzy dullRed'>xxxx</td>
               </tr>
               <tr>
                 <td className='tg-gceh'>2109</td>
-                <td className='tg-uulg'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-uulg'>xxxx</td>
+                <td className='tg-uulg red'>xxxx</td>
+                <td className='tg-gceh green'>xxxx</td>
+                <td className='tg-gceh dullRed'>xxxx</td>
+                <td className='tg-uulg red'>xxxx</td>
               </tr>
               <tr>
                 <td className='tg-hq65'>2110</td>
-                <td className='tg-0tzy'>xxxx</td>
-                <td className='tg-hq65'>xxxx</td>
-                <td className='tg-hq65'>xxxx</td>
-                <td className='tg-0tzy'>xxxx</td>
+                <td className='tg-0tzy red'>xxxx</td>
+                <td className='tg-hq65 green'>xxxx</td>
+                <td className='tg-hq65 red'>xxxx</td>
+                <td className='tg-0tzy red'>xxxx</td>
               </tr>
               <tr>
                 <td className='tg-gceh'>2111</td>
-                <td className='tg-uulg'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-uulg'>xxxx</td>
+                <td className='tg-uulg red'>xxxx</td>
+                <td className='tg-gceh dullGreen'>xxxx</td>
+                <td className='tg-gceh green'>xxxx</td>
+                <td className='tg-uulg red'>xxxx</td>
               </tr>
               <tr>
                 <td className='tg-hq65'>2112</td>
-                <td className='tg-0tzy'>xxxx</td>
-                <td className='tg-hq65'>xxxx</td>
-                <td className='tg-hq65'>xxxx</td>
-                <td className='tg-0tzy'>xxxx</td>
+                <td className='tg-0tzy green'>xxxx</td>
+                <td className='tg-hq65 dullGreen'>xxxx</td>
+                <td className='tg-hq65 dullRed'>xxxx</td>
+                <td className='tg-0tzy dullGreen'>xxxx</td>
               </tr>
               <tr>
                 <td className='tg-gceh'>2021</td>
-                <td className='tg-uulg'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-uulg'>xxxx</td>
+                <td className='tg-uulg red'>xxxx</td>
+                <td className='tg-gceh dullRed'>xxxx</td>
+                <td className='tg-gceh dullGreen'>xxxx</td>
+                <td className='tg-uulg red'>xxxx</td>
               </tr>
               <tr>
                 <td className='tg-gceh'>Mín</td>

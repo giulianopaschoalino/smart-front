@@ -61,8 +61,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             null
         }
       </AppView>
-        <Footer />
-
+        {/* <Footer /> */}
     </>
   )
 }

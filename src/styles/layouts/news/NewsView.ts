@@ -39,27 +39,26 @@ export const NewsView = styled.main`
         flex-direction: column;
       }
     }
-
-
 }`;
 
 export const Button = styled.div`
-   display: flex;
-   justify-content: center;
+  display: flex;
+  justify-content: center;
 
-
-   fieldset {
+  fieldset {
     border-top: 0.7px solid #E1E1E1;
     border-bottom: none;
     border-left: none;
     border-right: none;
+
     display: block;
     text-align: center;
+
     width: 100%;
   }
 
   fieldset legend {
-      padding: 25px 4px;
+      /* padding: 25px 4px; */
       color: #ABB3BB;
       font-size: 14px;
   }

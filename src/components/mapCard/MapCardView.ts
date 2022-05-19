@@ -1,13 +1,26 @@
 import styled from 'styled-components'
 
-export const MapCardView = styled.figure`
+interface MapCardViewInterface {
+  statistic?: any
+}
+
+export const MapCardView = styled.figure<MapCardViewInterface>`
   display: flex;
-  justify-content: center;
+  justify-content: flex;
   align-items: center;
 
   flex-direction: row;
 
   margin-right: 2px;
+
+  h4 {
+    margin-left: ${props => props.statistic? '0' : '10px'};
+  }
+  span {
+    margin-left: ${props => props.statistic? '0' : '10px'};
+    margin-bottom: ${props => props.statistic? '25px' : '0px'};
+    margin-top: ${props => props.statistic? '0px' : '30px'};
+  }
 
   * {
     margin: 0;
@@ -15,7 +28,6 @@ export const MapCardView = styled.figure`
   }
 
   span {
-    margin-bottom: 25px;
   }
 
   div {
@@ -27,6 +39,7 @@ export const MapCardView = styled.figure`
 
     article {
       display: flex;
+      /* margin-left: 20px; */
     }
   }
 
