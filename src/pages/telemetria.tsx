@@ -106,8 +106,8 @@ export default function Telemetria() {
 
         <Buttons>
           <GradientButton title='GRÁFICO' description='Gerar gráficos com os dados selecionados' orange link />
-          <GradientButton title='DOWNLOADS' description='Gerar gráficos com os dados selecionados' purple />
-          <GradientButton title='DADOS' description='Gerar gráficos com os dados selecionados' green />
+          <GradientButton title='DOWNLOADS' description='DADOS BRUTOS SELECIONADOS' purple />
+          <GradientButton title='DADOS' description='hORÁRIOS DO MÊS ATUAL' green />
         </Buttons>
         <p className='paragraph'>
           <i>

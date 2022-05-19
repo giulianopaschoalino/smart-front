@@ -14,6 +14,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import LineChart from '../components/graph/LineChart'
+import Footer from '../components/footer/footer'
 
 
 
@@ -44,30 +45,7 @@ export default function areaTest() {
 
   return (
     <>
-      {/* <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-            <InputLabel htmlFor="outlined-ad
-            ornment-password">Password</InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={values.showPassword ? 'text' : 'password'}
-              value={values.password}
-              onChange={handleChange('password')}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {values.showPassword ? <Image src="/eye-svgrepo-com.svg" width={50} height={10}/> : <Image src="/eye-svgrepo-com.svg" width={50} height={10} />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
-            />
-      </FormControl> */}
-      {/* <LineChart title='title' /> */}
+      <Footer />
     </>
   )
 }

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
 import NProgress from 'nprogress'
 
-
+import Footer from '../components/footer/Footer'
 import Sidebar from '../components/sidebar/Sidebar'
 import { GlobalStyle } from '../styles/globals'
 import { AppView } from '../styles/app/AppView'
@@ -40,25 +40,30 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router])
 
   return (
-    <AppView>
-      <Head>
-        <link rel="icon" type="imagem/png" href="/assets/logose.png" />
-        <meta name="viewport" content="viewport-fit=cover" />
-      </Head>
-      <Home />
-      <VerifyEmail />
-      <ForgotPassword />
-      <GlobalStyle />
-      {
-        rota != '/' && rota != '/forgotPassword' && rota != '/verifyEmail'?
-          <>
-            <Sidebar />
-            <Component {...pageProps} />
-          </>
-          :
-          null
-      }
-    </AppView>
+    <>
+      <AppView>
+        <Head>
+          <link rel="icon" type="imagem/png" href="/assets/logose.png" />
+          <meta name="viewport" content="viewport-fit=cover" />
+        </Head>
+        <Home />
+        <VerifyEmail />
+        <ForgotPassword />
+        <GlobalStyle />
+        {
+          rota != '/' && rota != '/forgotPassword' && rota != '/verifyEmail'?
+            <>
+              <Sidebar />
+              <Component {...pageProps} />
+
+            </>
+            :
+            null
+        }
+      </AppView>
+        <Footer />
+
+    </>
   )
 }
 

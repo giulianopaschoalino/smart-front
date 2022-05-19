@@ -15,8 +15,7 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
   flex-direction: column;
 
   width: 20%;
-  min-width: 15rem;
-
+  min-width: 20rem;
   margin: 0;
   padding: 0;
 
@@ -191,7 +190,7 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     font-size: 14px;
     ul {
       li {
-        height: 3.5rem;
+        height: 2rem;
       }
     }
   }
