@@ -12,7 +12,7 @@ import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ChartView } from './ChartView';
 import ChartTitle from './ChartTitle';
-import pattern from 'patternomaly'
+import { draw } from 'patternomaly'
 
 ChartJS.register(
   CategoryScale,
@@ -79,12 +79,12 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1
         label: dataset,
         data: dataProps.map(value => value),
         backgroundColor: (value, ctx) => {
-          return year? label[value.dataIndex]<=currentTime.getFullYear().toString()? '#255488' : pattern.draw('diagonal', '#C2D5FB') : day? parseInt(label[value.dataIndex])<=currentTime.getDay()? '#255488' : pattern.draw('diagonal', '#C2D5FB') : null
+          return year? label[value.dataIndex]<=currentTime.getFullYear().toString()? '#255488' : draw('diagonal', '#C2D5FB') : day? parseInt(label[value.dataIndex])<=currentTime.getDay()? '#255488' : draw('diagonal', '#C2D5FB') : null
         },
       },
       {
         label: dataset1,
-        backgroundColor: pattern.draw('diagonal', '#C2D5FB')
+        backgroundColor: draw('diagonal', '#C2D5FB')
       }
     ],
   };
