@@ -6,7 +6,6 @@ import MapCard from '../components/mapCard/MapCard'
 import GraphCard from '../components/graph/graphCard/ChartCard'
 import Header from '../components/header/Header'
 import PageTitle from '../components/pageTitle/PageTitle'
-import Footer from '../components/footer/footer';
 import Link from 'next/link'
 import LineChart from '../components/graph/LineChart'
 import { SingleBar } from '../components/graph/SingleBar'

@@ -52,6 +52,7 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
       justify-content: flex-start;
 
       width: 100%;
+      min-height: 60px;
       height: 60px;
 
       gap: 15px;
@@ -191,6 +192,14 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     ul {
       li {
         height: 2rem;
+      }
+    }
+  }
+  @media (max-width: 1008px) {
+    font-size: 14px;
+    ul {
+      li {
+        height: 6rem;
       }
     }
   }
