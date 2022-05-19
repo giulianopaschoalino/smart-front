@@ -6,6 +6,7 @@ import MapCard from '../components/mapCard/MapCard'
 import GraphCard from '../components/graph/graphCard/ChartCard'
 import Header from '../components/header/Header'
 import PageTitle from '../components/pageTitle/PageTitle'
+import Footer from '../components/footer/footer';
 import Link from 'next/link'
 import LineChart from '../components/graph/LineChart'
 import { SingleBar } from '../components/graph/SingleBar'
@@ -26,6 +27,7 @@ export default function Dashboard() {
         <title>Smart Energia - Dashboard</title>
       </Head>
       <Header name='' />
+
       <PageTitle title='Visão Geral' subtitle='Bem Vindo a Smart Energia' />
       <Link href={'pld'} >
         <section className="cardsSection" >
@@ -50,7 +52,12 @@ export default function Dashboard() {
         <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh'>
           <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)' data1={dataEconomiaIndicador.data1} data2={dataEconomiaIndicador.data2} label={dataEconomiaIndicador.labels} />
         </GraphCard>
+
       </section>
+
     </DashboardView>
+
+
+
   )
 }

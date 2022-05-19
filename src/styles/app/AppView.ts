@@ -3,9 +3,9 @@ import styled from 'styled-components'
 export const AppView = styled.main`
   display: flex;
 
-  height: 100%;
+  height: calc(20rem[] - 65px);
 
-  margin: 0 0 10rem 0;
+  margin: 0 0 0 0;
   padding: 0;
 
   @media (max-width: 1008px) {
