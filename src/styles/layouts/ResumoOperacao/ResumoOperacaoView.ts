@@ -10,6 +10,17 @@ export const TableView = styled.div`
   width: 100%;
   height: 100%;
 
+  .select{
+    display: flex;
+
+
+    margin-bottom: 25px;
+
+    width: 20rem;
+  }
+  .titleUnidade{
+
+  }
 
   .tg{
     border-collapse:collapse;
@@ -97,6 +108,10 @@ export const TableView = styled.div`
 
     color: #254F7F;
   }
+
+  .teste {
+    width: 10rem;
+  }
 `;
 
 export const Pagination = styled.div`
@@ -111,6 +126,8 @@ export const Pagination = styled.div`
   .numberColor{
     color: #ABAFB3;
   }
+
+
 
 `;
 

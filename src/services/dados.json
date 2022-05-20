@@ -1,0 +1,10 @@
+{
+  "unidades": [
+    { "value": "unidade1", "name": "Unidade-1",  "operacao": "Compra", "montante": "130,00", "contraparte": "cOPEL COM I5", "preco": "234,67", "valorNF": "38.257,15" },
+    { "value": "unidade2", "name": "Unidade-2",  "operacao": "Compra", "montante": "20,00", "contraparte":  "EMEWE I5", "preco": "234,67", "valorNF": "38.257,15"},
+    { "value": "unidade3", "name": "Unidade-3",  "operacao": "Compra", "montante": "30,00", "contraparte":  "EMEWE I5", "preco": "234,67", "valorNF": "38.257,15" },
+    { "value": "unidade4", "name": "Unidade-4",  "operacao": "Compra", "montante": "40,00", "contraparte":  "COPEL COM I5", "preco": "234,67", "valorNF": "38.257,15" },
+    { "value": "unidade5", "name": "Unidade-5",  "operacao": "Compra", "montante": "500,00","contraparte": "COPEL COM I5", "preco": "234,67", "valorNF": "38.257,15" },
+    { "value": "unidade6", "name": "Unidade-6", "operacao": "Compra", "montante": "300,00", "contraparte": "COPEL COM I5", "preco":"234,67", "valorNF": "965,95" }
+  ]
+}
