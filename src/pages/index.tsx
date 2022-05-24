@@ -46,7 +46,11 @@ export default function Home() {
       <Head>
         <title>Smart Energia</title>
       </Head>
-      <Image src='/assets/marca1.svg' width={350} height={350} />
+
+      <div>
+      <Image src='/assets/marca1.svg' width={520} height={350} />
+      </div>
+
       <LoginContainer>
         <h1>Bem-Vindo</h1>
         <h2>Estratégias Inteligentes em<br /> Gestão de Energia</h2>

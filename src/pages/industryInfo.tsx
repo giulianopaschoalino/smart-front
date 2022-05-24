@@ -15,7 +15,7 @@ export default function industryInfo() {
       <div className='title'>
         <PageTitle title='Info Setorial' subtitle='info setorial' />
       </div>
-      <BasicButton title='Baixar PDF' />
+      <button>Baixar PDF</button>
     </IndustryInfoView>
   )
 }

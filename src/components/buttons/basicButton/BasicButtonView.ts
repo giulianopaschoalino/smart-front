@@ -4,7 +4,7 @@ export const BasicButtonView = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 1px;
 
   width: 140px;
   height: 45px;

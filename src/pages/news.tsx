@@ -4,6 +4,7 @@ import Header from '../components/header/Header'
 import BasicButton from '../components/buttons/basicButton/BasicButton';
 import { NewsView, Button } from '../styles/layouts/news/NewsView'
 import Head from 'next/head';
+import Link from 'next/link'
 
 export default function aboutUs() {
   return (
@@ -42,7 +43,12 @@ export default function aboutUs() {
         <legend> <BasicButton  title='Ver Mais...' /></legend>
         </fieldset>
         </Button>
+
       </section>
+
+      <a href='https://www.energiasmart.com.br/noticias/'
+     target={"_blank"}
+     rel={"noreferrer"}><BasicButton  title='Noticias Atualizadas' /></a>
     </NewsView>
   )
 }
