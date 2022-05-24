@@ -10,6 +10,8 @@ export const TelemetriaView = styled.main`
     color: black;
     font-weight: 600;
     font-size: 14px;
+
+    margin: 0 0 0 10px;
   }
 
   span{
@@ -32,6 +34,22 @@ export const TelemetriaView = styled.main`
     color: #22d1f0;
     text-align: center;
     margin-top: 60px;
+  }
+
+  section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .select {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      flex-direction: column;
+
+      /* margin-top: 10px; */
+    }
   }
 `;
 

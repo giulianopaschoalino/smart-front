@@ -53,7 +53,10 @@ export default function LineChart({ title, subtitle, data1, data2, data3, data4,
         formatter: Math.round,
         anchor: "end",
         offset: -20,
-        align: "start"
+        align: "start",
+        font: {
+          size: 16
+        }
       },
       legend: {
         position: 'bottom' as const,

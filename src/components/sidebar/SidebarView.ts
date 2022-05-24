@@ -33,6 +33,20 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     color: #254F7F;
   }
 
+  .notification {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 32px;
+
+    border-radius: 8px;
+
+    background-color: #254F7F;
+    color: white;
+  }
+
   ul {
     display: flex;
     justify-content: center;

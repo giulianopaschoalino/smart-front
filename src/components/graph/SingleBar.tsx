@@ -12,7 +12,7 @@ import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { ChartView } from './ChartView';
 import ChartTitle from './ChartTitle';
-import { draw } from 'patternomaly'
+import { draw, generate } from 'patternomaly'
 
 ChartJS.register(
   CategoryScale,
@@ -32,16 +32,20 @@ interface SingleBarInterface{
   dataset: string,
   barLabel?: boolean | undefined,
   year?: boolean | undefined,
-  day?: boolean | undefined,
+  month?: boolean | undefined,
   dataset1?: string,
 }
 
-export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1, barLabel, year, day }: SingleBarInterface) {
-
+export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1, barLabel, year, month }: SingleBarInterface) {
   const currentTime = new Date();
 
   const options: object = {
     responsive: true,
+    series: {
+      downsample: {
+        threshold: 1000
+      }
+    },
     plugins: {
       datalabels: {
         formatter: (value, ctx) => {
@@ -50,15 +54,21 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1
           dataArr.map(data => {
               sum += data;
           });
-          const percentage = (value*100 / sum).toFixed(2)+"%";
-          const result = `  ${value}\n ${percentage}`
-          return result;
+          const percentage = (value*100 / sum).toFixed(0)+"%";
+          const result = `${value}\n ${percentage}`
+
+          console.log(value)
+
+          return value==null? null : result
         },
         display: true,
         color: barLabel? 'black' : "rgba(255, 255, 255, 0)",
         anchor: "end",
-        offset: -35,
-        align: "start"
+        offset: -40,
+        align: "start",
+        font: {
+          size: 16
+        }
       },
       legend: {
         position: 'bottom' as const,
@@ -77,22 +87,27 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1
     datasets: [
       {
         label: dataset,
-        data: dataProps.map(value => value),
+        data: dataProps.map((value, index) => {
+          return year? label[index]<=currentTime.getFullYear().toString()? value : null : month? label.indexOf(label[index])>currentTime.getMonth()? null : value : null
+        }),
         backgroundColor: (value, ctx) => {
-          return year? label[value.dataIndex]<=currentTime.getFullYear().toString()? '#255488' : '#C2D5FB' : day? parseInt(label[value.dataIndex])<=currentTime.getDay()? '#255488' : '#C2D5FB' : null
+          return year? label[value.dataIndex]<=currentTime.getFullYear().toString()? '#255488' : 'transparent' : month? label.indexOf(label[value.dataIndex])<=currentTime.getMonth()? '#255488' : 'transparent' : null// parseInt(label[value.dataIndex])<=currentTime.getMonth()? '#255488' : draw('diagonal', '#C2D5FB') : null
         },
       },
       {
         label: dataset1,
-        backgroundColor: '#C2D5FB'
+        data: dataProps.map((value, index) => {
+          return year? label[index]>=currentTime.getFullYear().toString()? value : null : month? label.indexOf(label[index])<=currentTime.getMonth()? null : value : null
+        }),
+        backgroundColor: typeof window !== 'undefined'? draw('diagonal', '#C2D5FB') : null
       }
     ],
-  };
+  }
+
   return (
     <ChartView>
       <ChartTitle title={title} subtitle={subtitle} />
       <Bar options={options} data={data} />
-      {/* <Bar options={options} data={data} /> */}
     </ChartView>
   )
 }

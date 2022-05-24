@@ -7,9 +7,10 @@ interface MapCardInterface {
   subtitle: string,
   statistic?: string,
   imgSource: string,
+  date?: string
 }
 
-export default function MapCard({ title, subtitle, statistic, imgSource }: MapCardInterface) {
+export default function MapCard({ title, subtitle, statistic, imgSource, date }: MapCardInterface) {
   const route = title==='R$/MWh'? '/consumption': `pld/${title.slice(0,2).toLocaleLowerCase()}-${title.slice(3,5).toLocaleLowerCase()}`
 
   return (
@@ -17,7 +18,12 @@ export default function MapCard({ title, subtitle, statistic, imgSource }: MapCa
         <Image src={imgSource} width={90} height={90}/>
         <div>
           <h4>{title}</h4>
-          <span>{subtitle}</span>
+          <span className='footer' >{subtitle}</span>
+          {
+            date?
+              <span>{date}</span> :
+              null
+          }
           <article>
             {
               statistic?

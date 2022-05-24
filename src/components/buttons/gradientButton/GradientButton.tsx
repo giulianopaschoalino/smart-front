@@ -11,12 +11,18 @@ interface GradientButtonInterface {
   purple?: undefined | null | boolean,
   green?: undefined | null | boolean,
   link?: any,
+  onClick?: () => void
 }
 
-export default function GradientButton({ title, description, orange, purple, green, link }: GradientButtonInterface) {
+export default function GradientButton({ title, description, orange, purple, green, link, onClick }: GradientButtonInterface) {
   const router = useRouter()
+
+  function handleClick() {
+    onClick()
+  }
+
   return (
-    <GradientButtonView color={orange? 'orange' : purple? 'purple' : green? 'green' : 'orange' } onClick={() => link? router.push('/chartTelemetry') : null} >
+    <GradientButtonView color={orange? 'orange' : purple? 'purple' : green? 'green' : 'orange' } onClick={() => link? router.push('/chartTelemetry') : handleClick()} >
       <p>{title}</p>
       <p>{description}</p>
     </GradientButtonView>

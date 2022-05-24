@@ -186,10 +186,10 @@ export default function region() {
           </table>
           <section>
             <article onClick={() => setPage('perMouth')}>
-              <p>Valores Diarios: R$100,00</p>
+              <p>Valores Diarios</p>
             </article>
             <article onClick={() => setPage('perDate')}>
-              <p>Valores Horários: R$100,00</p>
+              <p>Valores Horários</p>
             </article>
           </section>
         </PldTableView>

@@ -43,6 +43,30 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
   const labels = label;
   const empty = []
 
+  const options: any = {
+    responsive: true,
+    plugins: {
+      datalabels: {
+        display: true,
+        color: barLabel? 'black' : "rgba(255, 255, 255, 0)",
+        formatter: Math.round,
+        anchor: "end",
+        offset: -20,
+        align: "start",
+        font: {
+          size: 16
+        }
+      },
+      legend: {
+        position: 'bottom' as const,
+      },
+      title: {
+        display: true,
+        text: '',
+      },
+    },
+  };
+
   const data = {
     labels,
     datasets: [
@@ -59,28 +83,6 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
       } : null
     ],
   }
-
-  const options: any = {
-    responsive: true,
-    plugins: {
-      datalabels: {
-        display: true,
-        color: barLabel? 'black' : "rgba(255, 255, 255, 0)",
-        formatter: Math.round,
-        anchor: "end",
-        offset: -20,
-        align: "start"
-      },
-      legend: {
-        position: 'bottom' as const,
-      },
-      title: {
-        display: true,
-        text: '',
-      },
-    },
-  };
-
 
   return (
     <ChartView>

@@ -9,6 +9,8 @@ export const BannerView = styled.div`
   width: 100%;
   height: 20%;
 
+  margin-bottom: 30px;
+
   .gradient {
     position: absolute;
     width: 100%;

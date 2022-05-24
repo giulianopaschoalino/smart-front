@@ -16,7 +16,7 @@ export const MapCardView = styled.figure<MapCardViewInterface>`
   h4 {
     margin-left: ${props => props.statistic? '0' : '10px'};
   }
-  span {
+  .footer {
     margin-left: ${props => props.statistic? '0' : '10px'};
     margin-bottom: ${props => props.statistic? '25px' : '0px'};
     margin-top: ${props => props.statistic? '0px' : '30px'};
@@ -28,6 +28,7 @@ export const MapCardView = styled.figure<MapCardViewInterface>`
   }
 
   span {
+    margin-left: ${props => props.statistic? '0' : '10px'};
   }
 
   div {
