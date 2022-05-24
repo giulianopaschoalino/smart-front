@@ -42,7 +42,7 @@ export default function Dashboard() {
         <GraphCard title='Consumo' subtitle='Gráfico de Consumo'>
           <SingleBar title='Economia Bruta' subtitle='(Valores em R$ mil)' label={dataEconomiaBruta.labels} dataset='Consolidada' dataset1='Estimada' dataProps={dataEconomiaBruta.data} barLabel year/>
         </GraphCard>
-        <GraphCard title='Economia Acumulado' subtitle='Economia Acumulado' singleBar>
+        <GraphCard title='Economia Acumulada' subtitle='Economia Acumulada' singleBar>
           <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$)' dataset='Acumulada' dataset1='Estimado' label={EconomiaAcumulada.label1}  dataProps={EconomiaAcumulada.data2} barLabel day/>
         </GraphCard>
         <GraphCard title='Custos Estimados' subtitle='Custos Estimados em R$/MWh' singleBar>

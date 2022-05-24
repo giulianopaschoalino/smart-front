@@ -10,6 +10,14 @@ export const TableView = styled.div`
   width: 100%;
   height: 100%;
 
+  img{
+    margin-left:30rem;
+  }
+
+  .btn{
+    margin-top: 10px;
+  }
+
   .select{
     display: flex;
 

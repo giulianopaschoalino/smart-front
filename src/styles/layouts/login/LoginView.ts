@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const LoginView = styled.main<{auth: string}>`
   display: flex;
   display: ${props => props.auth == '/'? null : 'none'};
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 
   width: 100%;
@@ -12,6 +12,7 @@ export const LoginView = styled.main<{auth: string}>`
 
   padding: 0;
   margin: 0;
+
 
   @media (max-width: 1196px) {
     flex-direction: column;
@@ -96,7 +97,7 @@ export const LoginContainer = styled.section`
     align-items: center;
 
     width: 100%;
-    margin: 0;
+
   }
   @media (max-width: 1640px) {
     font-size: 80%;

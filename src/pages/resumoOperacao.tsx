@@ -10,11 +10,32 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Box from '@mui/material/Box';
+// import Teste from '../files/teste.csv';
+import { CSVLink, CSVDownload } from "react-csv";
+
+
 
 import { Pagination, TableView } from '../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 import Head from 'next/head';
 
 export default function ResumoOperacao() {
+  const csvData = [
+    // ["firstname", "lastname", "email"],
+    // ["Ahmed", "Tomi", "ah@smthing.co.com"],
+    // ["Raed", "Labes", "rl@smthing.co.com"],
+    // ["Yezzi", "Min l3b", "ymin@cocococo.com"],
+
+
+
+      [ "value", "unidade1", "name", "Unidade-1",  "operacao", "Compra", "montante", "130,00", "contraparte", "cOPEL COM I5", "preco", "234,67", "valorNF", "38.257,15" ],
+      [ "value", "unidade2", "name", "Unidade-2",  "operacao", "Compra", "montante", "20,00", "contraparte",  "EMEWE I5", "preco", "234,67", "valorNF", "38.257,15"],
+      [ "value", "unidade3", "name", "Unidade-3",  "operacao", "Compra", "montante", "30,00", "contraparte",  "EMEWE I5", "preco", "234,67", "valorNF", "38.257,15" ],
+      [ "value", "unidade4", "name", "Unidade-4",  "operacao", "Compra", "montante", "40,00", "contraparte",  "COPEL COM I5", "preco", "234,67", "valorNF", "38.257,15" ],
+      [ "value", "unidade5", "name", "Unidade-5",  "operacao", "Compra", "montante", "500,00","contraparte", "COPEL COM I5", "preco", "234,67", "valorNF", "38.257,15" ],
+      [ "value", "unidade6", "name", "Unidade-6", "operacao", "Compra", "montante", "300,00", "contraparte", "COPEL COM I5", "preco","234,67", "valorNF", "965,95" ]
+
+  ];
+
   const [month, setMonth] = React.useState('');
   const [unidade, setUnidade] = React.useState('');
 
@@ -46,7 +67,7 @@ export default function ResumoOperacao() {
       <h3>Seletor Mês</h3>
     <div className='select'>
 
-      <FormControl fullWidth >
+      <FormControl fullWidth  >
         <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -65,7 +86,7 @@ export default function ResumoOperacao() {
       </FormControl>
 
 
-      <FormControl fullWidth >
+      <FormControl fullWidth sx={{ml:1}} >
 
         <InputLabel id="demo-simple-select-label">Mês</InputLabel>
         <Select
@@ -90,7 +111,7 @@ export default function ResumoOperacao() {
           <MenuItem value={30}>Dezembro</MenuItem>
         </Select>
       </FormControl>
-    </div>
+      </div>
       <table className="tg">
         <thead>
           <tr>
@@ -126,60 +147,22 @@ export default function ResumoOperacao() {
               }
             })
           }
-            {/* <td className='tg-gceh'>{data.unidades.unidade1.name}</td>
-            <td className='tg-uulg'>{data.unidades.unidade1.operacao}</td>
-            <td className='tg-gceh'>{data.unidades.unidade1.montante}</td>
-            <td className='tg-gceh'>{data.unidades.unidade1.contraparte}</td>
-            <td className='tg-uulg'>{data.unidades.unidade1.preco}</td>
-            <td className='tg-gceh'>{data.unidades.unidade1.valorNF}</td> */}
-          {/* <tr>
-            <td className='tg-hq65'>Unidade - 9500130</td>
-            <td className='tg-0tzy'>Compra</td>
-            <td className='tg-hq65'>110,348</td>
-            <td className='tg-hq65'>EMEWE I5</td>
-            <td className='tg-0tzy'>190,16</td>
-            <td className='tg-hq65'>27.978,37</td>
-          </tr>
-          <tr>
-            <td className="tg-gceh">Unidade - 9500130</td>
-            <td className="tg-uulg">Compra</td>
-            <td className="tg-gceh">13,074</td>
-            <td className="tg-gceh">PACTO COMERCIALIZADORA I5</td>
-            <td className="tg-gceh">300,36</td>
-            <td className="tg-gceh">5.235,88</td>
-          </tr>
-          <tr>
-            <td className='tg-hq65'>Unidade - 9500130</td>
-            <td className='tg-0tzy'>Compra</td>
-            <td className='tg-hq65'>133,117</td>
-            <td className='tg-hq65'>COPEL COM I5</td>
-            <td className='tg-0tzy'>300,36</td>
-            <td className='tg-hq65'>41.651,42</td>
-          </tr>
-          <tr>
-            <td className='tg-gceh'>Unidade - 9500130</td>
-            <td className='tg-uulg'>Compra</td>
-            <td className='tg-gceh'>120,138</td>
-            <td className='tg-gceh'>EMEWE I5</td>
-            <td className='tg-uulg'>234,67</td>
-            <td className='tg-gceh'>30.460,59</td>
-          </tr>
-          <tr>
-            <td className='tg-hq65'>Unidade - 9500130</td>
-            <td className='tg-0tzy'>Compra</td>
-            <td className='tg-hq65'>14,897</td>
-            <td className='tg-hq65'>PACTO COMERCIALIZADORA I5</td>
-            <td className='tg-0tzy'>300,36</td>
-            <td className='tg-hq65'>5.965,95</td>
-          </tr> */}
+
         </tbody>
       </table>
-      <BasicButton title='Baixar PDF' />
+      <div className='btn'>
 
-      <Pagination>
-        <p>Mostrando 1 a 10 de 30 Entradas</p>
-        <p >Anterior <span className='number'>01</span>     <span className='numberColor'>02  ..  05</span>  <span className='number'>Proxima</span> </p>
-      </Pagination>
+        {/* <a href={Teste} download="dowload.csv"> */}
+          {/* <BasicButton title='Baixar PDF'  /> */}
+        {/* </a> */}
+
+        <CSVLink data={csvData} filename="Arquivo_Teste_Smart_Energia">
+
+        <BasicButton title='Baixar CSV'  />
+        </CSVLink>
+
+      </div>
+
     </TableView>
   )
 }
