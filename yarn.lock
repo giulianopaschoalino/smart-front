@@ -1064,6 +1064,12 @@
     prop-types "^15.7.2"
     react-is "^17.0.2"
 
+"@mui/icons-material@^5.8.2":
+  version "5.8.2"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.8.2.tgz#211ac2a041ece952749d39c3c26071226993be14"
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+
 "@mui/material@^5.6.4":
   version "5.6.4"
   resolved "https://registry.npmjs.org/@mui/material/-/material-5.6.4.tgz"
@@ -1422,7 +1428,6 @@
 "@types/react-csv@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@types/react-csv/-/react-csv-1.1.2.tgz#a5694d7e5cbf4bc1d4baa178a3fa7ac3466ea8c5"
-  integrity sha512-hCtZyXAubxBtn3Oi3I9kNAx2liRTaMtl1eWpO2M98aYkHuoSTbYO8OcZEjyr9aJJ30Xnoxj+uES3G6L6O1qgtg==
   dependencies:
     "@types/react" "*"
 
@@ -3908,7 +3913,6 @@ react-chartjs-2@^4.1.0:
 react-csv@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-csv/-/react-csv-2.2.2.tgz#5bbf0d72a846412221a14880f294da9d6def9bfb"
-  integrity sha512-RG5hOcZKZFigIGE8LxIEV/OgS1vigFQT4EkaHeKgyuCbUAu9Nbd/1RYq++bJcJJ9VOqO/n9TZRADsXNDR4VEpw==
 
 react-dom@18.1.0:
   version "18.1.0"

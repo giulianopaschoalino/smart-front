@@ -1,12 +1,14 @@
 import React from 'react'
+
 import { BasicButtonView } from './BasicButtonView'
 
 interface BasicButtonInterface {
   title: string
+  onClick: () => void
 }
 
-export default function BasicButton({ title }: BasicButtonInterface) {
+export default function BasicButton({title, onClick}: BasicButtonInterface) {
   return (
-    <BasicButtonView>{title}</BasicButtonView>
+    <BasicButtonView onClick={() => onClick()}>{title}</BasicButtonView>
   )
 }
