@@ -63,6 +63,7 @@ export default function Sidebar() {
               </div> */}
             <Link href='/administrative/clients'><li className={router.pathname=='/administrative/clients' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Clientes >'}</li></Link>
             <Link href='/administrative/faq'><li className={router.pathname=='/administrative/faq' ? 'actualPath' : null } ><Image src='/assets/sidebar/saqIcon.svg' width={25} height={25} />{'FAQ >'}</li></Link>
+            <Link href='/administrative/notifications'><li className={router.pathname=='/administrative/notifications'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificações >'}<div className='notification'><p>25</p></div></li></Link>
             {/* <Link href='/administrative/telemetria'><li className={router.pathname=='/telemetria'? 'actualPath' : null}><Image src='/assets/sidebar/telemetryIcon.svg' width={25} height={25} />{'Telemetria >'}</li></Link>
             <Link href='/administrative/resumoOperacao'><li className={router.pathname=='/resumoOperacao'? 'actualPath' : null} ><Image src='/assets/sidebar/summaryOperationsIcon.svg' width={25} height={25} />{'Resumo de Op. '}</li></Link>
             <Link href='/administrative/news'><li className={router.pathname=='/news'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'Notícias >'}</li></Link>

@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import AdministrativeHeader from '../../components/administrativeHeader/AdministrativeHeader';
 import ClientsTable from '../../components/administrativeTables/ClientsTable';
 import BasicButton from '../../components/buttons/basicButton/BasicButton'
+import Header from '../../components/header/Header'
 import ConfirmModal from '../../components/modal/ConfirmModal';
 import Modal from '../../components/modal/Modal';
 import PageTitle from '../../components/pageTitle/PageTitle'
@@ -15,29 +16,10 @@ export default function clients() {
   const [openModal, setOpenModal] = useState(false)
   const [openModalInativar, setOpenModalInativar] = useState(false)
 
-  const rows = [
-    { id: 1, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 2, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 3, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 4, codigoCliente: 'Unidade - 9500689', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 5, codigoCliente: 'Unidade - 9500689', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 6, codigoCliente: 'Unidade - 9500689', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 7, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 8, codigoCliente: 'Unidade - 9500130', clientName: 'FraCopelnces', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 9, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-  ];
-
-  const columns: GridColDef[] = [
-    { field: 'codigoCliente', headerName: 'Código Cliente', width: 180 },
-    { field: 'clientName', headerName: 'Nome do cliente', width: 130 },
-    { field: 'units', headerName: 'Unidade', width: 130 },
-    { field: 'status', headerName: 'Status', width: 90 },
-  ];
-
   return (
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-      <AdministrativeHeader />
       <ClientsView>
+        <Header name='' />
         <PageTitle title='Clientes' subtitle='Clientes Smart Energia'/>
 
         <section>
