@@ -3,87 +3,90 @@ import TextField from '@mui/material/TextField';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import React, { useState } from 'react'
 
+import AdministrativeHeader from '../../components/administrativeHeader/AdministrativeHeader';
+import ClientsTable from '../../components/administrativeTables/ClientsTable';
 import BasicButton from '../../components/buttons/basicButton/BasicButton'
+import ConfirmModal from '../../components/modal/ConfirmModal';
 import Modal from '../../components/modal/Modal';
 import PageTitle from '../../components/pageTitle/PageTitle'
-import { ClientsModalView, ClientsView } from '../../styles/layouts/clients/ClientsView'
+import { ClientsModalView, ClientsView, ConfirmModalView } from '../../styles/layouts/clients/ClientsView'
 
 export default function clients() {
   const [openModal, setOpenModal] = useState(false)
+  const [openModalInativar, setOpenModalInativar] = useState(false)
 
   const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+    { id: 1, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
+    { id: 2, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
+    { id: 3, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
+    { id: 4, codigoCliente: 'Unidade - 9500689', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
+    { id: 5, codigoCliente: 'Unidade - 9500689', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
+    { id: 6, codigoCliente: 'Unidade - 9500689', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
+    { id: 7, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
+    { id: 8, codigoCliente: 'Unidade - 9500130', clientName: 'FraCopelnces', units: 'clique para ver unidades', age: 'ativo' },
+    { id: 9, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
   ];
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'firstName', headerName: 'First name', width: 130 },
-    { field: 'lastName', headerName: 'Last name', width: 130 },
-    {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      width: 90,
-    },
-    {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-    },
+    { field: 'codigoCliente', headerName: 'Código Cliente', width: 180 },
+    { field: 'clientName', headerName: 'Nome do cliente', width: 130 },
+    { field: 'units', headerName: 'Unidade', width: 130 },
+    { field: 'status', headerName: 'Status', width: 90 },
   ];
 
   return (
-    <>
+    <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+      <AdministrativeHeader />
       <ClientsView>
         <PageTitle title='Clientes' subtitle='Clientes Smart Energia'/>
 
         <section>
           <BasicButton title='Adicionar' onClick={() => setOpenModal(true)}/>
-          <BasicButton title='Inativar' onClick={() => {throw new Error('fixing...')}}/>
+          <BasicButton title='Inativar' onClick={() => setOpenModalInativar(true)}/>
         </section>
 
         <section>
-          <DataGrid
+          {/* <DataGrid
             rows={rows}
             columns={columns}
             pageSize={6}
             rowsPerPageOptions={[6]}
             checkboxSelection
-          />
+          /> */}
+          <ClientsTable />
         </section>
       </ClientsView>
 
       <Modal open={openModal} handleIsClose={(value) => {setOpenModal(value)}}>
         <ClientsModalView>
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" style={{width: '300px'}}/>
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" style={{width: '300px'}}/>
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" style={{width: '300px'}}/>
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" style={{width: '300px'}}/>
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" style={{width: '300px'}}/>
-          <Button
-            variant="contained"
-            component="label"
-          >
-            Upload File
-            <input
-              type="file"
-              hidden
-            />
-          </Button>
+          <PageTitle title='Adicionar Cliente' subtitle='Adicionar Cliente Smart Energia'/>
+          <article>
+            <TextField id="outlined-basic" label="Nome" variant="outlined" style={{width: '90%', marginRight: '20px'}}/>
+            <TextField id="outlined-basic" label="email" variant="outlined" style={{width: '90%', marginRight: '20px'}}/>
+            <TextField id="outlined-basic" label="senha" variant="outlined" style={{width: '90%', marginRight: '20px'}}/>
+            <TextField id="outlined-basic" label="código" variant="outlined" style={{width: '90%', marginRight: '20px'}}/>
+            <BasicButton title='Criar Cliente' onClick={() => console.log()}/>
+            <Button
+              variant="contained"
+              component="label"
+              style={{width: '300px'}}
+            >
+              Logo
+              <input
+                type="file"
+                hidden
+              />
+            </Button>
+          </article>
         </ClientsModalView>
       </Modal>
-    </>
+
+      <ConfirmModal open={openModalInativar} handleIsClose={(value) => {setOpenModalInativar(value)}}>
+        <ConfirmModalView>
+          <BasicButton title='Confirmar' onClick={() => setOpenModalInativar(true)}/>
+          <BasicButton title='Cancelar' onClick={() => setOpenModalInativar(true)}/>
+        </ConfirmModalView>
+      </ConfirmModal>
+    </div>
   )
 }

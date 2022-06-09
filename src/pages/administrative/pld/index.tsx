@@ -1,25 +1,24 @@
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
-import BasicButton from '../../components/buttons/basicButton/BasicButton';
-import Chart from '../../components/graph/Chart';
-import { LineBarChart } from '../../components/graph/LineBarChart';
-import LineChart from '../../components/graph/LineChart';
-import Header from '../../components/header/Header'
-import PageTitle from '../../components/pageTitle/PageTitle';
-import { EconomiaAcumulada } from '../../services/economiaAcumulada';
-import { EvolucaoPld } from '../../services/evolucaoPld';
-import { GoBack, PldGraphView, PldTableView } from '../../styles/layouts/pld/PldView'
-import RenderIf from '../../utils/renderIf'
+import AdministrativeHeader from '../../../components/administrativeHeader/AdministrativeHeader';
+import BasicButton from '../../../components/buttons/basicButton/BasicButton';
+import Chart from '../../../components/graph/Chart';
+import { LineBarChart } from '../../../components/graph/LineBarChart';
+import LineChart from '../../../components/graph/LineChart';
+import Header from '../../../components/header/Header'
+import PageTitle from '../../../components/pageTitle/PageTitle';
+import { EconomiaAcumulada } from '../../../services/economiaAcumulada';
+import { EvolucaoPld } from '../../../services/evolucaoPld';
+import { GoBack, NewTableLine, PldGraphView, PldTableView } from '../../../styles/layouts/pld/PldView'
+import RenderIf from '../../../utils/renderIf'
 
-export default function region() {
-  const router = useRouter()
-  const { region } = router.query
-
+export default function index() {
   const [page, setPage] = useState<string>('table')
   const [age, setAge] = React.useState('');
 
@@ -31,20 +30,6 @@ export default function region() {
     console.log(page)
   }, [page])
 
-  function handleGreen(minimo, mi, ma, maximo) {
-    if (minimo - mi >= 100 && minimo - mi < 200) {
-      return 'green'
-    } else if ( mi*2 >= 200 && mi*2 <250 ) {
-      return'dullGreen'
-    } else if ( (ma-mi)/2 >=250 && (ma-mi)/2 < 300 ) {
-      return 'white'
-    } else if ( ma/2 >= 300 && ma/2 < 600 ) {
-      return 'dullRed'
-    } else if ( maximo-ma > 600 ) {
-      return 'red'
-    }
-  }
-
   return (
     <main style={{
       width: '100%',
@@ -52,10 +37,20 @@ export default function region() {
       <Head>
         <title>Smart Energia - PLD</title>
       </Head>
-      <Header name='' />
+      <AdministrativeHeader />
       <RenderIf isTrue={page==='table'? true : false}>
         <Link href='/dashboard' >{'< voltar para visão geral'}</Link>
         <PageTitle title='Tabela de consumo Pld' subtitle=''/>
+        <NewTableLine>
+          <article>
+            <TextField label="Mês" variant="standard" style={{width: '15%'}}/>
+            <TextField label="Nordeste" variant="standard" style={{width: '15%'}}/>
+            <TextField label="Nort" variant="standard" style={{width: '15%'}}/>
+            <TextField label="Sudeste" variant="standard" style={{width: '15%'}}/>
+            <TextField label="Sul" variant="standard" style={{width: '15%'}}/>
+          </article>
+          <BasicButton title='Adicionar' onClick={() => console.log()}/>
+        </NewTableLine>
         <PldTableView>
           <table className="tg">
             <thead>
@@ -226,7 +221,7 @@ export default function region() {
           <PageTitle title='Consumo por dia' subtitle=''/>
           <section className='toolsbar'>
             <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2021-09-19"/>
-            <BasicButton title='Download (csv)' />
+            <BasicButton title='Download (csv)' onClick={() => console.log()}/>
           </section>
           <LineChart data1={EconomiaAcumulada.data3} data2={EconomiaAcumulada.data4} data3={EconomiaAcumulada.data5} data4={EconomiaAcumulada.data6} dataset1='NORDESTE' dataset2='NORTE' dataset3='SUDESTE' dataset4='SUL' title='PLD - 19/09/21' subtitle='' label={EconomiaAcumulada.label1} />
         </PldGraphView>

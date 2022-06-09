@@ -4,6 +4,8 @@ export const ClientsView = styled.main`
   display: flex;
   flex-direction: column;
 
+  width: 100%;
+
   section {
     display: flex;
 
@@ -18,15 +20,37 @@ export const ClientsView = styled.main`
     }
 
     :last-child {
-      width: 50rem;
-      height: 30rem;
+      width: 100%;
     }
   }
 `
 
 export const ClientsModalView = styled.main`
-  display: grid;
+  display: flex;
+  flex-direction: column;
 
-  grid-template-columns: 100% 100%;
-  grid-template-rows: 100% 100% 100% 100%;
+  width: 70%;
+  article {
+    display: grid;
+
+    align-self: flex-start;
+    width: 100%;
+
+    grid-template-columns: 80% 80%;
+    grid-template-rows: 50% 50%;
+
+    margin-top: 70px
+  }
+`
+
+export const ConfirmModalView = styled.main`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  height: 100%;
 `

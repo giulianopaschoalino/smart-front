@@ -12,21 +12,21 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '80%',
-  height: '550px',
+  width: '30%',
+  height: '30%',
   bgcolor: 'background.paper',
   border: '2px solid #254F7F',
   boxShadow: 24,
   p: 4,
 };
 
-interface BasicModalInterface{
+interface ConfirmModalInterface{
   open: boolean,
   handleIsClose: (value: any) => void,
   children:  React.ReactNode
 }
 
-export default function BasicModal({open, handleIsClose, children}: BasicModalInterface) {
+export default function ConfirmModal({open, handleIsClose, children}: ConfirmModalInterface) {
   const [openState, setOpenState] = React.useState(false);
   const handleOpen = () => setOpenState(true);
   const handleClose = () => {setOpenState(false); handleIsClose(false)}

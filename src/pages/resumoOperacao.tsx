@@ -1,22 +1,20 @@
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Head from 'next/head';
 import React, { useEffect } from 'react';
+// import Teste from '../files/teste.csv';
+import { CSVDownload, CSVLink } from "react-csv";
+
+import BasicButton from '../components/buttons/basicButton/BasicButton';
 import Header from '../components/header/Header';
 import PageTitle from '../components/pageTitle/PageTitle';
-import BasicButton from '../components/buttons/basicButton/BasicButton';
 import Sidebar from '../components/sidebar/Sidebar';
 // import { dados } from '../services/DadosTabelaResumoOperacao';
 import data from '../services/dados.json'
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Box from '@mui/material/Box';
-// import Teste from '../files/teste.csv';
-import { CSVLink, CSVDownload } from "react-csv";
-
-
-
 import { Pagination, TableView } from '../styles/layouts/ResumoOperacao/ResumoOperacaoView';
-import Head from 'next/head';
 
 export default function ResumoOperacao() {
   const csvData = [
@@ -55,7 +53,6 @@ export default function ResumoOperacao() {
     console.log(data.unidades.filter((value, index)=> value.value.includes(unidade)))
   }, [month, unidade])
 
-
   return(
     <TableView>
       <Head>
@@ -65,52 +62,49 @@ export default function ResumoOperacao() {
       <PageTitle title='Resumo de Operaçoes' subtitle='Operações detalhadas' />
 
       <h3>Seletor Mês</h3>
-    <div className='select'>
+      <div className='select'>
+        <FormControl fullWidth  >
+          <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={unidade}
+            label="Unidade"
+            onChange={handleChangeUnidade}
+          >
+            <MenuItem key={1} value={''}></MenuItem>
+            {
+              data.unidades.map((value) => {
+                return <MenuItem key={1} value={value.value}>{value.name}</MenuItem>
+              })
+            }
+          </Select>
+        </FormControl>
 
-      <FormControl fullWidth  >
-        <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={unidade}
-          label="Unidade"
-          onChange={handleChangeUnidade}
-        >
-          <MenuItem key={1} value={''}></MenuItem>
-          {
-            data.unidades.map((value) => {
-              return <MenuItem key={1} value={value.value}>{value.name}</MenuItem>
-            })
-          }
-        </Select>
-      </FormControl>
-
-
-      <FormControl fullWidth sx={{ml:1}} >
-
-        <InputLabel id="demo-simple-select-label">Mês</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={month}
-          label="Month"
-          onChange={handleChangeMonth}
-        >
-          <MenuItem value={15}>Janeiro</MenuItem>
-          <MenuItem value={20}>Fevereiro</MenuItem>
-          <MenuItem value={30}>Março</MenuItem>
-          <MenuItem value={30}>Abril</MenuItem>
-          <MenuItem value={30}>Março</MenuItem>
-          <MenuItem value={30}>Maio</MenuItem>
-          <MenuItem value={30}>Junho</MenuItem>
-          <MenuItem value={30}>Julho</MenuItem>
-          <MenuItem value={30}>Agosto</MenuItem>
-          <MenuItem value={30}>Setembro</MenuItem>
-          <MenuItem value={30}>Outubro</MenuItem>
-          <MenuItem value={30}>Novembro</MenuItem>
-          <MenuItem value={30}>Dezembro</MenuItem>
-        </Select>
-      </FormControl>
+        <FormControl fullWidth sx={{ml:1}} >
+          <InputLabel id="demo-simple-select-label">Mês</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={month}
+            label="Month"
+            onChange={handleChangeMonth}
+          >
+            <MenuItem value={15}>Janeiro</MenuItem>
+            <MenuItem value={20}>Fevereiro</MenuItem>
+            <MenuItem value={30}>Março</MenuItem>
+            <MenuItem value={30}>Abril</MenuItem>
+            <MenuItem value={30}>Março</MenuItem>
+            <MenuItem value={30}>Maio</MenuItem>
+            <MenuItem value={30}>Junho</MenuItem>
+            <MenuItem value={30}>Julho</MenuItem>
+            <MenuItem value={30}>Agosto</MenuItem>
+            <MenuItem value={30}>Setembro</MenuItem>
+            <MenuItem value={30}>Outubro</MenuItem>
+            <MenuItem value={30}>Novembro</MenuItem>
+            <MenuItem value={30}>Dezembro</MenuItem>
+          </Select>
+        </FormControl>
       </div>
       <table className="tg">
         <thead>
@@ -147,22 +141,20 @@ export default function ResumoOperacao() {
               }
             })
           }
-
         </tbody>
       </table>
       <div className='btn'>
-
         {/* <a href={Teste} download="dowload.csv"> */}
           {/* <BasicButton title='Baixar PDF'  /> */}
         {/* </a> */}
 
         <CSVLink data={csvData} filename="Arquivo_Teste_Smart_Energia">
 
-        <BasicButton title='Baixar CSV'  />
+        <BasicButton title='Baixar CSV' onClick={function (): void {
+          throw new Error('Function not implemented.');
+        }}/>
         </CSVLink>
-
       </div>
-
     </TableView>
   )
 }

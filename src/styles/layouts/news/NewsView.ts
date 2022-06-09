@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const NewsView = styled.main`
   width: 100%;
 
+  margin-bottom: 100px;
+
   p {
     font-family: 'Poppins';
     font-style: normal;
@@ -22,20 +24,20 @@ export const NewsView = styled.main`
       margin-bottom: 8px;
     }
     button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-    width: 140px;
-    height: 45px;
-    cursor: pointer;
-    background: #254F7F;
-    border-radius: 8px;
-    border-style: none;
-    font-family: 'Poppins';
-    font-size: 90%;
-    color: #FFFFFF;
-   }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+      width: 140px;
+      height: 45px;
+      cursor: pointer;
+      background: #254F7F;
+      border-radius: 8px;
+      border-style: none;
+      font-family: 'Poppins';
+      font-size: 90%;
+      color: #FFFFFF;
+    }
   }
 
   section {
@@ -54,9 +56,8 @@ export const NewsView = styled.main`
         flex-direction: column;
       }
     }
-
-
-}`;
+  }
+`;
 
 export const Button = styled.div`
   display: flex;

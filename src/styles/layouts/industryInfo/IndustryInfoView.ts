@@ -12,7 +12,7 @@ export const IndustryInfoView = styled.main`
 button{
   height:60px;
   width: 22%;
-  margin-top: 17rem;
+  margin-top: 12rem;
   cursor: pointer;
   background: #254F7F;
   border-radius: 8px;
