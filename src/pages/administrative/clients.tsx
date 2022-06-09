@@ -12,8 +12,8 @@ import FaqButton1 from '../../components/buttons/faqButton/FaqButton1';
 import FaqButton2 from '../../components/buttons/faqButton/FaqButton2';
 import AdministrativeHeader from '../../components/administrativeHeader/AdministrativeHeader';
 import ClientsTable from '../../components/administrativeTables/ClientsTable';
+import Header from '../../components/header/Header'
 
-import ConfirmModal from '../../components/modal/ConfirmModal';
 
 const style = {
   position: 'absolute' as const,
@@ -40,33 +40,15 @@ export default function clients() {
   const [openModalInativar, setOpenModalInativar] = useState(false)
 
 
-  const rows = [
-    { id: 1, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 2, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 3, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 4, codigoCliente: 'Unidade - 9500689', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 5, codigoCliente: 'Unidade - 9500689', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 6, codigoCliente: 'Unidade - 9500689', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 7, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 8, codigoCliente: 'Unidade - 9500130', clientName: 'FraCopelnces', units: 'clique para ver unidades', age: 'ativo' },
-    { id: 9, codigoCliente: 'Unidade - 9500130', clientName: 'Copel', units: 'clique para ver unidades', age: 'ativo' },
-  ];
-
-  const columns: GridColDef[] = [
-    { field: 'codigoCliente', headerName: 'Código Cliente', width: 180 },
-    { field: 'clientName', headerName: 'Nome do cliente', width: 130 },
-    { field: 'units', headerName: 'Unidade', width: 130 },
-    { field: 'status', headerName: 'Status', width: 90 },
-  ];
 
   return (
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-      <AdministrativeHeader />
       <ClientsView>
+        <Header name='' />
         <PageTitle title='Clientes' subtitle='Clientes Smart Energia'/>
           {/* <BasicButton title='Adicionar' onClick={handleOpen}/> */}
           <div className='buttons'>
-        <button className='btn2' onClick={handleOpen}>Open modal</button>
+        <button className='btn2' onClick={handleOpen}>Adicionar</button>
         <button className='btn1' onClick={handleOpen}>Inativar</button>
         </div>
         <Modal
@@ -87,8 +69,8 @@ export default function clients() {
          <TextField id="outlined-basic" label="Codigo do Cliente Smart Energia" sx={{width:350, ml:5, mt:2}} variant="outlined" />
          <TextField id="outlined-basic" label="Imagem/Logotipo" sx={{width:350, ml:8, mt:2}} variant="outlined" />
           <br /><br />
-         <FaqButton1  title='Cancelar' />
-          <FaqButton2  title='Salvar' />
+        <FaqButton1  title='Cancelar' onClick={()=>console.log()} />
+        <FaqButton2  title='Salvar' onClick={()=>console.log()}/>
         </Box>
         </Modal>
         <section>

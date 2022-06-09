@@ -42,12 +42,12 @@ function createData(
 }
 
 const rows = [
-  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'Active'),
-  createData('Como usar o sistema', 'Você deve usar assim... e assado...', 'active'),
-  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'active'),
-  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'active'),
-  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'active'),
-  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'inactive'),
+  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'ativo'),
+  createData('Como usar o sistema', 'Você deve usar assim... e assado...', 'ativo'),
+  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'ativo'),
+  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'ativo'),
+  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'ativo'),
+  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'inativo'),
 ];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -66,8 +66,8 @@ function getComparator<Key extends keyof any>(
   order: Order,
   orderBy: Key,
 ): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string },
+  a: { [key in Key]: any },
+  b: { [key in Key]: any },
 ) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
@@ -98,13 +98,13 @@ const headCells: readonly HeadCell[] = [
     id: 'question',
     numeric: false,
     disablePadding: true,
-    label: 'código do cliente',
+    label: 'Pergunta',
   },
   {
     id: 'answer',
     numeric: true,
     disablePadding: false,
-    label: 'name',
+    label: 'Resposta',
   },
   {
     id: 'status',
@@ -127,7 +127,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
     props;
   const createSortHandler =
-    (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+    (property: any) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 
@@ -171,7 +171,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-export default function ClientTable() {
+export default function FaqTable() {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Data | string>('status');
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -190,7 +190,7 @@ export default function ClientTable() {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = rows.map((n) => n.question);
       setSelected(newSelecteds);
       return;
     }

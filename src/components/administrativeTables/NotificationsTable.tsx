@@ -24,33 +24,30 @@ import React, { useState } from 'react';
 import { ClientTableView, StyledStatus } from './ClientsTableView';
 
 interface Data {
-  clientCode: number,
-  name: string,
-  unity: string,
+  notification: string,
+  client: string,
   status: string,
 }
 
 function createData(
-  clientCode: number,
-  name: string,
-  unity: string,
+  notification: string,
+  client: string,
   status: string,
 ): Data {
   return {
-    clientCode,
-    name,
-    unity,
+    notification,
+    client,
     status,
   };
 }
 
 const rows = [
-  createData(9500130, 'Copel', 'clique para ver unidades', 'ativo'),
-  createData(9500131, 'Copel', 'clique para ver unidades', 'ativo'),
-  createData(9500132, 'Copel', 'clique para ver unidades', 'ativo'),
-  createData(9500689, 'Copel', 'clique para ver unidades', 'pendente'),
-  createData(9500690, 'Copel', 'clique para ver unidades', 'inativo'),
-  createData(9500691, 'Copel', 'clique para ver unidades', 'inativo'),
+  createData('Confira tal coisa - Texto da notificação', 'Copel', 'enviada'),
+  createData('Confira tal coisa - Texto da notificação', 'Copel', 'enviada'),
+  createData('Confira tal coisa - Texto da notificação', 'Copel', 'enviada'),
+  createData('Confira tal coisa - Texto da notificação', 'Copel', 'falhou'),
+  createData('Confira tal coisa - Texto da notificação', 'Copel', 'pendente'),
+  createData('Confira tal coisa - Texto da notificação', 'Copel', 'enviada'),
 ];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -67,10 +64,10 @@ type Order = 'asc' | 'desc';
 
 function getComparator<Key extends keyof any>(
   order: Order,
-  orderBy: any,
+  orderBy: Key,
 ): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string },
+  a: { [key in Key]: any },
+  b: { [key in Key]: any },
 ) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
@@ -98,22 +95,16 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
   {
-    id: 'clientCode',
+    id: 'notification',
     numeric: false,
     disablePadding: true,
-    label: 'código do cliente',
+    label: 'notificação',
   },
   {
-    id: 'name',
+    id: 'client',
     numeric: true,
     disablePadding: false,
-    label: 'name',
-  },
-  {
-    id: 'unity',
-    numeric: true,
-    disablePadding: false,
-    label: 'unity',
+    label: 'cliente',
   },
   {
     id: 'status',
@@ -199,19 +190,19 @@ export default function ClientTable() {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = rows.map((n) => n.notification);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, code: string) => {
-    const selectedIndex = selected.indexOf(code);
+  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+    const selectedIndex = selected.indexOf(name);
     let newSelected: readonly string[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, code);
+      newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -235,7 +226,7 @@ export default function ClientTable() {
     setPage(0);
   };
 
-  const isSelected = (code: any) => selected.indexOf(code.toString()) !== -1;
+  const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -262,17 +253,17 @@ export default function ClientTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.clientCode);
+                  const isItemSelected = isSelected(row.notification.toString());
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.clientCode.toString())}
+                      onClick={(event) => handleClick(event, row.notification.toString())}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.clientCode}
+                      key={row.notification}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -290,11 +281,10 @@ export default function ClientTable() {
                         scope="row"
                         padding="none"
                       >
-                        Unidade - {row.clientCode}
+                        {row.notification}
                       </TableCell>
-                      <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.unity}</TableCell>
-                      <TableCell align="left"><StyledStatus status={row.status}>{row.status}</StyledStatus></TableCell>
+                      <TableCell align="left">{row.client}</TableCell>
+                      <TableCell align="left"><StyledStatus status={row.status==='enviada'? 'ativo' : row.status==='falhou'? 'inativo' : 'pendente'}>{row.status}</StyledStatus></TableCell>
                     </TableRow>
                   );
                 })}

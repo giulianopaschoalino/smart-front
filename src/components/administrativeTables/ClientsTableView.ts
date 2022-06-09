@@ -33,7 +33,7 @@ export const ClientTableView = styled.main`
   }
 `
 
-export const StyledStatus = styled.div<{status: string}>`
+export const StyledStatus = styled.div<{status: any}>`
   display: flex;
   align-items: center;
   justify-content: center;

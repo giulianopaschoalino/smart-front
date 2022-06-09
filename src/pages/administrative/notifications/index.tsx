@@ -7,6 +7,7 @@ import Head from 'next/head'
 import React from 'react'
 
 import AdministrativeHeader from '../../../components/administrativeHeader/AdministrativeHeader'
+import NotificationsTable from '../../../components/administrativeTables/NotificationsTable';
 import BasicButton from '../../../components/buttons/basicButton/BasicButton';
 import CommonQuestionsCard from '../../../components/faqQuestionsCard/FaqQuestionsCard'
 import Header from '../../../components/header/Header'
@@ -26,53 +27,13 @@ export default function commonQuestions() {
 
   return (
     <>
-      <Head>
-        <title>Smart Energia - FAQ</title>
-      </Head>
-      <AdministrativeHeader />
       <FaqView>
-        <h1>Perguntas Frequentes</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <Head>
+          <title>Smart Energia - FAQ</title>
+        </Head>
+        <Header />
 
-        <TextField id="standard-basic" label="Mensagem" sx={{width:700}} variant="standard" />
-
-        <br />
-
-        <FormControl size='small' fullWidth sx={{ width: 135}} >
-
-          <InputLabel id="demo-simple-select-label">Clientes</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={month}
-            label="Month"
-            onChange={handleChangeMonth}
-          >
-            <MenuItem value={15}>Cliente 1</MenuItem>
-            <MenuItem value={20}>Cliente 2</MenuItem>
-            <MenuItem value={30}>Cliente 3</MenuItem>
-            <MenuItem value={30}>Cliente 4</MenuItem>
-            <MenuItem value={30}>Cliente 5</MenuItem>
-            <MenuItem value={30}>Cliente 6</MenuItem>
-            <MenuItem value={30}>Cliente 7</MenuItem>
-
-          </Select>
-        </FormControl>
-  <br />
-        <BasicButton title='Enviar' onClick={() => console.log()}/>
-
-        <section className='CommonQuestionsSection' >
-          <CommonQuestionsCard />
-          <hr />
-          <CommonQuestionsCard />
-          <hr />
-          <CommonQuestionsCard />
-          <hr />
-          <CommonQuestionsCard />
-          <hr />
-          <CommonQuestionsCard />
-          <hr />
-        </section>
+        <NotificationsTable />
       </FaqView>
     </>
   )
