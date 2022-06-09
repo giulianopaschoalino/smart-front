@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import React from 'react'
-import CommonQuestionsCard from '../../../components/faqQuestionsCard/FaqQuestionsCard'
+
 import Header from '../../../components/header/Header'
 import { NotificationView } from './notificationView'
 import BasicButton from '../../../components/buttons/basicButton/BasicButton';
@@ -11,6 +11,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import PageTitle from '../../../components/pageTitle/PageTitle'
 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -52,12 +53,12 @@ export default function commonQuestions() {
 
   return (
     <NotificationView>
+
       <Head>
         <title>Smart Energia - FAQ</title>
       </Head>
-      <Header  name='' />
-      <h1>Perguntas Frequentes</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+      <PageTitle title='Perguntas Frequentes' subtitle='Perguntas Frequentes'/>
 
 
       <button className='btn2' onClick={handleOpen}>Open modal</button>

@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-
 export const TableView = styled.div`
   display: flex;
   padding: 2.5rem;
@@ -21,13 +20,9 @@ export const TableView = styled.div`
   .select{
     display: flex;
 
-
     margin-bottom: 25px;
 
     width: 20rem;
-  }
-  .titleUnidade{
-
   }
 
   .tg{
@@ -35,7 +30,6 @@ export const TableView = styled.div`
     border-spacing:0;
     font-family:Poppins;
     width: 100%;
-
   }
 
   .tg td{
@@ -48,7 +42,6 @@ export const TableView = styled.div`
     padding:17px 30px;
     word-break:normal;
   }
-
 
   .tg th{
     border-color:#DDDFE1;
@@ -134,8 +127,27 @@ export const Pagination = styled.div`
   .numberColor{
     color: #ABAFB3;
   }
+`
 
+export const NewTableLine = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 
+  flex-direction: column;
 
-`;
+  margin: 0 0 15px 0;
 
+  width: 100%;
+  article {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-direction: row;
+
+    width: 100%;
+
+    margin: 0 0 10px 0;
+  }
+`

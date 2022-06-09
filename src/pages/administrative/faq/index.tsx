@@ -7,14 +7,23 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
+import PageTitle from '../../../components/pageTitle/PageTitle'
+
 import FaqButton1 from '../../../components/buttons/faqButton/FaqButton1';
 import FaqButton2 from '../../../components/buttons/faqButton/FaqButton2';
-import CommonQuestionsCard from '../../../components/faqQuestionsCard/FaqQuestionsCard'
+
+import TextField from '@mui/material/TextField';
+import Head from 'next/head'
 
 
 
-import { FaqView } from './faqView'
+import FaqTable from '../../../components/administrativeTables/FaqTable';
+import BasicButton from '../../../components/buttons/basicButton/BasicButton';
+import Header from '../../../components/header/Header'
+import { FaqView } from '../../../styles/layouts/commonQuestions/FaqView'
+
+
+
 
 const style = {
   position: 'absolute' as const,
@@ -38,18 +47,21 @@ export default function Sidebar() {
   const handleClose = () => setOpen(false);
 
 
-  return (
-    <FaqView>
-      <div className='title'>
-       <h1>Adicionar/Editar Pergunta</h1>
-          <Typography sx={{color:'gray', fontSize:12}}variant="h5" gutterBottom component="div">
-          Adicionar/Editar Pergunta
-          </Typography>
-      </div>
-      <div className='buttons'>
 
-      <button className='btn' onClick={handleOpen}>Open modal</button>
+  return (
+    <>
+
+    <FaqView>
+    <Header name=''/>
+
+      <PageTitle title='Perguntas Frequentes' subtitle='Perguntas Frequentes'/>
+
+
+
+      <div className='buttons'>
       <button className='btn2' onClick={handleOpen}>Open modal</button>
+      <button className='btn1' onClick={handleOpen}>Open modal</button>
+
       </div>
         <Modal
         open={open}
@@ -71,8 +83,9 @@ export default function Sidebar() {
         </Box>
 
       </Modal>
-
+      <FaqTable />
 
     </FaqView>
+    </>
   )
 }

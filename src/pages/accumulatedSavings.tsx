@@ -7,7 +7,6 @@ import Header from '../components/header/Header'
 import PageTitle from '../components/pageTitle/PageTitle'
 import { EconomiaAcumulada } from '../services/economiaAcumulada'
 import { dataEconomiaBruta } from '../services/economiaBruta'
-
 import { AccumulatedSavingsView } from '../styles/layouts/economy/accumulatedSavings/AccumulatedSavingsView'
 
 export default function AccumulatedSavings() {
@@ -19,7 +18,8 @@ export default function AccumulatedSavings() {
       <Header name='' />
       <PageTitle title='Economia Acumulada' subtitle='Economia Bruta Estimada e Acumulada anual (Valores em R$ mil)' />
       <section>
-        <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$ mil)' dataset='Consolidada' dataset1='Estimada' label={EconomiaAcumulada.label}  dataProps={EconomiaAcumulada.data2} barLabel month/>
+        <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$ mil)' dataset='Consolidada'
+          dataset1='Estimada' label={EconomiaAcumulada.label}  dataProps={EconomiaAcumulada.data2} barLabel month/>
       </section>
     </AccumulatedSavingsView>
   )
