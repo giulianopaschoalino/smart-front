@@ -33,4 +33,14 @@ export const FaqView = styled.main`
   hr {
     border: 1px solid #DDDDDD;
   }
+
+  /* .modal{
+    display: flex;
+    justify-self: flex-end;
+    align-self: center;
+    margin-left: 100px;
+
+  } */
+
+
 `
