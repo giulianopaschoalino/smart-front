@@ -67,7 +67,14 @@ export const NotificationView = styled.nav`
     justify-content: flex-start;
     align-self: flex-start;
     margin-top: 45px;
+    margin-left: 16px;
 
+  }
+  .title{
+    display: flex;
+    justify-content: flex-start;
+    align-self: flex-start;
+    margin-left: 16px;
   }
 
 

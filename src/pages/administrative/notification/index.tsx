@@ -57,11 +57,15 @@ export default function commonQuestions() {
       <Head>
         <title>Smart Energia - FAQ</title>
       </Head>
-
+      <div className='title'>
       <PageTitle title='Perguntas Frequentes' subtitle='Perguntas Frequentes'/>
+      </div>
 
+      <div className='buttons'>
+      <button className='btn2' onClick={handleOpen}>Adicionar</button>
+      <button className='btn1' onClick={handleOpen}>Inativar</button>
 
-      <button className='btn2' onClick={handleOpen}>Open modal</button>
+      </div>
         <Modal
         open={open}
         onClose={handleClose}
