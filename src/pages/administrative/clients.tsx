@@ -13,6 +13,9 @@ import FaqButton2 from '../../components/buttons/faqButton/FaqButton2';
 import AdministrativeHeader from '../../components/administrativeHeader/AdministrativeHeader';
 import ClientsTable from '../../components/administrativeTables/ClientsTable';
 import Header from '../../components/header/Header'
+import { IconButton } from '@mui/material';
+import InputUpload from '../../components/inputUplaod/inputUpload'
+
 
 
 const style = {
@@ -38,6 +41,8 @@ export default function clients() {
 
   const [openModal, setOpenModal] = useState(false)
   const [openModalInativar, setOpenModalInativar] = useState(false)
+
+
 
 
 
@@ -67,7 +72,12 @@ export default function clients() {
          <TextField id="outlined-basic" label="Senha" sx={{width:350, ml:5, mt:2}} variant="outlined" />
          <TextField id="outlined-basic" label="Confirma Senha" sx={{width:350, ml:8, mt:2}} variant="outlined" />
          <TextField id="outlined-basic" label="Codigo do Cliente Smart Energia" sx={{width:350, ml:5, mt:2}} variant="outlined" />
-         <TextField id="outlined-basic" label="Imagem/Logotipo" sx={{width:350, ml:8, mt:2}} variant="outlined" />
+         <InputUpload />
+
+
+
+
+
           <br /><br />
         <FaqButton1  title='Cancelar' onClick={()=>console.log()} />
         <FaqButton2  title='Salvar' onClick={()=>console.log()}/>
