@@ -40,6 +40,7 @@ export const ClientsView = styled.main`
   }
   .buttons{
     display: flex;
+    margin-top: 40px;
 
   }
 `

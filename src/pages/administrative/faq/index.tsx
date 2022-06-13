@@ -59,8 +59,8 @@ export default function Sidebar() {
 
 
       <div className='buttons'>
-      <button className='btn2' onClick={handleOpen}>Open modal</button>
-      <button className='btn1' onClick={handleOpen}>Open modal</button>
+      <button className='btn2' onClick={handleOpen}>Adicionar</button>
+      <button className='btn1' onClick={handleOpen}>Inativar</button>
 
       </div>
         <Modal

@@ -35,7 +35,7 @@ export default function Sidebar() {
   const router = useRouter()
 
   const user = {
-    role: 'admin'
+    role: 'client'
   }
 
   useEffect(() => {

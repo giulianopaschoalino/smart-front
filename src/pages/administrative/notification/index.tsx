@@ -12,6 +12,8 @@ import Checkbox from '@mui/material/Checkbox';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import PageTitle from '../../../components/pageTitle/PageTitle'
+import NotificationsTable from '../../../components/administrativeTables/NotificationsTable'
+import { FaqView } from '../../../styles/layouts/commonQuestions/FaqView'
 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -52,18 +54,22 @@ export default function commonQuestions() {
 
 
   return (
-    <NotificationView>
+    <FaqView>
 
       <Head>
-        <title>Smart Energia - FAQ</title>
+        <title>Smart Energia - Notificações</title>
       </Head>
-      <div className='title'>
-      <PageTitle title='Perguntas Frequentes' subtitle='Perguntas Frequentes'/>
-      </div>
+
+      <Header name=''/>
+
+
+
+      <PageTitle title='Notificações' subtitle='Notificações'/>
+
 
       <div className='buttons'>
-      <button className='btn2' onClick={handleOpen}>Adicionar</button>
-      <button className='btn1' onClick={handleOpen}>Inativar</button>
+      <button className='btn2' onClick={handleOpen}>Disparar nova</button>
+
 
       </div>
         <Modal
@@ -121,17 +127,15 @@ export default function commonQuestions() {
          <FaqButton1  title='Cancelar' />
          <FaqButton2  title='Salvar' />
         </Box>
-
-
-
-
       </Modal>
 
+      <NotificationsTable />
 
 
 
 
-    </NotificationView>
+
+    </FaqView>
 
 
   )
