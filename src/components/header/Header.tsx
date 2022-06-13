@@ -1,8 +1,7 @@
-import React from 'react'
-import Image from 'next/image';
-
-import TextField from '@mui/material/TextField';
 import Avatar from '@mui/material/Avatar';
+import TextField from '@mui/material/TextField';
+import Image from 'next/image';
+import React from 'react'
 
 import { HeaderView } from './HeaderView'
 
@@ -38,7 +37,6 @@ interface headerInterface {
 }
 
 export default function Header({ name }: headerInterface) {
-
   return (
     <HeaderView>
       <section>
@@ -53,9 +51,11 @@ export default function Header({ name }: headerInterface) {
       <section>
         <Image src='/assets/png/copel.png' width={170} height={50} />
         <div className='icon' >
-          olá, {'josé'}
+          <p>
+            olá, {'josé'}
+          </p>
         </div>
-        <Avatar {...stringAvatar('José Corte')} />
+        <Avatar {...stringAvatar('José Corte')} style={{border: 'white solid 4px', width: '47px', height: '47px'}}/>
       </section>
     </HeaderView>
   )

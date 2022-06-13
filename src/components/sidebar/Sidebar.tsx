@@ -35,7 +35,7 @@ export default function Sidebar() {
   const router = useRouter()
 
   const user = {
-    role: 'admin'
+    role: 'client'
   }
 
   useEffect(() => {
@@ -53,7 +53,10 @@ export default function Sidebar() {
             <Image src='/assets/logo.svg' width={100} height={100} />
           </div>
           <ul>
-            <Link href='/administrative'><li className={router.pathname=='/administrative'? 'actualPath' : null} ><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Visão Geral'}</li></Link>
+            <Link href='/administrative'><li className={router.pathname=='/administrative' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Clientes >'}</li></Link>
+            <Link href='/administrative/general'><li className={router.pathname=='/administrative/general'? 'actualPath' : null} ><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Visão Geral'}</li></Link>
+            <Link href='/administrative/faq'><li className={router.pathname=='/administrative/faq' ? 'actualPath' : null } ><Image src='/assets/sidebar/saqIcon.svg' width={25} height={25} />{'FAQ >'}</li></Link>
+            <Link href='/administrative/notifications'><li className={router.pathname=='/administrative/notifications'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificações >'}<div className='notification'><p>25</p></div></li></Link>
             {/* <li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/grossSavings' || router.pathname=='/accumulatedSavings' || router.pathname=='/estimatedCost' || router.pathname=='/costIndicator' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Economia >'}</li>
               <div className='economiaDrawer drawer' >
                 <Link href='/administrative/grossSavings'><li className={router.pathname=='/grossSavings'? 'actualPathDrawer' : null}>Economia Bruta</li></Link>
@@ -61,9 +64,6 @@ export default function Sidebar() {
                 <Link href='/administrative/estimatedCost'><li className={router.pathname=='/estimatedCost'? 'actualPathDrawer' : null}>Custo Estimado</li></Link>
                 <Link href='/administrative/costIndicator'><li className={router.pathname=='/costIndicator'? 'actualPathDrawer' : null}>Custo R/MWh</li></Link>
               </div> */}
-            <Link href='/administrative/clients'><li className={router.pathname=='/administrative/clients' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Clientes >'}</li></Link>
-            <Link href='/administrative/faq'><li className={router.pathname=='/administrative/faq' ? 'actualPath' : null } ><Image src='/assets/sidebar/saqIcon.svg' width={25} height={25} />{'FAQ >'}</li></Link>
-            <Link href='/administrative/notifications'><li className={router.pathname=='/administrative/notifications'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificações >'}<div className='notification'><p>25</p></div></li></Link>
             {/* <Link href='/administrative/telemetria'><li className={router.pathname=='/telemetria'? 'actualPath' : null}><Image src='/assets/sidebar/telemetryIcon.svg' width={25} height={25} />{'Telemetria >'}</li></Link>
             <Link href='/administrative/resumoOperacao'><li className={router.pathname=='/resumoOperacao'? 'actualPath' : null} ><Image src='/assets/sidebar/summaryOperationsIcon.svg' width={25} height={25} />{'Resumo de Op. '}</li></Link>
             <Link href='/administrative/news'><li className={router.pathname=='/news'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'Notícias >'}</li></Link>

@@ -5,7 +5,19 @@ export const ClientTableView = styled.main`
 
   color: #6A707E;
 
+  thead {
+    border-radius: 16px;
+    background-color: #f9f9f9;
+
+    th {
+      font-size: 12px;
+      font-family: 'inter';
+      font-weight: 800;
+      font-style: italic;
+    }
+  }
   tbody {
+    border-radius: 16px;
     tr {
       th {
         font-family: 'poppins';

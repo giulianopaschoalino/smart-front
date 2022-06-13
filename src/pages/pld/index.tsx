@@ -54,8 +54,8 @@ export default function region() {
       </Head>
       <Header name='' />
       <RenderIf isTrue={page==='table'? true : false}>
-        <Link href='/dashboard' >{'< voltar para visão geral'}</Link>
-        <PageTitle title='Tabela de consumo Pld' subtitle=''/>
+        <Link href='/dashboard' >{'< Voltar para Visão Geral'}</Link>
+        <PageTitle title='Tabela de consumo PLD' subtitle=''/>
         <PldTableView>
           <table className="tg">
             <thead>
@@ -184,7 +184,7 @@ export default function region() {
           </table>
           <section>
             <article onClick={() => setPage('perMouth')}>
-              <p>Valores Diarios</p>
+              <p>Valores Diários</p>
             </article>
             <article onClick={() => setPage('perDate')}>
               <p>Valores Horários</p>
@@ -194,8 +194,8 @@ export default function region() {
       </RenderIf>
 
       <RenderIf isTrue={page==='perMouth'? true : false}>
-        <GoBack onClick={() => setPage('table')}>{'< voltar para tabela pld'}</GoBack>
-        <PageTitle title='Consumo por mês' subtitle=''/>
+        <GoBack onClick={() => setPage('table')}>{'< voltar para tabela PLD'}</GoBack>
+        <PageTitle title='Resumo PLD - Mensal' subtitle=''/>
         <PldGraphView>
           <section className='toolsbar'>
             <div className='select'>
@@ -207,10 +207,10 @@ export default function region() {
                   width: '100%'
                 }}
               >
-                <MenuItem value={0}>Filial 3</MenuItem>
-                <MenuItem value={10}>Filial 3</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={0}>Norte</MenuItem>
+                <MenuItem value={10}>Nordeste</MenuItem>
+                <MenuItem value={20}>Sul</MenuItem>
+                <MenuItem value={30}>Sudeste</MenuItem>
               </Select>
             </div>
             <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2015-08-09"/>
@@ -221,12 +221,12 @@ export default function region() {
       </RenderIf>
 
       <RenderIf isTrue={page==='perDate'? true : false}>
-        <GoBack onClick={() => setPage('table')}>{'< voltar para tabela pld'}</GoBack>
+        <GoBack onClick={() => setPage('table')}>{'< voltar para tabela PLD'}</GoBack>
         <PldGraphView>
-          <PageTitle title='Consumo por dia' subtitle=''/>
+          <PageTitle title='Resumo PLD - Horas' subtitle=''/>
           <section className='toolsbar'>
             <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="2021-09-19"/>
-            <BasicButton title='Download (csv)' />
+            <BasicButton title='Download (csv)' onClick={() => console.log()}/>
           </section>
           <LineChart data1={EconomiaAcumulada.data3} data2={EconomiaAcumulada.data4} data3={EconomiaAcumulada.data5} data4={EconomiaAcumulada.data6} dataset1='NORDESTE' dataset2='NORTE' dataset3='SUDESTE' dataset4='SUL' title='PLD - 19/09/21' subtitle='' label={EconomiaAcumulada.label1} />
         </PldGraphView>

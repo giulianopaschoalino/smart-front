@@ -31,7 +31,7 @@ export default function commonQuestions() {
         <Head>
           <title>Smart Energia - FAQ</title>
         </Head>
-        <Header />
+        <Header name=''/>
 
         <NotificationsTable />
       </FaqView>

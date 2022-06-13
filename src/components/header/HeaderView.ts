@@ -11,58 +11,32 @@ export const HeaderView = styled.header`
   section {
     width: 30%;
 
-
     :last-child {
       display: flex;
       justify-content: flex-end;
-      align-items: flex-start;
+      align-items: center;
 
       height: fit-content;
     }
   }
 
   .icon {
-    position: relative;
-
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 
-    width: 150px;
+    min-width: 120px;
     height: 40px;
 
-    border-radius: 8px;
+    border-radius: 8px 0 0 8px;
 
     background-color: #254F7F;
-    color: white;
 
-    transform: translateX(12%);
+    transform: translateX(16px);
 
-    ::after {
-      content: "";
-      position: relative;
-      left: 2.5rem;
-      background-color: #fff;
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-    }
-  }
-
-  @media (max-width: 1020px) {
-    .icon {
-      display: none;
-    }
-    section {
-      width: 50%;
-    }
-  }
-  @media (max-width: 1640px) {
-    .icon {
-      transform: translateX(6%);
-    }
-    input {
-      height: 2rem;
+    p{
+      color: white;
+      margin-left: 15%;
     }
   }
 `
