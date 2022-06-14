@@ -12,9 +12,13 @@ import BasicButton from '../../components/buttons/basicButton/BasicButton'
 import FaqButton1 from '../../components/buttons/faqButton/FaqButton1';
 import FaqButton2 from '../../components/buttons/faqButton/FaqButton2';
 import Header from '../../components/header/Header'
+import InputUpload from '../../components/inputUplaod/inputUpload';
+import { IconButton } from '@mui/material';
+import { ClientsView, ConfirmModalView } from '../../styles/layouts/clients/ClientsView';
+import PageTitle from '../../components/pageTitle/PageTitle';
 import ConfirmModal from '../../components/modal/ConfirmModal';
-import PageTitle from '../../components/pageTitle/PageTitle'
-import { ClientsView, ConfirmModalView } from '../../styles/layouts/clients/ClientsView'
+
+
 
 const style = {
   position: 'absolute' as const,
@@ -42,6 +46,8 @@ export default function clients() {
 
 
 
+
+
   return (
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
       <ClientsView>
@@ -63,12 +69,12 @@ export default function clients() {
           <Typography sx={{color:'gray', fontSize:12}}variant="h5" gutterBottom component="div">
           Adicionar Cliente Smart Energia</Typography>
           <br />
-        <TextField id="outlined-basic" label="Nome" sx={{width:350, ml:5}} variant="outlined" />
-        <TextField id="outlined-basic" label="E-mail/Usuário" sx={{width:350, ml:8}} variant="outlined" />
-        <TextField id="outlined-basic" label="Senha" sx={{width:350, ml:5, mt:2}} variant="outlined" />
-        <TextField id="outlined-basic" label="Confirma Senha" sx={{width:350, ml:8, mt:2}} variant="outlined" />
-        <TextField id="outlined-basic" label="Codigo do Cliente Smart Energia" sx={{width:350, ml:5, mt:2}} variant="outlined" />
-        <TextField id="outlined-basic" label="Imagem/Logotipo" sx={{width:350, ml:8, mt:2}} variant="outlined" />
+          <TextField id="outlined-basic" label="Nome" sx={{width:350, ml:5}} variant="outlined" />
+          <TextField id="outlined-basic" label="E-mail/Usuário" sx={{width:350, ml:8}} variant="outlined" />
+          <TextField id="outlined-basic" label="Senha" sx={{width:350, ml:5, mt:2}} variant="outlined" />
+          <TextField id="outlined-basic" label="Confirma Senha" sx={{width:350, ml:8, mt:2}} variant="outlined" />
+          <TextField id="outlined-basic" label="Codigo do Cliente Smart Energia" sx={{width:350, ml:5, mt:2}} variant="outlined" />
+          <InputUpload />
           <br /><br />
         <FaqButton1  title='Cancelar' onClick={()=>console.log()} />
         <FaqButton2  title='Salvar' onClick={()=>console.log()}/>
