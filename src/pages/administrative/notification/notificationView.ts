@@ -1,7 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-export const FaqView = styled.main`
-  display: flex;
+
+
+export const NotificationView = styled.nav`
+   display: flex;
   align-items: center;
 
   flex-direction: column;
@@ -65,8 +67,17 @@ export const FaqView = styled.main`
     justify-content: flex-start;
     align-self: flex-start;
     margin-top: 45px;
+    margin-left: 16px;
 
   }
+  .title{
+    display: flex;
+    justify-content: flex-start;
+    align-self: flex-start;
+    margin-left: 16px;
+  }
+
+
 
 
 `

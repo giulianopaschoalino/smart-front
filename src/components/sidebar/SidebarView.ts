@@ -182,7 +182,7 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
 
       z-index: 2;
 
-      height: 5rem;
+      height: 3.5rem;
     }
     .imageNext {
       display: none;
@@ -194,8 +194,8 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
       background-color: #FFF;
 
       li {
-        height: 7rem;
-        font-size: 170%;
+        height: 5rem;
+        font-size: 150%;
       }
     }
     aside {
@@ -207,15 +207,17 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     font-size: 14px;
     ul {
       li {
-        height: 2rem;
+        height: 3rem;
+        font-size: 100%;
       }
     }
   }
   @media (max-width: 1008px) {
-    font-size: 14px;
+    font-size: 26px;
     ul {
       li {
-        height: 6rem;
+        height: 7rem;
+        font-size: 99.98%;
       }
     }
   }

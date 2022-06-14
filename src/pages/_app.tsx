@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 import { AppProps } from 'next/app'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
-
-// import Footer from '../components/footer/Footer'
-import Sidebar from '../components/sidebar/Sidebar'
-import { GlobalStyle } from '../styles/globals'
-import { AppView } from '../styles/app/AppView'
-import '../styles/nprogress/nprogress.css'
-import '../styles/globals.ts'
+import React, { useContext, useEffect, useState } from 'react'
 
 import Home from '.'
-import Head from 'next/head'
-import VerifyEmail from './verifyEmail'
+// import Footer from '../components/footer/Footer'
+import Sidebar from '../components/sidebar/Sidebar'
+import { AuthContext, AuthProvider } from '../contexts/AuthContext'
+import { AppView } from '../styles/app/AppView'
+import { GlobalStyle } from '../styles/globals'
 import ForgotPassword from './forgotPassword'
+import VerifyEmail from './verifyEmail'
+
+import '../styles/globals.ts'
+import '../styles/nprogress/nprogress.css'
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
+import getAPIClient from '../services/ssrApi'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -40,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router])
 
   return (
-    <>
+    <AuthProvider>
       <AppView>
         <Head>
           <link rel="icon" type="imagem/png" href="/assets/logose.png" />
@@ -61,8 +65,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             null
         }
       </AppView>
-        {/* <Footer /> */}
-    </>
+    </AuthProvider>
   )
 }
 

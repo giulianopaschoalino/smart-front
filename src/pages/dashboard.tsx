@@ -17,6 +17,10 @@ import Chart from '../components/graph/Chart'
 import { LineBarChart } from '../components/graph/LineBarChart'
 import { ConsumoEstimado } from '../services/consumoEstimado'
 import Head from 'next/head'
+import recoverUserInformation from '../services/auth'
+import { parseCookies } from 'nookies'
+import { GetServerSideProps } from 'next'
+import getAPIClient from '../services/ssrApi'
 
 export default function Dashboard() {
 
@@ -53,9 +57,28 @@ export default function Dashboard() {
         </GraphCard>
       </section>
 
+      <button onClick={() => {
+        const id = 1
+        console.log(recoverUserInformation(id))
+      }}></button>
     </DashboardView>
-
-
-
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
 }

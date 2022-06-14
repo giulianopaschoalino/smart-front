@@ -19,6 +19,30 @@ export const ClientsView = styled.main`
       margin: 45px 0 22px 0;
     }
   }
+  .btn2{
+      background: #254F7F;
+      border-radius: 8px;
+      color: white;
+      width: 164px;
+      height: 48px;
+      border: none;
+      margin-top: 10px;
+  }
+  .btn1{
+      background:#FFBC10;
+      border-radius: 8px;
+      color: white;
+      width: 164px;
+      height: 48px;
+      border: none;
+      margin-top: 10px;
+      margin-left: 4px;
+  }
+  .buttons{
+    display: flex;
+    margin-top: 40px;
+
+  }
 `
 
 export const ClientsModalView = styled.main`
@@ -49,4 +73,6 @@ export const ConfirmModalView = styled.main`
 
   width: 100%;
   height: 100%;
+
+
 `

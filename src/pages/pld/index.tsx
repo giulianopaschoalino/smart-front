@@ -34,7 +34,7 @@ export default function region() {
   function handleGreen(minimo, mi, ma, maximo) {
     if (minimo - mi >= 100 && minimo - mi < 200) {
       return 'green'
-    } else if ( mi*2 >= 200 && mi*2 <250 ) {
+    } else if ( mi*2 >= 200 && mi*2 < 250 ) {
       return'dullGreen'
     } else if ( (ma-mi)/2 >=250 && (ma-mi)/2 < 300 ) {
       return 'white'
@@ -195,7 +195,7 @@ export default function region() {
 
       <RenderIf isTrue={page==='perMouth'? true : false}>
         <GoBack onClick={() => setPage('table')}>{'< voltar para tabela PLD'}</GoBack>
-        <PageTitle title='Resumo PLD - Mensal' subtitle=''/>
+        <PageTitle title='Resumo PLD - Diários' subtitle=''/>
         <PldGraphView>
           <section className='toolsbar'>
             <div className='select'>

@@ -293,7 +293,7 @@ export default function ClientTable() {
                         Unidade - {row.clientCode}
                       </TableCell>
                       <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.unity}</TableCell>
+                      <TableCell align="left">{row.unity}button</TableCell>
                       <TableCell align="left"><StyledStatus status={row.status}>{row.status}</StyledStatus></TableCell>
                     </TableRow>
                   );

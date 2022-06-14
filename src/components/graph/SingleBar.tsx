@@ -1,18 +1,11 @@
-import React from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { ChartView } from './ChartView';
-import ChartTitle from './ChartTitle';
 import { draw, generate } from 'patternomaly'
+import React from 'react';
+import { Bar } from 'react-chartjs-2';
+
+import ChartTitle from './ChartTitle';
+import { ChartView } from './ChartView';
 
 ChartJS.register(
   CategoryScale,
@@ -56,8 +49,6 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1
           });
           const percentage = (value*100 / sum).toFixed(0)+"%";
           const result = `${value}\n ${percentage}`
-
-          console.log(value)
 
           return value==null? null : result
         },
