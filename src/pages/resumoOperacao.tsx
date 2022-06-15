@@ -144,15 +144,9 @@ export default function ResumoOperacao() {
         </tbody>
       </table>
       <div className='btn'>
-        {/* <a href={Teste} download="dowload.csv"> */}
-          {/* <BasicButton title='Baixar PDF'  /> */}
-        {/* </a> */}
-
         <CSVLink data={csvData} filename="Arquivo_Teste_Smart_Energia">
 
-        <BasicButton title='Baixar CSV' onClick={function (): void {
-          throw new Error('Function not implemented.');
-        }}/>
+        <BasicButton title='Baixar CSV' onClick={() => console.log()}/>
         </CSVLink>
       </div>
     </TableView>

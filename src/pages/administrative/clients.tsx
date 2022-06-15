@@ -17,6 +17,7 @@ import { ClientsView } from '../../styles/layouts/clients/ClientsView';
 import PageTitle from '../../components/pageTitle/PageTitle';
 import ConfirmModal from '../../components/modal/ConfirmModal';
 import { ConfirmModalView } from '../../styles/layouts/modals/confirmModalView';
+import { api } from '../../services/api';
 
 const style = {
   position: 'absolute' as const,
@@ -40,12 +41,21 @@ export default function clients() {
 
   const [openModal, setOpenModal] = useState(false)
 
+  function handleCreateClient() {
+    api.post('', {
+      "name": "Teste3",
+      "email": "teste3@gmail.com",
+      "password": "password",
+      "password_confirmation": "password",
+      "client_id": 222
+    })
+  }
+
   return (
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
       <ClientsView>
         <Header name='' />
         <PageTitle title='Clientes' subtitle='Clientes Smart Energia'/>
-          {/* <BasicButton title='Adicionar' onClick={handleOpen}/> */}
         <div className='buttons'>
         <button className='btn2' onClick={handleOpen}>Adicionar</button>
         <button className='btn1' onClick={() => setOpenModalInativar(true)}>Inativar</button>
