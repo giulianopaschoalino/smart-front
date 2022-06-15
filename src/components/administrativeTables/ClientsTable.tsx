@@ -180,7 +180,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-export default function ClientTable() {
+export default function ClientTable({clients}: any) {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Data | string>('status');
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -199,7 +199,7 @@ export default function ClientTable() {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = clients.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -259,20 +259,20 @@ export default function ClientTable() {
               rowCount={rows.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(clients, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.clientCode);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.clientCode.toString())}
+                      onClick={(event) => handleClick(event, row.id.toString())}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.clientCode}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -290,11 +290,11 @@ export default function ClientTable() {
                         scope="row"
                         padding="none"
                       >
-                        Unidade - {row.clientCode}
+                        Client - {row.client_id}
                       </TableCell>
                       <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.unity}button</TableCell>
-                      <TableCell align="left"><StyledStatus status={row.status}>{row.status}</StyledStatus></TableCell>
+                      <TableCell align="left">clique aqui para ver as unidades</TableCell>
+                      <TableCell align="left"><StyledStatus status={row.deleted_at? 'inativo' : 'ativo'}> {row.deleted_at? 'inativo' : 'ativo'}</StyledStatus></TableCell>
                     </TableRow>
                   );
                 })}

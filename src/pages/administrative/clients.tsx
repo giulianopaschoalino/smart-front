@@ -18,6 +18,9 @@ import PageTitle from '../../components/pageTitle/PageTitle';
 import ConfirmModal from '../../components/modal/ConfirmModal';
 import { ConfirmModalView } from '../../styles/layouts/modals/confirmModalView';
 import { api } from '../../services/api';
+import { parseCookies } from 'nookies';
+import { GetServerSideProps } from 'next';
+import getAPIClient from '../../services/ssrApi';
 
 const style = {
   position: 'absolute' as const,
@@ -33,8 +36,8 @@ const style = {
   overflowY: 'scroll'
 };
 
-export default function clients() {
-  const [client, setClient] = useState({
+export default function clients({clients}) {
+  const [client, setClient] = useState<any>({
     name: String,
     email: String,
     password: String,
@@ -50,7 +53,7 @@ export default function clients() {
   const [openModal, setOpenModal] = useState(false)
 
   function handleCreateClient({name, email, password, password_confirmation, client_id}) {
-    api.post('', {
+    api.post('/user', {
       name,
       email,
       password,
@@ -79,19 +82,44 @@ export default function clients() {
           <Typography sx={{color:'gray', fontSize:12}}variant="h5" gutterBottom component="div">
           Adicionar Cliente Smart Energia</Typography>
           <br />
-          <TextField id="outlined-basic" label="Nome" sx={{width:350, ml:5}} variant="outlined" />
-          <TextField id="outlined-basic" label="E-mail/Usuário" sx={{width:350, ml:8}} variant="outlined" />
-          <TextField id="outlined-basic" label="Senha" sx={{width:350, ml:5, mt:2}} variant="outlined" />
-          <TextField id="outlined-basic" label="Confirma Senha" sx={{width:350, ml:8, mt:2}} variant="outlined" />
-          <TextField id="outlined-basic" label="Codigo do Cliente Smart Energia" sx={{width:350, ml:5, mt:2}} variant="outlined" />
+          <TextField id="outlined-basic" label="Nome" sx={{width:350, ml:5}} onChange={(value) => {
+            setClient({
+              ...client,
+              name: value.target.value
+            })
+          }} variant="outlined" />
+          <TextField id="outlined-basic" label="E-mail/Usuário" sx={{width:350, ml:8}} onChange={(value) => {
+            setClient({
+              ...client,
+              email: value.target.value
+            })
+          }} variant="outlined" />
+          <TextField id="outlined-basic" label="Senha" sx={{width:350, ml:5, mt:2}} onChange={(value) => {
+            setClient({
+              ...client,
+              password: value.target.value
+            })
+          }} variant="outlined" />
+          <TextField id="outlined-basic" label="Confirma Senha" sx={{width:350, ml:8, mt:2}} onChange={(value) => {
+            setClient({
+              ...client,
+              password_confirmation: value.target.value
+            })
+          }} variant="outlined" />
+          <TextField id="outlined-basic" label="Codigo do Cliente Smart Energia" sx={{width:350, ml:5, mt:2}} onChange={(value) => {
+            setClient({
+              ...client,
+              client_id: value.target.value
+            })
+          }} variant="outlined" />
           <InputUpload />
           <br /><br />
-        <FaqButton1  title='Cancelar' onClick={()=>console.log()} />
-        <FaqButton2  title='Salvar' onClick={()=>console.log()}/>
+        <FaqButton1  title='Cancelar' onClick={() => console.log()} />
+        <FaqButton2  title='Salvar' onClick={() => handleCreateClient(client)}/>
         </Box>
         </Modal>
         <section>
-          <ClientsTable />
+          <ClientsTable clients={clients}/>
         </section>
       </ClientsView>
 
@@ -104,3 +132,32 @@ export default function clients() {
     </div>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+
+  let clients = [];
+
+  await apiClient.get('/user').then(res => {
+    clients = res.data
+  }).catch(res => {
+    console.log(res)
+  })
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      clients,
+    }
+  }
+}
+
