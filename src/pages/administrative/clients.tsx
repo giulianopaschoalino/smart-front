@@ -1,89 +1,98 @@
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import React, { useState } from 'react'
 
+import AdministrativeHeader from '../../components/administrativeHeader/AdministrativeHeader';
+import ClientsTable from '../../components/administrativeTables/ClientsTable';
 import BasicButton from '../../components/buttons/basicButton/BasicButton'
-import Modal from '../../components/modal/Modal';
-import PageTitle from '../../components/pageTitle/PageTitle'
-import { ClientsModalView, ClientsView } from '../../styles/layouts/clients/ClientsView'
+import FaqButton1 from '../../components/buttons/faqButton/FaqButton1';
+import FaqButton2 from '../../components/buttons/faqButton/FaqButton2';
+import Header from '../../components/header/Header'
+import InputUpload from '../../components/inputUplaod/inputUpload';
+import { ClientsView } from '../../styles/layouts/clients/ClientsView';
+import PageTitle from '../../components/pageTitle/PageTitle';
+import ConfirmModal from '../../components/modal/ConfirmModal';
+import { ConfirmModalView } from '../../styles/layouts/modals/confirmModalView';
+import { api } from '../../services/api';
+
+const style = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 900,
+  height: 500,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  overflowY: 'scroll'
+};
 
 export default function clients() {
+  const [open, setOpen] = React.useState(false);
+  const [openModalInativar, setOpenModalInativar] = useState(false)
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const [openModal, setOpenModal] = useState(false)
 
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  ];
-
-  const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'firstName', headerName: 'First name', width: 130 },
-    { field: 'lastName', headerName: 'Last name', width: 130 },
-    {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      width: 90,
-    },
-    {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-    },
-  ];
+  function handleCreateClient() {
+    api.post('', {
+      "name": "Teste3",
+      "email": "teste3@gmail.com",
+      "password": "password",
+      "password_confirmation": "password",
+      "client_id": 222
+    })
+  }
 
   return (
-    <>
+    <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
       <ClientsView>
+        <Header name='' />
         <PageTitle title='Clientes' subtitle='Clientes Smart Energia'/>
-
+        <div className='buttons'>
+        <button className='btn2' onClick={handleOpen}>Adicionar</button>
+        <button className='btn1' onClick={() => setOpenModalInativar(true)}>Inativar</button>
+        </div>
+        <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        >
+        <Box sx={style}>
+          <h1>Adicionar Cliente</h1>
+          <Typography sx={{color:'gray', fontSize:12}}variant="h5" gutterBottom component="div">
+          Adicionar Cliente Smart Energia</Typography>
+          <br />
+          <TextField id="outlined-basic" label="Nome" sx={{width:350, ml:5}} variant="outlined" />
+          <TextField id="outlined-basic" label="E-mail/Usuário" sx={{width:350, ml:8}} variant="outlined" />
+          <TextField id="outlined-basic" label="Senha" sx={{width:350, ml:5, mt:2}} variant="outlined" />
+          <TextField id="outlined-basic" label="Confirma Senha" sx={{width:350, ml:8, mt:2}} variant="outlined" />
+          <TextField id="outlined-basic" label="Codigo do Cliente Smart Energia" sx={{width:350, ml:5, mt:2}} variant="outlined" />
+          <InputUpload />
+          <br /><br />
+        <FaqButton1  title='Cancelar' onClick={()=>console.log()} />
+        <FaqButton2  title='Salvar' onClick={()=>console.log()}/>
+        </Box>
+        </Modal>
         <section>
-          <BasicButton title='Adicionar' onClick={() => setOpenModal(true)}/>
-          <BasicButton title='Inativar' onClick={() => {throw new Error('fixing...')}}/>
-        </section>
-
-        <section>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={6}
-            rowsPerPageOptions={[6]}
-            checkboxSelection
-          />
+          <ClientsTable />
         </section>
       </ClientsView>
 
-      <Modal open={openModal} handleIsClose={(value) => {setOpenModal(value)}}>
-        <ClientsModalView>
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" style={{width: '300px'}}/>
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" style={{width: '300px'}}/>
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" style={{width: '300px'}}/>
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" style={{width: '300px'}}/>
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" style={{width: '300px'}}/>
-          <Button
-            variant="contained"
-            component="label"
-          >
-            Upload File
-            <input
-              type="file"
-              hidden
-            />
-          </Button>
-        </ClientsModalView>
-      </Modal>
-    </>
+      <ConfirmModal open={openModalInativar} handleIsClose={(value) => {setOpenModalInativar(value)}}>
+        <ConfirmModalView>
+          <BasicButton title='Confirmar' onClick={() => setOpenModalInativar(true)}/>
+          <BasicButton title='Cancelar' onClick={() => setOpenModalInativar(true)}/>
+        </ConfirmModalView>
+      </ConfirmModal>
+    </div>
   )
 }

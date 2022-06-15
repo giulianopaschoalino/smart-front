@@ -203,5 +203,28 @@ export const PldGraphView = styled.main`
 `
 
 export const GoBack = styled.label`
-  cursor: pointer
+  cursor: pointer;
+`
+
+export const NewTableLine = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  flex-direction: column;
+
+  margin: 50px 0px 0px 0;
+
+  width: 100%;
+  article {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-direction: row;
+
+    width: 100%;
+
+    margin: 0 0 10px 0;
+  }
 `

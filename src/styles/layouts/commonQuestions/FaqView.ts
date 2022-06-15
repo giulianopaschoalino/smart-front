@@ -33,4 +33,40 @@ export const FaqView = styled.main`
   hr {
     border: 1px solid #DDDDDD;
   }
+
+  /* .modal{
+    display: flex;
+    justify-self: flex-end;
+    align-self: center;
+    margin-left: 100px;
+
+  } */
+  .btn2{
+      background: #254F7F;
+      border-radius: 8px;
+      color: white;
+      width: 164px;
+      height: 45px;
+      border: none;
+      margin-top: 10px;
+  }
+  .btn1{
+      background:#FFBC10;
+      border-radius: 8px;
+      color: white;
+      width: 164px;
+      height: 45px;
+      border: none;
+      margin-top: 10px;
+      margin-left: 6px;
+  }
+  .buttons{
+    display: flex;
+    justify-content: flex-start;
+    align-self: flex-start;
+    margin-top: 45px;
+
+  }
+
+
 `

@@ -13,14 +13,20 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: '80%',
-  height: '80%',
+  height: '550px',
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: '2px solid #254F7F',
   boxShadow: 24,
   p: 4,
 };
 
-export default function BasicModal({open, handleIsClose, children}: {open: boolean, handleIsClose: (value: any) => void, children:  React.ReactNode}) {
+interface BasicModalInterface{
+  open: boolean,
+  handleIsClose: (value: any) => void,
+  children:  React.ReactNode
+}
+
+export default function BasicModal({open, handleIsClose, children}: BasicModalInterface) {
   const [openState, setOpenState] = React.useState(false);
   const handleOpen = () => setOpenState(true);
   const handleClose = () => {setOpenState(false); handleIsClose(false)}

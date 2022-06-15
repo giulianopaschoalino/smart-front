@@ -1,11 +1,15 @@
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
+import { parseCookies } from 'nookies'
 import React from 'react'
-import CommonQuestionsCard from '../components/faqQuestionsCard/FaqQuestionsCard'
+import NotificationQuestionsCard from '../components/NotificationQuestionsCard/NotificationQuestionsCard'
 import Header from '../components/header/Header'
 import PageTitle from '../components/pageTitle/PageTitle'
+import { api } from '../services/api'
+import getAPIClient from '../services/ssrApi'
 import { FaqView } from '../styles/layouts/commonQuestions/FaqView'
 
-export default function Notifications() {
+export default function Notifications({notificationData}: any) {
   return (
     <FaqView>
       <Head>
@@ -15,17 +19,44 @@ export default function Notifications() {
       <PageTitle title='Notifications' subtitle='' />
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       <section className='CommonQuestionsSection' >
-        <CommonQuestionsCard />
-        <hr />
-        <CommonQuestionsCard />
-        <hr />
-        <CommonQuestionsCard />
-        <hr />
-        <CommonQuestionsCard />
-        <hr />
-        <CommonQuestionsCard />
-        <hr />
+      {
+        notificationData.map((value, index ) => {
+          return <>
+            <NotificationQuestionsCard key={index} title={value.title} body={value.body}/>
+            <hr />
+          </>
+        })
+      }
       </section>
     </FaqView>
   )
+}
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  console.log('teste')
+  let notificationData = [];
+
+
+await apiClient.get('/notification').then(res => {
+  notificationData = res.data
+}).catch(res => {
+  console.log(res)
+})
+  console.table(notificationData);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      notificationData
+    }
+  }
 }

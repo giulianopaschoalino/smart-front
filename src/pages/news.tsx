@@ -1,10 +1,11 @@
-import React from 'react'
-import Banner from '../components/banner/Banner'
-import Header from '../components/header/Header'
-import BasicButton from '../components/buttons/basicButton/BasicButton';
-import { NewsView, Button } from '../styles/layouts/news/NewsView'
 import Head from 'next/head';
 import Link from 'next/link'
+import React from 'react'
+
+import Banner from '../components/banner/Banner'
+import BasicButton from '../components/buttons/basicButton/BasicButton';
+import Header from '../components/header/Header'
+import { Button, NewsView } from '../styles/layouts/news/NewsView'
 
 export default function aboutUs() {
   return (
@@ -26,7 +27,7 @@ export default function aboutUs() {
           Os itens que mais impactaram a correção foram os encargos setoriais, os custos de distribuição, a retirada dos componentes financeiros..</p>
         <Button>
         <fieldset>
-        <legend> <BasicButton  title='Ver Mais...' /></legend>
+        <legend> <BasicButton title='Ver Mais...' onClick={() => console.log()}/></legend>
         </fieldset>
         </Button>
 
@@ -40,15 +41,15 @@ export default function aboutUs() {
           Os itens que mais impactaram a correção foram os encargos setoriais, os custos de distribuição, a retirada dos componentes financeiros..</p>
         <Button>
         <fieldset>
-        <legend> <BasicButton  title='Ver Mais...' /></legend>
+        <legend> <BasicButton title='Ver Mais...' onClick={() => console.log()}/></legend>
         </fieldset>
         </Button>
 
       </section>
 
       <a href='https://www.energiasmart.com.br/noticias/'
-     target={"_blank"}
-     rel={"noreferrer"}><BasicButton  title='Noticias Atualizadas' /></a>
+      target={"_blank"}
+      rel={"noreferrer"}><BasicButton title='Noticias Atualizadas' onClick={() => console.log()}/></a>
     </NewsView>
   )
 }

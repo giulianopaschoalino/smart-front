@@ -56,12 +56,14 @@ export default function Telemetria() {
               fullWidth
             >
               <MenuItem value="">
-                <em>None</em>
+                <em>Nenhum</em>
               </MenuItem>
-              <MenuItem value="">07/09/2021</MenuItem>
-              <MenuItem value={10}>Filial 3</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+
+              <MenuItem value={10}>Unidade 1</MenuItem>
+              <MenuItem value={20}>Unidade 2</MenuItem>
+              <MenuItem value={30}>Unidade 3</MenuItem>
+              <MenuItem value={30}>Unidade 4</MenuItem>
+              <MenuItem value={30}>Unidade 5</MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -79,12 +81,13 @@ export default function Telemetria() {
               fullWidth
             >
               <MenuItem value="">
-                <em>None</em>
+                <em>Nenhum</em>
               </MenuItem>
-              <MenuItem value="">07/09/2021</MenuItem>
-              <MenuItem value={10}>Filial 3</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={10}>20/05/2022</MenuItem>
+              <MenuItem value={20}>10/06/2022</MenuItem>
+              <MenuItem value={30}>05/06/2021</MenuItem>
+              <MenuItem value={30}>05/06/2021</MenuItem>
+              <MenuItem value={30}>05/06/2021</MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -102,12 +105,13 @@ export default function Telemetria() {
               fullWidth
             >
               <MenuItem value="">
-                <em>None</em>
+                <em>Nenhum</em>
               </MenuItem>
-              <MenuItem value="">07/09/2021</MenuItem>
-              <MenuItem value={10}>Filial 3</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={10}>20/05/2022</MenuItem>
+              <MenuItem value={20}>10/06/2022</MenuItem>
+              <MenuItem value={30}>05/06/2021</MenuItem>
+              <MenuItem value={30}>05/06/2021</MenuItem>
+              <MenuItem value={30}>05/06/2021</MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -125,7 +129,7 @@ export default function Telemetria() {
               fullWidth
             >
               <MenuItem value="">
-                <em>None</em>
+                <em>Nenhum</em>
               </MenuItem>
               <MenuItem value="">07/09/2021</MenuItem>
               <MenuItem value={10}>Filial 3</MenuItem>

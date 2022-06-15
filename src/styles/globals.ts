@@ -10,6 +10,10 @@ export const GlobalStyle = createGlobalStyle`
 
   main {
     padding: 2.5rem;
+
+    button {
+      cursor: pointer
+    }
   }
 
   a {

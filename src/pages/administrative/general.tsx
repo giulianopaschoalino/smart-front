@@ -1,0 +1,86 @@
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+import { Editor } from '@tinymce/tinymce-react'
+import React, { useRef, useState } from 'react'
+
+import Header from '../../components/header/Header';
+import { GeneralView } from '../../styles/layouts/general/GeneralView'
+
+export default function index() {
+  const editorRef = useRef(null);
+  const [text, setText] = useState('');
+
+  const log = () => {
+    if (editorRef.current) {
+      console.log(editorRef.current.getContent());
+    }
+  };
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setText(event.target.value);
+  };
+
+  return (
+    <GeneralView>
+      <Header name=''/>
+      <section>
+      <FormControl sx={{mr: '20px', minWidth: 180, minHeight: '80px'}}>
+        <Select
+          value={text}
+          onChange={handleChange}
+          displayEmpty
+          inputProps={{ 'aria-label': 'Without label' }}
+        >
+          <MenuItem value={0}>Sobre Nós</MenuItem>
+          <MenuItem value={10}>Copel</MenuItem>
+          <MenuItem value={20}>Cliente 1</MenuItem>
+          <MenuItem value={30}>Cliente 2</MenuItem>
+        </Select>
+      </FormControl>
+      </section>
+      <Editor
+        onInit={(evt, editor) => editorRef.current = editor}
+        initialValue='        <p>A <strong>SMART ENERGIA</strong> é uma consultoria independente especializada em Gestão de Energia Elétrica, consolidada como uma das três maiores consultorias do Brasil.
+          Devido à grande experiência em operações na CCEE – Câmara de Comercialização de Energia Elétrica e ANEEL, entrega resultados que superam as expectativas.</p>
+
+        <p>Nasceu para gerenciar a compra de energia com inovação, transparência e imparcialidade sendo o elo forte e necessário entre os Consumidores e os
+          Vendedores de energia. </p>
+
+        <p>Baseada em sua experiência no setor elétrico adquirida desde 2001 e em mais de 900 unidades migradas, atua na negociação de contratos de compra e venda de
+          energia, na Gestão de Energia no Mercado Livre e criação de produtos diferenciados para atender as necessidades específicas dos consumidores.</p>
+
+        <p>Apoiada pela sólida experiência de seus gestores, conhecendo as premissas dos agentes de Comercialização e Geração para a compra e venda de energia,
+          aplicamos as mesmas premissas a favor dos Consumidores, disponibilizando assim um diferencial único para a tomada de decisão e elaboração das estratégias de
+          contratação de energia.</p>
+        <ul>
+          <li>Informação</li>
+          <li>Economia</li>
+          <li>Gestão de Energia</li>
+          <li>Imparcialidade</li>
+          <li>Previsão de Custos</li>
+          <li>Experiência</li>
+          <li>Relacionamento</li>
+        </ul>'
+        init={{
+          height: 500,
+          width: '100%',
+          menubar: false,
+          plugins: [
+            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+            'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount'
+          ],
+          toolbar: 'undo redo | blocks | ' +
+            'bold italic forecolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | help',
+          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        }}
+      />
+      <button onClick={log}>Log editor content</button>
+    </GeneralView>
+  )
+}
