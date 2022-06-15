@@ -15,7 +15,7 @@ import FaqButton1 from '../../../components/buttons/faqButton/FaqButton1';
 import FaqButton2 from '../../../components/buttons/faqButton/FaqButton2';
 import Header from '../../../components/header/Header'
 import PageTitle from '../../../components/pageTitle/PageTitle'
-import { api } from '../../../services/api';
+import { api }  from '../../../services/api';
 import { FaqView } from '../../../styles/layouts/commonQuestions/FaqView'
 
 import Radio from '@mui/material/Radio';
