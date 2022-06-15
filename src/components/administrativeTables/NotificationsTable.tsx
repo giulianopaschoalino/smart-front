@@ -19,7 +19,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { visuallyHidden } from '@mui/utils';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { ClientTableView, StyledStatus } from './ClientsTableView';
 
@@ -178,7 +178,12 @@ interface NotificationData {
   deleted_at: Date,
 }
 
-export default function ClientTable({notifications}: any) {
+interface NotificationsTableInterface{
+  notifications: NotificationData[],
+  onChange: any
+}
+
+export default function NotificationsTable({notifications, onChange}: NotificationsTableInterface) {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Data | string>('status');
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -237,6 +242,10 @@ export default function ClientTable({notifications}: any) {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - notifications.length) : 0;
+
+  useEffect(() => {
+    onChange(selected)
+  }, [selected])
 
   return (
     <ClientTableView>

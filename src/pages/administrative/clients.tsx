@@ -13,12 +13,10 @@ import FaqButton1 from '../../components/buttons/faqButton/FaqButton1';
 import FaqButton2 from '../../components/buttons/faqButton/FaqButton2';
 import Header from '../../components/header/Header'
 import InputUpload from '../../components/inputUplaod/inputUpload';
-import { IconButton } from '@mui/material';
-import { ClientsView, ConfirmModalView } from '../../styles/layouts/clients/ClientsView';
+import { ClientsView } from '../../styles/layouts/clients/ClientsView';
 import PageTitle from '../../components/pageTitle/PageTitle';
 import ConfirmModal from '../../components/modal/ConfirmModal';
-
-
+import { ConfirmModalView } from '../../styles/layouts/modals/confirmModalView';
 
 const style = {
   position: 'absolute' as const,
@@ -34,8 +32,6 @@ const style = {
   overflowY: 'scroll'
 };
 
-
-
 export default function clients() {
   const [open, setOpen] = React.useState(false);
   const [openModalInativar, setOpenModalInativar] = useState(false)
@@ -44,17 +40,13 @@ export default function clients() {
 
   const [openModal, setOpenModal] = useState(false)
 
-
-
-
-
   return (
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
       <ClientsView>
         <Header name='' />
         <PageTitle title='Clientes' subtitle='Clientes Smart Energia'/>
           {/* <BasicButton title='Adicionar' onClick={handleOpen}/> */}
-          <div className='buttons'>
+        <div className='buttons'>
         <button className='btn2' onClick={handleOpen}>Adicionar</button>
         <button className='btn1' onClick={() => setOpenModalInativar(true)}>Inativar</button>
         </div>
@@ -91,7 +83,6 @@ export default function clients() {
           <BasicButton title='Cancelar' onClick={() => setOpenModalInativar(true)}/>
         </ConfirmModalView>
       </ConfirmModal>
-
     </div>
   )
 }

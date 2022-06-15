@@ -8,7 +8,7 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Head from 'next/head'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import NotificationsTable from '../../../components/administrativeTables/NotificationsTable'
 import FaqButton1 from '../../../components/buttons/faqButton/FaqButton1';
@@ -24,9 +24,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import getAPIClient from '../../../services/ssrApi';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import Notifications from '../../notifications';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import BasicButton from '../../../components/buttons/basicButton/BasicButton';
+import { ConfirmModalView } from '../../../styles/layouts/modals/confirmModalView';
+import ConfirmModal from '../../../components/modal/ConfirmModal';
+import { JsxElement } from 'typescript';
 
 const style = {
   position: 'absolute' as const,
@@ -65,10 +68,14 @@ export default function notification({clients, notifications}) {
     body: '',
     users: []
   })
+  const [selectedNotifications, setSelectedNotifications] = useState([])
 
   const [open, setOpen] = useState<boolean>(false);
+  const [openModalInativar, setOpenModalInativar] = useState<boolean>(false)
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
   const [openSnackError, setOpenSnackError] = useState<boolean>(false);
+  const [openSnackSuccessDelete, setOpenSnackSuccessDelete] = useState<boolean>(false);
+  const [openSnackErrorDelete, setOpenSnackErrorDelete] = useState<boolean>(false);
 
   const [radiusValue, setRadiusValue] = useState<string>('all');
 
@@ -81,8 +88,17 @@ export default function notification({clients, notifications}) {
     }
 
     setOpenSnackError(false);
+    setOpenSnackSuccess(false);
   };
 
+  const handleCloseSnackDelete = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackErrorDelete(false);
+    setOpenSnackSuccessDelete(false);
+  };
 
   async function handleRegisterNewNotification({title, body, users}: NotificationInterface) {
     await api.post('/notification', {
@@ -90,6 +106,15 @@ export default function notification({clients, notifications}) {
       body,
       users
     }).then(res => setOpenSnackSuccess(true)).catch(res => setOpenSnackError(true))
+  }
+  async function handleDeleteNotification(id: any) {
+    await id.map((value) => {
+      api.delete(`/notification/${value}`).then(res => {
+        setOpenSnackSuccessDelete(true)
+        setOpenModalInativar(false)
+        window.location.reload()
+      }).catch(res => setOpenSnackErrorDelete(true))
+    })
   }
 
   return (
@@ -111,90 +136,109 @@ export default function notification({clients, notifications}) {
         </Alert>
       </Snackbar>
 
+      <Snackbar open={openSnackSuccessDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
+        <Alert onClose={handleCloseSnackDelete} severity="success" sx={{ width: '100%' }}>
+          notificação excluida com sucesso!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openSnackErrorDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
+        <Alert onClose={handleCloseSnackDelete} severity="error" sx={{ width: '100%' }}>
+          Notificação não excluida!
+        </Alert>
+      </Snackbar>
+
       <div className='buttons'>
       <button className='btn2' onClick={handleOpen}>Disparar nova</button>
+      <button className='btn1' onClick={() => setOpenModalInativar(true)}>Inativar</button>
 
       </div>
-        <Modal
+      <NotificationsTable notifications={notifications} onChange={(value) => setSelectedNotifications(value)}/>
+      <Modal
           open={open}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-        <Box sx={style}>
-        <h1>Disparar Notificações</h1>
-        <Typography sx={{color:'gray', fontSize:12}}variant="h5" gutterBottom component="div">
-        Pode ser que todas as notificaçõs demorem alguns minutos para estarem disponíveis</Typography>
-        <br />
-        <TextField id="outlined-basic" label="Título" sx={{width:700, ml:8}} onChange={(value) => {
-          setNotification({
-            ...notification,
-            title: value.target.value
-          })
-        }} variant="outlined" /> <br /><br />
-        <TextField id="outlined-basic" label="Corpo/Conteúdo da notificação" sx={{width:700, ml:8}} onChange={(value) => {
-          setNotification({
-            ...notification,
-            body: value.target.value
-          })
-        }} variant="outlined" /> <br /><br />
+          <Box sx={style}>
+            <h1>Disparar Notificações</h1>
+            <Typography sx={{color:'gray', fontSize:12}}variant="h5" gutterBottom component="div">
+            Pode ser que todas as notificaçõs demorem alguns minutos para estarem disponíveis</Typography>
+            <br />
+            <TextField id="outlined-basic" label="Título" sx={{width:700, ml:8}} onChange={(value) => {
+              setNotification({
+                ...notification,
+                title: value.target.value
+              })
+            }} variant="outlined" /> <br /><br />
+            <TextField id="outlined-basic" label="Corpo/Conteúdo da notificação" sx={{width:700, ml:8}} onChange={(value) => {
+            setNotification({
+              ...notification,
+              body: value.target.value
+            })
+          }} variant="outlined" /> <br /><br />
 
-          <div>
-            <FormControl>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
-                name="radio-buttons-group"
-              >
-                <FormControlLabel value="all" control={<Radio />} checked={radiusValue==='all'? true : false}onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
-                  setRadiusValue(value.target.value)
-                }} label="Disparar para todos os clientes" />
-                <FormControlLabel value="some" control={<Radio />} checked={radiusValue==='some'? true : false} onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
-                  setRadiusValue(value.target.value)
-                }} label="Disparar somente para alguns clientes" />
-              </RadioGroup>
-            </FormControl>
-          </div>
+            <div>
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="female"
+                  name="radio-buttons-group"
+                >
+                  <FormControlLabel value="all" control={<Radio />} checked={radiusValue==='all'? true : false}onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
+                    setRadiusValue(value.target.value)
+                  }} label="Disparar para todos os clientes" />
+                  <FormControlLabel value="some" control={<Radio />} checked={radiusValue==='some'? true : false} onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
+                    setRadiusValue(value.target.value)
+                  }} label="Disparar somente para alguns clientes" />
+                </RadioGroup>
+              </FormControl>
+            </div>
 
-          {
-            radiusValue === 'some'?
-            <Autocomplete
-            multiple
-            id="checkboxes-tags-demo"
-            options={clients}
-            disableCloseOnSelect
-            onChange={(event: any, newValue: any) => {
-              setNotification({...notification, users: newValue.map((el) => {return {"user_id": el.id}})});
-            }}
-            getOptionLabel={(option) => option.name}
-            renderOption={(props, option, { selected }) => (
-              <li {...props}>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-                value={option.name}
-              />
-                {option.name}
-              </li>
-              )}
-              sx={{ml:8}}
-              style={{ width: 700 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Clientes" placeholder="Selecionar clientes"/>
+            {
+              radiusValue === 'some'?
+              <Autocomplete
+              multiple
+              id="checkboxes-tags-demo"
+              options={clients}
+              disableCloseOnSelect
+              onChange={(event: any, newValue: any) => {
+                setNotification({...notification, users: newValue.map((el) => {return {"user_id": el.id}})});
+              }}
+              getOptionLabel={(option) => option.name}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                <Checkbox
+                  icon={icon}
+                  checkedIcon={checkedIcon}
+                  style={{ marginRight: 8 }}
+                  checked={selected}
+                  value={option.name}
+                />
+                  {option.name}
+                </li>
                 )}
-            /> :
-            null
-          }
+                sx={{ml:8}}
+                style={{ width: 700 }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Clientes" placeholder="Selecionar clientes"/>
+                  )}
+              /> :
+              null
+            }
 
-          <FaqButton1  title='Cancelar' onClick={() => {console.log()}} />
-          <FaqButton2  title='Salvar' onClick={() => {
-            handleRegisterNewNotification(notification)
-          }} />
-        </Box>
+            <FaqButton1  title='Cancelar' onClick={() => {setOpen(false)}} />
+            <FaqButton2  title='Salvar' onClick={() => {
+              handleRegisterNewNotification(notification)}}
+            />
+          </Box>
       </Modal>
-      <NotificationsTable notifications={notifications}/>
+      <ConfirmModal open={openModalInativar} handleIsClose={(value) => {setOpenModalInativar(value)}}>
+        <PageTitle title='Excluir notificação' subtitle='deseja realmente excluir as notificações selecionadas?'/>
+        <ConfirmModalView>
+          <BasicButton title='Confirmar' onClick={() => handleDeleteNotification(selectedNotifications)}/>
+          <BasicButton title='Cancelar' onClick={() => setOpenModalInativar(false)}/>
+        </ConfirmModalView>
+      </ConfirmModal>
     </FaqView>
   )
 }
