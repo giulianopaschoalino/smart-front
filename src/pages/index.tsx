@@ -91,7 +91,7 @@ export default function Home() {
             label="Password"
           />
         </FormControl>
-        <Link href='verifyEmail' >Esqueceu a senha ?</Link>
+        <Link href='verifyEmail'>Esqueceu a senha ?</Link>
 
         <LoginButton title='ENTRAR' onClick={() => handleSignIn()}/>
 
