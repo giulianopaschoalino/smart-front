@@ -31,20 +31,35 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
   const isAuthenticated = !!user
 
   async function signIn({email, password}: SignInData) {
-    const { token, user }: any = await signInRequest({
+    const { token, user, exception }: any = await signInRequest({
       email,
       password
     })
 
-    setCookie(undefined, '@smartAuth-token', token, {
-      maxAge: 60 * 60 * 1, // 1 hour
-    })
+    if (token) {
+      setCookie(undefined, '@smartAuth-token', token, {
+        maxAge: 60 * 60 * 1, // 1 hour
+      })
+    }
+
+    if (user.role) {
+      setCookie(undefined, 'user-role', user.role)
+    }
+
+    if (!exception) {
+      if (user.role == 2) {
+        Router.push('/dashboard')
+      } else {
+        Router.push('administrative/clients')
+      }
+      return;
+    } else {
+      return
+    }
 
     api.defaults.headers['Authorization'] = `Bearer ${token}`
 
     setUser(user)
-
-    Router.push('/dashboard')
   }
 
   return (

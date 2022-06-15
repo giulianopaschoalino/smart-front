@@ -17,9 +17,6 @@ export default function getAPIClient(ctx?: Pick<next.NextPageContext, 'req'> | {
   });
 
   api.interceptors.request.use(config => {
-      // console.log(config)
-      // config.headers = {Authorization: `Bearer ${token}`};
-
       return config;
     },
   );
