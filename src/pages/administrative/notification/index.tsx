@@ -29,7 +29,6 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import BasicButton from '../../../components/buttons/basicButton/BasicButton';
 import { ConfirmModalView } from '../../../styles/layouts/modals/confirmModalView';
 import ConfirmModal from '../../../components/modal/ConfirmModal';
-import { JsxElement } from 'typescript';
 
 const style = {
   position: 'absolute' as const,
