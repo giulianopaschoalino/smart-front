@@ -70,7 +70,7 @@ export default function Sidebar({faqData}) {
       <PageTitle title='Perguntas Frequentes' subtitle='Perguntas Frequentes'/>
 
       <div className='buttons'>
-      <button className='btn2' onClick={handleOpen}>Adicionar</button>
+      <button className='btn2' value="Refresh Page"onClick={handleOpen} >Adicionar</button>
       <button className='btn1' onClick={handleOpen}>Inativar</button>
 
       </div>
@@ -95,6 +95,7 @@ export default function Sidebar({faqData}) {
               throw new Error('Function not implemented.');
             } } />
         <FaqButton2   title='Salvar' onClick={() => handleRegisterNewFaq(faq)}
+
         />
         </Box>
 

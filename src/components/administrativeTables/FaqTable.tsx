@@ -15,9 +15,6 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
 import { visuallyHidden } from '@mui/utils';
 import { GetServerSideProps } from 'next';
 import React, { useState } from 'react';
@@ -194,7 +191,7 @@ export default function FaqTable({questionData}: any) {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = questionData.map((n) => n.questionData);
+      const newSelecteds = questionData.map((n) => n.id);
       setSelected(newSelecteds);
       return;
     }
