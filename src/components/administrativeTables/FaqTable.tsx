@@ -19,7 +19,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { visuallyHidden } from '@mui/utils';
+import { GetServerSideProps } from 'next';
 import React, { useState } from 'react';
+import getAPIClient from '../../services/ssrApi';
 
 import { ClientTableView, StyledStatus } from './ClientsTableView';
 
@@ -171,7 +173,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-export default function FaqTable() {
+export default function FaqTable({questionData}: any) {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Data | string>('status');
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -179,6 +181,8 @@ export default function FaqTable() {
   const [dense, setDense] = useState<boolean>(false);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
 
+  console.table(questionData)
+  console.table(rows)
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: keyof Data,
@@ -190,7 +194,7 @@ export default function FaqTable() {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.question);
+      const newSelecteds = questionData.map((n) => n.questionData);
       setSelected(newSelecteds);
       return;
     }
@@ -247,23 +251,23 @@ export default function FaqTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={questionData.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(questionData, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.question);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.question)}
+                      onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.question}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -284,7 +288,7 @@ export default function FaqTable() {
                         {row.question}
                       </TableCell>
                       <TableCell align="left">{row.answer}</TableCell>
-                      <TableCell align="left"><StyledStatus status={row.status}>{row.status}</StyledStatus></TableCell>
+                      <TableCell align="left"><StyledStatus status={row.deleted_at? 'ativo' : 'inativo'}> {row.deleted_at? 'ativo' : 'inativo'}</StyledStatus></TableCell>
                     </TableRow>
                   );
                 })}
@@ -313,3 +317,4 @@ export default function FaqTable() {
     </ClientTableView>
   );
 }
+

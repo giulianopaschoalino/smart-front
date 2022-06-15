@@ -4,7 +4,7 @@ import Router from 'next/router'
 import { setCookie } from "nookies";
 
 import { signInRequest } from "../services/auth";
-import api from "../services/api";
+import { api } from "../services/api";
 
 type UserType = {
   name: string;
