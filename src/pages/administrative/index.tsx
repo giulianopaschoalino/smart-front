@@ -10,7 +10,8 @@ import Header from '../../components/header/Header'
 import ConfirmModal from '../../components/modal/ConfirmModal';
 import Modal from '../../components/modal/Modal';
 import PageTitle from '../../components/pageTitle/PageTitle'
-import { ClientsModalView, ClientsView, ConfirmModalView } from '../../styles/layouts/clients/ClientsView'
+import { ClientsModalView, ClientsView } from '../../styles/layouts/clients/ClientsView'
+import { ConfirmModalView } from '../../styles/layouts/modals/confirmModalView';
 
 export default function clients() {
   const [openModal, setOpenModal] = useState(false)
