@@ -34,7 +34,15 @@ const style = {
 };
 
 export default function clients() {
-  const [open, setOpen] = React.useState(false);
+  const [client, setClient] = useState({
+    name: String,
+    email: String,
+    password: String,
+    password_confirmation: String,
+    client_id: Number
+  })
+
+  const [open, setOpen] = useState(false);
   const [openModalInativar, setOpenModalInativar] = useState(false)
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

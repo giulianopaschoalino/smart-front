@@ -19,16 +19,13 @@ export default function InputUpload() {
     console.log(e);
   }
 
-
-
-
   return (
     <InputUploadView>
 
 <div className='imgContainer'>
         <article>
-     {imageURLS.map((imageSrc) => (
-          <img  className="image" src={imageSrc} alt="not fount"  />
+     {imageURLS.map((imageSrc, index) => (
+          <img key={index} className="image" src={imageSrc} alt="not fount"  />
         ))}
 
        </article>

@@ -32,7 +32,7 @@ export default function Dashboard() {
       <Header name='' />
 
       <PageTitle title='Visão Geral' subtitle='Bem Vindo a Smart Energia' />
-      <Link href={'pld'}>
+      <Link href='pld'>
         <section className="cardsSection" >
           <MapCard title='R$/MWh' subtitle='abril / 22' date='até 10/10' statistic='' imgSource='/moneyIcon.svg' />
           <MapCard title='SE/CO' subtitle='Sudeste' statistic='R$ 273,54' imgSource='/mapSample.svg' />

@@ -42,8 +42,7 @@ type FaqInterface = {
 
 }
 
-
-export default function Sidebar({faqData}) {
+export default function Sidebar({faqData}: any) {
   async function handleRegisterNewFaq({question, answer}: FaqInterface) {
     await api.post('/faq', {
       "question": question,
