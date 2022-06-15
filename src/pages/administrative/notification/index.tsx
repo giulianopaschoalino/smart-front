@@ -25,8 +25,8 @@ import getAPIClient from '../../../services/ssrApi';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import Notifications from '../../notifications';
-import Snackbar from '@mui/material/Snackbar/Snackbar';
-import Alert from '@mui/material/Alert/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 const style = {
   position: 'absolute' as const,
@@ -41,6 +41,13 @@ const style = {
   p: 4,
   overflowY: 'scroll'
 };
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -68,6 +75,15 @@ export default function notification({clients, notifications}) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleCloseSnack = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackError(false);
+  };
+
+
   async function handleRegisterNewNotification({title, body, users}: NotificationInterface) {
     await api.post('/notification', {
       title,
@@ -83,6 +99,17 @@ export default function notification({clients, notifications}) {
       </Head>
       <Header name=''/>
       <PageTitle title='Notificações' subtitle='Notificações'/>
+
+      <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
+        <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
+          notificação cadastrada com sucesso!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
+        <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
+          Notificação não cadastrada!
+        </Alert>
+      </Snackbar>
 
       <div className='buttons'>
       <button className='btn2' onClick={handleOpen}>Disparar nova</button>
@@ -168,16 +195,6 @@ export default function notification({clients, notifications}) {
         </Box>
       </Modal>
       <NotificationsTable notifications={notifications}/>
-      <Snackbar open={openSnackSuccess} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-          This is a success message!
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openSnackError} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          This is a success message!
-        </Alert>
-      </Snackbar>
     </FaqView>
   )
 }

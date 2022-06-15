@@ -40,7 +40,7 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
       maxAge: 60 * 60 * 1, // 1 hour
     })
 
-    // setCookie(undefined, 'user-role', user.role)
+    setCookie(undefined, 'user-role', user.role)
 
     api.defaults.headers['Authorization'] = `Bearer ${token}`
 

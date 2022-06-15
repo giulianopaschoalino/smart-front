@@ -27,12 +27,13 @@ export async function signInRequest(data: SignInRequestData) {
     "password": data.password,
     "device_name": "test"
   }).then(res => {
+    // console.log(res.data.user.roles.pivot.role_id)
     user = {
       name: res.data.user.name,
       email: res.data.user.email,
       client_id: res.data.user.client_id,
       id: res.data.user.id,
-      role: res.data.user.roles.role_id
+      role: res.data.user.roles[0].pivot.role_id
     }
     token = res.data.token
   }).catch(res => {
@@ -40,8 +41,14 @@ export async function signInRequest(data: SignInRequestData) {
   })
 
   return {
-    token,
-    user
+    token: token,
+    user: {
+      name: user?.name,
+      email: user?.email,
+      client_id: user?.client_id,
+      id: user?.id,
+      role: user?.role
+    }
   }
 }
 
@@ -55,13 +62,18 @@ export default async function recoverUserInformation(id) {
       email: res.data.user.email,
       client_id: res.data.user.client_id,
       id: res.data.user.id,
-      role: res.data.user.roles.role_id
+      role: res.data.user.roles[0].pivot.role_id
     }
   }).catch(res => {
     console.log(res)
   })
 
   return {
-    user
+    user: {
+      name: user?.name,
+      email: user?.email,
+      client_id: user?.client_id,
+      id: user?.id
+    }
   }
 }
