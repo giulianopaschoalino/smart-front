@@ -4,7 +4,7 @@ import Router from 'next/router'
 import { setCookie } from "nookies";
 
 import { signInRequest } from "../services/auth";
-import api from "../services/api";
+import { api } from "../services/api";
 
 type UserType = {
   name: string;
@@ -39,6 +39,8 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     setCookie(undefined, '@smartAuth-token', token, {
       maxAge: 60 * 60 * 1, // 1 hour
     })
+
+    // setCookie(undefined, 'user-role', user.role)
 
     api.defaults.headers['Authorization'] = `Bearer ${token}`
 

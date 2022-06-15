@@ -171,7 +171,14 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-export default function ClientTable() {
+interface NotificationData {
+  title: string,
+  body: string,
+  users: string
+  deleted_at: Date,
+}
+
+export default function ClientTable({notifications}: any) {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Data | string>('status');
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -190,7 +197,7 @@ export default function ClientTable() {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.notification);
+      const newSelecteds = notifications.map((n) => n.id.toString());
       setSelected(newSelecteds);
       return;
     }
@@ -229,8 +236,7 @@ export default function ClientTable() {
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - notifications.length) : 0;
 
   return (
     <ClientTableView>
@@ -247,23 +253,23 @@ export default function ClientTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={notifications.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(notifications, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.notification.toString());
+                  const isItemSelected = isSelected(row.id.toString());
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.notification.toString())}
+                      onClick={(event) => handleClick(event, row.id.toString())}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.notification}
+                      key={index}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -281,10 +287,10 @@ export default function ClientTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.notification}
+                        {row.title}
                       </TableCell>
-                      <TableCell align="left">{row.client}</TableCell>
-                      <TableCell align="left"><StyledStatus status={row.status==='enviada'? 'ativo' : row.status==='falhou'? 'inativo' : 'pendente'}>{row.status}</StyledStatus></TableCell>
+                      <TableCell align="left">{'copel'}</TableCell>
+                      <TableCell align="left"><StyledStatus status={row.deleted_at===null? 'ativo' : 'inativo'}>{row.deleted_at===null? 'ativo' : 'inativo'}</StyledStatus></TableCell>
                     </TableRow>
                   );
                 })}
@@ -303,7 +309,7 @@ export default function ClientTable() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={notifications.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

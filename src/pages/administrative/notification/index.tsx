@@ -1,29 +1,32 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import Modal from '@mui/material/Modal';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Head from 'next/head'
-import React from 'react'
+import React, { useState } from 'react'
 
 import NotificationsTable from '../../../components/administrativeTables/NotificationsTable'
-import BasicButton from '../../../components/buttons/basicButton/BasicButton';
 import FaqButton1 from '../../../components/buttons/faqButton/FaqButton1';
 import FaqButton2 from '../../../components/buttons/faqButton/FaqButton2';
 import Header from '../../../components/header/Header'
 import PageTitle from '../../../components/pageTitle/PageTitle'
-import api from '../../../services/api';
+import { api } from '../../../services/api';
 import { FaqView } from '../../../styles/layouts/commonQuestions/FaqView'
-import { NotificationView } from './notificationView'
+
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import getAPIClient from '../../../services/ssrApi';
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
+import Notifications from '../../notifications';
+import Snackbar from '@mui/material/Snackbar/Snackbar';
+import Alert from '@mui/material/Alert/Alert';
 
 const style = {
   position: 'absolute' as const,
@@ -42,11 +45,36 @@ const style = {
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export default function commonQuestions() {
+interface NotificationInterface {
+  title: string,
+  body: string,
+  users: object[]
+}
 
-  const [open, setOpen] = React.useState(false);
+export default function notification({clients, notifications}) {
+
+  const [notification, setNotification] = useState<NotificationInterface>({
+    title: '',
+    body: '',
+    users: []
+  })
+
+  const [open, setOpen] = useState<boolean>(false);
+  const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
+  const [openSnackError, setOpenSnackError] = useState<boolean>(false);
+
+  const [radiusValue, setRadiusValue] = useState<string>('all');
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  async function handleRegisterNewNotification({title, body, users}: NotificationInterface) {
+    await api.post('/notification', {
+      title,
+      body,
+      users
+    }).then(res => setOpenSnackSuccess(true)).catch(res => setOpenSnackError(true))
+  }
 
   return (
     <FaqView>
@@ -61,79 +89,131 @@ export default function commonQuestions() {
 
       </div>
         <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
         >
         <Box sx={style}>
         <h1>Disparar Notificações</h1>
         <Typography sx={{color:'gray', fontSize:12}}variant="h5" gutterBottom component="div">
         Pode ser que todas as notificaçõs demorem alguns minutos para estarem disponíveis</Typography>
         <br />
-        <TextField id="outlined-basic" label="Título" sx={{width:700, ml:8}} variant="outlined" /> <br /><br />
+        <TextField id="outlined-basic" label="Título" sx={{width:700, ml:8}} onChange={(value) => {
+          setNotification({
+            ...notification,
+            title: value.target.value
+          })
+        }} variant="outlined" /> <br /><br />
+        <TextField id="outlined-basic" label="Corpo/Conteúdo da notificação" sx={{width:700, ml:8}} onChange={(value) => {
+          setNotification({
+            ...notification,
+            body: value.target.value
+          })
+        }} variant="outlined" /> <br /><br />
 
-        <Autocomplete
-          multiple
-          id="checkboxes-tags-demo"
-          options={top100Films}
-          disableCloseOnSelect
-          getOptionLabel={(option) => option.title}
-          renderOption={(props, option, { selected }) => (
-            <li {...props}>
-          <Checkbox
-            icon={icon}
-            checkedIcon={checkedIcon}
-            style={{ marginRight: 8 }}
-            checked={selected}
-          />
-                {option.title}
-              </li>
-            )}
-            sx={{ml:8}}
-            style={{ width: 700 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Corpo/Conteúdo da notificação" placeholder="Corpo/Conteúdo da notificação" />
-            )}
-          />
           <div>
-            <Checkbox sx={{ml:7}}
-            icon={<RadioButtonUncheckedIcon />}
-            checkedIcon={<RadioButtonCheckedIcon />}
-            />
-              <Typography sx={{color:'#1976D2', fontSize:12, ml:12, mt:-3.7}} >
-              Disparar para todos os clientes</Typography>
-              <Checkbox sx={{ml:7}}
-            icon={<RadioButtonUncheckedIcon />}
-            checkedIcon={<RadioButtonCheckedIcon />}
-            />
-            <Typography sx={{color:'#1976D2', fontSize:12, ml:12, mt:-3.7}} >
-            Disparar somente para alguns clientes</Typography>
+            <FormControl>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="female"
+                name="radio-buttons-group"
+              >
+                <FormControlLabel value="all" control={<Radio />} checked={radiusValue==='all'? true : false}onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
+                  setRadiusValue(value.target.value)
+                }} label="Disparar para todos os clientes" />
+                <FormControlLabel value="some" control={<Radio />} checked={radiusValue==='some'? true : false} onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
+                  setRadiusValue(value.target.value)
+                }} label="Disparar somente para alguns clientes" />
+              </RadioGroup>
+            </FormControl>
           </div>
 
-          <FaqButton1  title='Cancelar' onClick={function (): void {
-              throw new Error('Function not implemented.');
-            } } />
-          <FaqButton2  title='Salvar' onClick={function (): void {
-              throw new Error('Function not implemented.');
-            } } />
+          {
+            radiusValue === 'some'?
+            <Autocomplete
+            multiple
+            id="checkboxes-tags-demo"
+            options={clients}
+            disableCloseOnSelect
+            onChange={(event: any, newValue: any) => {
+              setNotification({...notification, users: newValue.map((el) => {return {"user_id": el.id}})});
+            }}
+            getOptionLabel={(option) => option.name}
+            renderOption={(props, option, { selected }) => (
+              <li {...props}>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={selected}
+                value={option.name}
+              />
+                {option.name}
+              </li>
+              )}
+              sx={{ml:8}}
+              style={{ width: 700 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Clientes" placeholder="Selecionar clientes"/>
+                )}
+            /> :
+            null
+          }
+
+          <FaqButton1  title='Cancelar' onClick={() => {console.log()}} />
+          <FaqButton2  title='Salvar' onClick={() => {
+            handleRegisterNewNotification(notification)
+          }} />
         </Box>
       </Modal>
-      <NotificationsTable />
+      <NotificationsTable notifications={notifications}/>
+      <Snackbar open={openSnackSuccess} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          This is a success message!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openSnackError} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          This is a success message!
+        </Alert>
+      </Snackbar>
     </FaqView>
   )
 }
 
-const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  {
-    title: 'The Lord of the Rings: The Return of the King',
-    year: 2003,
-  },
-];
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+
+  let clients = [];
+  let notifications = [];
+
+  await apiClient.get('/user').then(res => {
+    clients = res.data
+  }).catch(res => {
+    console.log(res)
+  })
+
+  await apiClient.get('/notification').then(res => {
+    notifications = res.data
+  }).catch(res => {
+    console.log(res)
+  })
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      clients,
+      notifications
+    }
+  }
+}

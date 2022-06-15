@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 
 export const NotificationView = styled.nav`
-   display: flex;
+  display: flex;
   align-items: center;
 
   flex-direction: column;

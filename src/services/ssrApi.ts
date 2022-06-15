@@ -10,16 +10,13 @@ export default function getAPIClient(ctx?: Pick<next.NextPageContext, 'req'> | {
   req: express.Request;
 } | null | undefined) {
 
-  const { '@smartAuth-token': token } = parseCookies()
+  const { '@smartAuth-token': token } = parseCookies(ctx)
 
   const api = axios.create({
     baseURL: "https://smart-energia-api.herokuapp.com/api",
   });
 
   api.interceptors.request.use(config => {
-      // console.log(config)
-      // config.headers = {Authorization: `Bearer ${token}`};
-
       return config;
     },
   );

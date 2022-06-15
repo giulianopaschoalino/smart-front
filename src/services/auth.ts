@@ -1,4 +1,4 @@
-import api from "./api";
+import { api } from "./api";
 
 export const TOKEN_KEY = "@smartAuth-token";
 
@@ -15,7 +15,8 @@ type UserObjectType = {
   name: string;
   email: string;
   client_id: number
-  id: number
+  id: number,
+  role: number
 }
 
 export async function signInRequest(data: SignInRequestData) {
@@ -30,7 +31,8 @@ export async function signInRequest(data: SignInRequestData) {
       name: res.data.user.name,
       email: res.data.user.email,
       client_id: res.data.user.client_id,
-      id: res.data.user.id
+      id: res.data.user.id,
+      role: res.data.user.roles.role_id
     }
     token = res.data.token
   }).catch(res => {
@@ -38,13 +40,8 @@ export async function signInRequest(data: SignInRequestData) {
   })
 
   return {
-    token: token,
-    user: {
-      name: user.name,
-      email: user.email,
-      client_id: user.client_id,
-      id: user.id
-    }
+    token,
+    user
   }
 }
 
@@ -57,18 +54,14 @@ export default async function recoverUserInformation(id) {
       name: res.data.user.name,
       email: res.data.user.email,
       client_id: res.data.user.client_id,
-      id: res.data.user.id
+      id: res.data.user.id,
+      role: res.data.user.roles.role_id
     }
   }).catch(res => {
     console.log(res)
   })
 
   return {
-    user: {
-      name: user?.name,
-      email: user?.email,
-      client_id: user?.client_id,
-      id: user?.id
-    }
+    user
   }
 }
