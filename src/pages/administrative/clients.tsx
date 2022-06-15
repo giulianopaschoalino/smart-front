@@ -49,13 +49,13 @@ export default function clients() {
 
   const [openModal, setOpenModal] = useState(false)
 
-  function handleCreateClient() {
+  function handleCreateClient({name, email, password, password_confirmation, client_id}) {
     api.post('', {
-      "name": "Teste3",
-      "email": "teste3@gmail.com",
-      "password": "password",
-      "password_confirmation": "password",
-      "client_id": 222
+      name,
+      email,
+      password,
+      password_confirmation,
+      client_id
     })
   }
 
