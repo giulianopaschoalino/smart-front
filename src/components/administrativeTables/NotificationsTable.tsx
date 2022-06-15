@@ -179,7 +179,7 @@ interface NotificationData {
 }
 
 interface NotificationsTableInterface{
-  notifications: NotificationData[],
+  notifications: any,
   onChange: any
 }
 
