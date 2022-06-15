@@ -20,14 +20,14 @@ type UserObjectType = {
 }
 
 export async function signInRequest(data: SignInRequestData) {
-  let user: UserObjectType, token: string
+  let user: UserObjectType, token: string, exception: any = null
 
   await api.post('/auth/login', {
     "email": data.email,
     "password": data.password,
     "device_name": "test"
   }).then(res => {
-    // console.log(res.data.user.roles.pivot.role_id)
+    token = res.data.token
     user = {
       name: res.data.user.name,
       email: res.data.user.email,
@@ -35,20 +35,20 @@ export async function signInRequest(data: SignInRequestData) {
       id: res.data.user.id,
       role: res.data.user.roles[0].pivot.role_id
     }
-    token = res.data.token
   }).catch(res => {
-    console.log(res)
+    exception = res
   })
 
   return {
-    token: token,
+    token,
     user: {
       name: user?.name,
       email: user?.email,
       client_id: user?.client_id,
       id: user?.id,
       role: user?.role
-    }
+    },
+    exception
   }
 }
 
