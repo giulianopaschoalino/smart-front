@@ -1,27 +1,27 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import getAPIClient from '../../services/ssrApi';
-import { FaqQuestionsCardBody, FaqQuestionsCardHeader, CommonQuestionsCardView } from './FaqQuestionsCardView'
+import { FaqQuestionsCardBody, FaqQuestionsCardHeader, CommonQuestionsCardView } from './NotificationQuestionsCardView'
 
 interface CommonsQuestionsCardInterface {
-  question: string,
-  answer: string,
+  title: string,
+  body: string,
 
 }
 
-export default function CommonsQuestionsCard({question, answer}: CommonsQuestionsCardInterface) {
+export default function NotificationQuestionsCard({title, body}: CommonsQuestionsCardInterface) {
   const [ showCardBody, setShowCardBody ] = useState<boolean>(false)
   return (
 
     <CommonQuestionsCardView>
       <FaqQuestionsCardHeader>
-        <h4>{question}</h4>
+        <h4>{title}</h4>
         <Image src={showCardBody? '/assets/less-icon.svg' : '/assets/plus-icon.svg' } width={32} height={32} onClick={() => setShowCardBody(!showCardBody)} />
       </FaqQuestionsCardHeader>
 
       <FaqQuestionsCardBody showCardBody={showCardBody} >
         <p>
-          {answer}
+          {body}
         </p>
       </FaqQuestionsCardBody>
     </CommonQuestionsCardView>
