@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ClientTableView = styled.main`
+export const TableView = styled.main`
   width: 100%;
 
   color: #6A707E;

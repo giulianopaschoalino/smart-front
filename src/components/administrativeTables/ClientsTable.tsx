@@ -12,7 +12,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import React, { useState, useEffect } from 'react';
 
-import { ClientTableView, StyledStatus } from './ClientsTableView';
+import { TableView, StyledStatus } from './TableView';
 
 interface Data {
   clientCode: number,
@@ -219,7 +219,7 @@ export default function ClientTable({clients, onChange}: ClientsTableInterface) 
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - clients.length) : 0;
 
   return (
-    <ClientTableView>
+    <TableView>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
           <Table
@@ -297,6 +297,6 @@ export default function ClientTable({clients, onChange}: ClientsTableInterface) 
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </ClientTableView>
+    </TableView>
   );
 }

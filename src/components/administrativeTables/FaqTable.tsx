@@ -16,11 +16,10 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
-import { GetServerSideProps } from 'next';
 import React, { useState } from 'react';
 import getAPIClient from '../../services/ssrApi';
 
-import { ClientTableView, StyledStatus } from './ClientsTableView';
+import { TableView, StyledStatus } from './TableView';
 
 interface Data {
   question: string,
@@ -234,7 +233,7 @@ export default function FaqTable({questionData}: any) {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <ClientTableView>
+    <TableView>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
           <Table
@@ -311,7 +310,7 @@ export default function FaqTable({questionData}: any) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </ClientTableView>
+    </TableView>
   );
 }
 
