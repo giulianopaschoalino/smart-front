@@ -1,12 +1,6 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
-import { alpha } from '@mui/material/styles';
-import Switch from '@mui/material/Switch';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -15,11 +9,8 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
 import { visuallyHidden } from '@mui/utils';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { ClientTableView, StyledStatus } from './ClientsTableView';
 
@@ -29,29 +20,6 @@ interface Data {
   unity: string,
   status: string,
 }
-
-function createData(
-  clientCode: number,
-  name: string,
-  unity: string,
-  status: string,
-): Data {
-  return {
-    clientCode,
-    name,
-    unity,
-    status,
-  };
-}
-
-const rows = [
-  createData(9500130, 'Copel', 'clique para ver unidades', 'ativo'),
-  createData(9500131, 'Copel', 'clique para ver unidades', 'ativo'),
-  createData(9500132, 'Copel', 'clique para ver unidades', 'ativo'),
-  createData(9500689, 'Copel', 'clique para ver unidades', 'pendente'),
-  createData(9500690, 'Copel', 'clique para ver unidades', 'inativo'),
-  createData(9500691, 'Copel', 'clique para ver unidades', 'inativo'),
-];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -180,7 +148,12 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-export default function ClientTable({clients}: any) {
+interface ClientsTableInterface {
+  clients: any,
+  onChange: any
+}
+
+export default function ClientTable({clients, onChange}: ClientsTableInterface) {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Data | string>('status');
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -237,9 +210,13 @@ export default function ClientTable({clients}: any) {
 
   const isSelected = (code: any) => selected.indexOf(code.toString()) !== -1;
 
+  useEffect(() => {
+    onChange(selected)
+  }, [selected])
+
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - clients.length) : 0;
 
   return (
     <ClientTableView>
@@ -256,7 +233,7 @@ export default function ClientTable({clients}: any) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={clients.length}
             />
             <TableBody>
               {stableSort(clients, getComparator(order, orderBy))
@@ -313,7 +290,7 @@ export default function ClientTable({clients}: any) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={clients.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

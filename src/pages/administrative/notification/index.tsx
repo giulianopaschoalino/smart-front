@@ -147,10 +147,10 @@ export default function notification({clients, notifications}) {
       </Snackbar>
 
       <div className='buttons'>
-      <button className='btn2' onClick={handleOpen}>Disparar nova</button>
-      <button className='btn1' onClick={() => setOpenModalInativar(true)}>Inativar</button>
-
+        <button className='btn2' onClick={handleOpen}>Disparar nova</button>
+        <button className='btn1' onClick={() => setOpenModalInativar(true)}>Inativar</button>
       </div>
+
       <NotificationsTable notifications={notifications} onChange={(value) => setSelectedNotifications(value)}/>
       <Modal
           open={open}
