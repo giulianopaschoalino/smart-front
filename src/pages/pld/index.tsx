@@ -263,7 +263,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData}: pldI
                 <MenuItem value={'29'}>29</MenuItem>
                 <MenuItem value={'30'}>30</MenuItem>
               </Select>
-            <BasicButton title='Download (csv)' onClick={() => console.log()}/>
+
           </section>
           <LineBarChart
           data1={dataByDay} data3={dataByDay}
