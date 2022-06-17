@@ -59,7 +59,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             <>
               <Sidebar />
               <Component {...pageProps} />
-
             </>
             :
             null

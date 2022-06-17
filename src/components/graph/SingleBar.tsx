@@ -20,13 +20,16 @@ ChartJS.register(
 interface SingleBarInterface{
   title: string,
   subtitle: string,
-  dataProps: Array<number>,
+  dataProps: any,
   label: Array<string>,
   dataset: string,
   barLabel?: boolean | undefined,
   year?: boolean | undefined,
   month?: boolean | undefined,
   dataset1?: string,
+
+
+
 }
 
 export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1, barLabel, year, month }: SingleBarInterface) {
@@ -79,19 +82,14 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1
       {
         label: dataset,
         data: dataProps.map((value, index) => {
-          return year? label[index]<=currentTime.getFullYear().toString()? value : null : month? label.indexOf(label[index])>currentTime.getMonth()? null : value : null
+          return value.economia_acumulada
         }),
         backgroundColor: (value, ctx) => {
-          return year? label[value.dataIndex]<=currentTime.getFullYear().toString()? '#255488' : 'transparent' : month? label.indexOf(label[value.dataIndex])<=currentTime.getMonth()? '#255488' : 'transparent' : null// parseInt(label[value.dataIndex])<=currentTime.getMonth()? '#255488' : draw('diagonal', '#C2D5FB') : null
+          console.log(dataProps[value.dataIndex])
+          return dataProps[value.dataIndex].dad_estimado == false ? '#255488' : '#C2d5fb'
         },
       },
-      {
-        label: dataset1,
-        data: dataProps.map((value, index) => {
-          return year? label[index]>=currentTime.getFullYear().toString()? value : null : month? label.indexOf(label[index])<=currentTime.getMonth()? null : value : null
-        }),
-        backgroundColor: typeof window !== 'undefined'? draw('diagonal', '#C2D5FB') : null
-      }
+
     ],
   }
 

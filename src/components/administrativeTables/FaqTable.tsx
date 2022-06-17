@@ -17,15 +17,20 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import { GetServerSideProps } from 'next';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import getAPIClient from '../../services/ssrApi';
 
-import { ClientTableView, StyledStatus } from './ClientsTableView';
+import { TableView, StyledStatus } from './TableView';
 
 interface Data {
   question: string,
   answer: string,
   status: string,
+}
+
+interface FaqTableInterface{
+  questionData: any,
+  onChange: any
 }
 
 function createData(
@@ -170,7 +175,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-export default function FaqTable({questionData}: any) {
+export default function FaqTable({questionData, onChange}: FaqTableInterface) {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Data | string>('status');
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -229,12 +234,16 @@ export default function FaqTable({questionData}: any) {
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
+  useEffect(() => {
+    onChange(selected)
+  }, [selected])
+
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <ClientTableView>
+    <TableView>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
           <Table
@@ -311,7 +320,7 @@ export default function FaqTable({questionData}: any) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </ClientTableView>
+    </TableView>
   );
 }
 

@@ -73,7 +73,7 @@ interface LineBarChartInterface {
   hashurado?: boolean | undefined,
 }
 
-export function LineBarChart({ title, subtitle, data1, data2, data3, label, red, dataset1, dataset2, dataset3, barLabel, hashurado }: LineBarChartInterface) {
+export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red, dataset1, dataset2, dataset3, barLabel, hashurado }: LineBarChartInterface) {
   const chartRef = useRef<ChartJS>(null);
 
   const currentTime = new Date();
@@ -119,7 +119,7 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
         },
         borderWidth: 2,
         fill: false,
-        data: data1.map(value => value.value),
+        data: data1.map(value => value),
       },
       {
         type: 'bar' as const,
@@ -127,7 +127,7 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
         backgroundColor: (value, ctx) => {
           return hashurado? parseInt(value.dataIndex+1) <= currentTime.getMonth()? '#C2D5FB' : pattern.draw('diagonal', '#C2D5FB') : '#C2D5FB'
         },
-        data: data3.map(value => value.value),
+        data: data3.map(value => value),
       },
       {
         type: 'bar' as const,
@@ -136,7 +136,7 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
         backgroundColor: (value, ctx) => {
           return hashurado? parseInt(value.dataIndex+1) <= currentTime.getMonth()? '#255488' : pattern.draw('diagonal', '#255488') : '#255488'
         },
-        data: data2.map(value => value.value),
+        data: data2.map(value => value),
       },
     ],
   } : {
@@ -149,13 +149,13 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
         '#f00' : '#0c9200',
         borderWidth: 2,
         fill: false,
-        data: data1.map(value => value.value),
+        data: data1.map(value => value),
       },
       {
         type: 'bar' as const,
         label: dataset3? dataset3 : 'Dataset 2',
         backgroundColor: '#255488',
-        data: data3.map(value => value.value),
+        data: data3.map(value => value),
       },
     ],
   };

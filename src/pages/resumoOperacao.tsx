@@ -49,7 +49,7 @@ export default function ResumoOperacao() {
     // data.unidades.map((value) => {
     //   console.log(`olha o valor ${value.name}`)
     // })
-    console.log(unidade)
+    // console.log(unidade)
     console.log(data.unidades.filter((value, index)=> value.value.includes(unidade)))
   }, [month, unidade])
 

@@ -34,16 +34,14 @@ export default function Notifications({notificationData}: any) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
-  console.log('teste')
+
   let notificationData = [];
 
-
-await apiClient.get('/notification').then(res => {
-  notificationData = res.data
-}).catch(res => {
-  console.log(res)
-})
-  console.table(notificationData);
+  await apiClient.get('/notification').then(res => {
+    notificationData = res.data
+  }).catch(res => {
+    // console.log(res)
+  })
 
   if (!token) {
     return {

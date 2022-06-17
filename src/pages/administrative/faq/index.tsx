@@ -10,7 +10,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { api } from '../../../services/api';
-
+import ConfirmModal from '../../../components/modal/ConfirmModal';
+import { ConfirmModalView } from '../../../styles/layouts/modals/confirmModalView';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 import FaqTable from '../../../components/administrativeTables/FaqTable';
 import BasicButton from '../../../components/buttons/basicButton/BasicButton';
@@ -22,6 +25,7 @@ import { FaqView } from '../../../styles/layouts/commonQuestions/FaqView'
 import getAPIClient from '../../../services/ssrApi';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
+
 
 const style = {
   position: 'absolute' as const,
@@ -36,13 +40,69 @@ const style = {
   p: 4,
 };
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+
 type FaqInterface = {
   question: string;
   answer: string;
 
 }
+export default function Sidebar({faqData} : any ) {
 
-export default function Sidebar({faqData}: any) {
+
+  const [openModalInativar, setOpenModalInativar] = useState<boolean>(false)
+  const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
+  const [openSnackError, setOpenSnackError] = useState<boolean>(false);
+  const [openSnackSuccessDelete, setOpenSnackSuccessDelete] = useState<boolean>(false);
+  const [openSnackErrorDelete, setOpenSnackErrorDelete] = useState<boolean>(false);
+
+
+
+  const handleCloseSnack = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackError(false);
+    setOpenSnackSuccess(false);
+  };
+
+
+  const handleCloseSnackDelete = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackErrorDelete(false);
+    setOpenSnackSuccessDelete(false);
+  };
+
+  async function handleDeleteNotification(id: any) {
+    await id.map((value) => {
+      api.delete(`/faq/${value}`).then(res => {
+        setOpenSnackSuccessDelete(true)
+        setOpenModalInativar(false)
+        window.location.reload()
+      }).catch(res => setOpenSnackErrorDelete(true))
+    })
+  }
+
+
+
+  const [faq, setFaq] = useState<FaqInterface>({
+    question: '',
+    answer : '',
+
+  })
+
+  const [selectedfaq, setSelectedfaq] = useState([])
+
   async function handleRegisterNewFaq({question, answer}: FaqInterface) {
     await api.post('/faq', {
       "question": question,
@@ -51,10 +111,7 @@ export default function Sidebar({faqData}: any) {
     }).then(res => console.log(res.data))
   }
 
-  const [faq, setFaq] = useState<FaqInterface>({
-    question: '',
-    answer: '',
-  })
+
 
 
   const [open, setOpen] = React.useState(false);
@@ -68,9 +125,32 @@ export default function Sidebar({faqData}: any) {
 
       <PageTitle title='Perguntas Frequentes' subtitle='Perguntas Frequentes'/>
 
+      <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
+        <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
+          Notificação cadastrada com sucesso!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
+        <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
+          Notificação não cadastrada!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openSnackSuccessDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
+        <Alert onClose={handleCloseSnackDelete} severity="success" sx={{ width: '100%' }}>
+          notificação excluida com sucesso!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openSnackErrorDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
+        <Alert onClose={handleCloseSnackDelete} severity="error" sx={{ width: '100%' }}>
+          Notificação não excluida!
+        </Alert>
+      </Snackbar>
+
       <div className='buttons'>
       <button className='btn2' value="Refresh Page"onClick={handleOpen} >Adicionar</button>
-      <button className='btn1' onClick={handleOpen}>Inativar</button>
+      <button className='btn1' onClick={() => setOpenModalInativar(true)}>Inativar</button>
+
 
       </div>
         <Modal
@@ -99,7 +179,15 @@ export default function Sidebar({faqData}: any) {
         </Box>
 
       </Modal>
-      <FaqTable questionData={faqData}/>
+      <FaqTable questionData={faqData} onChange={value => setSelectedfaq(value)}/>
+
+      <ConfirmModal open={openModalInativar} handleIsClose={(value) => {setOpenModalInativar(value)}}>
+        <PageTitle title='Excluir notificação' subtitle='deseja realmente excluir as notificações selecionadas?'/>
+        <ConfirmModalView>
+          <BasicButton title='Confirmar' onClick={() => handleDeleteNotification(selectedfaq)}/>
+          <BasicButton title='Cancelar' onClick={() => setOpenModalInativar(false)}/>
+        </ConfirmModalView>
+      </ConfirmModal>
 
     </FaqView>
     </>
@@ -109,16 +197,14 @@ export default function Sidebar({faqData}: any) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
-  console.log('teste')
+
   let faqData = [];
 
-
-await apiClient.get('/faq').then(res => {
-  faqData = res.data
-}).catch(res => {
-  console.log(res)
-})
-  console.table(faqData);
+  await apiClient.get('/faq').then(res => {
+    faqData = res.data.data
+  }).catch(res => {
+    // console.log(res)
+  })
 
   if (!token) {
     return {
