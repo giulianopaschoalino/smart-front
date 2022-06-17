@@ -37,7 +37,7 @@ export default function Sidebar() {
 
   const { ['user-role']: role } = parseCookies()
 
-  console.log(role)
+  // console.log(role)
 
   useEffect(() => {
     setViewModal(false)

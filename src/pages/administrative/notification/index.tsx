@@ -252,13 +252,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await apiClient.get('/user').then(res => {
     clients = res.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   await apiClient.get('/notification').then(res => {
-    notifications = res.data
+    notifications = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   if (!token) {

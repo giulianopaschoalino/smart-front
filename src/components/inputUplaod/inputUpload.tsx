@@ -16,7 +16,7 @@ export default function InputUpload() {
 
   function onImageChange(e: any) {
     setImages([...e.target.files]);
-    console.log(e);
+    // console.log(e);
   }
 
   return (
