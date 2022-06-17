@@ -15,6 +15,7 @@ import { dataEconomiaIndicador } from '../services/economiaIndicador'
 import { EconomiaAcumulada } from '../services/economiaAcumulada'
 import Chart from '../components/graph/Chart'
 import { LineBarChart } from '../components/graph/LineBarChart'
+import { LineBarChart2 } from '../components/graph/LineBarChart2'
 import { ConsumoEstimado } from '../services/consumoEstimado'
 import Head from 'next/head'
 import recoverUserInformation from '../services/auth'
@@ -59,7 +60,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
         </GraphCard>
 
         <GraphCard title='Custos Estimados' subtitle='Custos Estimados em R$/MWh' singleBar>
-          <LineBarChart data1={ConsumoEstimado.data2} data2={ConsumoEstimado.data} data3={ConsumoEstimado.data1} label={ConsumoEstimado.label} dataset1='Custo' dataset2='Cativo' dataset3='Livre' title='Custo Estimado' subtitle='(Valores em R$/MWh)' barLabel hashurado/>
+          <LineBarChart2 data1={ConsumoEstimado.data2} data2={ConsumoEstimado.data} data3={ConsumoEstimado.data1} label={ConsumoEstimado.label} dataset1='Custo' dataset2='Cativo' dataset3='Livre' title='Custo Estimado' subtitle='(Valores em R$/MWh)' barLabel hashurado/>
         </GraphCard>
         <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh'>
           <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)' data1={dataEconomiaIndicador.data1} data2={dataEconomiaIndicador.data2} label={dataEconomiaIndicador.labels} barLabel/>
