@@ -22,7 +22,7 @@ import { parseCookies } from 'nookies'
 import { GetServerSideProps } from 'next'
 import getAPIClient from '../services/ssrApi'
 
-export default function Dashboard() {
+export default function Dashboard({grossAnualGraph, grossAnualYears} : any) {
 
   return (
     <DashboardView>
@@ -44,7 +44,10 @@ export default function Dashboard() {
 
       <section className='dashboard'>
         <GraphCard title='Consumo' subtitle='Gráfico de Consumo'>
-          <SingleBar title='Economia Bruta' subtitle='(Valores em R$ mil)' label={dataEconomiaBruta.labels} dataset='Consolidada' dataset1='Estimada' dataProps={dataEconomiaBruta.data} barLabel year/>
+          <SingleBar title='Economia Bruta' subtitle='(Valores em R$ mil)'
+          dataset='Consolidada' dataset1='Estimada'
+          dataProps={grossAnualGraph}
+          label={grossAnualYears} barLabel year/>
         </GraphCard>
         <GraphCard title='Economia Acumulado' subtitle='Economia Acumulada' singleBar>
           <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$)' dataset='Acumulada' dataset1='Estimado' label={EconomiaAcumulada.label}  dataProps={EconomiaAcumulada.data2} barLabel month/>
@@ -66,7 +69,23 @@ export default function Dashboard() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
+
+  let grossAnualGraph = [];
+
+
+
+  await apiClient.post('/economy/grossAnnual').then(res => {
+    grossAnualGraph = res.data.data
+    console.log(grossAnualGraph[0])
+  }).catch(res => {
+    console.log(res)
+  })
+
+
+
+  const grossAnualYears = grossAnualGraph.map((value) => value.ano)
 
   if (!token) {
     return {
@@ -77,7 +96,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 
+
   return {
-    props: {}
+    props: {
+      grossAnualGraph,
+      grossAnualYears,
+    }
   }
 }

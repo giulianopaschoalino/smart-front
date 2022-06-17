@@ -55,7 +55,6 @@ type FaqInterface = {
 }
 export default function Sidebar({faqData} : any ) {
 
-<<<<<<< HEAD
 
   const [openModalInativar, setOpenModalInativar] = useState<boolean>(false)
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
@@ -104,9 +103,6 @@ export default function Sidebar({faqData} : any ) {
 
   const [selectedfaq, setSelectedfaq] = useState([])
 
-=======
-export default function Sidebar({faqData}: any) {
->>>>>>> b045a2e541bdcd6882d728bf6a7d600768b93f1d
   async function handleRegisterNewFaq({question, answer}: FaqInterface) {
     await api.post('/faq', {
       "question": question,

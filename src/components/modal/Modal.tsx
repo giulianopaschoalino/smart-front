@@ -13,7 +13,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: '80%',
-  height: '550px',
+  height: '200px',
   bgcolor: 'background.paper',
   border: '2px solid #254F7F',
   boxShadow: 24,

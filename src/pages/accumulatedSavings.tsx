@@ -1,4 +1,6 @@
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
+import { parseCookies } from 'nookies'
 import React from 'react'
 
 import Chart from '../components/graph/Chart'
@@ -7,9 +9,10 @@ import Header from '../components/header/Header'
 import PageTitle from '../components/pageTitle/PageTitle'
 import { EconomiaAcumulada } from '../services/economiaAcumulada'
 import { dataEconomiaBruta } from '../services/economiaBruta'
+import getAPIClient from '../services/ssrApi'
 import { AccumulatedSavingsView } from '../styles/layouts/economy/accumulatedSavings/AccumulatedSavingsView'
 
-export default function AccumulatedSavings() {
+export default function AccumulatedSavings({graphData, years}: any) {
   return (
     <AccumulatedSavingsView>
       <Head>
@@ -19,8 +22,42 @@ export default function AccumulatedSavings() {
       <PageTitle title='Economia Acumulada' subtitle='Economia Bruta Estimada e Acumulada anual (Valores em R$ mil)' />
       <section>
         <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$ mil)' dataset='Consolidada'
-          dataset1='Estimada' label={EconomiaAcumulada.label}  dataProps={EconomiaAcumulada.data2} barLabel month/>
+          dataset1='Estimada' dataProps={graphData}
+          label={years} barLabel  month/>
       </section>
     </AccumulatedSavingsView>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+
+  let graphData = [];
+
+  await apiClient.post('/economy/grossMonthly').then(res => {
+    graphData = res.data.data
+    console.log(graphData[0].mes)
+  }).catch(res => {
+    console.log(res)
+  })
+
+  const years = graphData.map((value) => value.mes)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+
+  return {
+    props: {
+      graphData,
+      years,
+    }
+  }
 }
