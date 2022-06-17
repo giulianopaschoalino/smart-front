@@ -22,7 +22,7 @@ import { parseCookies } from 'nookies'
 import { GetServerSideProps } from 'next'
 import getAPIClient from '../services/ssrApi'
 
-export default function Dashboard({grossAnualGraph, grossAnualYears} : any) {
+export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears} : any) {
 
   return (
     <DashboardView>
@@ -49,9 +49,15 @@ export default function Dashboard({grossAnualGraph, grossAnualYears} : any) {
           dataProps={grossAnualGraph}
           label={grossAnualYears} barLabel year/>
         </GraphCard>
+
         <GraphCard title='Economia Acumulado' subtitle='Economia Acumulada' singleBar>
-          <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$)' dataset='Acumulada' dataset1='Estimado' label={EconomiaAcumulada.label}  dataProps={EconomiaAcumulada.data2} barLabel month/>
+          <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$)'
+          dataset='Acumulada' dataset1='Estimado'
+          dataProps={grossMensalGraph}
+          label={grossMensalYears}
+          barLabel month/>
         </GraphCard>
+
         <GraphCard title='Custos Estimados' subtitle='Custos Estimados em R$/MWh' singleBar>
           <LineBarChart data1={ConsumoEstimado.data2} data2={ConsumoEstimado.data} data3={ConsumoEstimado.data1} label={ConsumoEstimado.label} dataset1='Custo' dataset2='Cativo' dataset3='Livre' title='Custo Estimado' subtitle='(Valores em R$/MWh)' barLabel hashurado/>
         </GraphCard>
@@ -73,6 +79,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
 
   let grossAnualGraph = [];
+  let grossMensalGraph = [];
 
 
 
@@ -83,8 +90,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     console.log(res)
   })
 
+  await apiClient.post('/economy/grossMonthly').then(res => {
+    grossMensalGraph = res.data.data
+
+  }).catch(res => {
+    console.log(res)
+  })
 
 
+  const grossMensalYears = grossMensalGraph.map((value) => value.mes)
   const grossAnualYears = grossAnualGraph.map((value) => value.ano)
 
   if (!token) {
@@ -101,6 +115,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     props: {
       grossAnualGraph,
       grossAnualYears,
+      grossMensalYears,
+      grossMensalGraph,
     }
   }
 }
