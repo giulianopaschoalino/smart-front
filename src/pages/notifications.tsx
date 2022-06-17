@@ -38,9 +38,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let notificationData = [];
 
   await apiClient.get('/notification').then(res => {
-    notificationData = res.data
+    console.log(res)
+    notificationData = res.data.data
   }).catch(res => {
-    // console.log(res)
+    console.log(res)
   })
 
   if (!token) {

@@ -65,6 +65,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
         <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh'>
           <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)' data1={dataEconomiaIndicador.data1} data2={dataEconomiaIndicador.data2} label={dataEconomiaIndicador.labels} barLabel/>
         </GraphCard>
+
       </section>
 
       <button onClick={() => {

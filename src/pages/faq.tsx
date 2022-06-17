@@ -38,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 
   await apiClient.get('/faq').then(res => {
-    faqData = res.data
+    faqData = res.data.data
   }).catch(res => {
     // console.log(res)
   })
