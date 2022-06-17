@@ -91,7 +91,7 @@ export default function Home() {
             label="Password"
           />
         </FormControl>
-        <Link href='verifyEmail' >Esqueceu a senha ?</Link>
+        <Link href='verifyEmail'>Esqueceu a senha ?</Link>
 
         <LoginButton title='ENTRAR' onClick={() => handleSignIn()}/>
 
@@ -101,7 +101,6 @@ export default function Home() {
 
         <p><a href='tel:+55(41) 3012-5900' >+55(41) 3012-5900</a><br/><a href='https://www.energiasmart.com.br' target="_blank" rel="noreferrer" >www.energiasmart.com.br</a></p>
       </LoginContainer>
-
     </LoginView>
   )
 }

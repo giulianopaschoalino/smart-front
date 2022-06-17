@@ -34,16 +34,14 @@ export default function commonQuestions({faqData}) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
-  console.log('teste')
   let faqData = [];
 
 
-await apiClient.get('/faq').then(res => {
-  faqData = res.data
-}).catch(res => {
-  console.log(res)
-})
-  console.table(faqData);
+  await apiClient.get('/faq').then(res => {
+    faqData = res.data
+  }).catch(res => {
+    // console.log(res)
+  })
 
   if (!token) {
     return {

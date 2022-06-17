@@ -71,14 +71,14 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
     labels,
     datasets: [
       {
-        label: dataset1? dataset1 : '2020',
-        data: data1.map(value => value),
+        label: dataset1? dataset1 : '2021',
+        data: data1.map(value => value.custo_unit),
         backgroundColor: '#C2D5FB',
       },
       data2?
       {
-        label: dataset2? dataset2 : '2021',
-        data: data2.map(value => value),
+        label: dataset2? dataset2 : '2022',
+        data: data2.map(value => value.custo_unit),
         backgroundColor: '#255488',
       } : null
     ],

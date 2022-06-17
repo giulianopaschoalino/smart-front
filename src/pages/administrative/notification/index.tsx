@@ -30,7 +30,6 @@ import BasicButton from '../../../components/buttons/basicButton/BasicButton';
 import { ConfirmModalView } from '../../../styles/layouts/modals/confirmModalView';
 import ConfirmModal from '../../../components/modal/ConfirmModal';
 
-
 const style = {
   position: 'absolute' as const,
   top: '50%',
@@ -149,10 +148,10 @@ export default function notification({clients, notifications}) {
       </Snackbar>
 
       <div className='buttons'>
-      <button className='btn2' onClick={handleOpen}>Disparar nova</button>
-      <button className='btn1' onClick={() => setOpenModalInativar(true)}>Inativar</button>
-
+        <button className='btn2' onClick={handleOpen}>Disparar nova</button>
+        <button className='btn1' onClick={() => setOpenModalInativar(true)}>Inativar</button>
       </div>
+
       <NotificationsTable notifications={notifications} onChange={(value) => setSelectedNotifications(value)}/>
       <Modal
           open={open}
@@ -254,13 +253,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await apiClient.get('/user').then(res => {
     clients = res.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   await apiClient.get('/notification').then(res => {
     notifications = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   if (!token) {

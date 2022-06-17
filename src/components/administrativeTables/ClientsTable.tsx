@@ -1,12 +1,6 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
-import { alpha } from '@mui/material/styles';
-import Switch from '@mui/material/Switch';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -15,13 +9,10 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
 import { visuallyHidden } from '@mui/utils';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { ClientTableView, StyledStatus } from './ClientsTableView';
+import { TableView, StyledStatus } from './TableView';
 
 interface Data {
   clientCode: number,
@@ -29,29 +20,6 @@ interface Data {
   unity: string,
   status: string,
 }
-
-function createData(
-  clientCode: number,
-  name: string,
-  unity: string,
-  status: string,
-): Data {
-  return {
-    clientCode,
-    name,
-    unity,
-    status,
-  };
-}
-
-const rows = [
-  createData(9500130, 'Copel', 'clique para ver unidades', 'ativo'),
-  createData(9500131, 'Copel', 'clique para ver unidades', 'ativo'),
-  createData(9500132, 'Copel', 'clique para ver unidades', 'ativo'),
-  createData(9500689, 'Copel', 'clique para ver unidades', 'pendente'),
-  createData(9500690, 'Copel', 'clique para ver unidades', 'inativo'),
-  createData(9500691, 'Copel', 'clique para ver unidades', 'inativo'),
-];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -77,7 +45,7 @@ function getComparator<Key extends keyof any>(
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
+function stableSort<T>(array: any, comparator: (a: T, b: T) => number) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -180,7 +148,12 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-export default function ClientTable() {
+interface ClientsTableInterface {
+  clients: any,
+  onChange: any
+}
+
+export default function ClientTable({clients, onChange}: ClientsTableInterface) {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof Data | string>('status');
   const [selected, setSelected] = useState<readonly string[]>([]);
@@ -199,7 +172,7 @@ export default function ClientTable() {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = clients.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -237,12 +210,16 @@ export default function ClientTable() {
 
   const isSelected = (code: any) => selected.indexOf(code.toString()) !== -1;
 
+  useEffect(() => {
+    onChange(selected)
+  }, [selected])
+
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - clients.length) : 0;
 
   return (
-    <ClientTableView>
+    <TableView>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
           <Table
@@ -256,23 +233,23 @@ export default function ClientTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={clients.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(clients, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.clientCode);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.clientCode.toString())}
+                      onClick={(event) => handleClick(event, row.id.toString())}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.clientCode}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -290,11 +267,11 @@ export default function ClientTable() {
                         scope="row"
                         padding="none"
                       >
-                        Unidade - {row.clientCode}
+                        Client - {row.client_id}
                       </TableCell>
                       <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">{row.unity}button</TableCell>
-                      <TableCell align="left"><StyledStatus status={row.status}>{row.status}</StyledStatus></TableCell>
+                      <TableCell align="left">clique aqui para ver as unidades</TableCell>
+                      <TableCell align="left"><StyledStatus status={row.deleted_at? 'inativo' : 'ativo'}> {row.deleted_at? 'inativo' : 'ativo'}</StyledStatus></TableCell>
                     </TableRow>
                   );
                 })}
@@ -313,13 +290,13 @@ export default function ClientTable() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={clients.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </ClientTableView>
+    </TableView>
   );
 }

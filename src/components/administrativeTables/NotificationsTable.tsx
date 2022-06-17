@@ -21,7 +21,7 @@ import Typography from '@mui/material/Typography';
 import { visuallyHidden } from '@mui/utils';
 import React, { useState, useEffect } from 'react';
 
-import { ClientTableView, StyledStatus } from './ClientsTableView';
+import { TableView, StyledStatus } from './TableView';
 
 interface Data {
   notification: string,
@@ -179,7 +179,7 @@ interface NotificationData {
 }
 
 interface NotificationsTableInterface{
-  notifications: NotificationData[],
+  notifications: any,
   onChange: any
 }
 
@@ -248,7 +248,7 @@ export default function NotificationsTable({notifications, onChange}: Notificati
   }, [selected])
 
   return (
-    <ClientTableView>
+    <TableView>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
           <Table
@@ -325,6 +325,6 @@ export default function NotificationsTable({notifications, onChange}: Notificati
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </ClientTableView>
+    </TableView>
   );
 }

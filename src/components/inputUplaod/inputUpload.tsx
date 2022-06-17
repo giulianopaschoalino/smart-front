@@ -16,19 +16,16 @@ export default function InputUpload() {
 
   function onImageChange(e: any) {
     setImages([...e.target.files]);
-    console.log(e);
+    // console.log(e);
   }
-
-
-
 
   return (
     <InputUploadView>
 
 <div className='imgContainer'>
         <article>
-     {imageURLS.map((imageSrc) => (
-          <img  className="image" src={imageSrc} alt="not fount"  />
+     {imageURLS.map((imageSrc, index) => (
+          <img key={index} className="image" src={imageSrc} alt="not fount"  />
         ))}
 
        </article>

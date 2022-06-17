@@ -71,7 +71,7 @@ export default function VerifyEmail() {
           <legend className="text">Ou</legend>
         </fieldset>
 
-        <p><a href='tel:+55(41) 3012-5900' >+55(41) 3012-5900</a><br/><a href='https://www.energiasmart.com.br' >www.energiasmart.com.br</a></p>
+        <p><a href='tel:+55(41)3012-5900' >+55(41) 3012-5900</a><br/><a href='https://www.energiasmart.com.br' >www.energiasmart.com.br</a></p>
 
       </VerifyEmailContainer>
     </VerifyEmailView>

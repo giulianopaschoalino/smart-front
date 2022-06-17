@@ -1,8 +1,10 @@
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
+import { parseCookies } from 'nookies';
 import React, { useEffect, useState } from 'react'
 
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
@@ -13,10 +15,17 @@ import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle';
 import { EconomiaAcumulada } from '../../services/economiaAcumulada';
 import { EvolucaoPld } from '../../services/evolucaoPld';
+import getAPIClient from '../../services/ssrApi';
 import { GoBack, PldGraphView, PldTableView } from '../../styles/layouts/pld/PldView'
 import RenderIf from '../../utils/renderIf'
 
-export default function region() {
+interface pldInterface {
+  tableData: any,
+  graphByHourData: any,
+  graphByMonthData: any
+}
+
+export default function pld({tableData, graphByHourData, graphByMonthData}: pldInterface) {
   const router = useRouter()
   const { region } = router.query
 
@@ -68,97 +77,19 @@ export default function region() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className='tg-gceh'>2101</td>
-                <td className='tg-uulg red'>xxxx</td>
-                <td className='tg-gceh dullRed'>xxxx</td>
-                <td className='tg-gceh dullGreen'>xxxx</td>
-                <td className='tg-uulg red'>xxxx</td>
-              </tr>
-              <tr>
-                <td className='tg-hq65'>2102</td>
-                <td className='tg-0tzy dullGreen'>xxxx</td>
-                <td className='tg-hq65 dullRed'>xxxx</td>
-                <td className='tg-hq65 dullGreen'>xxxx</td>
-                <td className='tg-0tzy dullGreen'>xxxx</td>
-              </tr>
-              <tr>
-                <td className="tg-gceh">2103</td>
-                <td className="tg-uulg red">xxxx</td>
-                <td className="tg-gceh dullGreen">xxxx</td>
-                <td className="tg-gceh dullRed">xxxx</td>
-                <td className="tg-gceh dullGreen">xxxx</td>
-              </tr>
-              <tr>
-                <td className='tg-hq65'>2104</td>
-                <td className='tg-0tzy dullGreen'>xxxx</td>
-                <td className='tg-hq65 dullRed'>xxxx</td>
-                <td className='tg-hq65 dullRed'>xxxx</td>
-                <td className='tg-0tzy dullGreen'>xxxx</td>
-              </tr>
-              <tr>
-                <td className='tg-gceh'>2105</td>
-                <td className='tg-uulg red'>xxxx</td>
-                <td className='tg-gceh dullGreen'>xxxx</td>
-                <td className='tg-gceh dullGreen'>xxxx</td>
-                <td className='tg-uulg red'>xxxx</td>
-              </tr>
-              <tr>
-                <td className='tg-hq65'>2106</td>
-                <td className='tg-0tzy dullGreen'>xxxx</td>
-                <td className='tg-hq65 dullRed'>xxxx</td>
-                <td className='tg-hq65 red'>xxxx</td>
-                <td className='tg-0tzy green'>xxxx</td>
-              </tr>
-              <tr>
-                <td className='tg-gceh'>2107</td>
-                <td className='tg-uulg red'>xxxx</td>
-                <td className='tg-gceh green'>xxxx</td>
-                <td className='tg-gceh dullRed'>xxxx</td>
-                <td className='tg-uulg red'>xxxx</td>
-              </tr>
-              <tr>
-                <td className='tg-hq65'>2108</td>
-                <td className='tg-0tzy dullGreen'>xxxx</td>
-                <td className='tg-hq65 dullGreen'>xxxx</td>
-                <td className='tg-hq65 green'>xxxx</td>
-                <td className='tg-0tzy dullRed'>xxxx</td>
-              </tr>
-              <tr>
-                <td className='tg-gceh'>2109</td>
-                <td className='tg-uulg red'>xxxx</td>
-                <td className='tg-gceh green'>xxxx</td>
-                <td className='tg-gceh dullRed'>xxxx</td>
-                <td className='tg-uulg red'>xxxx</td>
-              </tr>
-              <tr>
-                <td className='tg-hq65'>2110</td>
-                <td className='tg-0tzy red'>xxxx</td>
-                <td className='tg-hq65 green'>xxxx</td>
-                <td className='tg-hq65 red'>xxxx</td>
-                <td className='tg-0tzy red'>xxxx</td>
-              </tr>
-              <tr>
-                <td className='tg-gceh'>2111</td>
-                <td className='tg-uulg red'>xxxx</td>
-                <td className='tg-gceh dullGreen'>xxxx</td>
-                <td className='tg-gceh green'>xxxx</td>
-                <td className='tg-uulg red'>xxxx</td>
-              </tr>
-              <tr>
-                <td className='tg-hq65'>2112</td>
-                <td className='tg-0tzy green'>xxxx</td>
-                <td className='tg-hq65 dullGreen'>xxxx</td>
-                <td className='tg-hq65 dullRed'>xxxx</td>
-                <td className='tg-0tzy dullGreen'>xxxx</td>
-              </tr>
-              <tr>
-                <td className='tg-gceh'>2021</td>
-                <td className='tg-uulg red'>xxxx</td>
-                <td className='tg-gceh dullRed'>xxxx</td>
-                <td className='tg-gceh dullGreen'>xxxx</td>
-                <td className='tg-uulg red'>xxxx</td>
-              </tr>
+              {
+                tableData.map(data => {
+                  return <>
+                    <tr>
+                      <td className='tg-gceh'>{data.year_month_formatted}</td>
+                      <td className='tg-uulg red'>{data.nordeste}</td>
+                      <td className='tg-gceh dullRed'>{data.norte}</td>
+                      <td className='tg-gceh dullGreen'>{data.sudeste}</td>
+                      <td className='tg-uulg red'>{data.sul}</td>
+                    </tr>
+                  </>
+                })
+              }
               <tr>
                 <td className='tg-gceh'>Mín</td>
                 <td className='tg-uulg'>xxxx</td>
@@ -233,4 +164,32 @@ export default function region() {
       </RenderIf>
     </main>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+
+  let tableData = [];
+
+  await apiClient.post('/pld/list').then(res => {
+    tableData = res.data
+  }).catch(res => {
+    console.log(res)
+  })
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      tableData,
+    }
+  }
 }
