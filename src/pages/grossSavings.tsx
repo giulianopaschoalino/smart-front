@@ -1,3 +1,4 @@
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import React from 'react'
 
@@ -6,6 +7,7 @@ import { SingleBar } from '../components/graph/SingleBar'
 import Header from '../components/header/Header'
 import PageTitle from '../components/pageTitle/PageTitle'
 import { dataEconomiaBruta } from '../services/economiaBruta'
+import getAPIClient from '../services/ssrApi'
 
 import { GrossSavingsView } from '../styles/layouts/economy/grossSavings/GrossSavings'
 
@@ -22,4 +24,41 @@ export default function GrossSavings() {
       </section>
     </GrossSavingsView>
   )
+}
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+
+  let clients = [];
+  let notifications = [];
+
+  await apiClient.get('/user').then(res => {
+    clients = res.data
+  }).catch(res => {
+    console.log(res)
+  })
+
+  await apiClient.get('/economy/grossAnnual').then(res => {
+    grossSaving = res.data
+    grossSaving.map(value)
+
+  }).catch(res => {
+    console.log(res)
+  })
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      clients,
+      grossSaving
+    }
+  }
 }

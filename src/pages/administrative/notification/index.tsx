@@ -29,7 +29,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import BasicButton from '../../../components/buttons/basicButton/BasicButton';
 import { ConfirmModalView } from '../../../styles/layouts/modals/confirmModalView';
 import ConfirmModal from '../../../components/modal/ConfirmModal';
-import { JsxElement } from 'typescript';
+
 
 const style = {
   position: 'absolute' as const,
@@ -61,6 +61,7 @@ interface NotificationInterface {
   users: object[]
 }
 
+// teste
 export default function notification({clients, notifications}) {
 
   const [notification, setNotification] = useState<NotificationInterface>({
@@ -127,7 +128,7 @@ export default function notification({clients, notifications}) {
 
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
-          notificação cadastrada com sucesso!
+          Notificação cadastrada com sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
@@ -257,7 +258,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   })
 
   await apiClient.get('/notification').then(res => {
-    notifications = res.data
+    notifications = res.data.data
   }).catch(res => {
     console.log(res)
   })
