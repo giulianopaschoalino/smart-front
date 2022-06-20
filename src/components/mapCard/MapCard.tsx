@@ -15,9 +15,11 @@ export default function MapCard({ title, subtitle, statistic, imgSource, date }:
 
   return (
       <MapCardView statistic={statistic} >
-        <Image src={imgSource} width={90} height={90}/>
+        <Image src={subtitle==='SUL'? '/SUL.svg' : subtitle==='NORTE'? '/norte.svg' : subtitle==='NORDESTE'? '/nordeste.svg' : subtitle==='SUDESTE'? '/mapSample.svg' : imgSource} width={90} height={90}/>
         <div>
-          <h4>{title}</h4>
+          <h4>{
+            subtitle==='SUL'? 'S' : subtitle==='NORTE'? 'N' : subtitle==='NORDESTE'? 'NE' : subtitle==='SUDESTE'? 'SE/CO' : title
+          }</h4>
           <span className='footer' >{subtitle}</span>
           {
             date?

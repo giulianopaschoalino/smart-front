@@ -50,7 +50,7 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1
           dataArr.map(data => {
               sum += data;
           });
-          const percentage = (value*100 / sum).toFixed(0)+"%";
+          const percentage = (dataProps[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
           const result = `${value}\n ${percentage}`
 
           return value==null? null : result
@@ -82,10 +82,9 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1
       {
         label: dataset,
         data: dataProps.map((value, index) => {
-          return value.economia_acumulada
+          return parseFloat(value.economia_acumulada).toFixed(2)
         }),
         backgroundColor: (value, ctx) => {
-          console.log(dataProps[value.dataIndex])
           return dataProps[value.dataIndex].dad_estimado == false ? '#255488' : '#C2d5fb'
         },
       },

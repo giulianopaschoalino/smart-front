@@ -13,7 +13,7 @@ import getAPIClient from '../services/ssrApi'
 import { GrossSavingsView } from '../styles/layouts/economy/grossSavings/GrossSavings'
 
 function addMissingMonths(data) {
-  console.log(data[0].mes.slice(1, 1))
+  // console.log(data[0].mes.slice(1, 1))
 }
 
 function verifyDataByYear(data) {
@@ -51,7 +51,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/economy/grossAnnual').then(res => {
     graphData = res.data.data
-    console.log(graphData[0])
+    // console.log(graphData[0])
   }).catch(res => {
     console.log(res)
   })

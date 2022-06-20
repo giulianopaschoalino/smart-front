@@ -23,8 +23,7 @@ import { parseCookies } from 'nookies'
 import { GetServerSideProps } from 'next'
 import getAPIClient from '../services/ssrApi'
 
-export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears} : any) {
-
+export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears, acumulatedGraph, mapsInfo} : any) {
   return (
     <DashboardView>
       <Head>
@@ -36,10 +35,15 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
       <Link href='pld'>
         <section className="cardsSection" >
           <MapCard title='R$/MWh' subtitle='abril / 22' date='até 10/10' statistic='' imgSource='/moneyIcon.svg' />
-          <MapCard title='SE/CO' subtitle='Sudeste' statistic='R$ 273,54' imgSource='/mapSample.svg' />
+          {
+            mapsInfo.map(value => {
+              return <MapCard key={value.submarket} title='S' subtitle={value.submarket} statistic={parseFloat(value.value).toFixed(2)} imgSource='/SUL.svg' />
+            })
+          }
+          {/* <MapCard title='SE/CO' subtitle='Sudeste' statistic='R$ 273,54' imgSource='/mapSample.svg' />
           <MapCard title='S' subtitle='Sul' statistic='R$ 273,54' imgSource='/SUL.svg' />
           <MapCard title='NE' subtitle='Nordeste' statistic='R$ 273,54' imgSource='/nordeste.svg' />
-          <MapCard title='N' subtitle='Norte' statistic='R$ 273,54' imgSource='/norte.svg' />
+          <MapCard title='N' subtitle='Norte' statistic='R$ 273,54' imgSource='/norte.svg' /> */}
         </section>
       </Link>
 
@@ -60,17 +64,19 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
         </GraphCard>
 
         <GraphCard title='Custos Estimados' subtitle='Custos Estimados em R$/MWh' singleBar>
-          <LineBarChart2 data1={ConsumoEstimado.data2} data2={ConsumoEstimado.data} data3={ConsumoEstimado.data1} label={ConsumoEstimado.label} dataset1='Custo' dataset2='Cativo' dataset3='Livre' title='Custo Estimado' subtitle='(Valores em R$/MWh)' barLabel hashurado/>
-        </GraphCard>
-        <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh'>
-          <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)' data1={dataEconomiaIndicador.data1} data2={dataEconomiaIndicador.data2} label={dataEconomiaIndicador.labels} barLabel/>
+          <LineBarChart2 data1={acumulatedGraph} data2={acumulatedGraph} data3={acumulatedGraph}
+          label={ConsumoEstimado.label} dataset1='Custo' dataset2='Cativo' dataset3='Livre'
+          title='Custo Estimado' subtitle='(Valores em R$/MWh)' barLabel hashurado/>
         </GraphCard>
 
+        <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh'>
+          <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)' data1={dataEconomiaIndicador.data1} data2={dataEconomiaIndicador.data2}
+          label={dataEconomiaIndicador.labels} barLabel/>
+        </GraphCard>
       </section>
 
       <button onClick={() => {
         const id = 1
-        console.log(recoverUserInformation(id))
       }}></button>
     </DashboardView>
   )
@@ -82,23 +88,32 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   let grossAnualGraph = [];
   let grossMensalGraph = [];
-
-
+  let acumulatedGraph = [];
+  let mapsInfo = [];
 
   await apiClient.post('/economy/grossAnnual').then(res => {
     grossAnualGraph = res.data.data
-    console.log(grossAnualGraph[0])
   }).catch(res => {
     console.log(res)
   })
 
   await apiClient.post('/economy/grossMonthly').then(res => {
     grossMensalGraph = res.data.data
-
   }).catch(res => {
     console.log(res)
   })
 
+  await apiClient.post('/economy/estimates').then(res => {
+    acumulatedGraph = res.data.data
+  }).catch(res => {
+    console.log(res)
+  })
+
+  await apiClient.post('/pld/overview').then(res => {
+    mapsInfo = res.data.data
+  }).catch(res => {
+    console.log(res)
+  })
 
   const grossMensalYears = grossMensalGraph.map((value) => value.mes)
   const grossAnualYears = grossAnualGraph.map((value) => value.ano)
@@ -112,13 +127,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 
-
   return {
     props: {
       grossAnualGraph,
       grossAnualYears,
       grossMensalYears,
       grossMensalGraph,
+      acumulatedGraph,
+      mapsInfo
     }
   }
 }

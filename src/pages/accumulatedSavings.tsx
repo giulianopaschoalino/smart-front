@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/economy/grossMonthly').then(res => {
     graphData = res.data.data
-    console.log(graphData[0].mes)
+    // console.log(graphData[0].mes)
   }).catch(res => {
     console.log(res)
   })
@@ -52,7 +52,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
-
 
   return {
     props: {

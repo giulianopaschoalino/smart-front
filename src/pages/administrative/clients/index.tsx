@@ -217,9 +217,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let clients = [];
 
   await apiClient.get('/user').then(res => {
-    console.log(res)
+    // console.log(res)
     clients = res.data.data
-    console.log(clients)
+    // console.log(clients)
   }).catch(res => {
     // console.log(res)
   })

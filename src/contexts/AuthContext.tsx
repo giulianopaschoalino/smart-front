@@ -36,15 +36,18 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
       password
     })
 
-    if (token) {
+    if (token)
       setCookie(undefined, '@smartAuth-token', token, {
         maxAge: 60 * 60 * 1, // 1 hour
       })
-    }
 
-    if (user.role) {
+    if (user.role)
       setCookie(undefined, 'user-role', user.role)
-    }
+
+    if (user.id)
+      setCookie(undefined, 'user-id', user.id)
+
+    console.log(user)
 
     if (!exception) {
       if (user.role == 2) {
