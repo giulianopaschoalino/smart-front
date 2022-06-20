@@ -45,15 +45,6 @@ function createData(
   };
 }
 
-const rows = [
-  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'ativo'),
-  createData('Como usar o sistema', 'Você deve usar assim... e assado...', 'ativo'),
-  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'ativo'),
-  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'ativo'),
-  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'ativo'),
-  createData('Como usar o sistema?', 'Você deve usar assim... e assado...', 'inativo'),
-];
-
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -183,8 +174,6 @@ export default function FaqTable({questionData, onChange}: FaqTableInterface) {
   const [dense, setDense] = useState<boolean>(false);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
 
-  console.table(questionData)
-  console.table(rows)
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: keyof Data,
@@ -240,7 +229,7 @@ export default function FaqTable({questionData, onChange}: FaqTableInterface) {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - questionData.length) : 0;
 
   return (
     <TableView>
@@ -313,7 +302,7 @@ export default function FaqTable({questionData, onChange}: FaqTableInterface) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={questionData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

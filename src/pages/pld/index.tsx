@@ -1,3 +1,5 @@
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { GetServerSideProps } from 'next';
@@ -23,16 +25,17 @@ interface pldInterface {
   tableData: any,
   graphByHourData: any,
   graphByMonthData: any
+  userName: string,
 }
 
-export default function pld({tableData, graphByHourData, graphByMonthData}: pldInterface) {
+export default function pld({tableData, graphByHourData, graphByMonthData, userName}: pldInterface) {
   const router = useRouter()
   const { region } = router.query
 
   const [date, setDate] = useState('');
   const [select, setSelect] = useState('NORDESTE');
   const [page, setPage] = useState<string>('table')
-  const [day, setDay] = useState<string>('2')
+  const [day, setDay] = useState<string>(null)
 
   const [dataByDay, setDataByDay] = useState([])
 
@@ -47,8 +50,6 @@ export default function pld({tableData, graphByHourData, graphByMonthData}: pldI
   const handleChangeDay = (event: SelectChangeEvent) => {
     setDay(event.target.value);
   };
-
-  const label = ['1', '2', '3', '4', '5', '6', '7', '8', '8', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']
 
   function getDataByDay() {
     api.post('/pld/daily', {
@@ -141,7 +142,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData}: pldI
       <Head>
         <title>Smart Energia - PLD</title>
       </Head>
-      <Header name='' />
+      <Header name={userName} />
       <RenderIf isTrue={page==='table'? true : false}>
         <Link href='/dashboard' >{'< Voltar para Visão Geral'}</Link>
         <PageTitle title='Tabela de consumo PLD' subtitle=''/>
@@ -205,65 +206,76 @@ export default function pld({tableData, graphByHourData, graphByMonthData}: pldI
       </RenderIf>
 
       <RenderIf isTrue={page==='perMouth'? true : false}>
-        <GoBack onClick={() => setPage('table')}>{'< voltar para tabela PLD'}</GoBack>
+        <GoBack onClick={() => setPage('table')}>{'< Voltar para tabela PLD'}</GoBack>
         <PageTitle title='Resumo PLD - Diários' subtitle=''/>
         <PldGraphView>
           <section className='toolsbar'>
             <div className='select'>
-              <Select
-                value={select}
-                onChange={handleChange}
-                displayEmpty
-                sx={{
-                  width: '100%'
-                }}
-              >
-                <MenuItem value={'NORTE'}>Norte</MenuItem>
-                <MenuItem value={'NORDESTE'}>Nordeste</MenuItem>
-                <MenuItem value={'SUL'}>Sul</MenuItem>
-                <MenuItem value={'SUDESTE'}>Sudeste</MenuItem>
-              </Select>
+            <FormControl sx={{
+              width: '100%'
+            }}>
+              <InputLabel id="demo-simple-select-label">Região</InputLabel>
+                <Select
+                  value={select}
+                  onChange={handleChange}
+                  displayEmpty
+                  label='Região'
+                  sx={{
+                    width: '100%'
+                  }}
+                >
+                  <MenuItem value={'NORTE'}>Norte</MenuItem>
+                  <MenuItem value={'NORDESTE'}>Nordeste</MenuItem>
+                  <MenuItem value={'SUL'}>Sul</MenuItem>
+                  <MenuItem value={'SUDESTE'}>Sudeste</MenuItem>
+                </Select>
+              </FormControl>
             </div>
-            <Select
-                value={day}
-                onChange={handleChangeDay}
-                displayEmpty
-                sx={{
-                  width: '100%'
-                }}
-              >
-                <MenuItem value={'01'}>01</MenuItem>
-                <MenuItem value={'02'}>02</MenuItem>
-                <MenuItem value={'03'}>03</MenuItem>
-                <MenuItem value={'04'}>04</MenuItem>
-                <MenuItem value={'05'}>05</MenuItem>
-                <MenuItem value={'06'}>06</MenuItem>
-                <MenuItem value={'07'}>07</MenuItem>
-                <MenuItem value={'08'}>08</MenuItem>
-                <MenuItem value={'09'}>09</MenuItem>
-                <MenuItem value={'10'}>10</MenuItem>
-                <MenuItem value={'11'}>11</MenuItem>
-                <MenuItem value={'12'}>12</MenuItem>
-                <MenuItem value={'13'}>13</MenuItem>
-                <MenuItem value={'14'}>14</MenuItem>
-                <MenuItem value={'15'}>15</MenuItem>
-                <MenuItem value={'16'}>16</MenuItem>
-                <MenuItem value={'17'}>17</MenuItem>
-                <MenuItem value={'18'}>18</MenuItem>
-                <MenuItem value={'19'}>19</MenuItem>
-                <MenuItem value={'20'}>20</MenuItem>
-                <MenuItem value={'21'}>21</MenuItem>
-                <MenuItem value={'22'}>22</MenuItem>
-                <MenuItem value={'23'}>23</MenuItem>
-                <MenuItem value={'24'}>24</MenuItem>
-                <MenuItem value={'25'}>25</MenuItem>
-                <MenuItem value={'26'}>26</MenuItem>
-                <MenuItem value={'27'}>27</MenuItem>
-                <MenuItem value={'28'}>28</MenuItem>
-                <MenuItem value={'29'}>29</MenuItem>
-                <MenuItem value={'30'}>30</MenuItem>
-              </Select>
+            <FormControl sx={{
+                    width: '22%',
+                    ml: 1
+                  }}>
+              <InputLabel id="demo-simple-select-label">Dia</InputLabel>
+              <Select
+                  value={day}
+                  onChange={handleChangeDay}
+                  displayEmpty
+                  placeholder='dia'
+                  label="Age"
 
+                >
+                  <MenuItem value={'01'}>01</MenuItem>
+                  <MenuItem value={'02'}>02</MenuItem>
+                  <MenuItem value={'03'}>03</MenuItem>
+                  <MenuItem value={'04'}>04</MenuItem>
+                  <MenuItem value={'05'}>05</MenuItem>
+                  <MenuItem value={'06'}>06</MenuItem>
+                  <MenuItem value={'07'}>07</MenuItem>
+                  <MenuItem value={'08'}>08</MenuItem>
+                  <MenuItem value={'09'}>09</MenuItem>
+                  <MenuItem value={'10'}>10</MenuItem>
+                  <MenuItem value={'11'}>11</MenuItem>
+                  <MenuItem value={'12'}>12</MenuItem>
+                  <MenuItem value={'13'}>13</MenuItem>
+                  <MenuItem value={'14'}>14</MenuItem>
+                  <MenuItem value={'15'}>15</MenuItem>
+                  <MenuItem value={'16'}>16</MenuItem>
+                  <MenuItem value={'17'}>17</MenuItem>
+                  <MenuItem value={'18'}>18</MenuItem>
+                  <MenuItem value={'19'}>19</MenuItem>
+                  <MenuItem value={'20'}>20</MenuItem>
+                  <MenuItem value={'21'}>21</MenuItem>
+                  <MenuItem value={'22'}>22</MenuItem>
+                  <MenuItem value={'23'}>23</MenuItem>
+                  <MenuItem value={'24'}>24</MenuItem>
+                  <MenuItem value={'25'}>25</MenuItem>
+                  <MenuItem value={'26'}>26</MenuItem>
+                  <MenuItem value={'27'}>27</MenuItem>
+                  <MenuItem value={'28'}>28</MenuItem>
+                  <MenuItem value={'29'}>29</MenuItem>
+                  <MenuItem value={'30'}>30</MenuItem>
+                </Select>
+              </FormControl>
           </section>
           <LineBarChart
           data1={dataByDay} data3={dataByDay}
@@ -274,12 +286,12 @@ export default function pld({tableData, graphByHourData, graphByMonthData}: pldI
       </RenderIf>
 
       <RenderIf isTrue={page==='perDate'? true : false}>
-        <GoBack onClick={() => setPage('table')}>{'< voltar para tabela PLD'}</GoBack>
+        <GoBack onClick={() => setPage('table')}>{'< Voltar para tabela PLD'}</GoBack>
         <PldGraphView>
           <PageTitle title='Resumo PLD - Horas' subtitle=''/>
           <section className='toolsbar'>
             <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={date} onChange={(value) => setDate(value.target.value)}/>
-            <BasicButton title='Download (csv)' onClick={() => console.log()}/>
+            {/* <BasicButton title='Download (csv)' onClick={() => console.log()}/> */}
           </section>
           <LineChart data1={nordeste} data2={norte} data3={sudeste} data4={sul}
           dataset1='NORDESTE' dataset2='NORTE' dataset3='SUDESTE' dataset4='SUL'
@@ -294,6 +306,8 @@ export default function pld({tableData, graphByHourData, graphByMonthData}: pldI
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
+
 
   let tableData = [];
 
@@ -315,6 +329,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       tableData,
+      userName
     }
   }
 }

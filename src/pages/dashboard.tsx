@@ -23,13 +23,13 @@ import { parseCookies } from 'nookies'
 import { GetServerSideProps } from 'next'
 import getAPIClient from '../services/ssrApi'
 
-export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears, acumulatedGraph, mapsInfo} : any) {
+export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears, acumulatedGraph, mapsInfo, userName} : any) {
   return (
     <DashboardView>
       <Head>
         <title>Smart Energia - Dashboard</title>
       </Head>
-      <Header name='' />
+      <Header name={userName} />
 
       <PageTitle title='Visão Geral' subtitle='Bem Vindo a Smart Energia' />
       <Link href='pld'>
@@ -40,10 +40,6 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
               return <MapCard key={value.submarket} title='S' subtitle={value.submarket} statistic={parseFloat(value.value).toFixed(2)} imgSource='/SUL.svg' />
             })
           }
-          {/* <MapCard title='SE/CO' subtitle='Sudeste' statistic='R$ 273,54' imgSource='/mapSample.svg' />
-          <MapCard title='S' subtitle='Sul' statistic='R$ 273,54' imgSource='/SUL.svg' />
-          <MapCard title='NE' subtitle='Nordeste' statistic='R$ 273,54' imgSource='/nordeste.svg' />
-          <MapCard title='N' subtitle='Norte' statistic='R$ 273,54' imgSource='/norte.svg' /> */}
         </section>
       </Link>
 
@@ -85,6 +81,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
 
   let grossAnualGraph = [];
   let grossMensalGraph = [];
@@ -134,7 +131,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       grossMensalYears,
       grossMensalGraph,
       acumulatedGraph,
-      mapsInfo
+      mapsInfo,
+
+      userName
     }
   }
 }

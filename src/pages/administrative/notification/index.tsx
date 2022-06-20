@@ -61,7 +61,7 @@ interface NotificationInterface {
 }
 
 // teste
-export default function notification({clients, notifications}) {
+export default function notification({clients, notifications, userName}: any) {
 
   const [notification, setNotification] = useState<NotificationInterface>({
     title: '',
@@ -122,7 +122,7 @@ export default function notification({clients, notifications}) {
       <Head>
         <title>Smart Energia - Notificações</title>
       </Head>
-      <Header name=''/>
+      <Header name={userName}/>
       <PageTitle title='Notificações' subtitle='Notificações'/>
 
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
@@ -246,12 +246,13 @@ export default function notification({clients, notifications}) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
 
   let clients = [];
   let notifications = [];
 
   await apiClient.get('/user').then(res => {
-    clients = res.data
+    clients = res.data.data
   }).catch(res => {
     // console.log(res)
   })
@@ -274,7 +275,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       clients,
-      notifications
+      notifications,
+      userName
     }
   }
 }

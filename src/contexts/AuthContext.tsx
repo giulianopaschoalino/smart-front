@@ -47,7 +47,10 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     if (user.id)
       setCookie(undefined, 'user-id', user.id)
 
-    console.log(user)
+    if (user.name)
+      setCookie(undefined, 'user-name', user.name)
+
+    api.defaults.headers['Authorization'] = `Bearer ${token}`
 
     if (!exception) {
       if (user.role == 2) {
@@ -59,10 +62,6 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     } else {
       return
     }
-
-    api.defaults.headers['Authorization'] = `Bearer ${token}`
-
-    setUser(user)
   }
 
   return (

@@ -23,7 +23,7 @@ function verifyDataByYear(data) {
     return false
 }
 
-export default function CostIndicator({graphData}: any) {
+export default function CostIndicator({graphData, userName}: any) {
   // console.log(graphData.filter((value, index) => value.mes.slice(3, 7).includes('2021')).map(value => value.custo_unit))
 
   return (
@@ -31,7 +31,7 @@ export default function CostIndicator({graphData}: any) {
       <Head>
         <title>Smart Energia - Indicador de Custos</title>
       </Head>
-      <Header name='' />
+      <Header name={userName} />
       <PageTitle title='Indicador de Custo' subtitle='Valores em R$/MWh'/>
       <section>
         <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)' data1={graphData.filter((value, index) => value.mes.slice(3, 7).includes('2021'))}
@@ -45,6 +45,7 @@ export default function CostIndicator({graphData}: any) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
 
   let graphData = [];
 
@@ -67,6 +68,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       graphData,
+      userName
     }
   }
 }

@@ -183,7 +183,8 @@ export const PldGraphView = styled.main`
     flex-wrap: wrap;
 
     :first-child {
-      justify-content: space-around;
+      justify-content: flex-start;
+      align-items: center;
     }
     :nth-child(2) {
       margin-top: 50px;

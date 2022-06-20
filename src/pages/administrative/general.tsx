@@ -4,12 +4,15 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { Editor } from '@tinymce/tinymce-react'
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 import React, { useRef, useState } from 'react'
 
 import Header from '../../components/header/Header';
+import PageTitle from '../../components/pageTitle/PageTitle';
 import { GeneralView } from '../../styles/layouts/general/GeneralView'
 
-export default function index() {
+export default function index({userName}: any) {
   const editorRef = useRef(null);
   const [text, setText] = useState('');
 
@@ -25,7 +28,8 @@ export default function index() {
 
   return (
     <GeneralView>
-      <Header name=''/>
+      <Header name={userName}/>
+      <PageTitle title='Sobre nós' subtitle='alterar texto de sobre nós'/>
       <section>
       <FormControl sx={{mr: '20px', minWidth: 180, minHeight: '80px'}}>
         <Select
@@ -83,4 +87,24 @@ export default function index() {
       <button onClick={log}>Log editor content</button>
     </GeneralView>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      userName
+    }
+  }
 }

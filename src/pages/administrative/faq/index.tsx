@@ -51,11 +51,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 type FaqInterface = {
   question: string;
   answer: string;
-
 }
-export default function Sidebar({faqData} : any ) {
 
-
+export default function Sidebar({faqData, userName} : any ) {
   const [openModalInativar, setOpenModalInativar] = useState<boolean>(false)
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
   const [openSnackError, setOpenSnackError] = useState<boolean>(false);
@@ -85,7 +83,7 @@ export default function Sidebar({faqData} : any ) {
 
   async function handleDeleteNotification(id: any) {
     await id.map((value) => {
-      api.delete(`/faq/${value}`).then(res => {
+      api.delete(`/faq/${value.id}`).then(res => {
         setOpenSnackSuccessDelete(true)
         setOpenModalInativar(false)
         window.location.reload()
@@ -93,12 +91,9 @@ export default function Sidebar({faqData} : any ) {
     })
   }
 
-
-
   const [faq, setFaq] = useState<FaqInterface>({
     question: '',
     answer : '',
-
   })
 
   const [selectedfaq, setSelectedfaq] = useState([])
@@ -107,12 +102,11 @@ export default function Sidebar({faqData} : any ) {
     await api.post('/faq', {
       "question": question,
       "answer": answer,
-
-    }).then(res => console.log(res.data))
+    }).then(res => {
+      setOpenSnackSuccess(true)
+      window.location.reload()
+    }).catch(res => setOpenSnackError(true))
   }
-
-
-
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -121,29 +115,29 @@ export default function Sidebar({faqData} : any ) {
   return (
     <>
     <FaqView>
-    <Header name=''/>
+    <Header name={userName}/>
 
       <PageTitle title='Perguntas Frequentes' subtitle='Perguntas Frequentes'/>
 
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
-          Notificação cadastrada com sucesso!
+          Pergunta cadastrada com sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
-          Notificação não cadastrada!
+          Pergunta não cadastrada!
         </Alert>
       </Snackbar>
 
       <Snackbar open={openSnackSuccessDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
         <Alert onClose={handleCloseSnackDelete} severity="success" sx={{ width: '100%' }}>
-          notificação excluida com sucesso!
+          Pergunta excluida com sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackErrorDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
         <Alert onClose={handleCloseSnackDelete} severity="error" sx={{ width: '100%' }}>
-          Notificação não excluida!
+          Pergunta não excluida!
         </Alert>
       </Snackbar>
 
@@ -197,6 +191,7 @@ export default function Sidebar({faqData} : any ) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
 
   let faqData = [];
 
@@ -217,7 +212,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      faqData
+      faqData,
+      userName
     }
   }
 }

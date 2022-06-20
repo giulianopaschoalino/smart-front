@@ -1,5 +1,7 @@
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link'
+import { parseCookies } from 'nookies';
 import React from 'react'
 
 import Banner from '../components/banner/Banner'
@@ -7,13 +9,13 @@ import BasicButton from '../components/buttons/basicButton/BasicButton';
 import Header from '../components/header/Header'
 import { Button, NewsView } from '../styles/layouts/news/NewsView'
 
-export default function aboutUs() {
+export default function aboutUs({userName}: any) {
   return (
     <NewsView>
       <Head>
         <title>Smart Energia - Noticias</title>
       </Head>
-      <Header name='' />
+      <Header name={userName} />
       <Banner title='Notícias' subtitle='Tudo de importante no setor de energia' imgSource='/assets/banners/news.png' />
 
       <section>
@@ -53,3 +55,24 @@ export default function aboutUs() {
     </NewsView>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      userName
+    }
+  }
+}
+

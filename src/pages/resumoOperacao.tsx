@@ -20,19 +20,12 @@ import data from '../services/dados.json'
 import getAPIClient from '../services/ssrApi';
 import { Pagination, TableView } from '../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 
-export default function ResumoOperacao() {
-  const csvData = [
-      [ "value", "unidade1", "name", "Unidade-1",  "operacao", "Compra", "montante", "130,00", "contraparte", "cOPEL COM I5", "preco", "234,67", "valorNF", "38.257,15" ],
-      [ "value", "unidade2", "name", "Unidade-2",  "operacao", "Compra", "montante", "20,00", "contraparte",  "EMEWE I5", "preco", "234,67", "valorNF", "38.257,15"],
-      [ "value", "unidade3", "name", "Unidade-3",  "operacao", "Compra", "montante", "30,00", "contraparte",  "EMEWE I5", "preco", "234,67", "valorNF", "38.257,15" ],
-      [ "value", "unidade4", "name", "Unidade-4",  "operacao", "Compra", "montante", "40,00", "contraparte",  "COPEL COM I5", "preco", "234,67", "valorNF", "38.257,15" ],
-      [ "value", "unidade5", "name", "Unidade-5",  "operacao", "Compra", "montante", "500,00","contraparte", "COPEL COM I5", "preco", "234,67", "valorNF", "38.257,15" ],
-      [ "value", "unidade6", "name", "Unidade-6", "operacao", "Compra", "montante", "300,00", "contraparte", "COPEL COM I5", "preco","234,67", "valorNF", "965,95" ]
-  ];
+export default function ResumoOperacao({tableData, userName}: any) {
+  const csvData = tableData;
 
   const [month, setMonth] = useState('');
   const [unidade, setUnidade] = useState('');
-  const [tableData, setTableData] = useState<any>([]);
+  const [tableDataState, setTableDataState] = useState<any>([]);
 
   const handleChangeMonth = (event: SelectChangeEvent) => {
     setMonth(event.target.value);
@@ -42,26 +35,29 @@ export default function ResumoOperacao() {
   };
 
   useEffect(() => {
-    api.post('/operation', {
-      "filters": [
-          {"type" : "=", "field": "mes", "value": `${month}/2022`},
-          {"type" : "=", "field": "dados_te.cod_smart_unidade", "value": 180103211002}
-        ]
-    }).then(res => {
-      setTableData(res.data.data)
-      console.log(tableData)
-    }).catch(res => {
-      console.log(res)
-    })
-    console.log(tableData)
+    if (unidade!=='' || month!==''){
+      api.post('/operation', {
+        "filters": [
+            {"type" : "=", "field": "mes", "value": `${month}/2022`},
+            {"type" : "=", "field": "dados_te.cod_smart_unidade", "value": unidade}
+          ]
+      }).then(res => {
+        setTableDataState(res.data.data)
+      }).catch(res => {
+        console.log(res)
+      })
+    } else {
+      setTableDataState(tableData)
+    }
+
   }, [month, unidade])
 
-  return(
+  return (
     <TableView>
       <Head>
         <title>Smart Energia - Resumo de Operação</title>
       </Head>
-      <Header name='' />
+      <Header name={userName} />
       <PageTitle title='Resumo de Operaçoes' subtitle='Operações detalhadas' />
 
       <h3>Seletor Mês</h3>
@@ -75,10 +71,10 @@ export default function ResumoOperacao() {
             label="Unidade"
             onChange={handleChangeUnidade}
           >
-            <MenuItem key={1} value={''}></MenuItem>
+            <MenuItem key={1} value={''}>Nenhum</MenuItem>
             {
-              data.unidades.map((value) => {
-                return <MenuItem key={1} value={value.value}>{value.name}</MenuItem>
+              tableData.map((value) => {
+                return <MenuItem key={1} value={value.cod_smart_unidade}>{value.cod_smart_unidade}</MenuItem>
               })
             }
           </Select>
@@ -93,6 +89,7 @@ export default function ResumoOperacao() {
             label="Month"
             onChange={handleChangeMonth}
           >
+            <MenuItem value={''}>Nenhum</MenuItem>
             <MenuItem value={'01'}>Janeiro</MenuItem>
             <MenuItem value={'02'}>Fevereiro</MenuItem>
             <MenuItem value={'03'}>Março</MenuItem>
@@ -121,7 +118,7 @@ export default function ResumoOperacao() {
         </thead>
         <tbody>
           {
-            tableData.map((value, index) => {
+            tableDataState.map((value, index) => {
               return <>
                 <tr>
                   <td key={index} className='tg-gceh'>{value.cod_smart_unidade}</td>
@@ -150,15 +147,20 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-id']: id } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
 
   let tableData = [];
 
-  await apiClient.post(`/user/${id}`).then(res => {
+  await apiClient.post('/operation', {
+    "filters": []
+  }).then(res => {
+    console.log(res.data.data)
     tableData = res.data.data
-    console.log(tableData)
   }).catch(res => {
     console.log(res)
   })
+
+  console.log(tableData)
 
   if (!token) {
     return {
@@ -172,6 +174,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       tableData,
+      userName
     }
   }
 }

@@ -1,17 +1,19 @@
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { parseCookies } from 'nookies'
 import React from 'react'
 import Banner from '../components/banner/Banner'
 import Header from '../components/header/Header'
 import { AboutUsView } from '../styles/layouts/aboutUs/AboutUsView'
 
-export default function aboutUs() {
+export default function aboutUs({userName}) {
   return (
     <AboutUsView>
       <Head>
         <title>Smart Energia - About Us</title>
       </Head>
-      <Header name='' />
+      <Header name={userName} />
       <Banner title='Quem Somos' subtitle='Soluções inteligentes em Gestão de Energia' imgSource='/assets/banners/aboutUsBanner.png' />
 
       <section>
@@ -50,3 +52,24 @@ export default function aboutUs() {
     </AboutUsView>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      userName
+    }
+  }
+}
+
