@@ -3,8 +3,10 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import React, { useEffect } from 'react';
+import { parseCookies } from 'nookies';
+import React, { useEffect, useState } from 'react';
 // import Teste from '../files/teste.csv';
 import { CSVDownload, CSVLink } from "react-csv";
 
@@ -12,30 +14,25 @@ import BasicButton from '../components/buttons/basicButton/BasicButton';
 import Header from '../components/header/Header';
 import PageTitle from '../components/pageTitle/PageTitle';
 import Sidebar from '../components/sidebar/Sidebar';
+import { api } from '../services/api';
 // import { dados } from '../services/DadosTabelaResumoOperacao';
 import data from '../services/dados.json'
+import getAPIClient from '../services/ssrApi';
 import { Pagination, TableView } from '../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 
 export default function ResumoOperacao() {
   const csvData = [
-    // ["firstname", "lastname", "email"],
-    // ["Ahmed", "Tomi", "ah@smthing.co.com"],
-    // ["Raed", "Labes", "rl@smthing.co.com"],
-    // ["Yezzi", "Min l3b", "ymin@cocococo.com"],
-
-
-
       [ "value", "unidade1", "name", "Unidade-1",  "operacao", "Compra", "montante", "130,00", "contraparte", "cOPEL COM I5", "preco", "234,67", "valorNF", "38.257,15" ],
       [ "value", "unidade2", "name", "Unidade-2",  "operacao", "Compra", "montante", "20,00", "contraparte",  "EMEWE I5", "preco", "234,67", "valorNF", "38.257,15"],
       [ "value", "unidade3", "name", "Unidade-3",  "operacao", "Compra", "montante", "30,00", "contraparte",  "EMEWE I5", "preco", "234,67", "valorNF", "38.257,15" ],
       [ "value", "unidade4", "name", "Unidade-4",  "operacao", "Compra", "montante", "40,00", "contraparte",  "COPEL COM I5", "preco", "234,67", "valorNF", "38.257,15" ],
       [ "value", "unidade5", "name", "Unidade-5",  "operacao", "Compra", "montante", "500,00","contraparte", "COPEL COM I5", "preco", "234,67", "valorNF", "38.257,15" ],
       [ "value", "unidade6", "name", "Unidade-6", "operacao", "Compra", "montante", "300,00", "contraparte", "COPEL COM I5", "preco","234,67", "valorNF", "965,95" ]
-
   ];
 
-  const [month, setMonth] = React.useState('');
-  const [unidade, setUnidade] = React.useState('');
+  const [month, setMonth] = useState('');
+  const [unidade, setUnidade] = useState('');
+  const [tableData, setTableData] = useState<any>([]);
 
   const handleChangeMonth = (event: SelectChangeEvent) => {
     setMonth(event.target.value);
@@ -45,12 +42,18 @@ export default function ResumoOperacao() {
   };
 
   useEffect(() => {
-    // console.log(data.unidades)
-    // data.unidades.map((value) => {
-    //   console.log(`olha o valor ${value.name}`)
-    // })
-    // console.log(unidade)
-    console.log(data.unidades.filter((value, index)=> value.value.includes(unidade)))
+    api.post('/operation', {
+      "filters": [
+          {"type" : "=", "field": "mes", "value": `${month}/2022`},
+          {"type" : "=", "field": "dados_te.cod_smart_unidade", "value": 180103211002}
+        ]
+    }).then(res => {
+      setTableData(res.data.data)
+      console.log(tableData)
+    }).catch(res => {
+      console.log(res)
+    })
+    console.log(tableData)
   }, [month, unidade])
 
   return(
@@ -90,19 +93,18 @@ export default function ResumoOperacao() {
             label="Month"
             onChange={handleChangeMonth}
           >
-            <MenuItem value={15}>Janeiro</MenuItem>
-            <MenuItem value={20}>Fevereiro</MenuItem>
-            <MenuItem value={30}>Março</MenuItem>
-            <MenuItem value={30}>Abril</MenuItem>
-            <MenuItem value={30}>Março</MenuItem>
-            <MenuItem value={30}>Maio</MenuItem>
-            <MenuItem value={30}>Junho</MenuItem>
-            <MenuItem value={30}>Julho</MenuItem>
-            <MenuItem value={30}>Agosto</MenuItem>
-            <MenuItem value={30}>Setembro</MenuItem>
-            <MenuItem value={30}>Outubro</MenuItem>
-            <MenuItem value={30}>Novembro</MenuItem>
-            <MenuItem value={30}>Dezembro</MenuItem>
+            <MenuItem value={'01'}>Janeiro</MenuItem>
+            <MenuItem value={'02'}>Fevereiro</MenuItem>
+            <MenuItem value={'03'}>Março</MenuItem>
+            <MenuItem value={'04'}>Abril</MenuItem>
+            <MenuItem value={'05'}>Maio</MenuItem>
+            <MenuItem value={'06'}>Junho</MenuItem>
+            <MenuItem value={'07'}>Julho</MenuItem>
+            <MenuItem value={'08'}>Agosto</MenuItem>
+            <MenuItem value={'09'}>Setembro</MenuItem>
+            <MenuItem value={'10'}>Outubro</MenuItem>
+            <MenuItem value={'11'}>Novembro</MenuItem>
+            <MenuItem value={'12'}>Dezembro</MenuItem>
           </Select>
         </FormControl>
       </div>
@@ -119,26 +121,17 @@ export default function ResumoOperacao() {
         </thead>
         <tbody>
           {
-            data.unidades.filter((value, index)=> value.value.includes(unidade)).map((value, index) => {
-              if (index%2===0) {
-                return <tr key={index}>
-                    <td key={index} className='tg-gceh'>{value.name}</td>
-                    <td key={index} className='tg-uulg'>{value.operacao}</td>
-                    <td key={index} className='tg-gceh'>{value.montante}</td>
-                    <td key={index} className='tg-gceh'>{value.contraparte}</td>
-                    <td key={index} className='tg-uulg'>{value.preco}</td>
-                    <td key={index} className='tg-gceh'>{value.valorNF}</td>
-                  </tr>
-              } else {
-                return <tr key={index}>
-                <td key={index} className='tg-hq65'>{value.name}</td>
-                <td key={index} className='tg-0tzy'>{value.operacao}</td>
-                <td key={index} className='tg-hq65'>{value.montante}</td>
-                <td key={index} className='tg-hq65'>{value.contraparte}</td>
-                <td key={index} className='tg-0tzy'>{value.preco}</td>
-                <td key={index} className='tg-hq65'>{value.valorNF}</td>
-              </tr>
-              }
+            tableData.map((value, index) => {
+              return <>
+                <tr>
+                  <td key={index} className='tg-gceh'>{value.cod_smart_unidade}</td>
+                  <td key={index} className='tg-uulg'>{value.operacao}</td>
+                  <td key={index} className='tg-gceh'>{value.montante_nf}</td>
+                  <td key={index} className='tg-gceh'>{value.contraparte}</td>
+                  <td key={index} className='tg-uulg'>{value.nf_c_icms}</td>
+                  <td key={index} className='tg-gceh'>{value.preco_nf}</td>
+                </tr>
+              </>
             })
           }
         </tbody>
@@ -151,4 +144,34 @@ export default function ResumoOperacao() {
       </div>
     </TableView>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-id']: id } = parseCookies(ctx)
+
+  let tableData = [];
+
+  await apiClient.post(`/user/${id}`).then(res => {
+    tableData = res.data.data
+    console.log(tableData)
+  }).catch(res => {
+    console.log(res)
+  })
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      tableData,
+    }
+  }
 }

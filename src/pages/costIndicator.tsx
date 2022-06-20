@@ -13,7 +13,7 @@ import getAPIClient from '../services/ssrApi'
 import { CostIndicatorView } from '../styles/layouts/economy/costIndicator/CostIndicatorView'
 
 function addMissingMonths(data) {
-  console.log(data[0].mes.slice(1, 1))
+  // console.log(data[0].mes.slice(1, 1))
 }
 
 function verifyDataByYear(data) {
@@ -24,7 +24,7 @@ function verifyDataByYear(data) {
 }
 
 export default function CostIndicator({graphData}: any) {
-  console.log(graphData.filter((value, index) => value.mes.slice(3, 7).includes('2021')).map(value => value.custo_unit))
+  // console.log(graphData.filter((value, index) => value.mes.slice(3, 7).includes('2021')).map(value => value.custo_unit))
 
   return (
     <CostIndicatorView>
