@@ -36,15 +36,21 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
       password
     })
 
-    if (token) {
+    if (token)
       setCookie(undefined, '@smartAuth-token', token, {
         maxAge: 60 * 60 * 1, // 1 hour
       })
-    }
 
-    if (user.role) {
+    if (user.role)
       setCookie(undefined, 'user-role', user.role)
-    }
+
+    if (user.id)
+      setCookie(undefined, 'user-id', user.id)
+
+    if (user.name)
+      setCookie(undefined, 'user-name', user.name)
+
+    api.defaults.headers['Authorization'] = `Bearer ${token}`
 
     if (!exception) {
       if (user.role == 2) {
@@ -56,10 +62,6 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     } else {
       return
     }
-
-    api.defaults.headers['Authorization'] = `Bearer ${token}`
-
-    setUser(user)
   }
 
   return (

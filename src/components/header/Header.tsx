@@ -1,9 +1,11 @@
+import React, { useContext, useEffect, useState } from 'react'
+import Image from 'next/image';
+
 import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
-import Image from 'next/image';
-import React from 'react'
 
 import { HeaderView } from './HeaderView'
+import { parseCookies } from 'nookies';
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -28,7 +30,7 @@ function stringAvatar(name: string) {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    children: `${name.split(' ')[0][0]}`,
   };
 }
 
@@ -52,10 +54,10 @@ export default function Header({ name }: headerInterface) {
         <Image src='/assets/png/copel.png' width={170} height={50} />
         <div className='icon' >
           <p>
-            olá, {'josé'}
+            olá, {name}
           </p>
         </div>
-        <Avatar {...stringAvatar('José Corte')} style={{border: 'white solid 4px', width: '47px', height: '47px'}}/>
+        <Avatar {...stringAvatar(name)} style={{border: 'white solid 4px', width: '47px', height: '47px'}}/>
       </section>
     </HeaderView>
   )

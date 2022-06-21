@@ -15,11 +15,13 @@ import { start } from 'nprogress';
 import LineChart from '../components/graph/LineChart';
 import { FatorPotencia } from '../services/fatorPotencia';
 import RenderIf from '../utils/renderIf';
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 
 
 
 
-export default function Telemetria() {
+export default function Telemetria({userName}: any) {
   const [unity, setUnity] = React.useState('');
   const [startDate, setStartDate] = React.useState('');
   const [endDate, setEndDate] = React.useState('');
@@ -36,7 +38,7 @@ export default function Telemetria() {
       <Head>
         <title>Smart Energia - Telemetria</title>
       </Head>
-      <Header name='' />
+      <Header name={userName} />
       <Banner title ='Telemetria' subtitle='Dados Coletados do Sistema de Coleta de Dados de Energia -
       SCDE da Câmara de Comercialização de Energia Elétrica - CCEE,
       sendo que as quantidades aqui informadas são de responsabilidade do agente de medição
@@ -161,3 +163,24 @@ export default function Telemetria() {
     </TelemetriaView>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      userName
+    }
+  }
+}
+

@@ -43,7 +43,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function clients({clients}) {
+export default function clients({clients, userName}) {
   const [client, setClient] = useState<any>({
     name: String,
     email: String,
@@ -114,28 +114,28 @@ export default function clients({clients}) {
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
-          notificação cadastrada com sucesso!
+          Usuario cadastrada com sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
-          Notificação não cadastrada!
+          Usuario não cadastrada!
         </Alert>
       </Snackbar>
 
       <Snackbar open={openSnackSuccessDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
         <Alert onClose={handleCloseSnackDelete} severity="success" sx={{ width: '100%' }}>
-          notificação excluida com sucesso!
+          Usuario excluida com sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackErrorDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
         <Alert onClose={handleCloseSnackDelete} severity="error" sx={{ width: '100%' }}>
-          Notificação não excluida!
+          Usuario não excluida!
         </Alert>
       </Snackbar>
 
       <ClientsView>
-        <Header name='' />
+        <Header name={userName} />
         <PageTitle title='Clientes' subtitle='Clientes Smart Energia'/>
         <div className='buttons'>
         <button className='btn2' onClick={handleOpen}>Adicionar</button>
@@ -209,13 +209,14 @@ export default function clients({clients}) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
 
   let clients = [];
 
   await apiClient.get('/user').then(res => {
-    console.log(res)
+    // console.log(res)
     clients = res.data.data
-    console.log(clients)
+    // console.log(clients)
   }).catch(res => {
     // console.log(res)
   })
@@ -232,6 +233,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       clients,
+      userName
     }
   }
 }

@@ -9,15 +9,15 @@ import { api } from '../services/api'
 import getAPIClient from '../services/ssrApi'
 import { FaqView } from '../styles/layouts/commonQuestions/FaqView'
 
-export default function Notifications({notificationData}: any) {
+export default function Notifications({notificationData, userName}: any) {
   return (
     <FaqView>
       <Head>
         <title>Smart Energia - Notificações</title>
       </Head>
-      <Header name='' />
+      <Header name={userName} />
       <PageTitle title='Notifications' subtitle='' />
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <p>Aqui estão as notificaões publicadas para voce!</p>
       <section className='CommonQuestionsSection' >
       {
         notificationData.map((value, index ) => {
@@ -31,9 +31,11 @@ export default function Notifications({notificationData}: any) {
     </FaqView>
   )
 }
+
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
 
   let notificationData = [];
 
@@ -55,7 +57,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      notificationData
+      notificationData,
+      userName
     }
   }
 }

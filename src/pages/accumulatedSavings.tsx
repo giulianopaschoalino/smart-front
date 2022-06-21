@@ -12,13 +12,13 @@ import { dataEconomiaBruta } from '../services/economiaBruta'
 import getAPIClient from '../services/ssrApi'
 import { AccumulatedSavingsView } from '../styles/layouts/economy/accumulatedSavings/AccumulatedSavingsView'
 
-export default function AccumulatedSavings({graphData, years}: any) {
+export default function AccumulatedSavings({graphData, years, userName}: any) {
   return (
     <AccumulatedSavingsView>
       <Head>
         <title>Smart Energia - Economia Acumulada</title>
       </Head>
-      <Header name='' />
+      <Header name={userName} />
       <PageTitle title='Economia Acumulada' subtitle='Economia Bruta Estimada e Acumulada anual (Valores em R$ mil)' />
       <section>
         <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$ mil)' dataset='Consolidada'
@@ -32,12 +32,14 @@ export default function AccumulatedSavings({graphData, years}: any) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
+
 
   let graphData = [];
 
   await apiClient.post('/economy/grossMonthly').then(res => {
     graphData = res.data.data
-    console.log(graphData[0].mes)
+    // console.log(graphData[0].mes)
   }).catch(res => {
     console.log(res)
   })
@@ -53,11 +55,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 
-
   return {
     props: {
       graphData,
       years,
+      userName
     }
   }
 }

@@ -16,6 +16,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
 
 const style = {
   display: 'flex',
@@ -30,7 +32,7 @@ const style = {
   p: 5,
 };
 
-export default function chartTelemetry() {
+export default function chartTelemetry({userName}) {
   const [openFatorPotencia, setOpenFatorPotencia] = useState(false);
   const handleCloseFatorPotencia = () => setOpenFatorPotencia(false);
 
@@ -48,7 +50,7 @@ export default function chartTelemetry() {
       <Head>
         <title>Smart Energia - Graficos Telemetria</title>
       </Head>
-      <Header name='' />
+      <Header name={userName} />
       <PageTitle title='Telemetria - Graficos' subtitle='Gráficos' />
       <section className='chartContainer'>
         <div onClick={() => setOpenFatorPotencia(true)}>
@@ -110,3 +112,24 @@ export default function chartTelemetry() {
     </ChatTelemetryView>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      userName
+    }
+  }
+}
+
