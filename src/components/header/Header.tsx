@@ -35,23 +35,22 @@ function stringAvatar(name: string) {
 }
 
 interface headerInterface {
-  name: string
+  name: string,
+  admin?: boolean | undefined
 }
 
-export default function Header({ name }: headerInterface) {
+export default function Header({ name, admin }: headerInterface) {
   return (
     <HeaderView>
       <section>
-        <TextField
-          id="outlined-textarea"
-          label="Encontre na Página"
-          placeholder="Encontre na Página"
-          multiline
-          fullWidth
-        />
       </section>
       <section>
-        <Image src='/assets/png/copel.png' width={170} height={50} />
+        {
+          !admin?
+          <Image src='/assets/png/copel.png' width={170} height={50} />
+          :
+          null
+        }
         <div className='icon' >
           <p>
             olá, {name}

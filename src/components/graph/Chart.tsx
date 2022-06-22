@@ -54,7 +54,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
         offset: -20,
         align: "start",
         font: {
-          size: 16
+          size: 12
         }
       },
       legend: {
@@ -72,13 +72,13 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
     datasets: [
       {
         label: dataset1? dataset1 : '2021',
-        data: data1.map(value => value.custo_unit),
+        data: data1.map(value => value.custo_unit? value.custo_unit : 0),
         backgroundColor: '#C2D5FB',
       },
       data2?
       {
         label: dataset2? dataset2 : '2022',
-        data: data2.map(value => value.custo_unit),
+        data: data2.map(value => value.custo_unit? value.custo_unit : 0),
         backgroundColor: '#255488',
       } : null
     ],

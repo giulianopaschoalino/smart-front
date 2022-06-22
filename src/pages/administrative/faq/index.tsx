@@ -115,7 +115,7 @@ export default function Sidebar({faqData, userName} : any ) {
   return (
     <>
     <FaqView>
-    <Header name={userName}/>
+    <Header name={userName} admin/>
 
       <PageTitle title='Perguntas Frequentes' subtitle='Perguntas Frequentes'/>
 
@@ -145,7 +145,6 @@ export default function Sidebar({faqData, userName} : any ) {
       <button className='btn2' value="Refresh Page"onClick={handleOpen} >Adicionar</button>
       <button className='btn1' onClick={() => setOpenModalInativar(true)}>Inativar</button>
 
-
       </div>
         <Modal
         open={open}
@@ -160,16 +159,12 @@ export default function Sidebar({faqData, userName} : any ) {
           </Typography>
           <br />
 
-        <TextField id="outlined-basic" label="Pergunta" onChange={value=>setFaq({...faq, question:value.target.value})} sx={{width:710, ml:8}} variant="outlined" /> <br /><br />
-        <TextField id="outlined-basic" label="Resposta" onChange={value=>setFaq({...faq, answer:value.target.value})} sx={{width:710, ml:8}} variant="outlined" />
+          <TextField id="outlined-basic" label="Pergunta" onChange={value=>setFaq({...faq, question:value.target.value})} sx={{width:710, ml:8}} variant="outlined" /> <br /><br />
+          <TextField id="outlined-basic" label="Resposta" onChange={value=>setFaq({...faq, answer:value.target.value})} sx={{width:710, ml:8}} variant="outlined" />
 
           <br /><br />
-        <FaqButton1  title='Cancelar' onClick={function (): void {
-              throw new Error('Function not implemented.');
-            } } />
-        <FaqButton2   title='Salvar' onClick={() => handleRegisterNewFaq(faq)}
-
-        />
+        <FaqButton1  title='Cancelar' onClick={() => setOpen(false)} />
+        <FaqButton2 title='Salvar' onClick={() => handleRegisterNewFaq(faq)}/>
         </Box>
 
       </Modal>

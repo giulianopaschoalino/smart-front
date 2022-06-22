@@ -115,25 +115,22 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
     }).catch(exception => console.log(exception))
   }
 
+  function handleColorNorte(value, region) {
+    if (value <= tableData.result[1].norte_min)
+      return 'green'
+    else if (value >= tableData.result[0][`${region}_max`])
+      return 'red'
+    else if (tableData.result[0][`${region}_max`] - value > tableData.result[0][`${region}_max`]/2)
+      return 'dullGreen'
+    else if (tableData.result[1][`${region}_min`] - value <= tableData.result[1][`${region}_min`])
+      return 'dullRed'
+  }
+
   useEffect(() => {
     getDataByHour()
     getDataByDay()
     console.log(dataByDay)
   }, [date, day, select])
-
-  function handleCellColor(minimo, mi, ma, maximo) {
-    if (minimo - mi >= 100 && minimo - mi < 200) {
-      return 'green'
-    } else if ( mi*2 >= 200 && mi*2 < 250 ) {
-      return'dullGreen'
-    } else if ( (ma-mi)/2 >=250 && (ma-mi)/2 < 300 ) {
-      return 'white'
-    } else if ( ma/2 >= 300 && ma/2 < 600 ) {
-      return 'dullRed'
-    } else if ( maximo-ma > 600 ) {
-      return 'red'
-    }
-  }
 
   return (
     <main style={{
@@ -159,39 +156,53 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
             </thead>
             <tbody>
               {
-                tableData.map(data => {
+                tableData.data.map(data => {
                   return <>
                     <tr>
                       <td className='tg-gceh'>{data.year_month_formatted}</td>
-                      <td className='tg-uulg red'>{data.nordeste}</td>
-                      <td className='tg-gceh dullRed'>{data.norte}</td>
-                      <td className='tg-gceh dullGreen'>{data.sudeste}</td>
-                      <td className='tg-uulg red'>{data.sul}</td>
+                      <td className={`tg-uulg ${handleColorNorte(parseFloat(data.norte), 'nordeste')}`}>{parseFloat(data.nordeste).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td className={`tg-gceh ${handleColorNorte(parseFloat(data.norte), 'norte')}`}>{parseFloat(data.norte).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td className={`tg-gceh ${handleColorNorte(parseFloat(data.norte), 'sudeste')}`}>{parseFloat(data.sudeste).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td className={`tg-uulg ${handleColorNorte(parseFloat(data.norte), 'sul')}`}>{parseFloat(data.sul).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                     </tr>
                   </>
                 })
               }
-              <tr>
-                <td className='tg-gceh'>Mín</td>
-                <td className='tg-uulg'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-uulg'>xxxx</td>
-              </tr>
-              <tr>
-                <td className='tg-gceh'>Max</td>
-                <td className='tg-uulg'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-uulg'>xxxx</td>
-              </tr>
-              <tr>
-                <td className='tg-gceh'>Desv Pad</td>
-                <td className='tg-uulg'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-gceh'>xxxx</td>
-                <td className='tg-uulg'>xxxx</td>
-              </tr>
+              {
+                tableData.result.map((data, index) => {
+                  if (index === 0) {
+                    return <>
+                      <tr>
+                        <td className='tg-gceh'>Max</td>
+                        <td className='tg-uulg'>{parseFloat(data.nordeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-gceh'>{parseFloat(data.norte_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-gceh'>{parseFloat(data.sudeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-uulg'>{parseFloat(data.sul_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      </tr>
+                    </>
+                  } else if (index===1) {
+                    return <>
+                      <tr>
+                        <td className='tg-gceh'>Min</td>
+                        <td className='tg-uulg'>{parseFloat(data.nordeste_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-gceh'>{parseFloat(data.norte_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-gceh'>{parseFloat(data.sudeste_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-uulg'>{parseFloat(data.sul_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      </tr>
+                    </>
+                  } else if (index===2) {
+                    return <>
+                      <tr>
+                        <td className='tg-gceh'>Desv. Padrão</td>
+                        <td className='tg-uulg'>{parseFloat(data.nordeste_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-gceh'>{parseFloat(data.norte_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-gceh'>{parseFloat(data.sudeste_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-uulg'>{parseFloat(data.sul_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      </tr>
+                    </>
+                  }
+                })
+              }
             </tbody>
           </table>
           <section>
@@ -235,7 +246,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
                     width: '22%',
                     ml: 1
                   }}>
-              <InputLabel id="demo-simple-select-label">Dia</InputLabel>
+              <InputLabel id="demo-simple-select-label">Mês</InputLabel>
               <Select
                   value={day}
                   onChange={handleChangeDay}
@@ -256,24 +267,6 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
                   <MenuItem value={'10'}>10</MenuItem>
                   <MenuItem value={'11'}>11</MenuItem>
                   <MenuItem value={'12'}>12</MenuItem>
-                  <MenuItem value={'13'}>13</MenuItem>
-                  <MenuItem value={'14'}>14</MenuItem>
-                  <MenuItem value={'15'}>15</MenuItem>
-                  <MenuItem value={'16'}>16</MenuItem>
-                  <MenuItem value={'17'}>17</MenuItem>
-                  <MenuItem value={'18'}>18</MenuItem>
-                  <MenuItem value={'19'}>19</MenuItem>
-                  <MenuItem value={'20'}>20</MenuItem>
-                  <MenuItem value={'21'}>21</MenuItem>
-                  <MenuItem value={'22'}>22</MenuItem>
-                  <MenuItem value={'23'}>23</MenuItem>
-                  <MenuItem value={'24'}>24</MenuItem>
-                  <MenuItem value={'25'}>25</MenuItem>
-                  <MenuItem value={'26'}>26</MenuItem>
-                  <MenuItem value={'27'}>27</MenuItem>
-                  <MenuItem value={'28'}>28</MenuItem>
-                  <MenuItem value={'29'}>29</MenuItem>
-                  <MenuItem value={'30'}>30</MenuItem>
                 </Select>
               </FormControl>
           </section>
@@ -312,7 +305,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let tableData = [];
 
   await apiClient.post('/pld/list').then(res => {
-    tableData = res.data.data
+    tableData = res.data
   }).catch(res => {
     console.log(res)
   })

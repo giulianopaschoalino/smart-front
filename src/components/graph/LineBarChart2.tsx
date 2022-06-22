@@ -93,7 +93,7 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
         offset: -20,
         align: "start",
         font: {
-          size: 16
+          size: 12
         }
       },
       legend: {

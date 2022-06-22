@@ -51,7 +51,7 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1
               sum += data;
           });
           const percentage = (dataProps[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
-          const result = `${value}\n    ${percentage}`
+          const result = `${parseFloat(value).toFixed(0)}\n    ${percentage}`
 
           return value==null? null : result
         },
@@ -61,7 +61,7 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1
         offset: -40,
         align: "start",
         font: {
-          size: 16
+          size: 10
         }
       },
       legend: {

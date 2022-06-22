@@ -83,19 +83,23 @@ export const PldTableView = styled.main`
   }
 
   .green {
-    background-color: #00A934!important;
+    background-color: #0F9D58!important;
+    color: black!important;
   }
 
   .dullGreen {
     background-color: #AED094!important;
+    color: black!important;
   }
 
   .red {
-    background-color: #FF5429!important;
+    background-color: #DB4437!important;
+    color: black!important;
   }
 
   .dullRed {
     background-color: #FFAA95!important;
+    color: black!important;
   }
 
   h3{

@@ -23,7 +23,6 @@ function verifyDataByYear(data) {
     return false
 }
 
-
 export default function GrossSavings({graphData, years, userName}: any) {
   return (
     <GrossSavingsView>
@@ -31,7 +30,7 @@ export default function GrossSavings({graphData, years, userName}: any) {
         <title>Smart Energia - Economia Acumulada</title>
       </Head>
       <Header name={userName} />
-      <PageTitle title='Economia Bruta' subtitle='Economia Bruta Estimada e Acumulada anual (Valores em R$ mil)' />
+      <PageTitle title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada anual (Valores em R$ mil)' />
       <section>
         <SingleBar title='Economia Bruta' subtitle='(Valores em R$ mil)'
         dataset='Consolidada' dataset1='Estimada'
@@ -43,6 +42,7 @@ export default function GrossSavings({graphData, years, userName}: any) {
     </GrossSavingsView>
   )
 }
+
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)

@@ -23,7 +23,7 @@ import { parseCookies } from 'nookies'
 import { GetServerSideProps } from 'next'
 import getAPIClient from '../services/ssrApi'
 
-export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears, acumulatedGraph, mapsInfo, userName} : any) {
+export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears, acumulatedGraph, mapsInfo, userName, costIndicator} : any) {
   return (
     <DashboardView>
       <Head>
@@ -44,14 +44,14 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
       </Link>
 
       <section className='dashboard'>
-        <GraphCard title='Consumo' subtitle='Gráfico de Consumo'>
+        <GraphCard title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada anual'>
           <SingleBar title='Economia Bruta' subtitle='(Valores em R$ mil)'
           dataset='Consolidada' dataset1='Estimada'
           dataProps={grossAnualGraph}
           label={grossAnualYears} barLabel year/>
         </GraphCard>
 
-        <GraphCard title='Economia Acumulado' subtitle='Economia Acumulada' singleBar>
+        <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada mensal' singleBar>
           <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$)'
           dataset='Acumulada' dataset1='Estimado'
           dataProps={grossMensalGraph}
@@ -59,15 +59,27 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
           barLabel month/>
         </GraphCard>
 
-        <GraphCard title='Custos Estimados' subtitle='Custos Estimados em R$/MWh' singleBar>
+        <GraphCard title='Cativo x Livre mensal' subtitle='Comparativo de Custo Estimado' singleBar>
           <LineBarChart2 data1={acumulatedGraph} data2={acumulatedGraph} data3={acumulatedGraph}
           label={ConsumoEstimado.label} dataset1='Custo' dataset2='Cativo' dataset3='Livre'
           title='Custo Estimado' subtitle='(Valores em R$/MWh)' barLabel hashurado/>
         </GraphCard>
 
         <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh'>
-          <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)' data1={dataEconomiaIndicador.data1} data2={dataEconomiaIndicador.data2}
-          label={dataEconomiaIndicador.labels} barLabel/>
+        <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)'
+        data1={costIndicator.filter((value, index) => value.mes.slice(3, 7).includes('2021')).sort((a, b) => {
+          if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
+          if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1
+
+          return 0
+        })}
+        data2={costIndicator.filter((value, index) => value.mes.slice(3, 7).includes('2022'))}
+        label={costIndicator.filter((value, index) => value.mes.slice(3, 7).includes('2021')).sort((a, b) => {
+          if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
+          if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1
+
+          return 0
+        }).map(value => value.mes)} barLabel />
         </GraphCard>
       </section>
 
@@ -86,6 +98,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let grossAnualGraph = [];
   let grossMensalGraph = [];
   let acumulatedGraph = [];
+  let costIndicator = []
   let mapsInfo = [];
 
   await apiClient.post('/economy/grossAnnual').then(res => {
@@ -102,6 +115,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/economy/estimates').then(res => {
     acumulatedGraph = res.data.data
+  }).catch(res => {
+    console.log(res)
+  })
+
+  await apiClient.post('/economy/MWh').then(res => {
+    costIndicator = res.data.data
   }).catch(res => {
     console.log(res)
   })
@@ -131,6 +150,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       grossMensalYears,
       grossMensalGraph,
       acumulatedGraph,
+      costIndicator,
       mapsInfo,
 
       userName
