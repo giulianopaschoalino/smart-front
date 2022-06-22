@@ -4,9 +4,9 @@ export const FaqButtonView1 = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 40px;
   margin-left: 65px;
-  width: 350px;
+  width: 320px;
   height: 45px;
   cursor: pointer;
   background: #DDDDDD;

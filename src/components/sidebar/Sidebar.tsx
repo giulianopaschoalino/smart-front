@@ -7,7 +7,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../contexts/AuthContext';
 
 import RenderIf from '../../utils/renderIf';
 import { SidebarView } from './SidebarView'
@@ -25,9 +26,11 @@ const style = {
 };
 
 export default function Sidebar() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const { signOut } = useContext(AuthContext)
 
   const [ economiaDrawer, setEconomiaDrawer ] = useState(false)
 
@@ -36,8 +39,6 @@ export default function Sidebar() {
   const router = useRouter()
 
   const { ['user-role']: role } = parseCookies()
-
-  // console.log(role)
 
   useEffect(() => {
     setViewModal(false)
@@ -54,10 +55,10 @@ export default function Sidebar() {
             <Image src='/assets/logo.svg' width={100} height={100} />
           </div>
           <ul>
-            <Link href='/administrative/clients'><li className={router.pathname=='/administrative' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Clientes >'}</li></Link>
+            <Link href='/administrative/clients'><li className={router.pathname=='/administrative/clients' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Clientes >'}</li></Link>
             <Link href='/administrative/general'><li className={router.pathname=='/administrative/general'? 'actualPath' : null} ><Image src='/assets/sidebar/aboutUs.svg' width={25} height={25} />{'Sobre Nós'}</li></Link>
             <Link href='/administrative/faq'><li className={router.pathname=='/administrative/faq' ? 'actualPath' : null } ><Image src='/assets/sidebar/saqIcon.svg' width={25} height={25} />{'FAQ >'}</li></Link>
-            <Link href='/administrative/notification'><li className={router.pathname=='/administrative/notifications'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificações >'}<div className='notification'><p>25</p></div></li></Link>
+            <Link href='/administrative/notification'><li className={router.pathname=='/administrative/notification'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificações >'}</li></Link>
             <button onClick={handleOpen}><Image src='/assets/logout.svg' width={25} height={25} />{'Sair'}</button>
             <Modal
             open={open}
@@ -92,9 +93,9 @@ export default function Sidebar() {
             <Link href='/dashboard'><li className={router.pathname=='/dashboard'? 'actualPath' : null} ><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Visão Geral'}</li></Link>
             <li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/grossSavings' || router.pathname=='/accumulatedSavings' || router.pathname=='/estimatedCost' || router.pathname=='/costIndicator' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Economia >'}</li>
               <div className='economiaDrawer drawer' >
-                <Link href='/grossSavings'><li className={router.pathname=='/grossSavings'? 'actualPathDrawer' : null}>Economia Bruta</li></Link>
-                <Link href='/accumulatedSavings'><li className={router.pathname=='/accumulatedSavings'? 'actualPathDrawer' : null}>Economia Acumulada</li></Link>
-                <Link href='/estimatedCost'><li className={router.pathname=='/estimatedCost'? 'actualPathDrawer' : null}>Custo Estimado</li></Link>
+                <Link href='/grossSavings'><li className={router.pathname=='/grossSavings'? 'actualPathDrawer' : null}>Economia Bruta Anual</li></Link>
+                <Link href='/accumulatedSavings'><li className={router.pathname=='/accumulatedSavings'? 'actualPathDrawer' : null}>Economia Bruta Mensal</li></Link>
+                <Link href='/estimatedCost'><li className={router.pathname=='/estimatedCost'? 'actualPathDrawer' : null}>Cativo x Livre mensal</li></Link>
                 <Link href='/costIndicator'><li className={router.pathname=='/costIndicator'? 'actualPathDrawer' : null}>Custo R/MWh</li></Link>
               </div>
             <Link href='/telemetria'><li className={router.pathname=='/telemetria'? 'actualPath' : null}><Image src='/assets/sidebar/telemetryIcon.svg' width={25} height={25} />{'Telemetria >'}</li></Link>
@@ -117,7 +118,7 @@ export default function Sidebar() {
               <Typography id="modal-modal-title" variant="h6" component="h2">
                 Deseja realmente sair ?
               </Typography>
-              <Link href='/'><Button variant="contained"  sx={{mt:5}}>Sim</Button></Link>
+              <Link href='/'><Button variant="contained" onClick={() => signOut()} sx={{mt:5}}>Sim</Button></Link>
               <Button variant="contained" onClick={handleClose} color="error" sx={{mt:5 ,ml:1}}>Não</Button>
             </Box>
           </Modal>

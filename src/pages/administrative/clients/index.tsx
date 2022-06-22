@@ -138,7 +138,7 @@ export default function clients({clients}) {
       </Snackbar>
 
       <ClientsView>
-        <Header name='' />
+        <Header name={userName} admin/>
         <PageTitle title='Clientes' subtitle='Clientes Smart Energia'/>
         <div className='buttons'>
         <button className='btn2' onClick={handleOpen}>Adicionar</button>
@@ -194,17 +194,17 @@ export default function clients({clients}) {
         }} variant="outlined" />
         <InputUpload />
         <br /><br />
-      <FaqButton1  title='Cancelar' onClick={() => {setOpen(false)}} />
+      <FaqButton1  title='Cancelar' onClick={() => setOpen(false)} />
       <FaqButton2  title='Salvar' onClick={() => handleCreateClient(client)}/>
       </Box>
       </Modal>
 
       <ConfirmModal open={openModalInativar} handleIsClose={(value) => {setOpenModalInativar(value)}}>
-        <PageTitle title='Excluir Cliente' subtitle='Deseja realmente excluir os clientes selecionadas?'/>
+        <PageTitle title='Inativar Cliente(s)' subtitle='deseja realmente inativar os clientes selecionadas?'/>
         <ConfirmModalView>
 
           <BasicButton title='Confirmar' onClick={() => handleDeleteClient(selectedClients)}/>
-          <BasicButton title='Cancelar' onClick={() => {setOpenModalInativar(false)}}/>
+          <BasicButton title='Cancelar' onClick={() => setOpenModalInativar(false)}/>
         </ConfirmModalView>
       </ConfirmModal>
     </div>

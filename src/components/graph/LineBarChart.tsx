@@ -71,9 +71,10 @@ interface LineBarChartInterface {
   dataset3?: string,
   barLabel?: boolean | undefined,
   hashurado?: boolean | undefined,
+  reais?: boolean | undefined
 }
 
-export function LineBarChart({ title, subtitle, data1, data2, data3, label, red, dataset1, dataset2, dataset3, barLabel, hashurado }: LineBarChartInterface) {
+export function LineBarChart({ title, subtitle, data1, data2, data3, label, red, dataset1, dataset2, dataset3, barLabel, hashurado, reais }: LineBarChartInterface) {
   const chartRef = useRef<ChartJS>(null);
 
   const currentTime = new Date();
@@ -93,7 +94,7 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
         offset: -20,
         align: "start",
         font: {
-          size: 16
+          size: 12
         }
       },
       legend: {
@@ -111,7 +112,7 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
     datasets: [
       {
         type: 'line' as const,
-        label: dataset1? dataset1 : 'Dataset 1',
+        label: dataset1&&reais==false? parseFloat(dataset1).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2}) : dataset1,
         borderColor: red?
         '#f00' : '#0c9200',
         datalabels: {
