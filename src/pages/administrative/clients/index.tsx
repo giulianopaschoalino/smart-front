@@ -92,6 +92,10 @@ export default function clients({clients, userName}) {
       password,
       password_confirmation,
       client_id
+    }, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
     }).then(res => {
       setOpenSnackSuccess(true)
       setOpenModalInativar(false)
