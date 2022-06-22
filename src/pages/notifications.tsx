@@ -16,7 +16,7 @@ export default function Notifications({notificationData}: any) {
         <title>Smart Energia - Notificações</title>
       </Head>
       <Header name='' />
-      <PageTitle title='Notifications' subtitle='' />
+      <PageTitle title='Notificações' subtitle='' />
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       <section className='CommonQuestionsSection' >
       {

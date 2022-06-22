@@ -13,6 +13,7 @@ export const FaqQuestionsCardHeader = styled.div`
   margin-top: 53px;
 
   width: 100%;
+  cursor: pointer;
 
   img {
     cursor: pointer;
