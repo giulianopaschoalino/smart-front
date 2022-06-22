@@ -114,6 +114,7 @@ export default function clients({clients}) {
 
   return (
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
           notificação cadastrada com sucesso!

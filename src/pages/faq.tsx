@@ -9,15 +9,15 @@ import getAPIClient from '../services/ssrApi'
 import { FaqView } from '../styles/layouts/commonQuestions/FaqView'
 
 
-export default function commonQuestions({faqData}) {
+export default function commonQuestions({faqData, userName}) {
   return (
     <FaqView>
       <Head>
         <title>Smart Energia - FAQ</title>
       </Head>
-      <Header name='' />
+      <Header name={userName} />
       <h1>Perguntas Frequentes</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <p>Aqui estão algumas das perguntas que mais recebemos!</p>
       <section className='CommonQuestionsSection' >
       {
         faqData.map((value, index ) => {
@@ -34,8 +34,9 @@ export default function commonQuestions({faqData}) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
-  let faqData = [];
+  const { ['user-name']: userName } = parseCookies(ctx)
 
+  let faqData = [];
 
   await apiClient.get('/faq').then(res => {
     faqData = res.data.data
@@ -54,7 +55,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      faqData
+      faqData,
+      userName
     }
   }
 }
