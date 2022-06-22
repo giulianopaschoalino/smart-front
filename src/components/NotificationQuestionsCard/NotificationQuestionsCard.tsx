@@ -13,7 +13,7 @@ export default function NotificationQuestionsCard({title, body}: CommonsQuestion
   const [ showCardBody, setShowCardBody ] = useState<boolean>(false)
   return (
 
-    <CommonQuestionsCardView>
+    <CommonQuestionsCardView onClick={() => setShowCardBody(!showCardBody)}>
       <FaqQuestionsCardHeader>
         <h4>{title}</h4>
         <Image src={showCardBody? '/assets/less-icon.svg' : '/assets/plus-icon.svg' } width={32} height={32} onClick={() => setShowCardBody(!showCardBody)} />

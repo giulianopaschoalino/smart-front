@@ -46,7 +46,7 @@ export default function VerifyEmail() {
       <Head>
         <title>Smart Energia - Verificar Email</title>
       </Head>
-      <Image src='/assets/marca1.svg' width={350} height={350} />
+      <Image style={{cursor:'pointer'}} src='/assets/marca1.png' width={500} height={340} onClick={() => router.push('/')} />
       <VerifyEmailContainer>
         <h1>Bem-Vindo</h1>
         <h2>Estratégias Inteligentes em<br /> Gestão de Energia</h2>
