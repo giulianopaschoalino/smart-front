@@ -45,12 +45,12 @@ export default function Header({ name, admin }: headerInterface) {
       <section>
       </section>
       <section>
-        {
+        {/* {
           !admin?
           <Image src='/assets/png/copel.png' width={170} height={50} />
           :
           null
-        }
+        } */}
         <div className='icon' >
           <p>
             olá, {name}

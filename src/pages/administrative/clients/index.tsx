@@ -11,7 +11,7 @@ import BasicButton from '../../../components/buttons/basicButton/BasicButton'
 import FaqButton1 from '../../../components/buttons/faqButton/FaqButton1';
 import FaqButton2 from '../../../components/buttons/faqButton/FaqButton2';
 import Header from '../../../components/header/Header'
-import InputUpload from '../../../components/inputUplaod/inputUpload';
+import InputUploadImg from '../../../components/inputUploadImg/inputUpload';
 import { ClientsView } from '../../../styles/layouts/clients/ClientsView';
 import PageTitle from '../../../components/pageTitle/PageTitle';
 import ConfirmModal from '../../../components/modal/ConfirmModal';
@@ -121,23 +121,23 @@ export default function clients({clients, userName}) {
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
-          Usuario cadastrada com sucesso!
+          Cliente cadastrada com Sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
-          Usuario não cadastrada!
+          Cliente não cadastrado!
         </Alert>
       </Snackbar>
 
       <Snackbar open={openSnackSuccessDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
         <Alert onClose={handleCloseSnackDelete} severity="success" sx={{ width: '100%' }}>
-          Usuario excluida com sucesso!
+         Cliente excluido com sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackErrorDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
         <Alert onClose={handleCloseSnackDelete} severity="error" sx={{ width: '100%' }}>
-          Usuario não excluida!
+         Cliente não excluido!
         </Alert>
       </Snackbar>
 
@@ -219,7 +219,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
-
   let clients = [];
 
   await apiClient.get('/user').then(res => {

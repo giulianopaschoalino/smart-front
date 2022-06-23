@@ -56,7 +56,9 @@ export default function VerifyEmail() {
           <LoginButton title='Enviar Email' onClick={() => setSent(true)} />
         </RenderIf>
 
+
         <RenderIf isTrue={sent? true : false}>
+          <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }}label="Nova Senha" variant="outlined"/>
           <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }}label="Codigo de verificação" variant="outlined" onChange={value => setCode(value.target.value)} />
           <LoginButton title='Continuar' onClick={() => {verifyConfirmationCode()}} />
           <RenderIf isTrue={codeStatus===true? true : false} >

@@ -10,9 +10,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router'
 import React, { useContext, useState, useEffect,useCallback } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 import RenderIf from '../utils/renderIf';
 import Snackbar from '@mui/material/Snackbar';
 
@@ -23,14 +20,12 @@ import { LoginContainer, LoginView } from  '../styles/layouts/login/LoginView';
 import Dashboard from './dashboard';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
-
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
 ) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-
 
 export default function Home() {
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
@@ -74,11 +69,19 @@ export default function Home() {
     if (email === "" || password === ""){
       setOpenSnackError(true)
     }else{
-    await signIn({email, password}).then(res => {console.log('')}).catch(res => setOpenSnackError(true))
+      try {
+        await signIn({email, password}).then((res: any) => {
+          if (res.response.status === 422) {
+            setOpenSnackError(true)
+          }
+        })
+      } catch (exception){
+        console.log(exception)
+      }
     }
   }
 
-   const handleCloseSnack = (event?: React.SyntheticEvent | Event, reason?: string) => {
+  const handleCloseSnack = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -89,7 +92,7 @@ export default function Home() {
 
   useEffect(() => {
     setValues({
-      password: "",
+      password: null,
       showPassword: false,
     });
     setEmail("")
