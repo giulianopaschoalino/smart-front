@@ -13,7 +13,7 @@ import BasicButton from '../../../components/buttons/basicButton/BasicButton'
 import FaqButton1 from '../../../components/buttons/faqButton/FaqButton1';
 import FaqButton2 from '../../../components/buttons/faqButton/FaqButton2';
 import Header from '../../../components/header/Header'
-import InputUpload from '../../../components/inputUplaod/inputUpload';
+import InputUploadImg from '../../../components/inputUploadImg/inputUpload';
 import { ClientsView } from '../../../styles/layouts/clients/ClientsView';
 import PageTitle from '../../../components/pageTitle/PageTitle';
 import ConfirmModal from '../../../components/modal/ConfirmModal';
@@ -44,7 +44,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function clients({clients}) {
+export default function clients({clients, userName}) {
   const [client, setClient] = useState<any>({
     name: String,
     email: String,
@@ -121,23 +121,23 @@ export default function clients({clients}) {
 
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
-          notificação cadastrada com sucesso!
+          Cliente cadastrada com Sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
-          Notificação não cadastrada!
+          Cliente não cadastrado!
         </Alert>
       </Snackbar>
 
       <Snackbar open={openSnackSuccessDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
         <Alert onClose={handleCloseSnackDelete} severity="success" sx={{ width: '100%' }}>
-          notificação excluida com sucesso!
+         Cliente excluido com sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackErrorDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
         <Alert onClose={handleCloseSnackDelete} severity="error" sx={{ width: '100%' }}>
-          Notificação não excluida!
+         Cliente não excluido!
         </Alert>
       </Snackbar>
 
@@ -196,7 +196,7 @@ export default function clients({clients}) {
             client_id: value.target.value
           })
         }} variant="outlined" />
-        <InputUpload />
+        <InputUploadImg />
         <br /><br />
       <FaqButton1  title='Cancelar' onClick={() => setOpen(false)} />
       <FaqButton2  title='Salvar' onClick={() => handleCreateClient(client)}/>
@@ -218,7 +218,7 @@ export default function clients({clients}) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
-
+  const { ['user-name']: userName } = parseCookies(ctx)
   let clients = [];
 
   await apiClient.get('/user').then(res => {
@@ -241,6 +241,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       clients,
+      userName
     }
   }
 }

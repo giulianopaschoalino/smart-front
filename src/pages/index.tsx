@@ -74,7 +74,7 @@ export default function Home() {
     if (email === "" || password === ""){
       setOpenSnackError(true)
     }else{
-    await signIn({email, password}).then(res => {console.log('')}).catch(res => setOpenSnackError(true))
+    await signIn({email, password})
     }
   }
 
@@ -89,7 +89,7 @@ export default function Home() {
 
   useEffect(() => {
     setValues({
-      password: "",
+      password: null,
       showPassword: false,
     });
     setEmail("")
