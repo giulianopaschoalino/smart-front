@@ -84,6 +84,8 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
     } else {
       setTableDataState(tableData)
     }
+
+    console.log(month)
   }, [month, unidade])
 
   return (
@@ -96,7 +98,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
 
       <h3>Seletor Mês</h3>
       <div className='select'>
-        <FormControl fullWidth  >
+        <FormControl fullWidth>
           <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -114,7 +116,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
           </Select>
         </FormControl>
 
-        <FormControl fullWidth sx={{ml:1}} >
+        <FormControl fullWidth sx={{mt: 2}}>
           <InputLabel id="demo-simple-select-label">Mês</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -126,7 +128,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
             <MenuItem value={''}>Nenhum</MenuItem>
             {
               clientMonth.map((value) => {
-                return <MenuItem key={1} value={value.mes}>{monthLabels[parseFloat(value.mes.slice(3, 4))-1]}</MenuItem>
+                return <MenuItem key={1} value={value.mes.slice(2, 4)}>{monthLabels[parseFloat(value.mes.slice(3, 4))-1]}</MenuItem>
               })
             }
           </Select>
