@@ -22,6 +22,7 @@ import { GetServerSideProps } from 'next';
 import getAPIClient from '../../../services/ssrApi';
 
 import FormData from 'form-data';
+import { InputUploadView } from '../../../components/inputUploadImg/inputUploadView';
 
 const style = {
   position: 'absolute' as const,
@@ -196,8 +197,26 @@ export default function clients({clients, userName}) {
             client_id: value.target.value
           })
         }} variant="outlined" />
-        <input type="file" onChange={onChange}/>
-        {/* <InputUpload /> */}
+            <InputUploadView>
+
+<div className='imgContainer'>
+        <article>
+
+      </article>
+
+    </div>
+
+        <div className="update">
+
+        <form action="">
+          <div >
+            <label  htmlFor="arquivo"> <p className='TitleButton'> Enviar foto de Perfil </p>   </label>
+            <input  type="file" name='arquivo' id='arquivo' onChange={onChange} />
+          </div>
+        </form>
+      </div>
+
+    </InputUploadView>
         <br /><br />
       <FaqButton1  title='Cancelar' onClick={() => setOpen(false)} />
       <FaqButton2  title='Salvar' onClick={() => handleCreateClient(client)}/>

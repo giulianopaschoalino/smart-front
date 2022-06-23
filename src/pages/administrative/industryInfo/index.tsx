@@ -13,6 +13,7 @@ import FormData from 'form-data';
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { InputUploadView } from '../../../components/inputUploadPdf/inputUploadView'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -69,8 +70,17 @@ export default function industryInfo({userName}: any) {
       <Header name={userName} />
       <div className='title'>
         <PageTitle title='Info Setorial' subtitle='Realize o upload da última versão de info setorial' />
-        <input type="file" onChange={onChange}/>
-        <InputUploadPdf/>
+        <InputUploadView>
+          <div className="update">
+          <form action="">
+            <div className='testess'>
+              <label  htmlFor="arquivo"> <p className='TitleButton'> Enviar PDF </p>   </label>
+              <input  type="file" name='arquivo' id='arquivo' onChange={onChange} />
+            </div>
+          </form>
+          </div>
+        </InputUploadView>
+        {/* <InputUploadPdf/> */}
       </div>
 
       <BasicButton onClick={() => handleCreateClient()} title='Atualizar'/>

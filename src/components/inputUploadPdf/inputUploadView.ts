@@ -16,7 +16,7 @@ input[type="file"] {
 label {
     width: 140px;
     height: 30px;
-    margin-top: -30px;
+    margin-top: 10px;
     border-radius: 4px;
     margin-left: 69px;
     background-color: #254F7F;
