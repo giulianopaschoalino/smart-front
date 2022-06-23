@@ -12,17 +12,6 @@ import getAPIClient from '../services/ssrApi'
 
 import { GrossSavingsView } from '../styles/layouts/economy/grossSavings/GrossSavings'
 
-function addMissingMonths(data) {
-  // console.log(data[0].mes.slice(1, 1))
-}
-
-function verifyDataByYear(data) {
-  if (data.length === 12)
-    return true
-  else
-    return false
-}
-
 export default function GrossSavings({graphData, years, userName}: any) {
   return (
     <GrossSavingsView>

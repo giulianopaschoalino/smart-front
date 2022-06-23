@@ -1,15 +1,56 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import React from 'react'
+import React, { useState } from 'react'
 import BasicButton from '../components/buttons/basicButton/BasicButton'
 import Header from '../components/header/Header'
 import PageTitle from '../components/pageTitle/PageTitle'
+import { api } from '../services/api'
 import { IndustryInfoView } from '../styles/layouts/industryInfo/IndustryInfoView'
 
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 export default function industryInfo({userName}: any) {
+  const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
+  const [openSnackError, setOpenSnackError] = useState<boolean>(false);
+
+  const handleCloseSnack = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackError(false);
+    setOpenSnackSuccess(false);
+  };
+
+  function handleDownloadPdf() {
+    api.get('/download').then(res => {
+      setOpenSnackSuccess(true)
+    }).catch(res => {
+      setOpenSnackError(true)
+    })
+  }
+
   return (
     <IndustryInfoView>
+      <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
+        <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
+          Cliente cadastrada com Sucesso!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
+        <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
+          Cliente não cadastrado!
+        </Alert>
+      </Snackbar>
       <Head>
         <title>Smart Energia - Info de Setor</title>
       </Head>
@@ -17,7 +58,7 @@ export default function industryInfo({userName}: any) {
       <div className='title'>
         <PageTitle title='Info Setorial' subtitle='Clique em "Baixar PDF", para fazer download do PDF' />
       </div>
-      <button>Baixar PDF</button>
+      <button onClick={() => handleDownloadPdf()}>Baixar PDF</button>
     </IndustryInfoView>
   )
 }
