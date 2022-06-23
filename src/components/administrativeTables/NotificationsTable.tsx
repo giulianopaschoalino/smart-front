@@ -290,7 +290,7 @@ export default function NotificationsTable({notifications, onChange}: Notificati
                         {row.title}
                       </TableCell>
                       <TableCell align="left">{'copel'}</TableCell>
-                      <TableCell align="left"><StyledStatus status={row.deleted_at===null? 'ativo' : 'inativo'}>{row.deleted_at===null? 'ativo' : 'inativo'}</StyledStatus></TableCell>
+                      <TableCell align="left"><StyledStatus status={'ativo'}>{'ativo'}</StyledStatus></TableCell>
                     </TableRow>
                   );
                 })}

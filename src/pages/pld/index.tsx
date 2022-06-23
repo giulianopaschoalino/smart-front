@@ -26,9 +26,10 @@ interface pldInterface {
   graphByHourData: any,
   graphByMonthData: any
   userName: string,
+  clientMonth: any
 }
 
-export default function pld({tableData, graphByHourData, graphByMonthData, userName}: pldInterface) {
+export default function pld({tableData, graphByHourData, graphByMonthData, userName, clientMonth}: pldInterface) {
   const router = useRouter()
   const { region } = router.query
 
@@ -255,18 +256,17 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
                   label="Age"
 
                 >
-                  <MenuItem value={'01'}>01</MenuItem>
-                  <MenuItem value={'02'}>02</MenuItem>
-                  <MenuItem value={'03'}>03</MenuItem>
-                  <MenuItem value={'04'}>04</MenuItem>
-                  <MenuItem value={'05'}>05</MenuItem>
-                  <MenuItem value={'06'}>06</MenuItem>
-                  <MenuItem value={'07'}>07</MenuItem>
-                  <MenuItem value={'08'}>08</MenuItem>
-                  <MenuItem value={'09'}>09</MenuItem>
-                  <MenuItem value={'10'}>10</MenuItem>
-                  <MenuItem value={'11'}>11</MenuItem>
-                  <MenuItem value={'12'}>12</MenuItem>
+                  <MenuItem value={'0'}>Nenhum</MenuItem>
+                  {
+                    clientMonth.sort((a, b) => {
+                      if (parseFloat(a.mes_ref.slice(3,4)) > parseFloat(b.mes_ref.slice(3,4))) return 1
+                      if (parseFloat(a.mes_ref.slice(3,4)) < parseFloat(b.mes_ref.slice(3,4))) return -1
+
+                      return 0
+                    }).map((data, index) => {
+                      return <MenuItem key={index} value={data.mes_ref.slice(2, 4)}>{data.mes_ref.slice(2, 4)}</MenuItem>
+                    })
+                  }
                 </Select>
               </FormControl>
           </section>
@@ -288,7 +288,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
           </section>
           <LineChart data1={nordeste} data2={norte} data3={sudeste} data4={sul}
           dataset1='NORDESTE' dataset2='NORTE' dataset3='SUDESTE' dataset4='SUL'
-          title={`PLD - ${date}`}
+          title={`Período - ${date}`}
           subtitle='' label={['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24']} />
         </PldGraphView>
       </RenderIf>
@@ -301,11 +301,21 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
 
-
   let tableData = [];
+  let clientMonth = [];
 
   await apiClient.post('/pld/list').then(res => {
     tableData = res.data
+  }).catch(res => {
+    console.log(res)
+  })
+
+  await apiClient.post('/pld', {
+    "filters": [],
+    "fields": ["mes_ref"],
+    "distinct": true
+  }).then(res => {
+    clientMonth = res.data.data
   }).catch(res => {
     console.log(res)
   })
@@ -322,7 +332,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       tableData,
-      userName
+      userName,
+      clientMonth
     }
   }
 }
