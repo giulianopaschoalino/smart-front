@@ -20,8 +20,7 @@ export default function industryInfo({userName}: any) {
         <InputUploadPdf/>
       </div>
 
-      <BasicButton onClick={("")} title='Atualizar'/>
-
+      <BasicButton onClick={() => console.log()} title='Atualizar'/>
 
     </IndustryInfoView>
   )
