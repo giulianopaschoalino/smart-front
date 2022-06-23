@@ -24,12 +24,11 @@ export default function InputUploadPdf() {
 
 <div className='imgContainer'>
         <article>
-     {imageURLS.map((imageSrc, index) => (
+        {imageURLS.map((imageSrc, index) => (
           <img key={index} className="image" src={imageSrc} alt="not fount"  />
         ))}
 
-       </article>
-
+      </article>
 
     </div>
 
