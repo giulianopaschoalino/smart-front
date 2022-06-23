@@ -132,12 +132,12 @@ export default function clients({clients, userName}) {
 
       <Snackbar open={openSnackSuccessDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
         <Alert onClose={handleCloseSnackDelete} severity="success" sx={{ width: '100%' }}>
-         Cliente excluido com sucesso!
+          Cliente excluido com sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackErrorDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
         <Alert onClose={handleCloseSnackDelete} severity="error" sx={{ width: '100%' }}>
-         Cliente não excluido!
+          Cliente não excluido!
         </Alert>
       </Snackbar>
 

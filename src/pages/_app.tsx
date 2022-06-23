@@ -19,9 +19,11 @@ import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
 import getAPIClient from '../services/ssrApi'
 
-function MyApp({ Component, pageProps }: AppProps) {
+export function MyApp({ Component, pageProps, notificationsCount }: AppProps | any) {
   const router = useRouter()
   const rota = router.pathname
+
+  console.log('notifications: ', notificationsCount)
 
   useEffect(() => {
     const handleStart = (url) => {
@@ -69,3 +71,29 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export default MyApp;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+
+  let notificationsCount
+
+  await apiClient.post('/download').then(res => {
+    console.log(res)
+  }).catch(res => console.log(res))
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      notificationsCount
+    }
+  }
+}

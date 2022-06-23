@@ -34,7 +34,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
       <PageTitle title='Visão Geral' subtitle='Bem Vindo a Smart Energia' />
       <Link href='pld'>
         <section className="cardsSection" >
-          <MapCard title='R$/MWh' subtitle='abril / 22' date='até 10/10' statistic='' imgSource='/moneyIcon.svg' />
+          <MapCard title='R$/MWh' subtitle='' date='periodo' statistic='' imgSource='/moneyIcon.svg' />
           {
             mapsInfo.map(value => {
               return <MapCard key={value.submarket} title='S' subtitle={value.submarket} statistic={parseFloat(value.value).toFixed(2)} imgSource='/SUL.svg' />
