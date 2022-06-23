@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const VerifyEmailView = styled.main<{auth: string}>`
   display: flex;
   display: ${props => props.auth == '/verifyEmail'? null : 'none'};
-  justify-content: flex-end;
+  justify-content:center;
   align-items: center;
 
   width: 100%;

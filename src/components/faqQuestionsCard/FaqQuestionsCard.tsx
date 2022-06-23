@@ -13,9 +13,10 @@ export default function CommonsQuestionsCard({question, answer}: CommonsQuestion
   const [ showCardBody, setShowCardBody ] = useState<boolean>(false)
   return (
 
-    <CommonQuestionsCardView>
-      <FaqQuestionsCardHeader>
-        <h4>{question}</h4>
+    <CommonQuestionsCardView onClick={() => setShowCardBody(!showCardBody)}>
+      <FaqQuestionsCardHeader >
+        <h4 >{question}</h4>
+
         <Image src={showCardBody? '/assets/less-icon.svg' : '/assets/plus-icon.svg' } width={32} height={32} onClick={() => setShowCardBody(!showCardBody)} />
       </FaqQuestionsCardHeader>
 

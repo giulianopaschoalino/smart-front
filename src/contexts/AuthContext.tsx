@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 import Router from 'next/router'
 
-import { setCookie } from "nookies";
+import { destroyCookie, setCookie } from "nookies";
 
 import { signInRequest } from "../services/auth";
 import { api } from "../services/api";
@@ -21,6 +21,7 @@ type AuthContextType = {
   isAuthenticated: boolean;
   user: UserType;
   signIn: (data: SignInData) => Promise<void>;
+  signOut: any;
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -60,12 +61,19 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
       }
       return;
     } else {
-      return
+      return exception
     }
   }
 
+  function signOut() {
+    destroyCookie(null, 'user-name')
+    destroyCookie(null, 'user-role')
+    destroyCookie(null, 'user-id')
+    destroyCookie(null, '@smartAuth-token')
+  }
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, signIn }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   )

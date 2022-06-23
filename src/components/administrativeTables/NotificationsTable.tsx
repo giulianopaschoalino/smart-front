@@ -41,15 +41,6 @@ function createData(
   };
 }
 
-const rows = [
-  createData('Confira tal coisa - Texto da notificação', 'Copel', 'enviada'),
-  createData('Confira tal coisa - Texto da notificação', 'Copel', 'enviada'),
-  createData('Confira tal coisa - Texto da notificação', 'Copel', 'enviada'),
-  createData('Confira tal coisa - Texto da notificação', 'Copel', 'falhou'),
-  createData('Confira tal coisa - Texto da notificação', 'Copel', 'pendente'),
-  createData('Confira tal coisa - Texto da notificação', 'Copel', 'enviada'),
-];
-
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -299,7 +290,7 @@ export default function NotificationsTable({notifications, onChange}: Notificati
                         {row.title}
                       </TableCell>
                       <TableCell align="left">{'copel'}</TableCell>
-                      <TableCell align="left"><StyledStatus status={row.deleted_at===null? 'ativo' : 'inativo'}>{row.deleted_at===null? 'ativo' : 'inativo'}</StyledStatus></TableCell>
+                      <TableCell align="left"><StyledStatus status={'ativo'}>{'ativo'}</StyledStatus></TableCell>
                     </TableRow>
                   );
                 })}

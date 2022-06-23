@@ -8,23 +8,39 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect,useCallback } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import RenderIf from '../utils/renderIf';
+import Snackbar from '@mui/material/Snackbar';
 
 import LoginButton from '../components/buttons/loginButton/LoginButton';
 import { AuthContext } from '../contexts/AuthContext';
 import { api } from '../services/api';
 import { LoginContainer, LoginView } from  '../styles/layouts/login/LoginView';
 import Dashboard from './dashboard';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function Home() {
+  const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
+  const [openSnackError, setOpenSnackError] = useState<boolean>(false);
+  const [openSnackSuccessDelete, setOpenSnackSuccessDelete] = useState<boolean>(false);
+  const [openSnackErrorDelete, setOpenSnackErrorDelete] = useState<boolean>(false);
+
   const [state, setstate] = useState(false);
 
   const [values, setValues] = useState({
-    password: '',
+
+    password: null,
     showPassword: false,
   });
-  const [email, setEmail] = useState<string>()
+  const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>()
 
   const router = useRouter()
@@ -42,6 +58,7 @@ export default function Home() {
     });
   };
 
+
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -49,25 +66,77 @@ export default function Home() {
   const { signIn } = useContext(AuthContext)
 
   async function handleSignIn() {
-    await signIn({email, password})
+    if (email === "" || password === ""){
+      setOpenSnackError(true)
+    }else{
+      try {
+        await signIn({email, password}).then((res: any) => {
+          if (res.response.status === 422) {
+            setOpenSnackError(true)
+          }
+        })
+      } catch (exception){
+        console.log(exception)
+      }
+    }
   }
 
+  const handleCloseSnack = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackError(false);
+    setOpenSnackSuccess(false);
+  };
+
+  useEffect(() => {
+    setValues({
+      password: null,
+      showPassword: false,
+    });
+    setEmail("")
+  }, [rota])
+
   return (
-    <LoginView auth={rota} >
+    <LoginView auth={rota}>
       <Head>
         <title>Smart Energia</title>
       </Head>
+      <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
+        <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
+          notificação cadastrada com sucesso!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
+        <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
+          Prencha os Campos corretamente!
+        </Alert>
+      </Snackbar>
+      {/* <Snackbar open={openSnackSuccessDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
+        <Alert onClose={handleCloseSnackDelete} severity="success" sx={{ width: '100%' }}>
+          notificação excluida com sucesso!
+        </Alert>
+      </Snackbar> */}
+      {/* <Snackbar open={openSnackErrorDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
+        <Alert onClose={handleCloseSnackDelete} severity="error" sx={{ width: '100%' }}>
+          Notificação não excluida!
+        </Alert>
+      </Snackbar> */}
 
       <div>
-        <Image src='/assets/marca1.svg' width={520} height={350} />
+        <Image src='/assets/marca1.png' width={500} height={340} />
       </div>
 
       <LoginContainer>
         <h1>Bem-Vindo</h1>
         <h2>Estratégias Inteligentes em<br /> Gestão de Energia</h2>
 
-        <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }} label="Login" variant="outlined" onChange={value => {
-          setEmail(value.target.value)
+
+        <TextField id="outlined-basic"
+        sx={{ m: 1, width: '90%' }} label="Login" value={email} variant="outlined"
+        onChange={value => {
+        setEmail(value.target.value)
         }}/>
         <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>

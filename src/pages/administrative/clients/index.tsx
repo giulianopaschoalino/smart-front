@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -12,7 +11,7 @@ import BasicButton from '../../../components/buttons/basicButton/BasicButton'
 import FaqButton1 from '../../../components/buttons/faqButton/FaqButton1';
 import FaqButton2 from '../../../components/buttons/faqButton/FaqButton2';
 import Header from '../../../components/header/Header'
-import InputUpload from '../../../components/inputUplaod/inputUpload';
+import InputUploadImg from '../../../components/inputUploadImg/inputUpload';
 import { ClientsView } from '../../../styles/layouts/clients/ClientsView';
 import PageTitle from '../../../components/pageTitle/PageTitle';
 import ConfirmModal from '../../../components/modal/ConfirmModal';
@@ -21,6 +20,8 @@ import { api } from '../../../services/api';
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
 import getAPIClient from '../../../services/ssrApi';
+
+import FormData from 'form-data';
 
 const style = {
   position: 'absolute' as const,
@@ -44,6 +45,8 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export default function clients({clients, userName}) {
+  const formData = new FormData();
+
   const [client, setClient] = useState<any>({
     name: String,
     email: String,
@@ -51,6 +54,7 @@ export default function clients({clients, userName}) {
     password_confirmation: String,
     client_id: Number
   })
+  const [logo, setLogo] = useState(false);
   const [selectedClients, setSelectedClients] = useState([])
 
   const [open, setOpen] = useState(false);
@@ -60,7 +64,6 @@ export default function clients({clients, userName}) {
 
   const [openModal, setOpenModal] = useState(false)
 
-  //
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
   const [openSnackError, setOpenSnackError] = useState<boolean>(false);
   const [openSnackSuccessDelete, setOpenSnackSuccessDelete] = useState<boolean>(false);
@@ -83,16 +86,20 @@ export default function clients({clients, userName}) {
     setOpenSnackErrorDelete(false);
     setOpenSnackSuccessDelete(false);
   };
-  //
+
+  function onChange(e) {
+    setLogo(e.target.files[0])
+  }
 
   function handleCreateClient({name, email, password, password_confirmation, client_id}) {
-    api.post('/user', {
-      name,
-      email,
-      password,
-      password_confirmation,
-      client_id
-    }).then(res => {
+    formData.append('name', name)
+    formData.append('email', email)
+    formData.append('password', password)
+    formData.append('password_confirmation', password_confirmation)
+    formData.append('client_id', client_id)
+    formData.append('profile_picture', logo)
+
+    api.post('/user', formData).then(res => {
       setOpenSnackSuccess(true)
       setOpenModalInativar(false)
       window.location.reload()
@@ -114,28 +121,28 @@ export default function clients({clients, userName}) {
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
-          Usuario cadastrada com sucesso!
+          Cliente cadastrada com Sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
-          Usuario não cadastrada!
+          Cliente não cadastrado!
         </Alert>
       </Snackbar>
 
       <Snackbar open={openSnackSuccessDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
         <Alert onClose={handleCloseSnackDelete} severity="success" sx={{ width: '100%' }}>
-          Usuario excluida com sucesso!
+         Cliente excluido com sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackErrorDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
         <Alert onClose={handleCloseSnackDelete} severity="error" sx={{ width: '100%' }}>
-          Usuario não excluida!
+         Cliente não excluido!
         </Alert>
       </Snackbar>
 
       <ClientsView>
-        <Header name={userName} />
+        <Header name={userName} admin/>
         <PageTitle title='Clientes' subtitle='Clientes Smart Energia'/>
         <div className='buttons'>
         <button className='btn2' onClick={handleOpen}>Adicionar</button>
@@ -189,17 +196,19 @@ export default function clients({clients, userName}) {
             client_id: value.target.value
           })
         }} variant="outlined" />
-        <InputUpload />
+        <input type="file" onChange={onChange}/>
+        {/* <InputUpload /> */}
         <br /><br />
-      <FaqButton1  title='Cancelar' onClick={() => console.log()} />
+      <FaqButton1  title='Cancelar' onClick={() => setOpen(false)} />
       <FaqButton2  title='Salvar' onClick={() => handleCreateClient(client)}/>
       </Box>
       </Modal>
+
       <ConfirmModal open={openModalInativar} handleIsClose={(value) => {setOpenModalInativar(value)}}>
-        <PageTitle title='Excluir Cliente' subtitle='deseja realmente excluir os clientes selecionadas?'/>
+        <PageTitle title='Inativar Cliente(s)' subtitle='deseja realmente inativar os clientes selecionadas?'/>
         <ConfirmModalView>
           <BasicButton title='Confirmar' onClick={() => handleDeleteClient(selectedClients)}/>
-          <BasicButton title='Cancelar' onClick={() => setOpenModalInativar(true)}/>
+          <BasicButton title='Cancelar' onClick={() => setOpenModalInativar(false)}/>
         </ConfirmModalView>
       </ConfirmModal>
     </div>
@@ -210,7 +219,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
-
   let clients = [];
 
   await apiClient.get('/user').then(res => {

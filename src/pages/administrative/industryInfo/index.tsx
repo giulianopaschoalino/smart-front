@@ -2,10 +2,11 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import React from 'react'
-import BasicButton from '../components/buttons/basicButton/BasicButton'
-import Header from '../components/header/Header'
-import PageTitle from '../components/pageTitle/PageTitle'
-import { IndustryInfoView } from '../styles/layouts/industryInfo/IndustryInfoView'
+import BasicButton from '../../../components/buttons/basicButton/BasicButton'
+import Header from '../../../components/header/Header'
+import PageTitle from '../../../components/pageTitle/PageTitle'
+import { IndustryInfoView } from '../../../styles/layouts/industryInfo/IndustryInfoView'
+import InputUploadPdf from '../../../components/inputUploadPdf/inputUpload';
 
 export default function industryInfo({userName}: any) {
   return (
@@ -15,9 +16,12 @@ export default function industryInfo({userName}: any) {
       </Head>
       <Header name={userName} />
       <div className='title'>
-        <PageTitle title='Info Setorial' subtitle='Clique em "Baixar PDF", para fazer download do PDF' />
+        <PageTitle title='Info Setorial' subtitle='Realize o upload da última versão de info setorial' />
+        <InputUploadPdf/>
       </div>
-      <button>Baixar PDF</button>
+
+      <BasicButton onClick={() => console.log()} title='Atualizar'/>
+
     </IndustryInfoView>
   )
 }

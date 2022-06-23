@@ -28,23 +28,9 @@ export default function index({userName}: any) {
 
   return (
     <GeneralView>
-      <Header name={userName}/>
-      <PageTitle title='Sobre nós' subtitle='alterar texto de sobre nós'/>
-      <section>
-      <FormControl sx={{mr: '20px', minWidth: 180, minHeight: '80px'}}>
-        <Select
-          value={text}
-          onChange={handleChange}
-          displayEmpty
-          inputProps={{ 'aria-label': 'Without label' }}
-        >
-          <MenuItem value={0}>Sobre Nós</MenuItem>
-          <MenuItem value={10}>Copel</MenuItem>
-          <MenuItem value={20}>Cliente 1</MenuItem>
-          <MenuItem value={30}>Cliente 2</MenuItem>
-        </Select>
-      </FormControl>
-      </section>
+      <Header name={userName} admin/>
+      <PageTitle title='Sobre nós' subtitle='Alterar texto de sobre nós'/>
+      <br />
       <Editor
         onInit={(evt, editor) => editorRef.current = editor}
         initialValue='        <p>A <strong>SMART ENERGIA</strong> é uma consultoria independente especializada em Gestão de Energia Elétrica, consolidada como uma das três maiores consultorias do Brasil.
@@ -84,7 +70,6 @@ export default function index({userName}: any) {
           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         }}
       />
-      <button onClick={log}>Log editor content</button>
     </GeneralView>
   )
 }

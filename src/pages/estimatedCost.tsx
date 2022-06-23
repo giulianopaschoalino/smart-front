@@ -23,7 +23,7 @@ export default function EstimatedCost({graphData, userName}: any) {
       <section>
         <LineBarChart2 data1={graphData} data2={graphData} data3={graphData}
         dataset1="Economia (R$)" dataset2='Cativo' dataset3='Livre'
-        label={ConsumoEstimado.label} title='Custo Estimado' subtitle='' barLabel hashurado />
+        label={ConsumoEstimado.label} title='Cativo x Livre mensal' subtitle='' barLabel hashurado />
       </section>
     </EstimatedCostView>
   )

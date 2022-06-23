@@ -55,7 +55,7 @@ export default function LineChart({ title, subtitle, data1, data2, data3, data4,
         offset: -20,
         align: "start",
         font: {
-          size: 16
+          size: 12
         }
       },
       legend: {

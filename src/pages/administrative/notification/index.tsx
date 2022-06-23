@@ -41,7 +41,7 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-  overflowY: 'scroll'
+  overflowY: 'scroll',
 };
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -122,7 +122,7 @@ export default function notification({clients, notifications, userName}: any) {
       <Head>
         <title>Smart Energia - Notificações</title>
       </Head>
-      <Header name={userName}/>
+      <Header name={userName} admin/>
       <PageTitle title='Notificações' subtitle='Notificações'/>
 
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
@@ -178,7 +178,9 @@ export default function notification({clients, notifications, userName}: any) {
           }} variant="outlined" /> <br /><br />
 
             <div>
-              <FormControl>
+              <FormControl
+                sx={{ml:8}}
+              >
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
                   defaultValue="female"
@@ -217,17 +219,16 @@ export default function notification({clients, notifications, userName}: any) {
                   {option.name}
                 </li>
                 )}
-                sx={{ml:8}}
                 style={{ width: 700 }}
+                sx={{ml:8}}
                 renderInput={(params) => (
                   <TextField {...params} label="Clientes" placeholder="Selecionar clientes"/>
                   )}
               /> :
               null
             }
-
-            <FaqButton1  title='Cancelar' onClick={() => {setOpen(false)}} />
-            <FaqButton2  title='Salvar' onClick={() => {
+            <FaqButton1 title='Cancelar' onClick={() => {setOpen(false)}} />
+            <FaqButton2 title='Salvar' onClick={() => {
               handleRegisterNewNotification(notification)}}
             />
           </Box>

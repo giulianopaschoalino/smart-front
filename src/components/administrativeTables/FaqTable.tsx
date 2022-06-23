@@ -283,7 +283,7 @@ export default function FaqTable({questionData, onChange}: FaqTableInterface) {
                         {row.question}
                       </TableCell>
                       <TableCell align="left">{row.answer}</TableCell>
-                      <TableCell align="left"><StyledStatus status={row.deleted_at? 'ativo' : 'inativo'}> {row.deleted_at? 'ativo' : 'inativo'}</StyledStatus></TableCell>
+                      <TableCell align="left"><StyledStatus status={'ativo'}> {'ativo'}</StyledStatus></TableCell>
                     </TableRow>
                   );
                 })}

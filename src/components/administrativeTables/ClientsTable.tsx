@@ -12,7 +12,34 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import React, { useState, useEffect } from 'react';
 
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+
+import Modal from '@mui/material/Modal';
+
+
 import { TableView, StyledStatus } from './TableView';
+import { api } from '../../services/api';
+
+const style = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 900,
+  height: 500,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  overflowY: 'scroll'
+};
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 interface Data {
   clientCode: number,
@@ -161,6 +188,37 @@ export default function ClientTable({clients, onChange}: ClientsTableInterface) 
   const [dense, setDense] = useState<boolean>(false);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
 
+  const [openSnackError, setOpenSnackError] = useState<boolean>(false);
+
+  const [open, setOpen] = useState(false);
+  const [openModalInativar, setOpenModalInativar] = useState(false)
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const [cod_client, setCod_client] = useState()
+  const [units, setUnits] = useState([])
+
+  function getClientUnits(client_id: number) {
+    api.post('/units', {
+      "filters": [
+        {"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": client_id}
+      ],
+      "fields": ["unidade"],
+      "distinct": true
+    }).then(res => setUnits(res.data.data)).catch(res => {
+      setOpenSnackError(true)
+    })
+
+    return units
+  }
+
+  const handleCloseSnack = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackError(false);
+  };
+
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: keyof Data,
@@ -220,6 +278,11 @@ export default function ClientTable({clients, onChange}: ClientsTableInterface) 
 
   return (
     <TableView>
+      <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
+        <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
+          Não foi possivel encontrar unidades do client!
+        </Alert>
+      </Snackbar>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
           <Table
@@ -270,7 +333,10 @@ export default function ClientTable({clients, onChange}: ClientsTableInterface) 
                         Client - {row.client_id}
                       </TableCell>
                       <TableCell align="left">{row.name}</TableCell>
-                      <TableCell align="left">clique aqui para ver as unidades</TableCell>
+                      <TableCell align="left" style={{cursor: 'pointer'}} onClick={() => {
+                        setOpen(true)
+                        getClientUnits(row.client_id)
+                      }}>clique aqui para ver as unidades</TableCell>
                       <TableCell align="left"><StyledStatus status={row.deleted_at? 'inativo' : 'ativo'}> {row.deleted_at? 'inativo' : 'ativo'}</StyledStatus></TableCell>
                     </TableRow>
                   );
@@ -297,6 +363,25 @@ export default function ClientTable({clients, onChange}: ClientsTableInterface) 
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        >
+        <Box sx={style}>
+          {
+            units.map((units, index) => {
+              return <>
+                <li style={{
+                listStyle: 'none'
+              }} key={index}>{units.unidade}</li>
+              <hr />
+              </>
+            })
+          }
+        </Box>
+      </Modal>
     </TableView>
   );
 }

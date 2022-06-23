@@ -20,12 +20,14 @@ import data from '../services/dados.json'
 import getAPIClient from '../services/ssrApi';
 import { Pagination, TableView } from '../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 
-export default function ResumoOperacao({tableData, userName}: any) {
+export default function ResumoOperacao({tableData, clientsData, userName, clientMonth}: any) {
   const csvData = tableData;
 
   const [month, setMonth] = useState('');
   const [unidade, setUnidade] = useState('');
   const [tableDataState, setTableDataState] = useState<any>([]);
+
+  const monthLabels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'ago', 'set', 'out', 'nov', 'dez']
 
   const handleChangeMonth = (event: SelectChangeEvent) => {
     setMonth(event.target.value);
@@ -36,7 +38,7 @@ export default function ResumoOperacao({tableData, userName}: any) {
 
   useEffect(() => {
     if (unidade!=='' || month!==''){
-      api.post('/operation', {
+      api.post('/operation/summary', {
         "filters": [
             {"type" : "=", "field": "mes", "value": `${month}/2022`},
             {"type" : "=", "field": "dados_te.cod_smart_unidade", "value": unidade}
@@ -49,7 +51,6 @@ export default function ResumoOperacao({tableData, userName}: any) {
     } else {
       setTableDataState(tableData)
     }
-
   }, [month, unidade])
 
   return (
@@ -73,7 +74,7 @@ export default function ResumoOperacao({tableData, userName}: any) {
           >
             <MenuItem key={1} value={''}>Nenhum</MenuItem>
             {
-              tableData.map((value) => {
+              clientsData.map((value) => {
                 return <MenuItem key={1} value={value.cod_smart_unidade}>{value.cod_smart_unidade}</MenuItem>
               })
             }
@@ -90,18 +91,11 @@ export default function ResumoOperacao({tableData, userName}: any) {
             onChange={handleChangeMonth}
           >
             <MenuItem value={''}>Nenhum</MenuItem>
-            <MenuItem value={'01'}>Janeiro</MenuItem>
-            <MenuItem value={'02'}>Fevereiro</MenuItem>
-            <MenuItem value={'03'}>Março</MenuItem>
-            <MenuItem value={'04'}>Abril</MenuItem>
-            <MenuItem value={'05'}>Maio</MenuItem>
-            <MenuItem value={'06'}>Junho</MenuItem>
-            <MenuItem value={'07'}>Julho</MenuItem>
-            <MenuItem value={'08'}>Agosto</MenuItem>
-            <MenuItem value={'09'}>Setembro</MenuItem>
-            <MenuItem value={'10'}>Outubro</MenuItem>
-            <MenuItem value={'11'}>Novembro</MenuItem>
-            <MenuItem value={'12'}>Dezembro</MenuItem>
+            {
+              clientMonth.map((value) => {
+                return <MenuItem key={1} value={value.mes}>{monthLabels[parseFloat(value.mes.slice(3, 4))-1]}</MenuItem>
+              })
+            }
           </Select>
         </FormControl>
       </div>
@@ -125,8 +119,8 @@ export default function ResumoOperacao({tableData, userName}: any) {
                   <td key={index} className='tg-uulg'>{value.operacao}</td>
                   <td key={index} className='tg-gceh'>{value.montante_nf}</td>
                   <td key={index} className='tg-gceh'>{value.contraparte}</td>
-                  <td key={index} className='tg-uulg'>{value.nf_c_icms}</td>
-                  <td key={index} className='tg-gceh'>{value.preco_nf}</td>
+                  <td key={index} className='tg-uulg'>{parseFloat(value.nf_c_icms).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                  <td key={index} className='tg-gceh'>{parseFloat(value.preco_nf).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                 </tr>
               </>
             })
@@ -150,17 +144,36 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['user-name']: userName } = parseCookies(ctx)
 
   let tableData = [];
+  let clientsData = [];
+  let clientMonth = [];
 
-  await apiClient.post('/operation', {
+  await apiClient.post('/operation/summary', {
     "filters": []
   }).then(res => {
-    console.log(res.data.data)
     tableData = res.data.data
   }).catch(res => {
     console.log(res)
   })
 
-  console.log(tableData)
+  await apiClient.post('/operation', {
+    "filters": [],
+    "fields": ["cod_smart_unidade"],
+    "distinct": true
+  }).then(res => {
+    clientsData = res.data.data
+  }).catch(res => {
+    console.log(res)
+  })
+
+  await apiClient.post('/operation', {
+    "filters": [],
+    "fields": ["mes"],
+    "distinct": true
+  }).then(res => {
+    clientMonth = res.data.data
+  }).catch(res => {
+    console.log(res)
+  })
 
   if (!token) {
     return {
@@ -174,6 +187,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       tableData,
+      clientsData,
+      clientMonth,
       userName
     }
   }

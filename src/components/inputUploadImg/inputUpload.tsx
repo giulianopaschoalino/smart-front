@@ -3,7 +3,7 @@ import React,{ useState, useEffect } from 'react'
 import { InputUploadView } from './inputUploadView'
 
 
-export default function InputUpload() {
+export default function InputUploadPdf() {
   const [images, setImages] = useState([] as any);
   const [imageURLS, setImageURLs] = useState([]);
 
@@ -34,6 +34,7 @@ export default function InputUpload() {
     </div>
 
         <div className="update">
+
         <form action="">
           <div >
             <label  htmlFor="arquivo"> <p className='TitleButton'> Enviar foto de Perfil </p>   </label>

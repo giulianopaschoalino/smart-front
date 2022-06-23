@@ -5,8 +5,8 @@ export const FaqButtonView2 = styled.button`
   justify-content: center;
   align-items: center;
   margin-top: -46px;
-  margin-left: 430px;
-  width: 350px;
+  margin-left: 444px;
+  width: 320px;
   height: 45px;
   cursor: pointer;
   background: #254F7F;
@@ -15,8 +15,6 @@ export const FaqButtonView2 = styled.button`
 
   font-family: 'Poppins';
   font-size: 90%;
-
-
 
   color: #FFFFFF;
 `
