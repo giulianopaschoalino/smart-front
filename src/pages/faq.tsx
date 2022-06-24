@@ -4,6 +4,7 @@ import { parseCookies } from 'nookies'
 import React from 'react'
 import CommonQuestionsCard from '../components/faqQuestionsCard/FaqQuestionsCard'
 import Header from '../components/header/Header'
+import PageTitle from '../components/pageTitle/PageTitle'
 import { api } from '../services/api'
 import getAPIClient from '../services/ssrApi'
 import { FaqView } from '../styles/layouts/commonQuestions/FaqView'
@@ -16,8 +17,9 @@ export default function commonQuestions({faqData, userName}) {
         <title>Smart Energia - FAQ</title>
       </Head>
       <Header name={userName} />
-      <h1>Perguntas Frequentes</h1>
-      <p>Aqui estão algumas das perguntas que mais recebemos!</p>
+      <PageTitle title='Perguntas Frequentes' subtitle='Aqui estão algumas das perguntas que mais recebemos!' />
+      {/* <h1>Perguntas Frequentes</h1>
+      <p>Aqui estão algumas das perguntas que mais recebemos!</p> */}
       <section className='CommonQuestionsSection' >
       {
         faqData.map((value, index ) => {
@@ -31,6 +33,7 @@ export default function commonQuestions({faqData, userName}) {
     </FaqView>
   )
 }
+
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)

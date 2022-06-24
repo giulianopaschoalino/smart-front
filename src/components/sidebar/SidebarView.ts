@@ -80,6 +80,13 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
       cursor: pointer;
 
       padding-left: 40px;
+
+      transition: all 350ms ease-in;
+
+      :hover {
+        color: rgb(37, 79, 127);
+        border-left: 8px solid rgb(37, 79, 127);
+      }
     }
 
     .economiaDrawer {
@@ -162,6 +169,13 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     color: #f00;
 
     cursor: pointer;
+
+    transition: all 350ms ease-in;
+
+    :hover {
+      opacity: 0.9;
+      box-shadow: rgb(0, 0, 0, 0.2) 0px 2px 4px -1px;
+    }
   }
 
   @media (max-width: 1008px) {

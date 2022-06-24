@@ -47,6 +47,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   })
 
   const years = graphData.map((value) => value.ano)
+
   console.log(years)
   if (!token) {
     return {
@@ -56,7 +57,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
-
 
   return {
     props: {

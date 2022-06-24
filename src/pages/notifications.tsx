@@ -16,8 +16,7 @@ export default function Notifications({notificationData, userName}: any) {
         <title>Smart Energia - Notificações</title>
       </Head>
       <Header name={userName} />
-      <PageTitle title='Notifications' subtitle='' />
-      <p>Aqui estão as notificaões publicadas para voce!</p>
+      <PageTitle title='Notificações' subtitle='Aqui estão as notificaões publicadas para voce!' />
       <section className='CommonQuestionsSection' >
       {
         notificationData.map((value, index ) => {
