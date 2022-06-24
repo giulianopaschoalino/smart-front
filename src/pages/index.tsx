@@ -71,7 +71,7 @@ export default function Home() {
     }else{
       try {
         await signIn({email, password}).then((res: any) => {
-          if (res.response.status === 422) {
+          if (res.response.status === 422 || res.response.status === 401) {
             setOpenSnackError(true)
           }
         })
