@@ -10,6 +10,7 @@ import { IndustryInfoView } from '../styles/layouts/industryInfo/IndustryInfoVie
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { useRouter } from 'next/router'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -22,19 +23,23 @@ export default function industryInfo({userName}: any) {
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
   const [openSnackError, setOpenSnackError] = useState<boolean>(false);
 
+  const router = useRouter()
+
   const handleCloseSnack = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpenSnackError(false);
     setOpenSnackSuccess(false);
   };
 
   function handleDownloadPdf() {
     api.get('/download').then(res => {
+      router.replace(res.data.path);
+      console.log(res.data);
       setOpenSnackSuccess(true)
     }).catch(res => {
+      console.log(res)
       setOpenSnackError(true)
     })
   }
@@ -43,12 +48,12 @@ export default function industryInfo({userName}: any) {
     <IndustryInfoView>
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
-          Cliente cadastrada com Sucesso!
+          Pdf baixado Sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
-          Cliente não cadastrado!
+        Pdf não baixado!
         </Alert>
       </Snackbar>
       <Head>

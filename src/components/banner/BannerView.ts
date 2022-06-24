@@ -39,8 +39,13 @@ export const BannerView = styled.div`
 
     overflow: hidden;
 
+    text-overflow: ellipsis;
+
     p {
       font-size: 70%;
+      /* height: 43px; */
+
+      text-overflow: ellipsis;
     }
 
     * {

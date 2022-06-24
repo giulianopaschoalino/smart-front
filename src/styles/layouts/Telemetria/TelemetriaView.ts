@@ -36,8 +36,11 @@ export const TelemetriaView = styled.main`
 
   section {
     display: flex;
+
     justify-content: center;
     align-items: center;
+
+    flex-wrap: wrap;
 
     .select {
       display: flex;
@@ -45,8 +48,6 @@ export const TelemetriaView = styled.main`
       align-items: flex-start;
 
       flex-direction: column;
-
-      /* margin-top: 10px; */
     }
   }
 `;
@@ -54,16 +55,22 @@ export const TelemetriaView = styled.main`
 export const Buttons = styled.div`
   display: flex;
   justify-content: space-evenly;
-  flex-direction: row;
 
-  min-width: 14rem;
-  height: 6rem;
+  flex-wrap: wrap;
+
+  max-width: 100%;
 
   margin-top: 5rem;
 
   padding-left: 100px;
   padding-right: 100px;
 
+  @media (max-width: 942px) {
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+  }
 `;
 
 export const Uploads = styled.div`

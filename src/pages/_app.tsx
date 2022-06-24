@@ -14,6 +14,7 @@ import ForgotPassword from './forgotPassword'
 import VerifyEmail from './verifyEmail'
 
 import '../styles/globals.ts'
+import '../styles/Home.module.css'
 import '../styles/nprogress/nprogress.css'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'

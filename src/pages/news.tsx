@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link'
@@ -7,9 +8,11 @@ import React from 'react'
 import Banner from '../components/banner/Banner'
 import BasicButton from '../components/buttons/basicButton/BasicButton';
 import Header from '../components/header/Header'
+import getAPIClient from '../services/ssrApi';
 import { Button, NewsView } from '../styles/layouts/news/NewsView'
 
-export default function aboutUs({userName}: any) {
+export default function aboutUs({userName, news}: any) {
+  console.log(news)
   return (
     <NewsView>
       <Head>
@@ -46,7 +49,6 @@ export default function aboutUs({userName}: any) {
         <legend> <BasicButton title='Ver Mais...' onClick={() => console.log()}/></legend>
         </fieldset>
         </Button>
-
       </section>
 
       <a href='https://www.energiasmart.com.br/noticias/'
@@ -57,8 +59,17 @@ export default function aboutUs({userName}: any) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
+
+  let news;
+
+  await axios.get('https://www.energiasmart.com.br/noticias/feed/').then(res => {
+    news = res.data
+  }).catch(res => {
+    console.log(res)
+  })
 
   if (!token) {
     return {
@@ -71,8 +82,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      userName
+      userName,
+      news
     }
   }
 }
-

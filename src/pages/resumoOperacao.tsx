@@ -71,12 +71,23 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
 
   useEffect(() => {
     if (unidade!=='' || month!==''){
-      api.post('/operation/summary', {
+      api.post('/operation/summary', month && !unidade? {
         "filters": [
-            {"type" : "=", "field": "mes", "value": `${month}/2022`},
-            {"type" : "=", "field": "dados_te.cod_smart_unidade", "value": unidade}
-          ]
-      }).then(res => {
+          {"type" : "=", "field": "mes", "value": month}
+        ]
+      } :
+      !month && unidade? {
+        "filters": [
+          {"type" : "=", "field": "dados_te.cod_smart_unidade", "value": unidade}
+        ]
+      } :
+      month && unidade? {
+        "filters": [
+          {"type" : "=", "field": "mes", "value": month},
+          {"type" : "=", "field": "dados_te.cod_smart_unidade", "value": unidade}
+        ]
+      } : {}
+      ).then(res => {
         setTableDataState(res.data.data)
       }).catch(res => {
         console.log(res)
@@ -84,6 +95,8 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
     } else {
       setTableDataState(tableData)
     }
+
+    console.log(month)
   }, [month, unidade])
 
   return (
@@ -96,7 +109,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
 
       <h3>Seletor Mês</h3>
       <div className='select'>
-        <FormControl fullWidth  >
+        <FormControl fullWidth>
           <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -114,7 +127,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
           </Select>
         </FormControl>
 
-        <FormControl fullWidth sx={{ml:1}} >
+        <FormControl fullWidth sx={{mt: 2}}>
           <InputLabel id="demo-simple-select-label">Mês</InputLabel>
           <Select
             labelId="demo-simple-select-label"

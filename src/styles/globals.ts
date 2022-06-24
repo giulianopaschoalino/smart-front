@@ -1,6 +1,21 @@
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
+  body::-webkit-scrollbar {
+    width: 15px;
+  }
+  body::-webkit-scrollbar-track {
+    background-color: #EFEFEF;
+  }
+  body::-webkit-scrollbar-thumb {
+    background-color: rgb(37,79,127);
+    border: 3px solid #EFEFEF;
+    border-radius: 10px;
+  }
+  body::-webkit-scrollbar-thumb:hover {
+    background-color: #1d3e63;
+  }
+
   body {
     margin: 0;
     padding: 0;

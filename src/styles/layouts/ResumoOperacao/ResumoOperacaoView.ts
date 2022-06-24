@@ -19,6 +19,7 @@ export const TableView = styled.div`
 
   .select{
     display: flex;
+    flex-direction: column;
 
     margin-bottom: 25px;
 
