@@ -23,8 +23,10 @@ export const BannerView = styled.div`
   }
 
   h1 {
-    font-size: 18px;
+    font-size: 1.3em;
+
   }
+
 
   .text {
     position: relative;
@@ -42,7 +44,7 @@ export const BannerView = styled.div`
     text-overflow: ellipsis;
 
     p {
-      font-size: 70%;
+      font-size: 19px;
       /* height: 43px; */
 
       text-overflow: ellipsis;

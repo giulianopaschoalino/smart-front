@@ -8,9 +8,12 @@ import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import React, { useRef, useState } from 'react'
 
+import BasicButton from '../../components/buttons/basicButton/BasicButton';
 import Header from '../../components/header/Header';
 import PageTitle from '../../components/pageTitle/PageTitle';
+import { api } from '../../services/api';
 import { GeneralView } from '../../styles/layouts/general/GeneralView'
+
 
 export default function index({userName}: any) {
   const editorRef = useRef(null);
@@ -22,14 +25,28 @@ export default function index({userName}: any) {
     }
   };
 
+
+
   const handleChange = (event: SelectChangeEvent) => {
     setText(event.target.value);
   };
+
+
+  async function handleRegisterAboutUs() {
+    await api.post('/aboutUs', {
+      about: editorRef.current.value
+    }).then(res => {
+      console.log(res)
+
+    }).catch(res => console.log(res))
+  }
 
   return (
     <GeneralView>
       <Header name={userName} admin/>
       <PageTitle title='Sobre nós' subtitle='Alterar texto de sobre nós'/>
+
+      <BasicButton onClick={() => handleRegisterAboutUs(editorRef)} title='Enviar'/>
       <br />
       <Editor
         onInit={(evt, editor) => editorRef.current = editor}
@@ -70,6 +87,8 @@ export default function index({userName}: any) {
           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         }}
       />
+
+
     </GeneralView>
   )
 }

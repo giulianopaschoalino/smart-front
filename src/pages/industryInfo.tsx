@@ -35,7 +35,7 @@ export default function industryInfo({userName}: any) {
 
   function handleDownloadPdf() {
     api.get('/download').then(res => {
-      router.replace(res.data.path);
+      window.open(res.data.path);
       console.log(res.data);
       setOpenSnackSuccess(true)
     }).catch(res => {
