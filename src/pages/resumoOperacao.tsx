@@ -71,12 +71,23 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
 
   useEffect(() => {
     if (unidade!=='' || month!==''){
-      api.post('/operation/summary', {
+      api.post('/operation/summary', month && !unidade? {
         "filters": [
-            {"type" : "=", "field": "mes", "value": `${month}/2022`},
-            {"type" : "=", "field": "dados_te.cod_smart_unidade", "value": unidade}
-          ]
-      }).then(res => {
+          {"type" : "=", "field": "mes", "value": month}
+        ]
+      } :
+      !month && unidade? {
+        "filters": [
+          {"type" : "=", "field": "dados_te.cod_smart_unidade", "value": unidade}
+        ]
+      } :
+      month && unidade? {
+        "filters": [
+          {"type" : "=", "field": "mes", "value": month},
+          {"type" : "=", "field": "dados_te.cod_smart_unidade", "value": unidade}
+        ]
+      } : {}
+      ).then(res => {
         setTableDataState(res.data.data)
       }).catch(res => {
         console.log(res)
@@ -128,7 +139,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
             <MenuItem value={''}>Nenhum</MenuItem>
             {
               clientMonth.map((value) => {
-                return <MenuItem key={1} value={value.mes.slice(2, 4)}>{monthLabels[parseFloat(value.mes.slice(3, 4))-1]}</MenuItem>
+                return <MenuItem key={1} value={value.mes}>{monthLabels[parseFloat(value.mes.slice(3, 4))-1]}</MenuItem>
               })
             }
           </Select>

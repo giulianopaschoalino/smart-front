@@ -9,19 +9,21 @@ export const IndustryInfoView = styled.main`
   .title {
     margin-bottom: 50px;
   }
-button{
-  height:60px;
-  width: 22%;
-  margin-top: 12rem;
-  cursor: pointer;
-  background: #254F7F;
-  border-radius: 8px;
-  border-style: none;
 
-  font-family: 'Poppins';
-  font-size: 90%;
+  button{
+    height: 70px;
+    width: 30%;
 
+    cursor: pointer;
 
-  color: #FFFFFF;
-}
+    background: #254F7F;
+
+    border-radius: 8px;
+    border-style: none;
+
+    font-family: 'Poppins';
+    font-size: 90%;
+
+    color: #FFFFFF;
+  }
 `

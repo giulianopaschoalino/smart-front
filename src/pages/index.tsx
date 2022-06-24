@@ -58,7 +58,6 @@ export default function Home() {
     });
   };
 
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -113,16 +112,6 @@ export default function Home() {
           Prencha os Campos corretamente!
         </Alert>
       </Snackbar>
-      {/* <Snackbar open={openSnackSuccessDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
-        <Alert onClose={handleCloseSnackDelete} severity="success" sx={{ width: '100%' }}>
-          notificação excluida com sucesso!
-        </Alert>
-      </Snackbar> */}
-      {/* <Snackbar open={openSnackErrorDelete} autoHideDuration={4000} onClose={handleCloseSnackDelete}>
-        <Alert onClose={handleCloseSnackDelete} severity="error" sx={{ width: '100%' }}>
-          Notificação não excluida!
-        </Alert>
-      </Snackbar> */}
 
       <div>
         <Image src='/assets/marca1.png' width={500} height={340} />
@@ -136,7 +125,7 @@ export default function Home() {
         <TextField id="outlined-basic"
         sx={{ m: 1, width: '90%' }} label="Login" value={email} variant="outlined"
         onChange={value => {
-        setEmail(value.target.value)
+        setEmail(value.target.value.toLowerCase())
         }}/>
         <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>

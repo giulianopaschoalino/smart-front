@@ -173,10 +173,10 @@ export default function clients({clients, userName}) {
             name: value.target.value
           })
         }} variant="outlined" />
-        <TextField id="outlined-basic" label="E-mail/Usuário" sx={{width:350, ml:8}} onChange={(value) => {
+        <TextField id="outlined-basic" label="E-mail/Usuário" value={client.email} sx={{width:350, ml:8}} onChange={(value) => {
           setClient({
             ...client,
-            email: value.target.value
+            email: value.target.value.toLowerCase()
           })
         }} variant="outlined" />
         <TextField id="outlined-basic" label="Senha" sx={{width:350, ml:5, mt:2}} onChange={(value) => {

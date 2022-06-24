@@ -9,7 +9,9 @@ export const GradientButtonView = styled.button`
   border-radius: 2px;
 
   width: 30%;
+  min-width: 240px;
   height: 110px;
+  min-height: 110px;
   margin-bottom: 25px;
 
   font-family: 'Poppins';
