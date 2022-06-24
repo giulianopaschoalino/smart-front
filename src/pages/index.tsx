@@ -139,7 +139,7 @@ export default function Home() {
         setEmail(value.target.value)
         }}/>
         <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+          <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
             type={values.showPassword ? 'text' : 'password'}
