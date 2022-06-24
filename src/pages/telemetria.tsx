@@ -1,5 +1,5 @@
-import React from 'react';
-import { useRouter } from 'next/router'
+import React, { useState } from 'react';
+import router, { useRouter } from 'next/router'
 
 import Banner from '../components/banner/Banner';
 import { TelemetriaView, Buttons} from '../styles/layouts/Telemetria/TelemetriaView';
@@ -18,16 +18,15 @@ import RenderIf from '../utils/renderIf';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 
-
-
-
 export default function Telemetria({userName}: any) {
-  const [unity, setUnity] = React.useState('');
-  const [startDate, setStartDate] = React.useState('');
-  const [endDate, setEndDate] = React.useState('');
-  const [discretization, setDiscretization] = React.useState('');
+  const [unity, setUnity] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [discretization, setDiscretization] = useState('');
 
-  const [showChart, setShowChart] = React.useState(false);
+  const [date, setDate] = useState('');
+
+  const [showChart, setShowChart] = useState(false);
 
   const handleChange = (event: SelectChangeEvent) => {
     // setAge(event.target.value);
@@ -72,50 +71,13 @@ export default function Telemetria({userName}: any) {
 
         <div className='select'>
           <p className='title' >Data inicial</p>
-          <FormControl sx={{ m: 1, minWidth: 120, width: 200 }} size="small">
-            <InputLabel id="demo-select-small">Data Inicial</InputLabel>
-            <Select
-              labelId="demo-select-small"
-              id="demo-select-small"
-              value={startDate}
-              label="Unidade"
-              onChange={value => setStartDate(value.target.value)}
-              fullWidth
-            >
-              <MenuItem value="">
-                <em>Nenhum</em>
-              </MenuItem>
-              <MenuItem value={10}>20/05/2022</MenuItem>
-              <MenuItem value={20}>10/06/2022</MenuItem>
-              <MenuItem value={30}>05/06/2021</MenuItem>
-              <MenuItem value={30}>05/06/2021</MenuItem>
-              <MenuItem value={30}>05/06/2021</MenuItem>
-            </Select>
-          </FormControl>
+          <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={startDate} onChange={(value) => setStartDate(value.target.value)}/>
         </div>
 
         <div className='select'>
-          <p className='title' >Data Final</p>
-          <FormControl sx={{ m: 1, minWidth: 120, width: 200 }} size="small">
-            <InputLabel id="demo-select-small">Data Final</InputLabel>
-            <Select
-              labelId="demo-select-small"
-              id="demo-select-small"
-              value={endDate}
-              label="Unidade"
-              onChange={value => setEndDate(value.target.value)}
-              fullWidth
-            >
-              <MenuItem value="">
-                <em>Nenhum</em>
-              </MenuItem>
-              <MenuItem value={10}>20/05/2022</MenuItem>
-              <MenuItem value={20}>10/06/2022</MenuItem>
-              <MenuItem value={30}>05/06/2021</MenuItem>
-              <MenuItem value={30}>05/06/2021</MenuItem>
-              <MenuItem value={30}>05/06/2021</MenuItem>
-            </Select>
-          </FormControl>
+        <p className='title' >Data final</p>
+
+          <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={endDate} onChange={(value) => setEndDate(value.target.value)}/>
         </div>
 
         <div className='select'>
@@ -133,10 +95,6 @@ export default function Telemetria({userName}: any) {
               <MenuItem value="">
                 <em>Nenhum</em>
               </MenuItem>
-              <MenuItem value="">07/09/2021</MenuItem>
-              <MenuItem value={10}>Filial 3</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -147,7 +105,12 @@ export default function Telemetria({userName}: any) {
       </RenderIf>
 
       <Buttons>
-        <GradientButton title='GRÁFICO' description='Gerar gráficos com os dados selecionados' orange link />
+        <GradientButton title='GRÁFICO' description='Gerar gráficos com os dados selecionados' orange onClick={() => router.replace('/chartTelemetry', { query: {
+          startDate,
+          endDate,
+          discretization
+        }})}/>
+        <GradientButton title='GRÁFICO' description='Gerar gráficos com os dados selecionados' orange onClick={() => router.replace('/chartTelemetry')}/>
         <GradientButton title='DOWNLOADS' description='DADOS BRUTOS SELECIONADOS' purple />
         <GradientButton title='DADOS' description='hORÁRIOS DO MÊS ATUAL' onClick={() => setShowChart(!showChart)} green />
       </Buttons>

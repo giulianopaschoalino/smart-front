@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SingleBar } from '../components/graph/SingleBar'
 import { ChatTelemetryView } from '../styles/layouts/ChatTelemetry/ChatTelemetryView'
-import { useRouter } from 'next/router'
+// import router, { useRouter } from 'next/router'
 
 import { FatorPotencia } from '../services/fatorPotencia'
 import { ConsumoDecretizadoBar } from '../services/consumoDiscretizadoBar'
@@ -18,6 +18,12 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
+import getAPIClient from '../services/ssrApi'
+import { api } from '../services/api'
+import FatorPotenciaChart from '../components/graph/fatorPotenciaChart'
+import { DemRegXDemConChart } from '../components/graph/demRegXDemConChart'
+import { DiscretizedConsumptionChart } from '../components/graph/DiscretizedConsumptionChart'
+import DiscretizedConsumptionChartLine from '../components/graph/DiscretizedConsumptionChartLine'
 
 const style = {
   display: 'flex',
@@ -45,6 +51,65 @@ export default function chartTelemetry({userName}) {
   const [openDemandaContratada, setOpenDemandaContratada] = useState(false);
   const handleCloseDemandaContratada = () => setOpenDemandaContratada(false);
 
+  const [fatorPotenciaData, setFatorPotenciaData] = useState([]);
+  const [demRegXDemCon, setDemRegXDemCon] = useState([]);
+  const [discretizedConsumptionData, setDiscretizedConsumptionData] = useState([]);
+  const [discretizedConsumptionDataReativa, setDiscretizedConsumptionDataReativa] = useState([]);
+
+  const { ['user-cod_client']: cod_client } = parseCookies()
+
+  async function getChartsData() {
+    await api.post('/telemetry/powerFactor', {
+      "filters": [
+        {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
+        {"type" : "between", "field": "dia_num", "value": ["2022-01-03", "2022-01-03"]}
+      ]
+    }).then(res => {
+      setFatorPotenciaData(res.data.data)
+    }).catch(res => {
+      console.log(res)
+    })
+
+    await api.post('/telemetry/demand', {
+      "filters": [
+        {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
+        {"type" : "between", "field": "dia_num", "value": ["2022-01-03", "2022-01-03"]}
+      ]
+    }).then(res => {
+      setDemRegXDemCon(res.data.data)
+    }).catch(res => {
+      console.log(res)
+    })
+
+    await api.post('/telemetry/discretization', {
+      "type": "5_min",
+      "filters": [
+          {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
+          {"type" : "between", "field": "dia_num", "value": ["2022-01-03", "2022-01-03"]}
+        ]
+    }).then(res => {
+      setDiscretizedConsumptionData(res.data.data)
+    }).catch(res => {
+      console.log(res)
+    })
+
+    await api.post('/telemetry/discretization', {
+      "type": "5_min",
+      "filters": [
+          {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
+          {"type" : "between", "field": "dia_num", "value": ["2022-01-03", "2022-01-03"]}
+        ]
+    }).then(res => {
+      setDiscretizedConsumptionDataReativa(res.data.data)
+    }).catch(res => {
+      console.log(res)
+    })
+  }
+
+  useEffect(() => {
+    getChartsData()
+  }, [])
+
   return (
     <ChatTelemetryView>
       <Head>
@@ -54,7 +119,7 @@ export default function chartTelemetry({userName}) {
       <PageTitle title='Telemetria - Graficos' subtitle='Gráficos' />
       <section className='chartContainer'>
         <div onClick={() => setOpenFatorPotencia(true)}>
-          <LineChart title='Fator de Potencia' subtitle='' data1={FatorPotencia.data} data2={FatorPotencia.data2} dataset1='Fator de Potencia' dataset2='Fator ref.' label={FatorPotencia.label1} />
+          <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData} data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={fatorPotenciaData.map(value => value.hora)} />
         </div>
         <Modal
           open={openFatorPotencia}
@@ -63,12 +128,12 @@ export default function chartTelemetry({userName}) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <LineChart title='Fator de Potencia' subtitle='' data1={FatorPotencia.data} data2={FatorPotencia.data4} data3={[]} data4={[]} dataset1='Fator de Potencia' label={FatorPotencia.label1} />
+          <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData} data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={FatorPotencia.label1} />
           </Box>
         </Modal>
 
         <div onClick={() => setOpenConsumoDiscretizado1(true)}>
-          <LineChart title='Consumo discretizado em 1 hora' subtitle='' data1={ConsumoDecretizadoLine.data} data2={[]} data3={[]} data4={[]} dataset1='Demanda registrada' label={ConsumoDecretizadoLine.label1} />
+          <DiscretizedConsumptionChartLine title='Consumo discretizado em 1 hora' subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada' label={discretizedConsumptionDataReativa.map(data => parseFloat(data.reativa).toFixed(3))} />
         </div>
         <Modal
           open={openConsumoDiscretizado1}
@@ -77,12 +142,12 @@ export default function chartTelemetry({userName}) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <LineChart title='Consumo discretizado em 1 hora' subtitle='' data1={ConsumoDecretizadoLine.data} data2={[]} data3={[]} data4={[]} dataset1='Demanda registrada' label={ConsumoDecretizadoLine.label1} />
+            <DiscretizedConsumptionChartLine title='Consumo discretizado em 1 hora' subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada' label={discretizedConsumptionDataReativa.map(data => data.reativa)} />
           </Box>
         </Modal>
 
         <div onClick={() => setOpenConsumoDiscretizado2(true)}>
-          <SingleBar title='Consumo discretizado em 1 hora' subtitle='' dataProps={ConsumoDecretizadoBar.data} label={ConsumoDecretizadoBar.label} dataset={'Consumo'} dataset1='Estimado' month/>
+          <DiscretizedConsumptionChart title='Consumo discretizado em 5 minutos' subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
         </div>
         <Modal
           open={openConsumoDiscretizado2}
@@ -96,7 +161,7 @@ export default function chartTelemetry({userName}) {
         </Modal>
 
         <div onClick={() => setOpenDemandaContratada(true)}>
-          <LineBarChart data1={ConsumoDecretizadoLine.data1} data3={ConsumoDecretizadoLine.data} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'} label={ConsumoDecretizadoLine.label1} title='Demanda Contratada X Registrada' subtitle='' red/>
+          <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'} label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
         </div>
         <Modal
           open={openDemandaContratada}
@@ -105,7 +170,7 @@ export default function chartTelemetry({userName}) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <LineBarChart data1={ConsumoDecretizadoLine.data1} data3={ConsumoDecretizadoLine.data} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'2021'} label={ConsumoDecretizadoLine.label1} title='Demanda Contratada X Registrada' subtitle='' red/>
+            <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'} label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
           </Box>
         </Modal>
       </section>
@@ -114,8 +179,26 @@ export default function chartTelemetry({userName}) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
+
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
+  const { ['user-cod_client']: cod_client } = parseCookies(ctx)
+
+  const fatorPotenciaChart = []
+
+  console.log('olha os query ai', ctx.query)
+
+  // await apiClient.post('/telemetry/powerFactor', {
+	// 	"filters": [
+	// 		{"type" : "=", "field": "med_5min.ponto", "value": cod_client},
+	// 		{"type" : "between", "field": "dia_num", "value": ["2022-01-03", "2022-01-03"]}
+	// 	]
+  // }).then(res => {
+  //   fatorPotenciaChart = res.data
+  // }).catch(res => {
+  //   console.log(res)
+  // })
 
   if (!token) {
     return {
@@ -128,8 +211,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      userName
+      userName,
+      fatorPotenciaChart
     }
   }
 }
-

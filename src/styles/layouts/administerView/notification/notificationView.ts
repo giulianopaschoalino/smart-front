@@ -77,7 +77,21 @@ export const NotificationView = styled.nav`
     margin-left: 16px;
   }
 
-
-
+  .MuiBox-root .css-4y2i0o {
+    :-webkit-scrollbar {
+      width: 15px!important;
+    }
+    :-webkit-scrollbar-track {
+      background-color: #EFEFEF!important;
+    }
+    :-webkit-scrollbar-thumb {
+      background-color: rgb(37,79,127)!important;
+      border: 3px solid #EFEFEF!important;
+      border-radius: 10px!important
+    }
+    :-webkit-scrollbar-thumb:hover {
+      background-color: #1d3e63!important;
+    }
+  }
 
 `

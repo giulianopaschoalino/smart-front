@@ -127,6 +127,8 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
       return 'dullRed'
   }
 
+  const dateFormated = new Date()
+
   useEffect(() => {
     getDataByHour()
     getDataByDay()
@@ -174,7 +176,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
                   if (index === 0) {
                     return <>
                       <tr>
-                        <td className='tg-gceh'>Max</td>
+                        <td className='tg-gceh'>Máximo</td>
                         <td className='tg-uulg'>{parseFloat(data.nordeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                         <td className='tg-gceh'>{parseFloat(data.norte_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                         <td className='tg-gceh'>{parseFloat(data.sudeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
@@ -184,7 +186,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
                   } else if (index===1) {
                     return <>
                       <tr>
-                        <td className='tg-gceh'>Min</td>
+                        <td className='tg-gceh'>Mínimo</td>
                         <td className='tg-uulg'>{parseFloat(data.nordeste_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                         <td className='tg-gceh'>{parseFloat(data.norte_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                         <td className='tg-gceh'>{parseFloat(data.sudeste_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
@@ -288,7 +290,8 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
           </section>
           <LineChart data1={nordeste} data2={norte} data3={sudeste} data4={sul}
           dataset1='NORDESTE' dataset2='NORTE' dataset3='SUDESTE' dataset4='SUL'
-          title={`Período - ${date}`}
+          title={new Date(date).toLocaleString('pt-br').split(" ")[0]!='Invalid' && new Date(date).toLocaleString('pt-br').split(" ")[0]!='NaN'
+          ? 'Período - ' +  new Date(date).toLocaleString('pt-br').split(" ")[0] : 'Período - '}
           subtitle='' label={['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24']} />
         </PldGraphView>
       </RenderIf>

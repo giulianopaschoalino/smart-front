@@ -1,12 +1,9 @@
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import TextField from '@mui/material/TextField';
+import { SelectChangeEvent } from '@mui/material/Select';
 import { Editor } from '@tinymce/tinymce-react'
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import React, { useRef, useState } from 'react'
+import BasicButton from '../../components/buttons/basicButton/BasicButton';
 
 import Header from '../../components/header/Header';
 import PageTitle from '../../components/pageTitle/PageTitle';
@@ -30,7 +27,9 @@ export default function index({userName}: any) {
     <GeneralView>
       <Header name={userName} admin/>
       <PageTitle title='Sobre nós' subtitle='Alterar texto de sobre nós'/>
-      <br />
+      <div style={{width: '100%', display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', marginTop: '30px', marginBottom: '10px'}}>
+        <BasicButton title='Salvar Texto' onClick={() => console.log()}/>
+      </div>
       <Editor
         onInit={(evt, editor) => editorRef.current = editor}
         initialValue='        <p>A <strong>SMART ENERGIA</strong> é uma consultoria independente especializada em Gestão de Energia Elétrica, consolidada como uma das três maiores consultorias do Brasil.
