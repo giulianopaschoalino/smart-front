@@ -105,9 +105,9 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
         <title>Smart Energia - Resumo de Operação</title>
       </Head>
       <Header name={userName} />
-      <PageTitle title='Resumo de Operaçoes' subtitle='Operações detalhadas' />
+      <PageTitle title='Resumo de Operações' subtitle='Operações detalhadas' />
 
-      <h3>Seletor Mês</h3>
+      <h3>Filtrar por Unidade e/ou Mês</h3>
       <div className='select'>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>

@@ -8,8 +8,11 @@ import PageTitle from '../../../components/pageTitle/PageTitle'
 import { IndustryInfoView } from '../../../styles/layouts/industryInfo/IndustryInfoView'
 import InputUploadPdf from '../../../components/inputUploadPdf/inputUpload';
 import { api } from '../../../services/api'
-
+import { Viewer } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css';
 import FormData from 'form-data';
+
+
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
@@ -23,12 +26,12 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 export default function industryInfo({userName}: any) {
-  const formData = new FormData();
+  const [url, setUrl] = React.useState('');
 
-  const [pdf, setPdf] = useState<any>();
-  function onChange(e) {
-    setPdf(e.target.files[0])
-  }
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
+      files.length > 0 && setUrl(URL.createObjectURL(files[0]));
+  };
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
   const [openSnackError, setOpenSnackError] = useState<boolean>(false);
@@ -75,13 +78,23 @@ export default function industryInfo({userName}: any) {
           <form action="">
             <div className='testess'>
               <label  htmlFor="arquivo"> <p className='TitleButton'> Enviar PDF </p>   </label>
-              <input  type="file" name='arquivo' id='arquivo' onChange={onChange} />
+              {/* <input  type="file" name='arquivo' id='arquivo' onChange={onChange} /> */}
+              <input type="file" name='arquivo' id='arquivo' accept=".pdf" onChange={onChange} />
             </div>
           </form>
           </div>
         </InputUploadView>
         {/* <InputUploadPdf/> */}
       </div>
+
+      <div className="update">
+          <form action="">
+            <div className='testess'>
+            <label  htmlFor="arquivo"> <p className='TitleButton'> Enviar PDF </p>   </label>
+            <input type="file" accept=".pdf" onChange={onChange} />
+            </div>
+          </form>
+          </div>
 
       <BasicButton onClick={() => handleCreateClient()} title='Atualizar'/>
 

@@ -10,6 +10,7 @@ import { parseCookies } from 'nookies';
 import React, { useEffect, useState } from 'react'
 
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
+import { BasicButtonView } from '../../components/buttons/basicButton/BasicButtonView';
 import { LineBarChart } from '../../components/graph/LineBarChart';
 import LineChart from '../../components/graph/LineChart';
 import Header from '../../components/header/Header'
@@ -208,7 +209,11 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
               }
             </tbody>
           </table>
+          <div className='btnDownload'>
+          <BasicButton onClick={''} title='Download'/>
+          </div>
           <section>
+
             <article onClick={() => setPage('perMouth')}>
               <p>Valores Diários</p>
             </article>

@@ -4,10 +4,11 @@ import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import React, { useRef, useState } from 'react'
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
-
 import Header from '../../components/header/Header';
 import PageTitle from '../../components/pageTitle/PageTitle';
+import { api } from '../../services/api';
 import { GeneralView } from '../../styles/layouts/general/GeneralView'
+
 
 export default function index({userName}: any) {
   const editorRef = useRef(null);
@@ -23,13 +24,24 @@ export default function index({userName}: any) {
     setText(event.target.value);
   };
 
+  async function handleRegisterAboutUs() {
+    await api.post('/aboutUs', {
+      about: editorRef.current.value
+    }).then(res => {
+      console.log(res)
+
+    }).catch(res => console.log(res))
+  }
+
   return (
     <GeneralView>
       <Header name={userName} admin/>
       <PageTitle title='Sobre nós' subtitle='Alterar texto de sobre nós'/>
       <div style={{width: '100%', display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', marginTop: '30px', marginBottom: '10px'}}>
-        <BasicButton title='Salvar Texto' onClick={() => console.log()}/>
+        <BasicButton title='Salvar Texto' onClick={() => handleRegisterAboutUs()}/>
       </div>
+
+      <br />
       <Editor
         onInit={(evt, editor) => editorRef.current = editor}
         initialValue='        <p>A <strong>SMART ENERGIA</strong> é uma consultoria independente especializada em Gestão de Energia Elétrica, consolidada como uma das três maiores consultorias do Brasil.
@@ -69,6 +81,8 @@ export default function index({userName}: any) {
           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         }}
       />
+
+
     </GeneralView>
   )
 }
