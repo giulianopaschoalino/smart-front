@@ -67,7 +67,7 @@ export default function Sidebar() {
             <Link href='/administrative/general'><li className={router.pathname=='/administrative/general'? 'actualPath' : null} ><Image src='/assets/sidebar/aboutUs.svg' width={25} height={25} />{'Sobre Nós'}</li></Link>
             <Link href='/administrative/faq'><li className={router.pathname=='/administrative/faq' ? 'actualPath' : null } ><Image src='/assets/sidebar/saqIcon.svg' width={25} height={25} />{'FAQ >'}</li></Link>
             <Link href='/administrative/notification'><li className={router.pathname=='/administrative/notification'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificações >'}</li></Link>
-            <Link href='/administrative/industryInfo'><li className={router.pathname=='/administrative/general'? 'actualPath' : null} ><Image src='/assets/sidebar/aboutUs.svg' width={25} height={25} />{'Info Setorial'}</li></Link>
+            <Link href='/administrative/industryInfo'><li className={router.pathname=='/administrative/industryInfo'? 'actualPath' : null} ><Image src='/assets/sidebar/aboutUs.svg' width={25} height={25} />{'Info Setorial'}</li></Link>
             <button onClick={handleOpen}><Image src='/assets/logout.svg' width={25} height={25} />{'Sair'}</button>
             <Modal
             open={open}
@@ -79,7 +79,7 @@ export default function Sidebar() {
               <Typography id="modal-modal-title" variant="h6" component="h2">
                 Deseja realmente sair ?
               </Typography>
-              <Link href='/'><Button variant="contained"  sx={{mt:5}}>Sim</Button></Link>
+              <Link href='/'><Button variant="contained" sx={{mt:5}} onClick={() => signOut()}>Sim</Button></Link>
               <Button variant="contained" onClick={handleClose} color="error" sx={{mt:5 ,ml:1}}>Não</Button>
             </Box>
           </Modal>
@@ -90,6 +90,7 @@ export default function Sidebar() {
           </aside>
         </SidebarView>
       </RenderIf>
+
       <RenderIf isTrue={role === '2'}>
         <SidebarView economiaDrawer={economiaDrawer} modalOpen={viewModal} >
           <div className='hamburger' onClick={() => setViewModal(!viewModal)} >

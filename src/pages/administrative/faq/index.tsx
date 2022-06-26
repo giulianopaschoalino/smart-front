@@ -66,7 +66,6 @@ export default function Sidebar({faqData, userName} : any ) {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpenSnackError(false);
     setOpenSnackSuccess(false);
   };
@@ -76,14 +75,13 @@ export default function Sidebar({faqData, userName} : any ) {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpenSnackErrorDelete(false);
     setOpenSnackSuccessDelete(false);
   };
 
   async function handleDeleteNotification(id: any) {
     await id.map((value) => {
-      api.delete(`/faq/${value.id}`).then(res => {
+      api.delete(`/faq/${value}`).then(res => {
         setOpenSnackSuccessDelete(true)
         setOpenModalInativar(false)
         window.location.reload()

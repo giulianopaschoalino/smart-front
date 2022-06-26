@@ -1,13 +1,8 @@
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import TextField from '@mui/material/TextField';
+import { SelectChangeEvent } from '@mui/material/Select';
 import { Editor } from '@tinymce/tinymce-react'
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import React, { useRef, useState } from 'react'
-
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
 import Header from '../../components/header/Header';
 import PageTitle from '../../components/pageTitle/PageTitle';
@@ -24,9 +19,11 @@ export default function index({userName}: any) {
       console.log(editorRef.current.getContent());
     }
   };
+
   const handleChange = (event: SelectChangeEvent) => {
     setText(event.target.value);
   };
+
   async function handleRegisterAboutUs() {
     await api.post('/aboutUs', {
       about: editorRef.current.value
@@ -39,8 +36,10 @@ export default function index({userName}: any) {
     <GeneralView>
       <Header name={userName} admin/>
       <PageTitle title='Sobre nós' subtitle='Alterar texto de sobre nós'/>
+      <div style={{width: '100%', display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', marginTop: '30px', marginBottom: '10px'}}>
+        <BasicButton title='Salvar Texto' onClick={() => handleRegisterAboutUs()}/>
+      </div>
 
-      <BasicButton onClick={() => handleRegisterAboutUs(editorRef)} title='Enviar'/>
       <br />
       <Editor
         onInit={(evt, editor) => editorRef.current = editor}

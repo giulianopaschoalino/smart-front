@@ -12,6 +12,21 @@ export const TelemetriaView = styled.main`
     margin: 0 0 0 10px;
   }
 
+  input {
+    width: 15rem;
+    height: 2.5rem;
+
+    padding: 14px;
+
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+
+    border-radius: 6px;
+    border: solid gray 1px;
+
+    background-color: #F9F9F9;
+  }
+
   span {
     font-family: 'Inter';
     font-style: normal;

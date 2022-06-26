@@ -29,7 +29,7 @@ interface SingleBarInterface{
   dataset1?: string,
 }
 
-export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1, barLabel, year, month }: SingleBarInterface) {
+export function DiscretizedConsumptionChart({ title, subtitle, dataProps, label, dataset, barLabel, year, month }: SingleBarInterface) {
   const currentTime = new Date();
 
   const options: object = {
@@ -78,14 +78,9 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, dataset1
     datasets: [
       {
         label: dataset,
-        data: dataProps.map((value, index) => {
-          return parseFloat(value.economia_acumulada).toFixed(2)
-        }),
-        backgroundColor: (value, ctx) => {
-          return dataProps[value.dataIndex]?.dad_estimado == false ? '#255488' : '#C2d5fb'
-        },
+        data: dataProps.map(value => value.consumo),
+        backgroundColor: '#255488'
       },
-
     ],
   }
 
