@@ -24,20 +24,14 @@ export default function index({userName}: any) {
       console.log(editorRef.current.getContent());
     }
   };
-
-
-
   const handleChange = (event: SelectChangeEvent) => {
     setText(event.target.value);
   };
-
-
   async function handleRegisterAboutUs() {
     await api.post('/aboutUs', {
       about: editorRef.current.value
     }).then(res => {
       console.log(res)
-
     }).catch(res => console.log(res))
   }
 
