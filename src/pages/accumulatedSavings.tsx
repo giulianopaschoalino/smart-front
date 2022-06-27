@@ -22,13 +22,13 @@ export default function AccumulatedSavings({graphData, years, userName}: any) {
       <PageTitle title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada mensal (Valores em R$ mil)' />
       <section>
         <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$ mil)' dataset='Consolidada'
-          dataset1='Estimada' dataProps={graphData.sort((a, b) => {
+          dataProps={graphData.sort((a, b) => {
             if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
             if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1
 
             return 0
           })}
-          label={years} barLabel  month/>
+          label={years} barLabel/>
       </section>
     </AccumulatedSavingsView>
   )

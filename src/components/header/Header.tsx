@@ -9,65 +9,28 @@ import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
 import getAPIClient from '../../services/ssrApi';
 
-function stringToColor(string: string) {
-  let hash = 0;
-  let i;
-
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  let color = '#';
-
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.slice(-2);
-  }
-
-  return color;
-}
-
-function stringAvatar(profile_picture: string) {
-  return {
-
-    children: `${profile_picture}`,
-  };
-}
-
-
 interface headerInterface {
   name: string,
   admin?: boolean | undefined
   logo?: string
-  profile_picture: string
 }
 
-export default function Header({ name, admin, profile_picture }: headerInterface) {
+export default function Header({name, admin}: headerInterface) {
+  const { ['user-profile_picture']: profile_picture } = parseCookies()
+
   return (
     <HeaderView>
-      <section>
-      </section>
-      <section>
-        {
-          !admin?
-          // <Image src={logo} width={170} height={50} />
-          null
-          :
-          null
-        }
-        <div className='icon' >
-          <p>
-            olá, {name}
-          </p>
-        </div>
-        {
-          !admin?
-          <Image src={profile_picture} alt='teste' height={45} width={50} />
-          :
-          null
-        }
-
-      </section>
+      <div className='icon' >
+        <p>
+          olá, {name}
+        </p>
+      </div>
+      {
+        !admin?
+        <Image src={profile_picture} height={50} width={75}/>
+        :
+        null
+      }
     </HeaderView>
   )
 }

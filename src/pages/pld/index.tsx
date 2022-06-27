@@ -160,7 +160,12 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
             </thead>
             <tbody>
               {
-                tableData.data.map(data => {
+                tableData.data.sort((a, b) => {
+                  if (parseFloat(a.year_month_formatted.slice(0,2)) > parseFloat(b.year_month_formatted.slice(1,2))) return 1
+                  if (parseFloat(a.year_month_formatted.slice(0,2)) < parseFloat(b.year_month_formatted.slice(1,2))) return -1
+
+                  return 0
+                }).map(data => {
                   return <>
                     <tr>
                       <td className='tg-gceh'>{data.year_month_formatted}</td>
@@ -210,7 +215,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
             </tbody>
           </table>
           <div className='btnDownload'>
-          <BasicButton onClick={''} title='Download'/>
+          <BasicButton onClick={() => console.log()} title='Download'/>
           </div>
           <section>
 
@@ -251,9 +256,9 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
               </FormControl>
             </div>
             <FormControl sx={{
-                    width: '22%',
-                    ml: 1
-                  }}>
+              width: '22%',
+              ml: 1
+            }}>
               <InputLabel id="demo-simple-select-label">Mês</InputLabel>
               <Select
                   value={day}
@@ -261,7 +266,6 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
                   displayEmpty
                   placeholder='dia'
                   label="Age"
-
                 >
                   <MenuItem value={'0'}>Nenhum</MenuItem>
                   {

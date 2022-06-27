@@ -2,23 +2,9 @@ import styled from "styled-components";
 
 export const HeaderView = styled.header`
   display: flex;
-  justify-content: space-between;
-
-  margin: 0 0 75px 0;
+  justify-content: flex-end;
 
   width: 100%;
-
-  section {
-    width: 30%;
-
-    :last-child {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-
-      height: fit-content;
-    }
-  }
 
   .icon {
     display: flex;
@@ -31,6 +17,8 @@ export const HeaderView = styled.header`
     border-radius: 8px;
 
     background-color: #254F7F;
+
+    margin-right: 20px;
 
     p{
       color: white;
