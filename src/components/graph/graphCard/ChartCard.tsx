@@ -70,7 +70,7 @@ export default function ChartCard({ title, subtitle, consumption, className, lin
         <div className='header'>
           <div>
             <h2>{title}</h2>
-            <span>{subtitle}</span>
+            <span style={{display:'block'}}>{subtitle}</span>
           </div>
           {/* <ButtonGroup /> */}
         </div>

@@ -62,7 +62,8 @@ export default function Header({ name, admin, profile_picture }: headerInterface
         </div>
         {
           !admin?
-          <Image src={profile_picture} alt='teste' height={45} width={50} />
+          // <Image src={profile_picture} alt='teste' height={45} width={50} />
+          null
           :
           null
         }
