@@ -14,15 +14,13 @@ interface GradientButtonInterface {
   onClick?: () => void
 }
 
-export default function GradientButton({ title, description, orange, purple, green, link, onClick }: GradientButtonInterface) {
-  const router = useRouter()
-
-  function handleClick() {
-    onClick()
-  }
+export default function GradientButton({ title, description, orange, purple, green, onClick }: GradientButtonInterface) {
+  // function handleClick() {
+  //   onClick()
+  // }
 
   return (
-    <GradientButtonView color={orange? 'orange' : purple? 'purple' : green? 'green' : 'orange' } onClick={() => link? router.push('/chartTelemetry') : handleClick()} >
+    <GradientButtonView color={orange? 'orange' : purple? 'purple' : green? 'green' : 'orange' } >
       <p>{title}</p>
       <p>{description}</p>
     </GradientButtonView>

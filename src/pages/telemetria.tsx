@@ -105,12 +105,21 @@ export default function Telemetria({userName}: any) {
       </RenderIf>
 
       <Buttons>
-        <GradientButton title='GRÁFICO' description='Gerar gráficos com os dados selecionados' orange onClick={() => router.replace('/chartTelemetry', { query: {
-          startDate,
-          endDate,
-          discretization
-        }})}/>
-        <GradientButton title='GRÁFICO' description='Gerar gráficos com os dados selecionados' orange onClick={() => router.replace('/chartTelemetry')}/>
+        <Link href={{
+          pathname: '/chartTelemetry',
+          query: {
+            startDate,
+            endDate,
+            discretization
+          },
+        }} >
+          {/* <GradientButton title='GRÁFICO' description='Gerar gráficos com os dados selecionados' orange/> */}
+          <button>
+            <p>GRÁFICO</p>
+            <p>Gerar gráficos com os dados selecionados</p>
+          </button>
+        </Link>
+        {/* <GradientButton title='GRÁFICO' description='Gerar gráficos com os dados selecionados' orange onClick={() => router.replace('/chartTelemetry')}/> */}
         <GradientButton title='DOWNLOADS' description='DADOS BRUTOS SELECIONADOS' purple />
         <GradientButton title='DADOS' description='hORÁRIOS DO MÊS ATUAL' onClick={() => setShowChart(!showChart)} green />
       </Buttons>

@@ -32,8 +32,6 @@ export const GradientButtonView = styled.button`
 
   border-style: none;
 
-  cursor: pointer;
-
   * {
     margin: 0;
     padding: 0;

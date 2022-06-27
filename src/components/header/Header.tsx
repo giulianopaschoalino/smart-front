@@ -50,7 +50,8 @@ export default function Header({ name, admin, logo }: headerInterface) {
       <section>
         {
           !admin?
-          <Image src={logo} width={170} height={50} />
+          // <Image src={logo} width={170} height={50} />
+          null
           :
           null
         }

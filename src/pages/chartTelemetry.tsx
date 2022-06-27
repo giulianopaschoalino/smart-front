@@ -21,9 +21,11 @@ import { parseCookies } from 'nookies'
 import getAPIClient from '../services/ssrApi'
 import { api } from '../services/api'
 import FatorPotenciaChart from '../components/graph/fatorPotenciaChart'
-import { DemRegXDemConChart } from '../components/graph/demRegXDemConChart'
+// import { DemRegXDemConChart } from '../components/graph/demRegXDemConChart'
 import { DiscretizedConsumptionChart } from '../components/graph/DiscretizedConsumptionChart'
 import DiscretizedConsumptionChartLine from '../components/graph/DiscretizedConsumptionChartLine'
+import router, { useRouter } from 'next/router'
+import { DemRegXDemConChart } from '../components/graph/DemRegXDemConChart'
 
 const style = {
   display: 'flex',
@@ -58,11 +60,16 @@ export default function chartTelemetry({userName}) {
 
   const { ['user-cod_client']: cod_client } = parseCookies()
 
+  const router = useRouter()
+
+  const {startDate, endDate} = router.query
+
   async function getChartsData() {
+    console.log(router.query)
     await api.post('/telemetry/powerFactor', {
       "filters": [
         {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
-        {"type" : "between", "field": "dia_num", "value": ["2022-01-03", "2022-01-03"]}
+        {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
       ]
     }).then(res => {
       setFatorPotenciaData(res.data.data)
@@ -73,7 +80,7 @@ export default function chartTelemetry({userName}) {
     await api.post('/telemetry/demand', {
       "filters": [
         {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
-        {"type" : "between", "field": "dia_num", "value": ["2022-01-03", "2022-01-03"]}
+        {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
       ]
     }).then(res => {
       setDemRegXDemCon(res.data.data)
@@ -85,7 +92,7 @@ export default function chartTelemetry({userName}) {
       "type": "5_min",
       "filters": [
           {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
-          {"type" : "between", "field": "dia_num", "value": ["2022-01-03", "2022-01-03"]}
+          {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
         ]
     }).then(res => {
       setDiscretizedConsumptionData(res.data.data)
@@ -156,7 +163,7 @@ export default function chartTelemetry({userName}) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <SingleBar title='Consumo discretizado em 1 hora' subtitle='' dataProps={ConsumoDecretizadoBar.data} label={ConsumoDecretizadoBar.label} dataset={'Consumo'} dataset1='Estimado' month/>
+            <SingleBar title='Consumo discretizado em 1 hora' subtitle='' dataProps={ConsumoDecretizadoBar.data} label={ConsumoDecretizadoBar.label} dataset={'Consumo'}/>
           </Box>
         </Modal>
 

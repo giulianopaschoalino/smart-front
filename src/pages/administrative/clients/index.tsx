@@ -67,7 +67,7 @@ export default function clients({ clients, userName }) {
   const handleClose = () => setOpen(false)
 
   const [openModal, setOpenModal] = useState(false)
-  const [nivelAcess, setnivelAcess] = useState<any>(0);
+  const [nivelAcess, setnivelAcess] = useState<any>(2);
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
   const [openSnackError, setOpenSnackError] = useState<boolean>(false)
   const [openSnackSuccessDelete, setOpenSnackSuccessDelete] =
@@ -116,9 +116,9 @@ export default function clients({ clients, userName }) {
     formData.append('password_confirmation', password_confirmation)
     formData.append('client_id', client_id)
     formData.append('profile_picture', logo)
-    formData.append('role', 0)
-    api
-      .post('/user', formData)
+    formData.append('role', nivelAcess)
+
+    api.post('/user', formData)
       .then((res) => {
         setOpenSnackSuccess(true)
         setOpenModalInativar(false)
@@ -358,7 +358,7 @@ export default function clients({ clients, userName }) {
               fullWidth
             >
               <MenuItem value={1}>Administrador</MenuItem>
-              <MenuItem value={0}>Cliente</MenuItem>
+              <MenuItem value={2}>Cliente</MenuItem>
 
             </Select>
           </FormControl>
