@@ -6,6 +6,8 @@ import TextField from '@mui/material/TextField';
 
 import { HeaderView } from './HeaderView'
 import { parseCookies } from 'nookies';
+import { GetServerSideProps } from 'next';
+import getAPIClient from '../../services/ssrApi';
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -37,20 +39,21 @@ function stringAvatar(name: string) {
 interface headerInterface {
   name: string,
   admin?: boolean | undefined
+  logo?: string
 }
 
-export default function Header({ name, admin }: headerInterface) {
+export default function Header({ name, admin, logo }: headerInterface) {
   return (
     <HeaderView>
       <section>
       </section>
       <section>
-        {/* {
+        {
           !admin?
-          <Image src='/assets/png/copel.png' width={170} height={50} />
+          <Image src={logo} width={170} height={50} />
           :
           null
-        } */}
+        }
         <div className='icon' >
           <p>
             olá, {name}
@@ -61,3 +64,34 @@ export default function Header({ name, admin }: headerInterface) {
     </HeaderView>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
+
+  let userData = [];
+
+  await apiClient.get('/user').then(res => {
+    userData = res.data.data
+  }).catch(res => {
+    // console.log(res)
+  })
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      userData,
+      userName
+    }
+  }
+}
+

@@ -23,6 +23,7 @@ import getAPIClient from '../../../services/ssrApi'
 
 import FormData from 'form-data'
 import { InputUploadView } from '../../../components/inputUploadImg/inputUploadView'
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
 const style = {
   position: 'absolute' as const,
@@ -66,7 +67,7 @@ export default function clients({ clients, userName }) {
   const handleClose = () => setOpen(false)
 
   const [openModal, setOpenModal] = useState(false)
-
+  const [nivelAcess, setnivelAcess] = useState<any>(0);
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
   const [openSnackError, setOpenSnackError] = useState<boolean>(false)
   const [openSnackSuccessDelete, setOpenSnackSuccessDelete] =
@@ -115,7 +116,7 @@ export default function clients({ clients, userName }) {
     formData.append('password_confirmation', password_confirmation)
     formData.append('client_id', client_id)
     formData.append('profile_picture', logo)
-
+    formData.append('role', 0)
     api
       .post('/user', formData)
       .then((res) => {
@@ -127,6 +128,7 @@ export default function clients({ clients, userName }) {
         setOpenSnackError(true)
       })
   }
+
   async function handleDeleteClient(id: any) {
     await id.map((client) => {
       api
@@ -341,8 +343,27 @@ export default function clients({ clients, userName }) {
               </form>
             </div>
           </InputUploadView>
-          <br />
-          <br />
+
+
+          <div className='select'>
+
+          <FormControl sx={{ width: 350, ml: 5, mt: 2 }}>
+            <InputLabel id="demo-select-small">Nivel de acesso</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={nivelAcess}
+              label="Unidade"
+              onChange={value => setnivelAcess(value.target.value)}
+              fullWidth
+            >
+              <MenuItem value={1}>Administrador</MenuItem>
+              <MenuItem value={0}>Cliente</MenuItem>
+
+            </Select>
+          </FormControl>
+        </div>
+
           <FaqButton1 title="Cancelar" onClick={() => setOpen(false)} />
           <FaqButton2
             title="Salvar"
