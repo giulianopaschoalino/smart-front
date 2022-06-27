@@ -28,11 +28,9 @@ export const HeaderView = styled.header`
     min-width: 120px;
     height: 40px;
 
-    border-radius: 8px 0 0 8px;
+    border-radius: 8px;
 
     background-color: #254F7F;
-
-    transform: translateX(16px);
 
     p{
       color: white;

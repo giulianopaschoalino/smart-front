@@ -27,22 +27,22 @@ function stringToColor(string: string) {
   return color;
 }
 
-function stringAvatar(name: string) {
+function stringAvatar(profile_picture: string) {
   return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-    children: `${name.split(' ')[0][0]}`,
+
+    children: `${profile_picture}`,
   };
 }
+
 
 interface headerInterface {
   name: string,
   admin?: boolean | undefined
   logo?: string
+  profile_picture: string
 }
 
-export default function Header({ name, admin, logo }: headerInterface) {
+export default function Header({ name, admin, profile_picture }: headerInterface) {
   return (
     <HeaderView>
       <section>
@@ -60,7 +60,13 @@ export default function Header({ name, admin, logo }: headerInterface) {
             olá, {name}
           </p>
         </div>
-        <Avatar {...stringAvatar(name)} style={{border: 'white solid 4px', width: '47px', height: '47px'}}/>
+        {
+          !admin?
+          <Image src={profile_picture} alt='teste' height={45} width={50} />
+          :
+          null
+        }
+
       </section>
     </HeaderView>
   )
