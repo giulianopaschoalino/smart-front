@@ -16,9 +16,9 @@ export default function CostIndicator({graphData, userName}: any) {
         <title>Smart Energia - Indicador de Custos</title>
       </Head>
       <Header name={userName} />
-      <PageTitle title='Indicador de Custo' subtitle='Valores em R$/MWh'/>
+      <PageTitle title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'/>
       <section>
-        <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)'
+        <Chart title='' subtitle=''
         data1={graphData.filter((value, index) => value.mes.slice(3, 7).includes('2021')).sort((a, b) => {
           if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
           if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1

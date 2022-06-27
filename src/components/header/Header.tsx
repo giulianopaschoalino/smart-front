@@ -26,7 +26,7 @@ export default function Header({name, admin}: headerInterface) {
         </p>
       </div>
       {
-        !admin?
+        !admin && profile_picture?
         <Image src={profile_picture} height={50} width={75}/>
         :
         null
@@ -39,6 +39,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
+  const { ['user-profile_picture']: profile_picture } = parseCookies()
 
   let userData = [];
 
@@ -60,7 +61,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       userData,
-      userName
+      userName,
+      profile_picture
     }
   }
 }

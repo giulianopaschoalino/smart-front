@@ -78,7 +78,7 @@ export default function industryInfo({userName}: any) {
           <form action="">
             <div className='testess'>
               <label  htmlFor="arquivo"> <p className='TitleButton'> Enviar PDF </p>   </label>
-              {/* <input  type="file" name='arquivo' id='arquivo' onChange={onChange} /> */}
+
               <input type="file" name='arquivo' id='arquivo' accept=".pdf" onChange={onChange} />
             </div>
           </form>
@@ -87,16 +87,13 @@ export default function industryInfo({userName}: any) {
         {/* <InputUploadPdf/> */}
       </div>
 
-      <div className="update">
-          <form action="">
-            <div className='testess'>
-            <label  htmlFor="arquivo"> <p className='TitleButton'> Enviar PDF </p>   </label>
-            <input type="file" accept=".pdf" onChange={onChange} />
-            </div>
-          </form>
-          </div>
+      <div style={{marginTop:'20px'}}>
+      <input  type="file" name='arquivo' id='arquivo' onChange={onChange} />
+      </div>
 
-      <BasicButton onClick={() => handleCreateClient()} title='Atualizar'/>
+
+<br />
+      {/* <BasicButton onClick={() => handleCreateClient()} title='Atualizar'/> */}
 
     </IndustryInfoView>
   )

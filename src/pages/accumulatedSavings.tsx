@@ -19,9 +19,9 @@ export default function AccumulatedSavings({graphData, years, userName}: any) {
         <title>Smart Energia - Economia Bruta Mensal</title>
       </Head>
       <Header name={userName} />
-      <PageTitle title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada mensal (Valores em R$ mil)' />
+      <PageTitle title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada mensal - Valores em R$ mil' />
       <section>
-        <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$ mil)' dataset='Consolidada'
+        <SingleBar title='' subtitle='' dataset='Consolidada'
           dataProps={graphData.sort((a, b) => {
             if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
             if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1
