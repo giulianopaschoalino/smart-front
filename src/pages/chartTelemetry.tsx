@@ -62,13 +62,13 @@ export default function chartTelemetry({userName}) {
 
   const router = useRouter()
 
-  const {startDate, endDate} = router.query
+  const {startDate, endDate, unity, discretization} = router.query
 
   async function getChartsData() {
     console.log(router.query)
     await api.post('/telemetry/powerFactor', {
       "filters": [
-        {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
+        {"type" : "=", "field": discretization, "value": unity},
         {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
       ]
     }).then(res => {
@@ -80,8 +80,8 @@ export default function chartTelemetry({userName}) {
     await api.post('/telemetry/discretization', {
       "type": "5_min",
       "filters": [
-          {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
-          {"type" : "between", "field": "dia_num", "value": ["2022-01-03", "2022-01-03"]}
+          {"type" : "=", "field": discretization, "value": unity},
+          {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
         ]
     }).then(res => {
       setDiscretizedConsumptionDataReativa(res.data.data)
@@ -92,7 +92,7 @@ export default function chartTelemetry({userName}) {
   await api.post('/telemetry/discretization', {
     "type": "5_min",
     "filters": [
-        {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
+        {"type" : "=", "field": discretization, "value": unity},
         {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
       ]
     }).then(res => {
@@ -103,7 +103,7 @@ export default function chartTelemetry({userName}) {
 
   await api.post('/telemetry/demand', {
     "filters": [
-      {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
+      {"type" : "=", "field": discretization, "value": unity},
       {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
     ]
     }).then(res => {
@@ -112,8 +112,6 @@ export default function chartTelemetry({userName}) {
       console.log(res)
     })
   }
-
-
 
   useEffect(() => {
     getChartsData()

@@ -95,10 +95,6 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
     } else {
       setTableDataState(tableData)
     }
-
-    console.log(tableData)
-
-    console.log(month)
   }, [month, unidade])
 
   return (

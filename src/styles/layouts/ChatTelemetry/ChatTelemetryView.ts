@@ -29,7 +29,7 @@ export const ChatTelemetryView = styled.main`
     bottom:0px;
     width: 9px;
     height: 5px;
-    background:#9b59b6;
+    background:#254F7F;
     position:absolute;
     animation: preloader_1 1.5s  infinite ease-in-out;
   }
