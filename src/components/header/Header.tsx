@@ -29,7 +29,7 @@ export default function Header({name, admin}: headerInterface) {
         !admin && profile_picture?
         <Image src={profile_picture} height={50} width={75}/>
         :
-        null
+        <Image src='https://kluppdevelopment.s3.sa-east-1.amazonaws.com/avatars/zcgw6O0FxZgxRmIs97WMcUddKurQJcIqSxBLStSc.png' height={50} width={75}/>
       }
     </HeaderView>
   )

@@ -53,22 +53,22 @@ export default function chartTelemetry({userName}) {
   const [openDemandaContratada, setOpenDemandaContratada] = useState(false);
   const handleCloseDemandaContratada = () => setOpenDemandaContratada(false);
 
-  const [fatorPotenciaData, setFatorPotenciaData] = useState([]);
-  const [demRegXDemCon, setDemRegXDemCon] = useState([]);
-  const [discretizedConsumptionData, setDiscretizedConsumptionData] = useState([]);
-  const [discretizedConsumptionDataReativa, setDiscretizedConsumptionDataReativa] = useState([]);
+  const [fatorPotenciaData, setFatorPotenciaData] = useState(null);
+  const [demRegXDemCon, setDemRegXDemCon] = useState(null);
+  const [discretizedConsumptionData, setDiscretizedConsumptionData] = useState(null);
+  const [discretizedConsumptionDataReativa, setDiscretizedConsumptionDataReativa] = useState(null);
 
   const { ['user-cod_client']: cod_client } = parseCookies()
 
   const router = useRouter()
 
-  const {startDate, endDate} = router.query
+  const {startDate, endDate, unity, discretization} = router.query
 
   async function getChartsData() {
     console.log(router.query)
     await api.post('/telemetry/powerFactor', {
       "filters": [
-        {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
+        {"type" : "=", "field": discretization, "value": unity},
         {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
       ]
     }).then(res => {
@@ -77,37 +77,37 @@ export default function chartTelemetry({userName}) {
       console.log(res)
     })
 
-    await api.post('/telemetry/demand', {
+    await api.post('/telemetry/discretization', {
+      "type": "5_min",
       "filters": [
-        {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
-        {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
-      ]
+          {"type" : "=", "field": discretization, "value": unity},
+          {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
+        ]
     }).then(res => {
-      setDemRegXDemCon(res.data.data)
+      setDiscretizedConsumptionDataReativa(res.data.data)
     }).catch(res => {
       console.log(res)
     })
 
-    await api.post('/telemetry/discretization', {
-      "type": "5_min",
-      "filters": [
-          {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
-          {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
-        ]
+  await api.post('/telemetry/discretization', {
+    "type": "5_min",
+    "filters": [
+        {"type" : "=", "field": discretization, "value": unity},
+        {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
+      ]
     }).then(res => {
       setDiscretizedConsumptionData(res.data.data)
     }).catch(res => {
       console.log(res)
     })
 
-    await api.post('/telemetry/discretization', {
-      "type": "5_min",
-      "filters": [
-          {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
-          {"type" : "between", "field": "dia_num", "value": ["2022-01-03", "2022-01-03"]}
-        ]
+  await api.post('/telemetry/demand', {
+    "filters": [
+      {"type" : "=", "field": discretization, "value": unity},
+      {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
+    ]
     }).then(res => {
-      setDiscretizedConsumptionDataReativa(res.data.data)
+      setDemRegXDemCon(res.data.data)
     }).catch(res => {
       console.log(res)
     })
@@ -115,6 +115,7 @@ export default function chartTelemetry({userName}) {
 
   useEffect(() => {
     getChartsData()
+    console.log(fatorPotenciaData)
   }, [])
 
   return (
@@ -125,62 +126,77 @@ export default function chartTelemetry({userName}) {
       <Header name={userName} />
       <PageTitle title='Telemetria - Graficos' subtitle='Gráficos' />
       <section className='chartContainer'>
-        <div onClick={() => setOpenFatorPotencia(true)}>
-          <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData} data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={fatorPotenciaData.map(value => value.hora)} />
-        </div>
-        <Modal
-          open={openFatorPotencia}
-          onClose={handleCloseFatorPotencia}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-          <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData} data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={FatorPotencia.label1} />
-          </Box>
-        </Modal>
+        {
+          demRegXDemCon==null?
+          <div id="preloader_1">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          :
+          <>
+            <div onClick={() => setOpenFatorPotencia(true)}>
+            <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData}
+              data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={FatorPotencia.label1} />
+            </div>
+            <Modal
+              open={openFatorPotencia}
+              onClose={handleCloseFatorPotencia}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData}
+                  data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={FatorPotencia.label1} />
+              </Box>
+            </Modal>
 
-        <div onClick={() => setOpenConsumoDiscretizado1(true)}>
-          <DiscretizedConsumptionChartLine title='Consumo discretizado em 1 hora' subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada' label={discretizedConsumptionDataReativa.map(data => parseFloat(data.reativa).toFixed(3))} />
-        </div>
-        <Modal
-          open={openConsumoDiscretizado1}
-          onClose={handleCloseConsumoDiscretizado1}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <DiscretizedConsumptionChartLine title='Consumo discretizado em 1 hora' subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada' label={discretizedConsumptionDataReativa.map(data => data.reativa)} />
-          </Box>
-        </Modal>
+            <div onClick={() => setOpenConsumoDiscretizado1(true)}>
+              <DiscretizedConsumptionChartLine title='Consumo discretizado em 1 hora' subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada' label={discretizedConsumptionDataReativa.map(data => parseFloat(data.reativa).toFixed(3))} />
+            </div>
+            <Modal
+              open={openConsumoDiscretizado1}
+              onClose={handleCloseConsumoDiscretizado1}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <DiscretizedConsumptionChartLine title='Consumo discretizado em 1 hora' subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada' label={discretizedConsumptionDataReativa.map(data => data.reativa)} />
+              </Box>
+            </Modal>
 
-        <div onClick={() => setOpenConsumoDiscretizado2(true)}>
-          <DiscretizedConsumptionChart title='Consumo discretizado em 5 minutos' subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
-        </div>
-        <Modal
-          open={openConsumoDiscretizado2}
-          onClose={handleCloseConsumoDiscretizado2}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <SingleBar title='Consumo discretizado em 1 hora' subtitle='' dataProps={ConsumoDecretizadoBar.data} label={ConsumoDecretizadoBar.label} dataset={'Consumo'}/>
-          </Box>
-        </Modal>
+            <div onClick={() => setOpenConsumoDiscretizado2(true)}>
+              <DiscretizedConsumptionChart title='Consumo discretizado em 5 minutos' subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
+            </div>
+            <Modal
+              open={openConsumoDiscretizado2}
+              onClose={handleCloseConsumoDiscretizado2}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <DiscretizedConsumptionChart title='Consumo discretizado em 5 minutos' subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
+              </Box>
+            </Modal>
 
-        <div onClick={() => setOpenDemandaContratada(true)}>
-          <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'} label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
-        </div>
-        <Modal
-          open={openDemandaContratada}
-          onClose={handleCloseDemandaContratada}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'} label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
-          </Box>
-        </Modal>
-      </section>
+            <div onClick={() => setOpenDemandaContratada(true)}>
+              <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'} label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
+            </div>
+            <Modal
+              open={openDemandaContratada}
+              onClose={handleCloseDemandaContratada}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'} label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
+              </Box>
+            </Modal>
+            </>
+        }
+        </section>
     </ChatTelemetryView>
   )
 }

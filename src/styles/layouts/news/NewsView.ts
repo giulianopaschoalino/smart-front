@@ -5,6 +5,20 @@ export const NewsView = styled.main`
 
   margin-bottom: 100px;
 
+  .description {
+    a {
+      display: none;
+    }
+    p {
+      :last-child {
+        display: none;
+      }
+    }
+    .read-more {
+      display: none;
+    }
+  }
+
   p {
     font-family: 'Poppins';
     font-style: normal;

@@ -15,12 +15,12 @@ interface GradientButtonInterface {
 }
 
 export default function GradientButton({ title, description, orange, purple, green, onClick }: GradientButtonInterface) {
-  // function handleClick() {
-  //   onClick()
-  // }
+  function handleClick() {
+    onClick()
+  }
 
   return (
-    <GradientButtonView color={orange? 'orange' : purple? 'purple' : green? 'green' : 'orange' } >
+    <GradientButtonView color={orange? 'orange' : purple? 'purple' : green? 'green' : 'orange'} onClick={() => handleClick()}>
       <p>{title}</p>
       <p>{description}</p>
     </GradientButtonView>
