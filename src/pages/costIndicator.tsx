@@ -4,50 +4,21 @@ import { parseCookies } from 'nookies'
 import React from 'react'
 
 import Chart from '../components/graph/Chart'
-import { SingleBar } from '../components/graph/SingleBar'
 import Header from '../components/header/Header'
 import PageTitle from '../components/pageTitle/PageTitle'
-import { dataEconomiaBruta } from '../services/economiaBruta'
-import { dataEconomiaIndicador } from '../services/economiaIndicador'
 import getAPIClient from '../services/ssrApi'
 import { CostIndicatorView } from '../styles/layouts/economy/costIndicator/CostIndicatorView'
 
-function verifyDataByYear(data) {
-  const currentYear = []
-  const currentYearAux = data.filter(value => value.mes.slice(3, 7).includes('2021'))
-  console.log(currentYear.length)
-  console.log(currentYearAux.length)
-
-  currentYearAux.sort((a, b) => {
-    if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
-    if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1
-
-    return 0
-  })
-
-  // for (let i=0; currentYear.length <= currentYearAux.length; i++) {
-  //   console.log(i, 'dentro do for')
-  //   // console.log(currentYearAux.length, 'tamanho aux')
-  //   if (currentYearAux[i].mes.slice(1,2)==i) {
-  //     currentYear.push(currentYearAux[i])
-  //     console.log(currentYear.length, 'tamanho')
-  //   }
-  // }
-  console.log(currentYearAux)
-}
-
 export default function CostIndicator({graphData, userName}: any) {
-  // console.log(graphData.filter((value, index) => value.mes.slice(3, 7).includes('2021')).map(value => value.custo_unit))
-
   return (
     <CostIndicatorView>
       <Head>
         <title>Smart Energia - Indicador de Custos</title>
       </Head>
       <Header name={userName} />
-      <PageTitle title='Indicador de Custo' subtitle='Valores em R$/MWh'/>
+      <PageTitle title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'/>
       <section>
-        <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)'
+        <Chart title='' subtitle=''
         data1={graphData.filter((value, index) => value.mes.slice(3, 7).includes('2021')).sort((a, b) => {
           if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
           if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1

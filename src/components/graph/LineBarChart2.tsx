@@ -125,7 +125,7 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
         type: 'bar' as const,
         label: dataset2? dataset2 : 'Dataset 2',
         backgroundColor: (value, ctx) => {
-          return hashurado? data1[value.dataIndex].dad_estimado == false? '#C2D5FB' : pattern.draw('diagonal', '#C2D5FB') : '#C2D5FB'
+          return hashurado? data1[value.dataIndex]?.dad_estimado == false? '#C2D5FB' : pattern.draw('diagonal', '#C2D5FB') : '#C2D5FB'
         },
         data: data3.map(value => value.custo_cativo),
       },
@@ -134,7 +134,7 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
         label: dataset3? dataset3 : 'Dataset 2',
         // backgroundColor: '#255488',
         backgroundColor: (value, ctx) => {
-          return hashurado? data1[value.dataIndex].dad_estimado == false? '#255488' : pattern.draw('diagonal', '#255488') : '#255488'
+          return hashurado? data1[value.dataIndex]?.dad_estimado == false? '#255488' : pattern.draw('diagonal', '#255488') : '#255488'
         },
         data: data2.map(value => value.custo_livre),
       },

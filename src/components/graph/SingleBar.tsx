@@ -75,9 +75,9 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel
     labels,
     datasets: [
       {
-        label: '',
+        label: 'Estimado',
         data: [],
-        backgroundColor: 'transparent',
+        backgroundColor: '#C2d5fb',
       },
       {
         label: dataset,

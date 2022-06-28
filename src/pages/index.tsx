@@ -146,7 +146,7 @@ export default function Home() {
                 </IconButton>
               </InputAdornment>
             }
-            label="Password"
+            label="Senha"
           />
         </FormControl>
         <Link href='verifyEmail'>Esqueceu a senha ?</Link>

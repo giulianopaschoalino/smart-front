@@ -64,6 +64,9 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     if (user.client_id)
       setCookie(undefined, 'user-client_id', user.client_id)
 
+    if (user.profile_picture)
+      setCookie(undefined, 'user-profile_picture', user.profile_picture)
+
     api.defaults.headers['Authorization'] = `Bearer ${token}`
 
     if (!exception) {

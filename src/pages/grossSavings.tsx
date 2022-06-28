@@ -19,13 +19,13 @@ export default function GrossSavings({graphData, years, userName}: any) {
         <title>Smart Energia - Economia Acumulada</title>
       </Head>
       <Header name={userName} />
-      <PageTitle title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada anual (Valores em R$ mil)' />
+      <PageTitle title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada anual - Valores em R$ mil' />
       <section>
-        <SingleBar title='Economia Bruta' subtitle='(Valores em R$ mil)'
-        dataset='Consolidada' dataset1='Estimada'
+        <SingleBar title='' subtitle=''
+        dataset='Consolidada'
 
         dataProps={graphData}
-        label={years} barLabel year/>
+        label={years} barLabel/>
 
       </section>
     </GrossSavingsView>

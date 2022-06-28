@@ -8,6 +8,7 @@ export const BannerView = styled.div`
 
   width: 100%;
   height: 20%;
+  max-height: 200px;
 
   margin-bottom: 30px;
 
