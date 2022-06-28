@@ -8,6 +8,7 @@ import PageTitle from '../../../components/pageTitle/PageTitle'
 import { IndustryInfoView } from '../../../styles/layouts/industryInfo/IndustryInfoView'
 import InputUploadPdf from '../../../components/inputUploadPdf/inputUpload';
 import { api } from '../../../services/api'
+import PdfThumbnail from 'react-pdf-thumbnail';
 
 import FormData from 'form-data';
 
@@ -74,10 +75,12 @@ export default function industryInfo({userName}: any) {
           <div className="update">
           <form action="">
             <div className='testess'>
-              <label  htmlFor="arquivo"> <p className='TitleButton'> Enviar PDF </p>   </label>
-              <input  type="file" name='arquivo' id='arquivo' onChange={onChange} />
+              <label htmlFor="arquivo"><p className='TitleButton'> Enviar PDF </p></label>
+              <input type="file" name='arquivo' id='arquivo' onChange={onChange}/>
+              {/* <input type='file' accept='application/pdf' onChange={onChange} /> */}
             </div>
           </form>
+          <p>{pdf}</p>
           </div>
         </InputUploadView>
         {/* <InputUploadPdf/> */}

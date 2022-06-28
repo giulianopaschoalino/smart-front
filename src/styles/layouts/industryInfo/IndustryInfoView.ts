@@ -29,21 +29,20 @@ export const IndustryInfoView = styled.main`
   .inputTeste{
     display: flex;
     align-items: center;
-    margin-top:-10px;
     width: 50%;
-    margin-bottom: 50px;
     height: 50px;
     background: white;
-    border: 3px solid #254F7F;
     border-radius:10px;
   }
 
-
   input[type="file"] {
-    display: none;
-}
-label {
-    padding: 20px 10px;
+    display: block;
+  }
+
+  label {
+    display: flex;
+    justify-content: flex-start;
+    padding: 2px 10px;
     width: 200px;
     background-color: #333;
     color: #FFF;
@@ -52,7 +51,7 @@ label {
     display: block;
     margin-top: 10px;
     cursor: pointer;
-}
+  }
 
 
 
