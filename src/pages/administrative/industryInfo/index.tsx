@@ -8,7 +8,7 @@ import PageTitle from '../../../components/pageTitle/PageTitle'
 import { IndustryInfoView } from '../../../styles/layouts/industryInfo/IndustryInfoView'
 import InputUploadPdf from '../../../components/inputUploadPdf/inputUpload';
 import { api } from '../../../services/api'
-import { Viewer } from '@react-pdf-viewer/core';
+// import { Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import FormData from 'form-data';
 import Snackbar from '@mui/material/Snackbar';
@@ -128,9 +128,7 @@ export default function industryInfo({userName}: any) {
 
 
 
-
-<BasicButton onClick={handleCreateClient} title='Atualizar'/>
-
+      {/* <BasicButton onClick={() => handleCreateClient()} title='Atualizar'/> */}
     </IndustryInfoView>
   )
 }

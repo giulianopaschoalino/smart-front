@@ -46,17 +46,17 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
       <section className='dashboard'>
         <GraphCard title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada anual - (Valores em R$ mil)'>
           <SingleBar title='' subtitle=''
-          dataset='Consolidada' dataset1='Estimada'
+          dataset='Consolidada'
           dataProps={grossAnualGraph}
-          label={grossAnualYears} barLabel year/>
+          label={grossAnualYears} barLabel/>
         </GraphCard>
 
         <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada mensal - (Valores em R$)' singleBar>
           <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$)'
-          dataset='Acumulada' dataset1='Estimado'
+          dataset='Acumulada'
           dataProps={grossMensalGraph}
           label={grossMensalYears}
-          barLabel month/>
+          barLabel/>
         </GraphCard>
 
         <GraphCard title='Cativo x Livre mensal' subtitle='Comparativo de Custo Estimado - (Valores em R$/MWh)' singleBar>
