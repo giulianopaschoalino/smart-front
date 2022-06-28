@@ -149,6 +149,10 @@ export const PldTableView = styled.main`
       margin: 20px;
     }
   }
+
+  .btnDownload{
+    margin-top:6px;
+  }
 `
 
 export const PldGraphView = styled.main`

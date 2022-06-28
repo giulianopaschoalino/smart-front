@@ -37,6 +37,11 @@ export const ChartCardView = styled.article`
     color: #2F4CDD;
   }
 
+  span{
+    display:block;
+    font-size: 12.8px;
+  }
+
   .statusDot {
     max-width: 11px;
     max-height: 11px;

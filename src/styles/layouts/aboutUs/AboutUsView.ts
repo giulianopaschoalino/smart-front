@@ -22,21 +22,19 @@ export const AboutUsView = styled.main`
     }
   }
 
-  section {
-    article {
+  article {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    aside {
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
 
-      aside {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      width: fit-content;
 
-        width: fit-content;
-
-        flex-direction: column;
-      }
+      flex-direction: column;
     }
   }
 

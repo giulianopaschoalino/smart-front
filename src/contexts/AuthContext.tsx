@@ -31,7 +31,17 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
 
   const isAuthenticated = !!user
 
+  function signOut() {
+    destroyCookie(null, 'user-client_id')
+    destroyCookie(null, 'user-name')
+    destroyCookie(null, 'user-role')
+    destroyCookie(null, 'user-id')
+    destroyCookie(null, '@smartAuth-token')
+  }
+
   async function signIn({email, password}: SignInData) {
+    await signOut()
+
     const { token, user, exception }: any = await signInRequest({
       email,
       password
@@ -51,6 +61,12 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     if (user.name)
       setCookie(undefined, 'user-name', user.name)
 
+    if (user.client_id)
+      setCookie(undefined, 'user-client_id', user.client_id)
+
+    if (user.profile_picture)
+      setCookie(undefined, 'user-profile_picture', user.profile_picture)
+
     api.defaults.headers['Authorization'] = `Bearer ${token}`
 
     if (!exception) {
@@ -63,13 +79,6 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     } else {
       return exception
     }
-  }
-
-  function signOut() {
-    destroyCookie(null, 'user-name')
-    destroyCookie(null, 'user-role')
-    destroyCookie(null, 'user-id')
-    destroyCookie(null, '@smartAuth-token')
   }
 
   return (

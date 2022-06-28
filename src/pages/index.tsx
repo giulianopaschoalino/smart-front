@@ -36,10 +36,10 @@ export default function Home() {
   const [state, setstate] = useState(false);
 
   const [values, setValues] = useState({
-
     password: null,
     showPassword: false,
   });
+
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>()
 
@@ -128,7 +128,7 @@ export default function Home() {
         setEmail(value.target.value.toLowerCase())
         }}/>
         <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+          <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
             type={values.showPassword ? 'text' : 'password'}
@@ -146,7 +146,7 @@ export default function Home() {
                 </IconButton>
               </InputAdornment>
             }
-            label="Password"
+            label="Senha"
           />
         </FormControl>
         <Link href='verifyEmail'>Esqueceu a senha ?</Link>

@@ -16,15 +16,18 @@ export default function Notifications({notificationData, userName}: any) {
         <title>Smart Energia - Notificações</title>
       </Head>
       <Header name={userName} />
-      <PageTitle title='Notificações' subtitle='Aqui estão as notificaões publicadas para voce!' />
+      <PageTitle title='Notificações' subtitle='Aqui estão as notificações publicadas para você!' />
       <section className='CommonQuestionsSection' >
       {
+        notificationData?
         notificationData.map((value, index ) => {
           return <>
             <NotificationQuestionsCard key={index} title={value.title} body={value.body}/>
             <hr />
           </>
         })
+          :
+        <p style={{alignSelf: 'center'}}>Você não tem notificações!</p>
       }
       </section>
     </FaqView>

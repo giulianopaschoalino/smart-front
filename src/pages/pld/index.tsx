@@ -10,6 +10,7 @@ import { parseCookies } from 'nookies';
 import React, { useEffect, useState } from 'react'
 
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
+import { BasicButtonView } from '../../components/buttons/basicButton/BasicButtonView';
 import { LineBarChart } from '../../components/graph/LineBarChart';
 import LineChart from '../../components/graph/LineChart';
 import Header from '../../components/header/Header'
@@ -127,6 +128,41 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
       return 'dullRed'
   }
 
+  const dateFormated = new Date()
+
+  function downloadCSVFile(csv, filename) {
+    const csv_file = new Blob([csv], {type: "text/csv"});
+
+    const download_link = document.createElement("a");
+
+    download_link.download = filename;
+
+    download_link.href = window.URL.createObjectURL(csv_file);
+
+    download_link.style.display = "none";
+
+    document.body.appendChild(download_link);
+
+    download_link.click();
+  }
+
+  function htmlToCSV(html, filename) {
+    const data = [];
+    const rows = document.querySelectorAll("table tr");
+
+    for (let i = 0; i < rows.length; i++) {
+      const row = [], cols: any = rows[i].querySelectorAll("td, th");
+
+      for (let j = 0; j < cols.length; j++) {
+        row.push(cols[j].innerText);
+      }
+
+      data.push(row.join(","));
+    }
+
+    downloadCSVFile(data.join("\n"), filename);
+  }
+
   useEffect(() => {
     getDataByHour()
     getDataByDay()
@@ -157,7 +193,12 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
             </thead>
             <tbody>
               {
-                tableData.data.map(data => {
+                tableData.data.sort((a, b) => {
+                  if (parseFloat(a.year_month_formatted.slice(0,2)) > parseFloat(b.year_month_formatted.slice(1,2))) return 1
+                  if (parseFloat(a.year_month_formatted.slice(0,2)) < parseFloat(b.year_month_formatted.slice(1,2))) return -1
+
+                  return 0
+                }).map(data => {
                   return <>
                     <tr>
                       <td className='tg-gceh'>{data.year_month_formatted}</td>
@@ -174,7 +215,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
                   if (index === 0) {
                     return <>
                       <tr>
-                        <td className='tg-gceh'>Max</td>
+                        <td className='tg-gceh'>Máximo</td>
                         <td className='tg-uulg'>{parseFloat(data.nordeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                         <td className='tg-gceh'>{parseFloat(data.norte_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                         <td className='tg-gceh'>{parseFloat(data.sudeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
@@ -184,7 +225,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
                   } else if (index===1) {
                     return <>
                       <tr>
-                        <td className='tg-gceh'>Min</td>
+                        <td className='tg-gceh'>Mínimo</td>
                         <td className='tg-uulg'>{parseFloat(data.nordeste_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                         <td className='tg-gceh'>{parseFloat(data.norte_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                         <td className='tg-gceh'>{parseFloat(data.sudeste_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
@@ -206,7 +247,14 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
               }
             </tbody>
           </table>
+          <div className='btnDownload'>
+          <BasicButton onClick={() => {
+            const html = document.querySelector("table").outerHTML;
+            htmlToCSV(html, "tabela_PLD.csv");
+          }} title='Download'/>
+          </div>
           <section>
+
             <article onClick={() => setPage('perMouth')}>
               <p>Valores Diários</p>
             </article>
@@ -244,9 +292,9 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
               </FormControl>
             </div>
             <FormControl sx={{
-                    width: '22%',
-                    ml: 1
-                  }}>
+              width: '22%',
+              ml: 1
+            }}>
               <InputLabel id="demo-simple-select-label">Mês</InputLabel>
               <Select
                   value={day}
@@ -254,7 +302,6 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
                   displayEmpty
                   placeholder='dia'
                   label="Age"
-
                 >
                   <MenuItem value={'0'}>Nenhum</MenuItem>
                   {
@@ -288,7 +335,8 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
           </section>
           <LineChart data1={nordeste} data2={norte} data3={sudeste} data4={sul}
           dataset1='NORDESTE' dataset2='NORTE' dataset3='SUDESTE' dataset4='SUL'
-          title={`Período - ${date}`}
+          title={new Date(date).toLocaleString('pt-br').split(" ")[0]!='Invalid' && new Date(date).toLocaleString('pt-br').split(" ")[0]!='NaN'
+          ? 'Período - ' +  new Date(date).toLocaleString('pt-br').split(" ")[0] : 'Período - '}
           subtitle='' label={['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24']} />
         </PldGraphView>
       </RenderIf>

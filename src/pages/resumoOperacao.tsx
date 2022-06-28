@@ -105,9 +105,9 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
         <title>Smart Energia - Resumo de Operação</title>
       </Head>
       <Header name={userName} />
-      <PageTitle title='Resumo de Operaçoes' subtitle='Operações detalhadas' />
+      <PageTitle title='Resumo de Operações' subtitle='Operações detalhadas' />
 
-      <h3>Seletor Mês</h3>
+      <h3>Filtrar por Unidade e/ou Mês</h3>
       <div className='select'>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>
@@ -163,7 +163,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
                 <tr>
                   <td key={index} className='tg-gceh'>{value.cod_smart_unidade}</td>
                   <td key={index} className='tg-uulg'>{value.operacao}</td>
-                  <td key={index} className='tg-gceh'>{value.montante_nf}</td>
+                  <td key={index} className='tg-gceh'>{parseFloat(value.montante_nf).toLocaleString('pt-br')}</td>
                   <td key={index} className='tg-gceh'>{value.contraparte}</td>
                   <td key={index} className='tg-uulg'>{parseFloat(value.nf_c_icms).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                   <td key={index} className='tg-gceh'>{parseFloat(value.preco_nf).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>

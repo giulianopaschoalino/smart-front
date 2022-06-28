@@ -24,10 +24,12 @@ interface SingleBarInterface{
   label: Array<string>,
   dataset: string,
   barLabel?: boolean | undefined,
-  brutoAnual?: boolean | undefined,
+  year?: boolean | undefined,
+  month?: boolean | undefined,
+  dataset1?: string,
 }
 
-export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel, brutoAnual }: SingleBarInterface) {
+export function DiscretizedConsumptionChart({ title, subtitle, dataProps, label, dataset, barLabel, year, month }: SingleBarInterface) {
   const currentTime = new Date();
 
   const options: object = {
@@ -75,26 +77,9 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel
     labels,
     datasets: [
       {
-        label: 'Estimado',
-        data: [],
-        backgroundColor: '#C2d5fb',
-      },
-      {
         label: dataset,
-        data: dataProps.map((value, index) => {
-          return parseFloat(value.economia_acumulada).toFixed(2)
-        }),
-        backgroundColor: (value, ctx) => {
-          return dataProps[value.dataIndex]?.dad_estimado == false ? '#255488' : '#C2d5fb'
-        },
-      },
-      {
-        label: '',
-        data: [dataProps[0]?.economia_acumulada?dataProps[0].economia_acumulada*1.1:1],
-        backgroundColor: 'transparent',
-        datalabels: {
-          display: false
-        }
+        data: dataProps.map(value => value.consumo),
+        backgroundColor: '#255488'
       },
     ],
   }

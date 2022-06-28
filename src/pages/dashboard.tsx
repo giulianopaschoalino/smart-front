@@ -44,29 +44,29 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
       </Link>
 
       <section className='dashboard'>
-        <GraphCard title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada anual'>
-          <SingleBar title='Economia Bruta' subtitle='(Valores em R$ mil)'
-          dataset='Consolidada' dataset1='Estimada'
+        <GraphCard title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada anual - (Valores em R$ mil)'>
+          <SingleBar title='' subtitle=''
+          dataset='Consolidada'
           dataProps={grossAnualGraph}
-          label={grossAnualYears} barLabel year/>
+          label={grossAnualYears} barLabel/>
         </GraphCard>
 
-        <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada mensal' singleBar>
-          <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$)'
-          dataset='Acumulada' dataset1='Estimado'
+        <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada mensal - (Valores em R$)' singleBar>
+          <SingleBar title='' subtitle=''
+          dataset='Acumulada'
           dataProps={grossMensalGraph}
           label={grossMensalYears}
-          barLabel month/>
+          barLabel/>
         </GraphCard>
 
-        <GraphCard title='Cativo x Livre mensal' subtitle='Comparativo de Custo Estimado' singleBar>
+        <GraphCard title='Cativo x Livre mensal' subtitle='Comparativo de Custo Estimado - (Valores em R$/MWh)' singleBar>
           <LineBarChart2 data1={acumulatedGraph} data2={acumulatedGraph} data3={acumulatedGraph}
           label={ConsumoEstimado.label} dataset1='Custo' dataset2='Cativo' dataset3='Livre'
-          title='Custo Estimado' subtitle='(Valores em R$/MWh)' barLabel hashurado/>
+          title='' subtitle='' barLabel hashurado/>
         </GraphCard>
 
         <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh'>
-        <Chart title='Indicador de Custo' subtitle='(Valores em R$/MWh)'
+        <Chart title='' subtitle=''
         data1={costIndicator.filter((value, index) => value.mes.slice(3, 7).includes('2021')).sort((a, b) => {
           if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
           if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1

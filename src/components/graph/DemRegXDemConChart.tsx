@@ -63,7 +63,6 @@ interface LineBarChartInterface {
   subtitle: string,
   data1: any,
   data2?: any,
-  data3: any,
   red?: any,
   label: any,
   dataset1?: string,
@@ -71,13 +70,24 @@ interface LineBarChartInterface {
   dataset3?: string,
   barLabel?: boolean | undefined,
   hashurado?: boolean | undefined,
+  reais?: boolean | undefined
 }
 
-export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red, dataset1, dataset2, dataset3, barLabel, hashurado }: LineBarChartInterface) {
+export function DemRegXDemConChart({
+    title,
+    subtitle,
+    data1,
+    data2,
+    label,
+    red,
+    dataset1,
+    dataset2,
+    dataset3,
+    barLabel
+  }: LineBarChartInterface) {
   const chartRef = useRef<ChartJS>(null);
 
   const currentTime = new Date();
-
 
   const labels = label
 
@@ -106,56 +116,23 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
     },
   };
 
-  const data = data2? {
+  const data = {
     labels,
     datasets: [
       {
         type: 'line' as const,
-        label: dataset1? dataset1 : 'Dataset 1',
-        borderColor: red?
-        '#f00' : '#0c9200',
-        datalabels: {
-          backgroundColor: 'white'
-        },
-        borderWidth: 2,
-        fill: false,
-        data: data1.map(value => value.economia_mensal),
-      },
-      {
-        type: 'bar' as const,
-        label: dataset2? dataset2 : 'Dataset 2',
-        backgroundColor: (value, ctx) => {
-          return hashurado? data1[value.dataIndex]?.dad_estimado == false? '#C2D5FB' : pattern.draw('diagonal', '#C2D5FB') : '#C2D5FB'
-        },
-        data: data3.map(value => value.custo_cativo),
-      },
-      {
-        type: 'bar' as const,
-        label: dataset3? dataset3 : 'Dataset 2',
-        // backgroundColor: '#255488',
-        backgroundColor: (value, ctx) => {
-          return hashurado? data1[value.dataIndex]?.dad_estimado == false? '#255488' : pattern.draw('diagonal', '#255488') : '#255488'
-        },
-        data: data2.map(value => value.custo_livre),
-      },
-    ],
-  } : {
-    labels,
-    datasets: [
-      {
-        type: 'line' as const,
-        label: dataset1? dataset1 : 'Dataset 1',
+        label: 'Demanda Contratada',
         borderColor: red?
         '#f00' : '#0c9200',
         borderWidth: 2,
         fill: false,
-        data: data1.map(value => value),
+        data: data1.map(value => value.dem_cont),
       },
       {
         type: 'bar' as const,
-        label: dataset3? dataset3 : 'Dataset 2',
+        label: 'Demanda Registrada',
         backgroundColor: '#255488',
-        data: data3.map(value => value),
+        data: data2.map(value => value.dem_reg),
       },
     ],
   };

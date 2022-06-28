@@ -6,58 +6,64 @@ import TextField from '@mui/material/TextField';
 
 import { HeaderView } from './HeaderView'
 import { parseCookies } from 'nookies';
-
-function stringToColor(string: string) {
-  let hash = 0;
-  let i;
-
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  let color = '#';
-
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.slice(-2);
-  }
-
-  return color;
-}
-
-function stringAvatar(name: string) {
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-    children: `${name.split(' ')[0][0]}`,
-  };
-}
+import { GetServerSideProps } from 'next';
+import getAPIClient from '../../services/ssrApi';
 
 interface headerInterface {
   name: string,
   admin?: boolean | undefined
+  logo?: string
 }
 
-export default function Header({ name, admin }: headerInterface) {
+export default function Header({name, admin}: headerInterface) {
+  const { ['user-profile_picture']: profile_picture } = parseCookies()
+
   return (
     <HeaderView>
-      <section>
-      </section>
-      <section>
-        {/* {
-          !admin?
-          <Image src='/assets/png/copel.png' width={170} height={50} />
-          :
-          null
-        } */}
-        <div className='icon' >
-          <p>
-            olá, {name}
-          </p>
-        </div>
-        <Avatar {...stringAvatar(name)} style={{border: 'white solid 4px', width: '47px', height: '47px'}}/>
-      </section>
+      <div className='icon' >
+        <p>
+          olá, {name}
+        </p>
+      </div>
+      {
+        !admin && profile_picture?
+        <Image src={profile_picture} height={50} width={75}/>
+        :
+        null
+      }
     </HeaderView>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
+  const { ['user-profile_picture']: profile_picture } = parseCookies()
+
+  let userData = [];
+
+  await apiClient.get('/user').then(res => {
+    userData = res.data.data
+  }).catch(res => {
+    // console.log(res)
+  })
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      userData,
+      userName,
+      profile_picture
+    }
+  }
+}
+
