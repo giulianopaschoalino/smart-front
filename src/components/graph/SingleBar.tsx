@@ -56,7 +56,7 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel
         offset: -40,
         align: "start",
         font: {
-          size: 10
+          size: 12
         }
       },
       legend: {

@@ -36,8 +36,24 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
     setUnidade(event.target.value);
   };
 
+  function stringToBytes(text) {
+    const length = text.length;
+    const result = new Uint8Array(length);
+    for (let i = 0; i < length; i++) {
+      const code = text.charCodeAt(i);
+      const byte = code > 255 ? 32 : code;
+      result[i] = byte;
+    }
+    return result;
+  }
+
+  // const originalString = 'ååå';
+  // const bytes = stringToBytes(originalString);
+  // const blob = new Blob([bytes.buffer], { type: 'text/plain; charset=ISO-8859-1' });
+
   function downloadCSVFile(csv, filename) {
-    const csv_file = new Blob([csv], {type: "text/csv"});
+
+    const csv_file = new Blob(["\ufeff",csv], {type: "text/csv"});
 
     const download_link = document.createElement("a");
 
@@ -63,7 +79,8 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
         row.push(cols[j].innerText);
       }
 
-      data.push(row.join(","));
+
+      data.push(row.join(";"));
     }
 
     downloadCSVFile(data.join("\n"), filename);
@@ -95,8 +112,6 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
     } else {
       setTableDataState(tableData)
     }
-
-    console.log(month)
   }, [month, unidade])
 
   return (
@@ -148,6 +163,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
       <table className="tg">
         <thead>
           <tr>
+            <th className='tg-8oo6'>Mês </th>
             <th className='tg-8oo6'>Unidade </th>
             <th className='tg-8oo6'>Operação</th>
             <th className='tg-8oo6'>Montante (MWh)</th>
@@ -161,6 +177,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
             tableDataState.map((value, index) => {
               return <>
                 <tr>
+                  <td key={index} className='tg-gceh'>{value.mes}</td>
                   <td key={index} className='tg-gceh'>{value.cod_smart_unidade}</td>
                   <td key={index} className='tg-uulg'>{value.operacao}</td>
                   <td key={index} className='tg-gceh'>{parseFloat(value.montante_nf).toLocaleString('pt-br')}</td>

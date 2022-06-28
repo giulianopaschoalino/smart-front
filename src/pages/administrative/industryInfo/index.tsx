@@ -8,7 +8,7 @@ import PageTitle from '../../../components/pageTitle/PageTitle'
 import { IndustryInfoView } from '../../../styles/layouts/industryInfo/IndustryInfoView'
 import InputUploadPdf from '../../../components/inputUploadPdf/inputUpload';
 import { api } from '../../../services/api'
-import PdfThumbnail from 'react-pdf-thumbnail';
+// import PdfThumbnail from 'react-pdf-thumbnail';
 
 import FormData from 'form-data';
 
@@ -58,12 +58,12 @@ export default function industryInfo({userName}: any) {
     <IndustryInfoView>
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
-          PDF Baixado com Sucesso!
+          PDF enviado com Sucesso!
         </Alert>
       </Snackbar>
       <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
-          PDF não baixado!
+          Falha ao enviar PDF!
         </Alert>
       </Snackbar>
       <Head>

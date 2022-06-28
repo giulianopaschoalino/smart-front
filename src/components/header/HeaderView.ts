@@ -6,6 +6,8 @@ export const HeaderView = styled.header`
 
   width: 100%;
 
+  margin-bottom: 40px;
+
   .icon {
     display: flex;
     align-items: center;
