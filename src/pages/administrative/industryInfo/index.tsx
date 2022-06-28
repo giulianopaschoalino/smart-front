@@ -25,7 +25,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 const formData = new FormData()
 
 
-
 export default function industryInfo({userName}: any) {
   const [url, setUrl] = React.useState('');
 
@@ -105,8 +104,29 @@ export default function industryInfo({userName}: any) {
       </div>
 
       <div className='inputTeste'>
+      <form action="">
+      <div className='tesess'>
+      <label  htmlFor="arquivo"> <p className='TitleBllutton'>   </p>   </label>
       <input  type="file" name='arquivo' id='arquivo' onChange={onChange} />
       </div>
+      </form>
+      </div>
+
+
+
+
+      <form>
+        <div>
+            <label htmlFor="arquivo"></label>
+            <input type="file" name='arquivo' id='arquivo'/>
+        </div>
+    </form>
+
+
+
+
+
+
 
 
 <BasicButton onClick={handleCreateClient} title='Atualizar'/>
