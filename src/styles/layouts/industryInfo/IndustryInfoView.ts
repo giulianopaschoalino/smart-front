@@ -26,4 +26,17 @@ export const IndustryInfoView = styled.main`
 
     color: #FFFFFF;
   }
+  .inputTeste{
+    display: flex;
+    align-items: center;
+    margin-top:-10px;
+    width: 50%;
+    margin-bottom: 50px;
+    height: 50px;
+    background: white;
+    border: 3px solid #254F7F;
+    border-radius:10px;
+  }
+
+
 `

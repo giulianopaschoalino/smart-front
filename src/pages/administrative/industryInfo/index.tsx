@@ -11,9 +11,6 @@ import { api } from '../../../services/api'
 import { Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import FormData from 'form-data';
-
-
-
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { InputUploadView } from '../../../components/inputUploadPdf/inputUploadView'
@@ -24,6 +21,10 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 ) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+
+const formData = new FormData()
+
+
 
 export default function industryInfo({userName}: any) {
   const [url, setUrl] = React.useState('');
@@ -45,15 +46,31 @@ export default function industryInfo({userName}: any) {
     setOpenSnackSuccess(false);
   };
 
-  function handleCreateClient() {
+  function handleCreateClient({
+    pdf,
+  }) {
     formData.append('file', pdf)
-
-    api.post('/updateFile', formData).then(res => {
-      setOpenSnackSuccess(true)
-    }).catch(res => {
-      setOpenSnackError(true)
-    })
+    api.post('/updateFile', formData)
+      .then((res) => {
+        setOpenSnackSuccess(true)
+        window.location.reload()
+      })
+      .catch((res) => {
+        setOpenSnackError(true)
+      })
   }
+
+
+  // function handleCreateClient() {
+  //   pdf,
+  //   FormData.append('file', pdf)
+
+  //   api.post('/updateFile', FormData).then(res => {
+  //     setOpenSnackSuccess(true)
+  //   }).catch(res => {
+  //     setOpenSnackError(true)
+  //   })
+  // }
 
   return (
     <IndustryInfoView>
@@ -73,7 +90,7 @@ export default function industryInfo({userName}: any) {
       <Header name={userName} />
       <div className='title'>
         <PageTitle title='Info Setorial' subtitle='Realize o upload da última versão de info setorial' />
-        <InputUploadView>
+        {/* <InputUploadView>
           <div className="update">
           <form action="">
             <div className='testess'>
@@ -83,17 +100,16 @@ export default function industryInfo({userName}: any) {
             </div>
           </form>
           </div>
-        </InputUploadView>
+        </InputUploadView> */}
         {/* <InputUploadPdf/> */}
       </div>
 
-      <div style={{marginTop:'20px'}}>
+      <div className='inputTeste'>
       <input  type="file" name='arquivo' id='arquivo' onChange={onChange} />
       </div>
 
 
-<br />
-      {/* <BasicButton onClick={() => handleCreateClient()} title='Atualizar'/> */}
+<BasicButton onClick={handleCreateClient} title='Atualizar'/>
 
     </IndustryInfoView>
   )

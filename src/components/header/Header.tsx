@@ -42,7 +42,7 @@ interface headerInterface {
   profile_picture: string
 }
 
-export default function Header({ name, admin, profile_picture }: headerInterface) {
+export default function Header({ name, admin, }: headerInterface) {
   return (
     <HeaderView>
       <section>
@@ -60,13 +60,6 @@ export default function Header({ name, admin, profile_picture }: headerInterface
             olá, {name}
           </p>
         </div>
-        {
-          !admin?
-          // <Image src={profile_picture} alt='teste' height={45} width={50} />
-          null
-          :
-          null
-        }
 
       </section>
     </HeaderView>
