@@ -70,7 +70,7 @@ export default function Home() {
     }else{
       try {
         await signIn({email, password}).then((res: any) => {
-          if (res.response.status === 422 || res.response.status === 401) {
+          if (res.response.status === 422 || res.response.status === 401 || res.response.status === 500 ) {
             setOpenSnackError(true)
           }
         })
@@ -91,8 +91,8 @@ export default function Home() {
 
   useEffect(() => {
     setValues({
-      password: null,
-      showPassword: false,
+      password: (''),
+      showPassword: null,
     });
     setEmail("")
   }, [rota])

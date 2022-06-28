@@ -11,7 +11,7 @@ export const LoginButtonView = styled.button`
   background: rgb(2,0,36);
   background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(37,79,127,1) 35%, rgba(136,136,136,1) 100%);
 
-  font-family: 'Nunito Sans';
+  font-family: 'Poppins';
   font-weight: 700;
   font-size: calc(99.98% + 10px);
   line-height: 44px;

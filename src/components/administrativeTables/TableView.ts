@@ -20,7 +20,7 @@ export const TableView = styled.main`
     border-radius: 16px;
     tr {
       th {
-        font-family: 'poppins';
+        font-family: 'Poppins';
         font-weight: 500;
         font-size: 16px;
         color: #6A707E;
@@ -28,13 +28,13 @@ export const TableView = styled.main`
 
       td {
         :nth-child(3) {
-          font-family: 'poppins';
+          font-family: 'Poppins';
           font-weight: 500;
           font-size: 16px;
           color: #6A707E;
         }
         :nth-child(4) {
-          font-family: 'poppins';
+          font-family: 'Poppins';
           font-weight: 400;
           font-size: 12px;
           color: #828282;
