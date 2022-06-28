@@ -96,6 +96,8 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
       setTableDataState(tableData)
     }
 
+    console.log(tableData)
+
     console.log(month)
   }, [month, unidade])
 
@@ -148,6 +150,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
       <table className="tg">
         <thead>
           <tr>
+            <th className='tg-8oo6'>Mês </th>
             <th className='tg-8oo6'>Unidade </th>
             <th className='tg-8oo6'>Operação</th>
             <th className='tg-8oo6'>Montante (MWh)</th>
@@ -161,6 +164,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
             tableDataState.map((value, index) => {
               return <>
                 <tr>
+                  <td key={index} className='tg-gceh'>{value.mes}</td>
                   <td key={index} className='tg-gceh'>{value.cod_smart_unidade}</td>
                   <td key={index} className='tg-uulg'>{value.operacao}</td>
                   <td key={index} className='tg-gceh'>{parseFloat(value.montante_nf).toLocaleString('pt-br')}</td>
