@@ -68,7 +68,7 @@ export default function chartTelemetry({userName}) {
     console.log(router.query)
     await api.post('/telemetry/powerFactor', {
       "filters": [
-        {"type" : "=", "field": discretization, "value": unity},
+        {"type" : "=", "field": "med_5min.ponto", "value": unity},
         {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
       ]
     }).then(res => {
@@ -78,9 +78,9 @@ export default function chartTelemetry({userName}) {
     })
 
     await api.post('/telemetry/discretization', {
-      "type": "5_min",
+      "type": discretization,
       "filters": [
-          {"type" : "=", "field": discretization, "value": unity},
+          {"type" : "=", "field": "med_5min.ponto", "value": unity},
           {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
         ]
     }).then(res => {
@@ -90,9 +90,9 @@ export default function chartTelemetry({userName}) {
     })
 
   await api.post('/telemetry/discretization', {
-    "type": "5_min",
+    "type": discretization,
     "filters": [
-        {"type" : "=", "field": discretization, "value": unity},
+        {"type" : "=", "field": "med_5min.ponto", "value": unity},
         {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
       ]
     }).then(res => {
@@ -103,7 +103,7 @@ export default function chartTelemetry({userName}) {
 
   await api.post('/telemetry/demand', {
     "filters": [
-      {"type" : "=", "field": discretization, "value": unity},
+      {"type" : "=", "field": 'med_5min.ponto', "value": unity},
       {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
     ]
     }).then(res => {
@@ -154,7 +154,10 @@ export default function chartTelemetry({userName}) {
             </Modal>
 
             <div onClick={() => setOpenConsumoDiscretizado1(true)}>
-              <DiscretizedConsumptionChartLine title='Consumo discretizado em 1 hora' subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada' label={discretizedConsumptionDataReativa.map(data => parseFloat(data.reativa).toFixed(3))} />
+              <DiscretizedConsumptionChartLine title={
+                  discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
+                  discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
+                } subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada' label={discretizedConsumptionDataReativa.map(data => parseFloat(data.reativa).toFixed(3))} />
             </div>
             <Modal
               open={openConsumoDiscretizado1}
@@ -163,12 +166,18 @@ export default function chartTelemetry({userName}) {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
-                <DiscretizedConsumptionChartLine title='Consumo discretizado em 1 hora' subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada' label={discretizedConsumptionDataReativa.map(data => data.reativa)} />
+                <DiscretizedConsumptionChartLine title={
+                  discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
+                  discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
+                } subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada' label={discretizedConsumptionDataReativa.map(data => data.reativa)} />
               </Box>
             </Modal>
 
             <div onClick={() => setOpenConsumoDiscretizado2(true)}>
-              <DiscretizedConsumptionChart title='Consumo discretizado em 5 minutos' subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
+              <DiscretizedConsumptionChart title={
+                  discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
+                  discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
+                } subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
             </div>
             <Modal
               open={openConsumoDiscretizado2}
@@ -177,7 +186,10 @@ export default function chartTelemetry({userName}) {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
-                <DiscretizedConsumptionChart title='Consumo discretizado em 5 minutos' subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
+                <DiscretizedConsumptionChart title={
+                  discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
+                  discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
+                } subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
               </Box>
             </Modal>
 
