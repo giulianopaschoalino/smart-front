@@ -91,8 +91,8 @@ export default function Home() {
 
   useEffect(() => {
     setValues({
-      password: null,
-      showPassword: false,
+      password: (''),
+      showPassword: null,
     });
     setEmail("")
   }, [rota])
