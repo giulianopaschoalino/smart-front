@@ -49,7 +49,16 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
       datalabels: {
         display: true,
         color: barLabel? 'black' : "rgba(255, 255, 255, 0)",
-        formatter: Math.round,
+        formatter: (value, ctx) => {
+          let sum = 0;
+          const dataArr = ctx.chart.data.datasets[0].data;
+          dataArr.map(data => {
+              sum += data;
+          });
+          const result = `${parseFloat(value).toLocaleString('pt-br')}`
+
+          return value==null? null : result
+        },
         anchor: "end",
         offset: -20,
         align: "start",
