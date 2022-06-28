@@ -130,6 +130,39 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
 
   const dateFormated = new Date()
 
+  function downloadCSVFile(csv, filename) {
+    const csv_file = new Blob([csv], {type: "text/csv"});
+
+    const download_link = document.createElement("a");
+
+    download_link.download = filename;
+
+    download_link.href = window.URL.createObjectURL(csv_file);
+
+    download_link.style.display = "none";
+
+    document.body.appendChild(download_link);
+
+    download_link.click();
+  }
+
+  function htmlToCSV(html, filename) {
+    const data = [];
+    const rows = document.querySelectorAll("table tr");
+
+    for (let i = 0; i < rows.length; i++) {
+      const row = [], cols: any = rows[i].querySelectorAll("td, th");
+
+      for (let j = 0; j < cols.length; j++) {
+        row.push(cols[j].innerText);
+      }
+
+      data.push(row.join(","));
+    }
+
+    downloadCSVFile(data.join("\n"), filename);
+  }
+
   useEffect(() => {
     getDataByHour()
     getDataByDay()
@@ -215,7 +248,10 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
             </tbody>
           </table>
           <div className='btnDownload'>
-          <BasicButton onClick={() => console.log()} title='Download'/>
+          <BasicButton onClick={() => {
+            const html = document.querySelector("table").outerHTML;
+            htmlToCSV(html, "tabela_PLD.csv");
+          }} title='Download'/>
           </div>
           <section>
 

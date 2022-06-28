@@ -26,24 +26,50 @@ export const IndustryInfoView = styled.main`
 
     color: #FFFFFF;
   }
-  .inputTeste{
+
+  form {
+    label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      width: 150px;
+      margin-left: 10px;
+      transform: translateY(20px);
+      background-color: #254F7F;
+      color: white;
+      border-radius: 8px;
+    }
+  }
+
+  input[type="file"] {
+    padding-top: 20px;
+    padding-left: 41px;
+    width: 350px;
+    height: 60px;
+    border: 1px solid black;
+    border-radius: 6px;
+  }
+  label {
+  }
+
+  /* .inputTeste{
     display: flex;
     align-items: center;
-    margin-top:-10px;
     width: 50%;
-    margin-bottom: 50px;
     height: 50px;
     background: white;
-    border: 3px solid #254F7F;
     border-radius:10px;
   }
 
-
   input[type="file"] {
-    display: none;
-}
-label {
-    padding: 20px 10px;
+    display: block;
+  }
+
+  label {
+    display: flex;
+    justify-content: flex-start;
+    padding: 2px 10px;
     width: 200px;
     background-color: #333;
     color: #FFF;
@@ -52,7 +78,7 @@ label {
     display: block;
     margin-top: 10px;
     cursor: pointer;
-}
+  } */
 
 
 

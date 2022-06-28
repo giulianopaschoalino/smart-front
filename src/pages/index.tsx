@@ -36,10 +36,10 @@ export default function Home() {
   const [state, setstate] = useState(false);
 
   const [values, setValues] = useState({
-
     password: null,
     showPassword: false,
   });
+
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>()
 

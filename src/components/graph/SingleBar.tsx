@@ -46,7 +46,7 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel
               sum += data;
           });
           const percentage = (dataProps[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
-          const result = `${parseFloat(value).toFixed(0)}\n    ${percentage}`
+          const result = `${parseFloat(value).toLocaleString('pt-br')}\n    ${percentage}`
 
           return value==null? null : result
         },

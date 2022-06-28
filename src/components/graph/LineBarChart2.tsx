@@ -78,7 +78,6 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
 
   const currentTime = new Date();
 
-
   const labels = label
 
   const options: any = {
@@ -88,12 +87,21 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
         display: true,
         color: barLabel? 'black' : "rgba(255, 255, 255, 0)",
         // backgroundColor: '#255488',
-        formatter: Math.round,
         anchor: "end",
         offset: -20,
         align: "start",
         font: {
           size: 12
+        },
+        formatter: (value, ctx) => {
+          let sum = 0;
+          const dataArr = ctx.chart.data.datasets[0].data;
+          dataArr.map(data => {
+              sum += data;
+          });
+          const result = `${parseFloat(value).toLocaleString('pt-br')}`
+
+          return value==null? null : result
         }
       },
       legend: {

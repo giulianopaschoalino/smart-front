@@ -8,6 +8,7 @@ import PageTitle from '../../../components/pageTitle/PageTitle'
 import { IndustryInfoView } from '../../../styles/layouts/industryInfo/IndustryInfoView'
 import InputUploadPdf from '../../../components/inputUploadPdf/inputUpload';
 import { api } from '../../../services/api'
+import PdfThumbnail from 'react-pdf-thumbnail';
 
 import FormData from 'form-data';
 
@@ -28,6 +29,7 @@ export default function industryInfo({userName}: any) {
   const [pdf, setPdf] = useState<any>();
   function onChange(e) {
     setPdf(e.target.files[0])
+    console.log(pdf)
   }
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
@@ -70,17 +72,10 @@ export default function industryInfo({userName}: any) {
       <Header name={userName} />
       <div className='title'>
         <PageTitle title='Info Setorial' subtitle='Realize o upload da última versão de info setorial' />
-        <InputUploadView>
-          <div className="update">
-          <form action="">
-            <div className='testess'>
-              <label  htmlFor="arquivo"> <p className='TitleButton'> Enviar PDF </p>   </label>
-              <input  type="file" name='arquivo' id='arquivo' onChange={onChange} />
-            </div>
-          </form>
-          </div>
-        </InputUploadView>
-        {/* <InputUploadPdf/> */}
+        <form action="">
+          <label htmlFor="">Escolher arquivo</label>
+          <input type="file" name='arquivo' id='arquivo' onChange={onChange}/>
+        </form>
       </div>
 
       <BasicButton onClick={() => handleCreateClient()} title='Atualizar'/>

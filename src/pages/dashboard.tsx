@@ -52,7 +52,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
         </GraphCard>
 
         <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada mensal - (Valores em R$)' singleBar>
-          <SingleBar title='Economia Bruta Estimada e Acumulada' subtitle='(Valores em R$)'
+          <SingleBar title='' subtitle=''
           dataset='Acumulada'
           dataProps={grossMensalGraph}
           label={grossMensalYears}
