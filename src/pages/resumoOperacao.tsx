@@ -36,53 +36,27 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
     setUnidade(event.target.value);
   };
 
-  function stringToBytes(text) {
-    const length = text.length;
-    const result = new Uint8Array(length);
-    for (let i = 0; i < length; i++) {
-      const code = text.charCodeAt(i);
-      const byte = code > 255 ? 32 : code;
-      result[i] = byte;
-    }
-    return result;
-  }
-
-  // const originalString = 'ååå';
-  // const bytes = stringToBytes(originalString);
-  // const blob = new Blob([bytes.buffer], { type: 'text/plain; charset=ISO-8859-1' });
-
   function downloadCSVFile(csv, filename) {
 
     const csv_file = new Blob(["\ufeff",csv], {type: "text/csv"});
-
     const download_link = document.createElement("a");
-
     download_link.download = filename;
-
     download_link.href = window.URL.createObjectURL(csv_file);
-
     download_link.style.display = "none";
-
     document.body.appendChild(download_link);
-
     download_link.click();
   }
 
   function htmlToCSV(html, filename) {
     const data = [];
     const rows = document.querySelectorAll("table tr");
-
     for (let i = 0; i < rows.length; i++) {
       const row = [], cols: any = rows[i].querySelectorAll("td, th");
-
       for (let j = 0; j < cols.length; j++) {
         row.push(cols[j].innerText);
       }
-
-
       data.push(row.join(";"));
     }
-
     downloadCSVFile(data.join("\n"), filename);
   }
 
@@ -123,7 +97,6 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
       </Head>
       <Header name={userName} />
       <PageTitle title='Resumo de Operações' subtitle='Operações detalhadas' />
-
       <h3>Filtrar por Unidade e/ou Mês</h3>
       <div className='select'>
         <FormControl fullWidth>

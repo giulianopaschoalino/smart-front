@@ -9,7 +9,7 @@ interface PageTitleInterface {
 export default function PageTitle({ title, subtitle }: PageTitleInterface) {
   return (
     <PageTitleView>
-      <h1>{title}</h1>
+      <h1 style={{fontSize:'2em'}} >{title}</h1>
       <p>{subtitle}</p>
     </PageTitleView>
   )
