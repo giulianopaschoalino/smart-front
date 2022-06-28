@@ -36,8 +36,24 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
     setUnidade(event.target.value);
   };
 
+  function stringToBytes(text) {
+    const length = text.length;
+    const result = new Uint8Array(length);
+    for (let i = 0; i < length; i++) {
+      const code = text.charCodeAt(i);
+      const byte = code > 255 ? 32 : code;
+      result[i] = byte;
+    }
+    return result;
+  }
+
+  // const originalString = 'ååå';
+  // const bytes = stringToBytes(originalString);
+  // const blob = new Blob([bytes.buffer], { type: 'text/plain; charset=ISO-8859-1' });
+
   function downloadCSVFile(csv, filename) {
-    const csv_file = new Blob([csv], {type: "text/csv"});
+
+    const csv_file = new Blob(["\ufeff",csv], {type: "text/csv"});
 
     const download_link = document.createElement("a");
 
@@ -63,7 +79,8 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
         row.push(cols[j].innerText);
       }
 
-      data.push(row.join(","));
+
+      data.push(row.join(";"));
     }
 
     downloadCSVFile(data.join("\n"), filename);
