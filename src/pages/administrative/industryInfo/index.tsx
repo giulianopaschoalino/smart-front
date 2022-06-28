@@ -8,9 +8,9 @@ import PageTitle from '../../../components/pageTitle/PageTitle'
 import { IndustryInfoView } from '../../../styles/layouts/industryInfo/IndustryInfoView'
 import InputUploadPdf from '../../../components/inputUploadPdf/inputUpload';
 import { api } from '../../../services/api'
-// import { Viewer } from '@react-pdf-viewer/core';
-import '@react-pdf-viewer/core/lib/styles/index.css';
+
 import FormData from 'form-data';
+
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { InputUploadView } from '../../../components/inputUploadPdf/inputUploadView'
@@ -22,16 +22,13 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const formData = new FormData()
-
-
 export default function industryInfo({userName}: any) {
-  const [url, setUrl] = React.useState('');
+  const formData = new FormData();
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const files = e.target.files;
-      files.length > 0 && setUrl(URL.createObjectURL(files[0]));
-  };
+  const [pdf, setPdf] = useState<any>();
+  function onChange(e) {
+    setPdf(e.target.files[0])
+  }
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
   const [openSnackError, setOpenSnackError] = useState<boolean>(false);
@@ -45,31 +42,15 @@ export default function industryInfo({userName}: any) {
     setOpenSnackSuccess(false);
   };
 
-  function handleCreateClient({
-    pdf,
-  }) {
+  function handleCreateClient() {
     formData.append('file', pdf)
-    api.post('/updateFile', formData)
-      .then((res) => {
-        setOpenSnackSuccess(true)
-        window.location.reload()
-      })
-      .catch((res) => {
-        setOpenSnackError(true)
-      })
+
+    api.post('/updateFile', formData).then(res => {
+      setOpenSnackSuccess(true)
+    }).catch(res => {
+      setOpenSnackError(true)
+    })
   }
-
-
-  // function handleCreateClient() {
-  //   pdf,
-  //   FormData.append('file', pdf)
-
-  //   api.post('/updateFile', FormData).then(res => {
-  //     setOpenSnackSuccess(true)
-  //   }).catch(res => {
-  //     setOpenSnackError(true)
-  //   })
-  // }
 
   return (
     <IndustryInfoView>
@@ -89,46 +70,21 @@ export default function industryInfo({userName}: any) {
       <Header name={userName} />
       <div className='title'>
         <PageTitle title='Info Setorial' subtitle='Realize o upload da última versão de info setorial' />
-        {/* <InputUploadView>
+        <InputUploadView>
           <div className="update">
           <form action="">
             <div className='testess'>
               <label  htmlFor="arquivo"> <p className='TitleButton'> Enviar PDF </p>   </label>
-
-              <input type="file" name='arquivo' id='arquivo' accept=".pdf" onChange={onChange} />
+              <input  type="file" name='arquivo' id='arquivo' onChange={onChange} />
             </div>
           </form>
           </div>
-        </InputUploadView> */}
+        </InputUploadView>
         {/* <InputUploadPdf/> */}
       </div>
 
-      <div className='inputTeste'>
-      <form action="">
-      <div className='tesess'>
-      <label  htmlFor="arquivo"> <p className='TitleBllutton'>   </p>   </label>
-      <input  type="file" name='arquivo' id='arquivo' onChange={onChange} />
-      </div>
-      </form>
-      </div>
+      <BasicButton onClick={() => handleCreateClient()} title='Atualizar'/>
 
-
-
-
-      <form>
-        <div>
-            <label htmlFor="arquivo"></label>
-            <input type="file" name='arquivo' id='arquivo'/>
-        </div>
-    </form>
-
-
-
-
-
-
-
-      {/* <BasicButton onClick={() => handleCreateClient()} title='Atualizar'/> */}
     </IndustryInfoView>
   )
 }
