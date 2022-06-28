@@ -29,6 +29,7 @@ export default function industryInfo({userName}: any) {
   const [pdf, setPdf] = useState<any>();
   function onChange(e) {
     setPdf(e.target.files[0])
+    console.log(pdf)
   }
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
@@ -71,19 +72,10 @@ export default function industryInfo({userName}: any) {
       <Header name={userName} />
       <div className='title'>
         <PageTitle title='Info Setorial' subtitle='Realize o upload da última versão de info setorial' />
-        <InputUploadView>
-          <div className="update">
-          <form action="">
-            <div className='testess'>
-              <label htmlFor="arquivo"><p className='TitleButton'> Enviar PDF </p></label>
-              <input type="file" name='arquivo' id='arquivo' onChange={onChange}/>
-              {/* <input type='file' accept='application/pdf' onChange={onChange} /> */}
-            </div>
-          </form>
-          <p>{pdf}</p>
-          </div>
-        </InputUploadView>
-        {/* <InputUploadPdf/> */}
+        <form action="">
+          <label htmlFor="">Escolher arquivo</label>
+          <input type="file" name='arquivo' id='arquivo' onChange={onChange}/>
+        </form>
       </div>
 
       <BasicButton onClick={() => handleCreateClient()} title='Atualizar'/>
