@@ -13,18 +13,20 @@ export const HeaderView = styled.header`
     align-items: center;
     justify-content: flex-start;
 
-    min-width: 120px;
     height: 40px;
 
     border-radius: 8px;
 
     background-color: #254F7F;
 
+    padding: 14px;
+
     margin-right: 20px;
 
     p{
       color: white;
-      margin-left: 15%;
+
+      white-space: nowrap;
     }
   }
 `

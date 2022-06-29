@@ -41,7 +41,6 @@ interface ChartInterface {
 export default function Chart({ title, data1, data2, label, subtitle, dataset1, dataset2, barLabel }: ChartInterface) {
 
   const labels = label;
-  const empty = []
 
   const options: any = {
     responsive: true,

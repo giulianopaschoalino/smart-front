@@ -267,7 +267,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
 
       <RenderIf isTrue={page==='perMouth'? true : false}>
         <GoBack onClick={() => setPage('table')}>{'< Voltar para tabela PLD'}</GoBack>
-        <PageTitle title='Resumo PLD - Diários' subtitle=''/>
+        <PageTitle title='Resumo PLD - Diários' subtitle='Evolução PLD (R$/MWh)'/>
         <PldGraphView>
           <section className='toolsbar'>
             <div className='select'>
@@ -321,7 +321,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
           data1={dataByDay} data3={dataByDay}
           dataset1={'Economia'} dataset2={'barra1'} dataset3={'2021'}
           label={EvolucaoPld.label}
-          title='Evolução PLD (R$/MWh)' subtitle='' />
+          title='' subtitle='' />
         </PldGraphView>
       </RenderIf>
 
@@ -335,8 +335,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
           </section>
           <LineChart data1={nordeste} data2={norte} data3={sudeste} data4={sul}
           dataset1='NORDESTE' dataset2='NORTE' dataset3='SUDESTE' dataset4='SUL'
-          title={new Date(date).toLocaleString('pt-br').split(" ")[0]!='Invalid' && new Date(date).toLocaleString('pt-br').split(" ")[0]!='NaN'
-          ? 'Período - ' +  new Date(date).toLocaleString('pt-br').split(" ")[0] : 'Período - '}
+          title={date? `Período - ${date.toString().split("-")[2]}/${date.toString().split("-")[1]}/${date.toString().split("-")[0]}` : null}
           subtitle='' label={['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24']} />
         </PldGraphView>
       </RenderIf>

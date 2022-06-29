@@ -78,7 +78,7 @@ export default function chartTelemetry({userName}) {
     })
 
     await api.post('/telemetry/discretization', {
-      "type": discretization,
+      "type": discretization? discretization : "5_min",
       "filters": [
           {"type" : "=", "field": "med_5min.ponto", "value": unity},
           {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
@@ -90,7 +90,7 @@ export default function chartTelemetry({userName}) {
     })
 
   await api.post('/telemetry/discretization', {
-    "type": discretization,
+    "type": discretization? discretization : "5_min",
     "filters": [
         {"type" : "=", "field": "med_5min.ponto", "value": unity},
         {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
@@ -103,7 +103,7 @@ export default function chartTelemetry({userName}) {
 
   await api.post('/telemetry/demand', {
     "filters": [
-      {"type" : "=", "field": 'med_5min.ponto', "value": unity},
+      {"type" : "=", "field": "med_5min.ponto", "value": unity},
       {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
     ]
     }).then(res => {
