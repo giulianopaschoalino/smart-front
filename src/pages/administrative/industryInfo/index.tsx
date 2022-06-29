@@ -6,15 +6,11 @@ import BasicButton from '../../../components/buttons/basicButton/BasicButton'
 import Header from '../../../components/header/Header'
 import PageTitle from '../../../components/pageTitle/PageTitle'
 import { IndustryInfoView } from '../../../styles/layouts/industryInfo/IndustryInfoView'
-import InputUploadPdf from '../../../components/inputUploadPdf/inputUpload';
 import { api } from '../../../services/api'
-// import PdfThumbnail from 'react-pdf-thumbnail';
-
 import FormData from 'form-data';
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import { InputUploadView } from '../../../components/inputUploadPdf/inputUploadView'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
