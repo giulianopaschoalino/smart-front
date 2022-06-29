@@ -40,13 +40,7 @@ export default function ForgotPassword() {
     setOpenSnackSuccess(false);
   };
 
-  function handleChangePassword() {
-    if (same) {
-      router.push('/')
-    } else {
-      null
-    }
-  }
+
 
   useEffect(() => {
     if (password == confirmPassword && password != '') {
@@ -66,7 +60,7 @@ export default function ForgotPassword() {
   }
 
   return (
-    <ForgotPasswordView auth={rota} >
+    <ForgotPasswordView auth={rota}>
       <Head>
         <title>Smart Energia</title>
       </Head>
@@ -103,7 +97,6 @@ export default function ForgotPassword() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
   if (!token) {
