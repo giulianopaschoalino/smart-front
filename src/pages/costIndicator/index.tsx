@@ -34,19 +34,10 @@ export default function CostIndicator({graphData, userName}: any) {
       <PageTitle title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'/>
       <section>
         <Chart title='' subtitle=''
-        data1={graphData.filter((value, index) => value.mes.slice(3, 7).includes('2021')).sort((a, b) => {
-          if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
-          if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1
-
-          return 0
-        })}
-        data2={graphData.filter((value, index) => value.mes.slice(3, 7).includes('2022'))}
-        label={graphData.filter((value, index) => value.mes.slice(3, 7).includes('2021')).sort((a, b) => {
-          if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
-          if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1
-
-          return 0
-        }).map(value => value.mes)} barLabel />
+        data1={graphData.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
+        // data1={graphData}
+        data2={graphData.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
+        label={graphData.map(value => value.mes.slice(0, 3))} barLabel />
       </section>
     </CostIndicatorView>
   )
