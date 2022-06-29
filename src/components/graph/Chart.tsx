@@ -59,11 +59,13 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
 
           return value==null? null : result
         },
-        anchor: "end",
-        offset: -20,
-        align: "start",
+        anchor: "start",
+        offset: 20,
+        align: "end",
+        rotation: -90,
         font: {
-          size: 12
+          size: 14,
+          weight: 800
         }
       },
       legend: {

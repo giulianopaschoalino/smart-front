@@ -28,8 +28,6 @@ interface SingleBarInterface{
 }
 
 export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel, brutoAnual }: SingleBarInterface) {
-  const currentTime = new Date();
-
   const options: object = {
     responsive: true,
     series: {
@@ -90,7 +88,7 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel
       },
       {
         label: '',
-        data: [dataProps[0]?.economia_acumulada?dataProps[0].economia_acumulada*1.1:1],
+        data: [dataProps[0]?.economia_acumulada?dataProps[0].economia_acumulada*1.1 : 1],
         backgroundColor: 'transparent',
         datalabels: {
           display: false

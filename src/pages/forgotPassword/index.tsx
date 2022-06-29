@@ -3,16 +3,16 @@ import Image from 'next/image';
 import { useRouter } from 'next/router'
 import FormData from 'form-data';
 import Snackbar from '@mui/material/Snackbar';
-import LoginButton from '../components/buttons/loginButton/LoginButton';
+import LoginButton from '../../components/buttons/loginButton/LoginButton';
 import TextField from '@mui/material/TextField';
-import { ForgotPasswordContainer, ForgotPasswordView } from '../styles/layouts/forgotPassword/ForgotPasswordView';
-import RenderIf from '../utils/renderIf';
+import { ForgotPasswordContainer, ForgotPasswordView } from '../../styles/layouts/forgotPassword/ForgotPasswordView';
+import RenderIf from '../../utils/renderIf';
 import Alert from '@mui/material/Alert';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import getAPIClient from '../services/ssrApi';
-import { api } from '../services/api';
+import getAPIClient from '../../services/ssrApi';
+import { api } from '../../services/api';
 
 export default function ForgotPassword() {
   const router = useRouter()

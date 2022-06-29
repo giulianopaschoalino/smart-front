@@ -10,15 +10,15 @@ import React, { useEffect, useState } from 'react';
 // import Teste from '../files/teste.csv';
 import { CSVDownload, CSVLink } from "react-csv";
 
-import BasicButton from '../components/buttons/basicButton/BasicButton';
-import Header from '../components/header/Header';
-import PageTitle from '../components/pageTitle/PageTitle';
-import Sidebar from '../components/sidebar/Sidebar';
-import { api } from '../services/api';
+import BasicButton from '../../components/buttons/basicButton/BasicButton';
+import Header from '../../components/header/Header';
+import PageTitle from '../../components/pageTitle/PageTitle';
+import Sidebar from '../../components/sidebar/Sidebar';
+import { api } from '../../services/api';
 // import { dados } from '../services/DadosTabelaResumoOperacao';
-import data from '../services/dados.json'
-import getAPIClient from '../services/ssrApi';
-import { Pagination, TableView } from '../styles/layouts/ResumoOperacao/ResumoOperacaoView';
+import data from '../../services/dados.json'
+import getAPIClient from '../../services/ssrApi';
+import { Pagination, TableView } from '../../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 
 export default function ResumoOperacao({tableData, clientsData, userName, clientMonth}: any) {
   const csvData = tableData;

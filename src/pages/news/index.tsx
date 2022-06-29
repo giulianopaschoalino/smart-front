@@ -6,11 +6,11 @@ import { Router } from 'next/router';
 import { parseCookies } from 'nookies';
 import React from 'react'
 
-import Banner from '../components/banner/Banner'
-import BasicButton from '../components/buttons/basicButton/BasicButton';
-import Header from '../components/header/Header'
-import getAPIClient from '../services/ssrApi';
-import { Button, NewsView } from '../styles/layouts/news/NewsView'
+import Banner from '../../components/banner/Banner'
+import BasicButton from '../../components/buttons/basicButton/BasicButton';
+import Header from '../../components/header/Header'
+import getAPIClient from '../../services/ssrApi';
+import { Button, NewsView } from '../../styles/layouts/news/NewsView'
 
 export default function aboutUs({userName, news}: any) {
   console.log(news.channel.item)

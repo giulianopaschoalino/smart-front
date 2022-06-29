@@ -2,12 +2,12 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import React from 'react'
-import CommonQuestionsCard from '../components/faqQuestionsCard/FaqQuestionsCard'
-import Header from '../components/header/Header'
-import PageTitle from '../components/pageTitle/PageTitle'
-import { api } from '../services/api'
-import getAPIClient from '../services/ssrApi'
-import { FaqView } from '../styles/layouts/commonQuestions/FaqView'
+import CommonQuestionsCard from '../../components/faqQuestionsCard/FaqQuestionsCard'
+import Header from '../../components/header/Header'
+import PageTitle from '../../components/pageTitle/PageTitle'
+import { api } from '../../services/api'
+import getAPIClient from '../../services/ssrApi'
+import { FaqView } from '../../styles/layouts/commonQuestions/FaqView'
 
 
 export default function commonQuestions({faqData, userName}) {

@@ -3,11 +3,11 @@ import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import React from 'react'
 
-import Chart from '../components/graph/Chart'
-import Header from '../components/header/Header'
-import PageTitle from '../components/pageTitle/PageTitle'
-import getAPIClient from '../services/ssrApi'
-import { CostIndicatorView } from '../styles/layouts/economy/costIndicator/CostIndicatorView'
+import Chart from '../../components/graph/Chart'
+import Header from '../../components/header/Header'
+import PageTitle from '../../components/pageTitle/PageTitle'
+import getAPIClient from '../../services/ssrApi'
+import { CostIndicatorView } from '../../styles/layouts/economy/costIndicator/CostIndicatorView'
 
 export default function CostIndicator({graphData, userName}: any) {
   return (

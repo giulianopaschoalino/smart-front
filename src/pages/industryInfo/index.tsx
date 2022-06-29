@@ -2,11 +2,11 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import React, { useState } from 'react'
-import BasicButton from '../components/buttons/basicButton/BasicButton'
-import Header from '../components/header/Header'
-import PageTitle from '../components/pageTitle/PageTitle'
-import { api } from '../services/api'
-import { IndustryInfoView } from '../styles/layouts/industryInfo/IndustryInfoView'
+import BasicButton from '../../components/buttons/basicButton/BasicButton'
+import Header from '../../components/header/Header'
+import PageTitle from '../../components/pageTitle/PageTitle'
+import { api } from '../../services/api'
+import { IndustryInfoView } from '../../styles/layouts/industryInfo/IndustryInfoView'
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';

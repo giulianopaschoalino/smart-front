@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import Banner from '../components/banner/Banner';
-import { TelemetriaView, Buttons} from '../styles/layouts/Telemetria/TelemetriaView';
-import GradientButton from '../components/buttons/gradientButton/GradientButton'
-import Header from '../components/header/Header';
+import Banner from '../../components/banner/Banner';
+import { TelemetriaView, Buttons} from '../../styles/layouts/Telemetria/TelemetriaView';
+import GradientButton from '../../components/buttons/gradientButton/GradientButton'
+import Header from '../../components/header/Header';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
@@ -11,15 +11,15 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Link from 'next/link';
 import Head from 'next/head';
 import { start } from 'nprogress';
-import LineChart from '../components/graph/LineChart';
-import { FatorPotencia } from '../services/fatorPotencia';
-import RenderIf from '../utils/renderIf';
+import LineChart from '../../components/graph/LineChart';
+import { FatorPotencia } from '../../services/fatorPotencia';
+import RenderIf from '../../utils/renderIf';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import { api } from '../services/api';
+import { api } from '../../services/api';
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
-import getAPIClient from '../services/ssrApi';
+import getAPIClient from '../../services/ssrApi';
 
 const style = {
   position: 'absolute' as const,

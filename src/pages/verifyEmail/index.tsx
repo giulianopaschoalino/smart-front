@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import { useRouter } from 'next/router'
 import FormData from 'form-data';
-import LoginButton from '../components/buttons/loginButton/LoginButton';
+import LoginButton from '../../components/buttons/loginButton/LoginButton';
 import TextField from '@mui/material/TextField';
 
 import Alert from '@mui/material/Alert';
 
-import { VerifyEmailContainer, VerifyEmailView } from '../styles/layouts/forgotPassword/verifyEmail';
-import RenderIf from '../utils/renderIf';
+import { VerifyEmailContainer, VerifyEmailView } from '../../styles/layouts/forgotPassword/verifyEmail';
+import RenderIf from '../../utils/renderIf';
 import Head from 'next/head';
-import { api } from '../services/api';
+import { api } from '../../services/api';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 
