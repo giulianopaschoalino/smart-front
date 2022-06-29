@@ -131,7 +131,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
   const dateFormated = new Date()
 
   function downloadCSVFile(csv, filename) {
-    const csv_file = new Blob([csv], {type: "text/csv"});
+    const csv_file = new Blob(["\ufeff",csv], {type: "text/csv"});
 
     const download_link = document.createElement("a");
 
@@ -157,7 +157,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
         row.push(cols[j].innerText);
       }
 
-      data.push(row.join(","));
+      data.push(row.join(";"));
     }
 
     downloadCSVFile(data.join("\n"), filename);
