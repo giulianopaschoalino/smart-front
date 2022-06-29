@@ -108,7 +108,7 @@ export default function Telemetria({userName, clients}: any) {
     if (startDate!=='' && endDate!=='' && send)
       setOpen(true)
       await api.post('/telemetry/powerFactor', {
-        "type": "15_min",
+        "type": discretization,
         "filters": [
             {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
             {"type" : "between", "field": "dia_num", "value": ["2022-01-03", "2022-01-03"]}
@@ -292,7 +292,7 @@ export default function Telemetria({userName, clients}: any) {
           query: {
             startDate,
             endDate,
-            discretization: discretization==='5_min'? 'med_5min.ponto' : discretization==='15_min'? '15min.ponto' : discretization==='1_hora'? 'med_1hora.ponto' : discretization==='1_dia'? 'med_1dia.ponto' : 'med_5min.ponto',
+            discretization,
             unity
           },
         }} >
