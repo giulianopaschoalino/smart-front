@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import { useRouter } from 'next/router'
-
+import FormData from 'form-data';
 import LoginButton from '../components/buttons/loginButton/LoginButton';
 import TextField from '@mui/material/TextField';
 
@@ -10,12 +10,18 @@ import Alert from '@mui/material/Alert';
 import { VerifyEmailContainer, VerifyEmailView } from '../styles/layouts/forgotPassword/verifyEmail';
 import RenderIf from '../utils/renderIf';
 import Head from 'next/head';
+import { api } from '../services/api';
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 
 export default function VerifyEmail() {
   const [sent, setSent]=useState(false);
   const [code, setCode]=useState<string>('')
   const [codeStatus, setCodeStatus]=useState<boolean>(null)
-
+  const formData = new FormData();
+  const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
+  const [openSnackError, setOpenSnackError] = useState<boolean>(false);
+  const [email, setEmail] = useState<any>();
   const [values, setValues] = React.useState({
     password: '',
     showPassword: false,
@@ -29,6 +35,15 @@ export default function VerifyEmail() {
     setSent(false)
     setCodeStatus(null)
   }, [rota])
+
+  function handleSendEmail() {
+    formData.append('email', email)
+    api.post('/auth/forgot-password', formData).then(res => {
+      setOpenSnackSuccess(true)
+    }).catch(res => {
+      setOpenSnackError(true)
+    })
+  }
 
   function verifyConfirmationCode() {
     if (code === '0000') {
@@ -50,13 +65,10 @@ export default function VerifyEmail() {
       <VerifyEmailContainer>
         <h1>Bem-Vindo</h1>
         <h2>Estratégias Inteligentes em<br /> Gestão de Energia</h2>
-
         <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }}label="Email" variant="outlined"/>
         <RenderIf isTrue={sent? false : true}>
-          <LoginButton title='Enviar Email' onClick={() => setSent(true)} />
+          <LoginButton title='Enviar Email' onClick={() => handleSendEmail()} />
         </RenderIf>
-
-
         <RenderIf isTrue={sent? true : false}>
           <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }}label="Nova Senha" variant="outlined"/>
           <TextField id="outlined-basic" sx={{ m: 1, width: '90%' }}label="Codigo de verificação" variant="outlined" onChange={value => setCode(value.target.value)} />
@@ -78,4 +90,23 @@ export default function VerifyEmail() {
       </VerifyEmailContainer>
     </VerifyEmailView>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+  const { ['user-name']: userName } = parseCookies(ctx)
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      userName
+    }
+  }
 }
