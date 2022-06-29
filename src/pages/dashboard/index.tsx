@@ -66,20 +66,11 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
         </GraphCard>
 
         <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh'>
-        <Chart title='' subtitle=''
-        data1={costIndicator.filter((value, index) => value.mes.slice(3, 7).includes('2021')).sort((a, b) => {
-          if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
-          if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1
-
-          return 0
-        })}
-        data2={costIndicator.filter((value, index) => value.mes.slice(3, 7).includes('2022'))}
-        label={costIndicator.filter((value, index) => value.mes.slice(3, 7).includes('2021')).sort((a, b) => {
-          if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
-          if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1
-
-          return 0
-        }).map(value => value.mes)} barLabel />
+          <Chart title='' subtitle=''
+          data1={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
+          // data1={graphData}
+          data2={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
+          label={costIndicator.map(value => value.mes.slice(0, 3))} barLabel />
         </GraphCard>
       </section>
     </DashboardView>
