@@ -10,6 +10,7 @@ import { api } from '../../services/api';
 import { GeneralView } from '../../styles/layouts/general/GeneralView'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar';
+import getAPIClient from '../../services/ssrApi';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -18,12 +19,14 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
 
-export default function index({userName}: any) {
+export default function index({userName, initialText}: any) {
   const editorRef = useRef(null);
   const [text, setText] = useState('');
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
   const [openSnackError, setOpenSnackError] = useState<boolean>(false)
+
+  console.log(initialText)
 
   const log = () => {
     if (editorRef.current) {
@@ -94,27 +97,7 @@ export default function index({userName}: any) {
         onInit={(evt, editor) => editorRef.current = editor}
         onChange={value => console.log(value)}
         onEditorChange={(newText) => setText(newText)}
-        initialValue='        <p>A <strong>SMART ENERGIA</strong> é uma consultoria independente especializada em Gestão de Energia Elétrica, consolidada como uma das três maiores consultorias do Brasil.
-          Devido à grande experiência em operações na CCEE – Câmara de Comercialização de Energia Elétrica e ANEEL, entrega resultados que superam as expectativas.</p>
-
-        <p>Nasceu para gerenciar a compra de energia com inovação, transparência e imparcialidade sendo o elo forte e necessário entre os Consumidores e os
-          Vendedores de energia. </p>
-
-        <p>Baseada em sua experiência no setor elétrico adquirida desde 2001 e em mais de 900 unidades migradas, atua na negociação de contratos de compra e venda de
-          energia, na Gestão de Energia no Mercado Livre e criação de produtos diferenciados para atender as necessidades específicas dos consumidores.</p>
-
-        <p>Apoiada pela sólida experiência de seus gestores, conhecendo as premissas dos agentes de Comercialização e Geração para a compra e venda de energia,
-          aplicamos as mesmas premissas a favor dos Consumidores, disponibilizando assim um diferencial único para a tomada de decisão e elaboração das estratégias de
-          contratação de energia.</p>
-        <ul>
-          <li>Informação</li>
-          <li>Economia</li>
-          <li>Gestão de Energia</li>
-          <li>Imparcialidade</li>
-          <li>Previsão de Custos</li>
-          <li>Experiência</li>
-          <li>Relacionamento</li>
-        </ul>'
+        initialValue={initialText[0].about}
         init={{
           height: 500,
           width: '100%',
@@ -138,8 +121,18 @@ export default function index({userName}: any) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
+
+  let initialText = []
+
+  await apiClient.get('/aboutUs').then(res => {
+    initialText = res.data.data
+    console.log(res.data.data)
+  }).catch(res => {
+    console.log(res)
+  })
 
   if (!token) {
     return {
@@ -152,7 +145,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      userName
+      userName,
+      initialText
     }
   }
 }
+
+

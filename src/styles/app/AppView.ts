@@ -3,8 +3,6 @@ import styled from 'styled-components'
 export const AppView = styled.main`
   display: flex;
 
-  height: calc(20rem[] - 65px);
-
   margin: 0 0 0 0;
   padding: 0;
 

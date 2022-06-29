@@ -10,6 +10,21 @@ import getAPIClient from '../../services/ssrApi'
 import { CostIndicatorView } from '../../styles/layouts/economy/costIndicator/CostIndicatorView'
 
 export default function CostIndicator({graphData, userName}: any) {
+  const months = [
+    'Jan',
+    'Fev',
+    'Mar',
+    'Abr',
+    'Mai',
+    'Jun',
+    'Jul',
+    'Ago',
+    'Set',
+    'Out',
+    'Nov',
+    'Dez'
+  ]
+
   return (
     <CostIndicatorView>
       <Head>
