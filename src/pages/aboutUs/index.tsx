@@ -3,10 +3,10 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { parseCookies } from 'nookies'
 import React from 'react'
-import Banner from '../components/banner/Banner'
-import Header from '../components/header/Header'
-import getAPIClient from '../services/ssrApi'
-import { AboutUsView } from '../styles/layouts/aboutUs/AboutUsView'
+import Banner from '../../components/banner/Banner'
+import Header from '../../components/header/Header'
+import getAPIClient from '../../services/ssrApi'
+import { AboutUsView } from '../../styles/layouts/aboutUs/AboutUsView'
 
 export default function aboutUs({userName, text}) {
   return (

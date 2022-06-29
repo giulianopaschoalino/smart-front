@@ -3,14 +3,14 @@ import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import React from 'react'
 
-import Chart from '../components/graph/Chart'
-import { LineBarChart } from '../components/graph/LineBarChart'
-import { LineBarChart2 } from '../components/graph/LineBarChart2'
-import Header from '../components/header/Header'
-import PageTitle from '../components/pageTitle/PageTitle'
-import { ConsumoEstimado } from '../services/consumoEstimado'
-import getAPIClient from '../services/ssrApi'
-import { EstimatedCostView } from '../styles/layouts/economy/estimatedCost/EstimatedCostView'
+import Chart from '../../components/graph/Chart'
+import { LineBarChart } from '../../components/graph/LineBarChart'
+import { LineBarChart2 } from '../../components/graph/LineBarChart2'
+import Header from '../../components/header/Header'
+import PageTitle from '../../components/pageTitle/PageTitle'
+import { ConsumoEstimado } from '../../services/consumoEstimado'
+import getAPIClient from '../../services/ssrApi'
+import { EstimatedCostView } from '../../styles/layouts/economy/estimatedCost/EstimatedCostView'
 
 export default function EstimatedCost({graphData, userName}: any) {
   return (

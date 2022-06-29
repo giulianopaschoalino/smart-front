@@ -3,14 +3,14 @@ import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import React from 'react'
 
-import Chart from '../components/graph/Chart'
-import { SingleBar } from '../components/graph/SingleBar'
-import Header from '../components/header/Header'
-import PageTitle from '../components/pageTitle/PageTitle'
-import { dataEconomiaBruta } from '../services/economiaBruta'
-import getAPIClient from '../services/ssrApi'
+import Chart from '../../components/graph/Chart'
+import { SingleBar } from '../../components/graph/SingleBar'
+import Header from '../../components/header/Header'
+import PageTitle from '../../components/pageTitle/PageTitle'
+import { dataEconomiaBruta } from '../../services/economiaBruta'
+import getAPIClient from '../../services/ssrApi'
 
-import { GrossSavingsView } from '../styles/layouts/economy/grossSavings/GrossSavings'
+import { GrossSavingsView } from '../../styles/layouts/economy/grossSavings/GrossSavings'
 
 export default function GrossSavings({graphData, years, userName}: any) {
   return (

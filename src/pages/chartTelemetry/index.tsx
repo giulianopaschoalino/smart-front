@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { SingleBar } from '../components/graph/SingleBar'
-import { ChatTelemetryView } from '../styles/layouts/ChatTelemetry/ChatTelemetryView'
+import { SingleBar } from '../../components/graph/SingleBar'
+import { ChatTelemetryView } from '../../styles/layouts/ChatTelemetry/ChatTelemetryView'
 // import router, { useRouter } from 'next/router'
 
-import { FatorPotencia } from '../services/fatorPotencia'
-import { ConsumoDecretizadoBar } from '../services/consumoDiscretizadoBar'
-import { ConsumoDecretizadoLine } from '../services/consumoDiscretizadoLine'
-import LineChart from '../components/graph/LineChart'
-import { LineBarChart } from '../components/graph/LineBarChart'
-import Header from '../components/header/Header'
-import PageTitle from '../components/pageTitle/PageTitle'
+import { FatorPotencia } from '../../services/fatorPotencia'
+import { ConsumoDecretizadoBar } from '../../services/consumoDiscretizadoBar'
+import { ConsumoDecretizadoLine } from '../../services/consumoDiscretizadoLine'
+import LineChart from '../../components/graph/LineChart'
+import { LineBarChart } from '../../components/graph/LineBarChart'
+import Header from '../../components/header/Header'
+import PageTitle from '../../components/pageTitle/PageTitle'
 import Head from 'next/head'
 
 import Box from '@mui/material/Box';
@@ -18,14 +18,14 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
-import getAPIClient from '../services/ssrApi'
-import { api } from '../services/api'
-import FatorPotenciaChart from '../components/graph/fatorPotenciaChart'
+import getAPIClient from '../../services/ssrApi'
+import { api } from '../../services/api'
+import FatorPotenciaChart from '../../components/graph/fatorPotenciaChart'
 // import { DemRegXDemConChart } from '../components/graph/demRegXDemConChart'
-import { DiscretizedConsumptionChart } from '../components/graph/DiscretizedConsumptionChart'
-import DiscretizedConsumptionChartLine from '../components/graph/DiscretizedConsumptionChartLine'
+import { DiscretizedConsumptionChart } from '../../components/graph/DiscretizedConsumptionChart'
+import DiscretizedConsumptionChartLine from '../../components/graph/DiscretizedConsumptionChartLine'
 import router, { useRouter } from 'next/router'
-import { DemRegXDemConChart } from '../components/graph/DemRegXDemConChart'
+import { DemRegXDemConChart } from '../../components/graph/DemRegXDemConChart'
 
 const style = {
   display: 'flex',

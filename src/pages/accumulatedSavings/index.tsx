@@ -3,14 +3,14 @@ import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import React from 'react'
 
-import Chart from '../components/graph/Chart'
-import { SingleBar } from '../components/graph/SingleBar'
-import Header from '../components/header/Header'
-import PageTitle from '../components/pageTitle/PageTitle'
-import { EconomiaAcumulada } from '../services/economiaAcumulada'
-import { dataEconomiaBruta } from '../services/economiaBruta'
-import getAPIClient from '../services/ssrApi'
-import { AccumulatedSavingsView } from '../styles/layouts/economy/accumulatedSavings/AccumulatedSavingsView'
+import Chart from '../../components/graph/Chart'
+import { SingleBar } from '../../components/graph/SingleBar'
+import Header from '../../components/header/Header'
+import PageTitle from '../../components/pageTitle/PageTitle'
+import { EconomiaAcumulada } from '../../services/economiaAcumulada'
+import { dataEconomiaBruta } from '../../services/economiaBruta'
+import getAPIClient from '../../services/ssrApi'
+import { AccumulatedSavingsView } from '../../styles/layouts/economy/accumulatedSavings/AccumulatedSavingsView'
 
 export default function AccumulatedSavings({graphData, years, userName}: any) {
   return (
@@ -22,12 +22,7 @@ export default function AccumulatedSavings({graphData, years, userName}: any) {
       <PageTitle title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada mensal - Valores em R$ mil' />
       <section>
         <SingleBar title='' subtitle='' dataset='Consolidada'
-          dataProps={graphData.sort((a, b) => {
-            if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
-            if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1
-
-            return 0
-          })}
+          dataProps={graphData}
           label={years} barLabel/>
       </section>
     </AccumulatedSavingsView>
