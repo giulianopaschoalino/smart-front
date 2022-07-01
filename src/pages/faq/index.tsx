@@ -21,6 +21,9 @@ export default function commonQuestions({faqData, userName}) {
       </Header>
       <section className='CommonQuestionsSection' >
       {
+        faqData.length<1?
+        <p>Nenhuma pergunta no momento!</p>
+          :
         faqData.map((value, index ) => {
           return <>
             <CommonQuestionsCard key={index} question={value.question} answer={value.answer}/>
