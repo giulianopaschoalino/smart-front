@@ -349,7 +349,7 @@ export default function Telemetria({userName, clients}: any) {
       <Buttons>
         <GradientButton title='DADOS' description='CLIQUE AQUI PARA GERAR GRÁFICO DO MÊS ATUAL' onClick={() => setShowChart(!showChart)} purple />
         <GradientButton title='GRÁFICO' description='CLIQUE AQUI PARA GERAR GRÁFICO DO PERÍODO SELECIONADO' onClick={() => handleVerifyFields()} orange />
-        <GradientButton title='DOWNLOADS' description={`CLIEQUE AQUI PARA BAIXAR OS DADOS EM FORMATO EXCEL DO PESÍODO SELECIONADO`} green onClick={() => {
+        <GradientButton title='DOWNLOADS' description={`CLIQUE AQUI PARA BAIXAR OS DADOS EM FORMATO EXCEL DO PERÍODO SELECIONADO`} green onClick={() => {
           const html = document.querySelector("table").outerHTML;
           htmlToCSV(html, "telemetria.csv");
         }}/>
