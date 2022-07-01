@@ -37,7 +37,6 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
   };
 
   function downloadCSVFile(csv, filename) {
-
     const csv_file = new Blob(["\ufeff",csv], {type: "text/csv"});
     const download_link = document.createElement("a");
     download_link.download = filename;
@@ -81,7 +80,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
       ).then(res => {
         setTableDataState(res.data.data)
       }).catch(res => {
-        console.log(res)
+        // console.log(res)
       })
     } else {
       setTableDataState(tableData)
@@ -93,8 +92,9 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
       <Head>
         <title>Smart Energia - Resumo de Operação</title>
       </Head>
-      <Header name={userName} />
-      <PageTitle title='Resumo de Operações' subtitle='Operações detalhadas' />
+      <Header name={userName}>
+        <PageTitle title='Resumo de Operações' subtitle='Operações detalhadas' />
+      </Header>
       <h3>Filtrar por Unidade e/ou Mês</h3>
       <div className='select'>
         <FormControl fullWidth>
@@ -106,7 +106,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
             label="Unidade"
             onChange={handleChangeUnidade}
           >
-            <MenuItem key={1} value={''}>Nenhum</MenuItem>
+            <MenuItem key={1} value={''}>Todas</MenuItem>
             {
               clientsData.map((value) => {
                 return <MenuItem key={1} value={value.cod_smart_unidade}>{value.cod_smart_unidade}</MenuItem>
@@ -124,7 +124,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
             label="Month"
             onChange={handleChangeMonth}
           >
-            <MenuItem value={''}>Nenhum</MenuItem>
+            <MenuItem value={''}>Todos</MenuItem>
             {
               clientMonth.map((value) => {
                 return <MenuItem key={1} value={value.mes}>{monthLabels[parseFloat(value.mes.slice(3, 4))-1]}</MenuItem>
@@ -139,10 +139,10 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
             <th className='tg-8oo6'>Mês </th>
             <th className='tg-8oo6'>Unidade </th>
             <th className='tg-8oo6'>Operação</th>
-            <th className='tg-8oo6'>Montante (MWh)</th>
             <th className='tg-8oo6'>Contraparte</th>
-            <th className='tg-8oo6'>Preço(R$/MWh)</th>
+            <th className='tg-8oo6'>Montante (MWh)</th>
             <th className='tg-8oo6'>ValorNF/Crédito(R$)</th>
+            <th className='tg-8oo6'>Preço(R$/MWh)</th>
           </tr>
         </thead>
         <tbody>
@@ -153,10 +153,10 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
                   <td key={index} className='tg-gceh'>{value.mes}</td>
                   <td key={index} className='tg-gceh'>{value.cod_smart_unidade}</td>
                   <td key={index} className='tg-uulg'>{value.operacao}</td>
-                  <td key={index} className='tg-gceh'>{parseFloat(value.montante_nf).toLocaleString('pt-br')}</td>
                   <td key={index} className='tg-gceh'>{value.contraparte}</td>
-                  <td key={index} className='tg-uulg'>{parseFloat(value.nf_c_icms).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                  <td key={index} className='tg-gceh'>{parseFloat(value.montante_nf).toLocaleString('pt-br')}</td>
                   <td key={index} className='tg-gceh'>{parseFloat(value.preco_nf).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                  <td key={index} className='tg-uulg'>{parseFloat(value.nf_c_icms).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                 </tr>
               </>
             })
@@ -188,7 +188,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }).then(res => {
     tableData = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   await apiClient.post('/operation', {
@@ -198,7 +198,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }).then(res => {
     clientsData = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   await apiClient.post('/operation', {
@@ -208,7 +208,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }).then(res => {
     clientMonth = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   if (!token) {

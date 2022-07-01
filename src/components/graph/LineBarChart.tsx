@@ -84,6 +84,13 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
 
   const options: any = {
     responsive: true,
+    scales: {
+      x: {
+        grid: {
+          display: false
+        }
+      },
+    },
     plugins: {
       datalabels: {
         display: true,

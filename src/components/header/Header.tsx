@@ -13,24 +13,30 @@ interface headerInterface {
   name: string,
   admin?: boolean | undefined
   logo?: string
+  children?: React.ReactNode
 }
 
-export default function Header({name, admin}: headerInterface) {
+export default function Header({name, admin, children}: headerInterface) {
   const { ['user-profile_picture']: profile_picture } = parseCookies()
 
   return (
     <HeaderView>
-      <div className='icon' >
-        <p>
-          olá, {name}
-        </p>
-      </div>
-      {
-        !admin && profile_picture?
-        <Image src={profile_picture} height={50} width={75}/>
-        :
-        <Image src='https://kluppdevelopment.s3.sa-east-1.amazonaws.com/avatars/zcgw6O0FxZgxRmIs97WMcUddKurQJcIqSxBLStSc.png' height={50} width={75}/>
-      }
+      <section>
+        {children}
+      </section>
+      <section>
+        <div className='icon' >
+          <p>
+            olá, {name}
+          </p>
+        </div>
+        {
+          !admin && profile_picture?
+          <Image src={profile_picture} height={100} width={108}/>
+          :
+          <Image src='https://kluppdevelopment.s3.sa-east-1.amazonaws.com/avatars/zcgw6O0FxZgxRmIs97WMcUddKurQJcIqSxBLStSc.png' height={75} width={108}/>
+        }
+      </section>
     </HeaderView>
   )
 }

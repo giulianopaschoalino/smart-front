@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BasicButton from '../../../components/buttons/basicButton/BasicButton'
 import Header from '../../../components/header/Header'
 import PageTitle from '../../../components/pageTitle/PageTitle'
@@ -19,13 +19,13 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function industryInfo({userName}: any) {
+export default function industryInfo({userName, pdfUrl}: any) {
   const formData = new FormData();
 
   const [pdf, setPdf] = useState<any>();
   function onChange(e) {
+    console.log(e.target.files)
     setPdf(e.target.files[0])
-    console.log(pdf)
   }
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
@@ -76,6 +76,12 @@ export default function industryInfo({userName}: any) {
 
       <BasicButton onClick={() => handleCreateClient()} title='Atualizar'/>
 
+      {/* <PDFViewer
+          document={{
+            url: pdfUrl,
+          }}
+        /> */}
+
     </IndustryInfoView>
   )
 }
@@ -83,6 +89,14 @@ export default function industryInfo({userName}: any) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
+
+  let pdfUrl=[]
+
+  api.get('/download').then(res => {
+    pdfUrl = res.data.path
+  }).catch(res => {
+    // console.log()
+  })
 
   if (!token) {
     return {
@@ -95,7 +109,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      userName
+      userName,
+      pdfUrl
     }
   }
 }

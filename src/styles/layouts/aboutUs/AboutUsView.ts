@@ -3,14 +3,6 @@ import styled from "styled-components";
 export const AboutUsView = styled.main`
   width: 100%;
 
-  p {
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 80%;
-    line-height: 26px;
-  }
-
   ul {
     list-style: none;
 

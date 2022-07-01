@@ -30,14 +30,15 @@ export default function CostIndicator({graphData, userName}: any) {
       <Head>
         <title>Smart Energia - Indicador de Custos</title>
       </Head>
-      <Header name={userName} />
-      <PageTitle title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'/>
+      <Header name={userName}>
+        <PageTitle title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'/>
+      </Header>
       <section>
         <Chart title='' subtitle=''
         data1={graphData.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
         // data1={graphData}
         data2={graphData.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
-        label={graphData.map(value => value.mes.slice(0, 3))} barLabel />
+        label={months}/>
       </section>
     </CostIndicatorView>
   )
@@ -53,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await apiClient.post('/economy/MWh').then(res => {
     graphData = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   if (!token) {

@@ -15,11 +15,12 @@ export default function Notifications({notificationData, userName}: any) {
       <Head>
         <title>Smart Energia - Notificações</title>
       </Head>
-      <Header name={userName} />
-      <PageTitle title='Notificações' subtitle='Aqui estão as notificações publicadas para você!' />
+      <Header name={userName}>
+        <PageTitle title='Notificações' subtitle='Aqui estão as notificações publicadas para você!' />
+      </Header>
       <section className='CommonQuestionsSection' >
       {
-        notificationData?
+        notificationData.length!=0?
         notificationData.map((value, index ) => {
           return <>
             <NotificationQuestionsCard key={index} title={value.title} body={value.body}/>
@@ -42,10 +43,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let notificationData = [];
 
   await apiClient.get('/notification').then(res => {
-    console.log(res)
     notificationData = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   if (!token) {

@@ -20,6 +20,8 @@ import { api } from '../../services/api';
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import getAPIClient from '../../services/ssrApi';
+import router from 'next/router';
+import { DemRegXDemConChart } from '../../components/graph/DemRegXDemConChart';
 
 const style = {
   position: 'absolute' as const,
@@ -48,6 +50,7 @@ export default function Telemetria({userName, clients}: any) {
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
   const [openSnackError, setOpenSnackError] = useState<boolean>(false)
+  const [openSnackFields, setOpenSnackFields] = useState<boolean>(false)
   const handleCloseSnack = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -58,6 +61,7 @@ export default function Telemetria({userName, clients}: any) {
 
     setOpenSnackError(false)
     setOpenSnackSuccess(false)
+    setOpenSnackFields(false)
   }
 
   function downloadCSVFile(csv, filename) {
@@ -104,6 +108,8 @@ export default function Telemetria({userName, clients}: any) {
 
   const [open, setOpen] = useState(false);
 
+  const [demRegXDemCon, setDemRegXDemCon] = useState(null);
+
   async function getTableData() {
     if (startDate!=='' && endDate!=='' && send)
       setOpen(true)
@@ -123,13 +129,53 @@ export default function Telemetria({userName, clients}: any) {
         setSend(false)
         setOpenSnackError(true)
         setOpenSnackSuccess(false)
-        console.log(res)
+      })
+  }
+
+  function openSnackFieldError() {
+    setOpenSnackFields(true)
+  }
+
+  function handleVerifyFields() {
+    if (unity != '' && startDate != '' && endDate != '' && discretization != '') {
+      router.push({
+        pathname: '/chartTelemetry',
+        query: {
+          startDate,
+          endDate,
+          discretization,
+          unity
+        },
+      })
+      return true
+    } else {
+      setOpenSnackFields(true)
+      return false
+    }
+  }
+
+  async function getChartData() {
+    await api.post('/telemetry/demand', {
+      "filters": [
+        {"type" : "=", "field": "med_5min.ponto", "value": unity},
+        {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
+      ]
+      }).then(res => {
+        setDemRegXDemCon(res.data.data)
+      }).catch(res => {
+        // console.log(res)
+        router.push('/telemetria')
       })
   }
 
   useEffect(() => {
     setSend(false)
   }, [startDate, endDate])
+
+  useEffect(() => {
+    if (send===true)
+      getChartData()
+  }, [send])
 
 
   return(
@@ -147,7 +193,7 @@ export default function Telemetria({userName, clients}: any) {
           severity="success"
           sx={{ width: '100%' }}
         >
-          Dados coletados com sucesso com Sucesso!
+          Dados disponíveis para Visualização/Download!
         </Alert>
       </Snackbar>
       <Snackbar
@@ -161,6 +207,20 @@ export default function Telemetria({userName, clients}: any) {
           sx={{ width: '100%' }}
         >
           Não foi possivel pegar os dados!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={openSnackFields}
+        autoHideDuration={4000}
+        onClose={handleCloseSnack}
+      >
+        <Alert
+          onClose={handleCloseSnack}
+          severity="error"
+          sx={{ width: '100%' }}
+        >
+          Verifique os campos!
         </Alert>
       </Snackbar>
 
@@ -186,11 +246,10 @@ export default function Telemetria({userName, clients}: any) {
               <MenuItem value="">
                 <em>Nenhum</em>
               </MenuItem>
-              <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem>
-
+              {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
               {
                 clients.map((value) => {
-                  return <MenuItem key={1} value={value.codigo_scde}>{value.codigo_scde}</MenuItem>
+                  return <MenuItem key={1} value={value.codigo_scde}>{value.cod_smart_unidade}</MenuItem>
                 })
               }
             </Select>
@@ -199,12 +258,14 @@ export default function Telemetria({userName, clients}: any) {
 
         <div className='select'>
           <p className='title' >Data inicial</p>
-          <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={startDate} onChange={(value) => setStartDate(value.target.value)} onSelect={value => console.log(value)}/>
+          <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={startDate}
+          onChange={(value) => setStartDate(value.target.value)} min="2021-01-01"/>
         </div>
 
         <div className='select'>
           <p className='title' >Data final</p>
-          <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={endDate} onChange={(value) => setEndDate(value.target.value)}/>
+          <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={endDate}
+          onChange={(value) => setEndDate(value.target.value)} min="2021-01-01"/>
         </div>
 
         <div className='select'>
@@ -232,7 +293,7 @@ export default function Telemetria({userName, clients}: any) {
       <button className='sendButton' onClick={() => {
         setSend(true)
         getTableData()
-      }}>Enviar!</button>
+      }}>Selecionar!</button>
       </section>
 
       <RenderIf isTrue={startDate!=='' && endDate!=='' && tableData===null && exception === false && send}>
@@ -283,30 +344,15 @@ export default function Telemetria({userName, clients}: any) {
       </RenderIf>
 
       <RenderIf isTrue={showChart}>
-        <LineChart title='Fator de Potencia' subtitle='' data1={FatorPotencia.data} data2={FatorPotencia.data2} dataset1='Fator de Potencia' dataset2='Fator ref.' label={FatorPotencia.label1} />
+        <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'} label={demRegXDemCon?.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
       </RenderIf>
-
       <Buttons>
-        <Link href={{
-          pathname: '/chartTelemetry',
-          query: {
-            startDate,
-            endDate,
-            discretization,
-            unity
-          },
-        }} >
-          <button>
-            <p>GRÁFICO</p>
-            <p>Gerar gráficos com os dados selecionados</p>
-          </button>
-        </Link>
-        <GradientButton title='DOWNLOADS' description='DADOS BRUTOS SELECIONADOS' purple onClick={() => {
+        <GradientButton title='DADOS' description='CLIQUE AQUI PARA GERAR GRÁFICO DO MÊS ATUAL' onClick={() => setShowChart(!showChart)} purple />
+        <GradientButton title='GRÁFICO' description='CLIQUE AQUI PARA GERAR GRÁFICO DO PERÍODO SELECIONADO' onClick={() => handleVerifyFields()} orange />
+        <GradientButton title='DOWNLOADS' description={`CLIEQUE AQUI PARA BAIXAR OS DADOS EM FORMATO EXCEL DO PESÍODO SELECIONADO`} green onClick={() => {
           const html = document.querySelector("table").outerHTML;
           htmlToCSV(html, "telemetria.csv");
-          console.log('clicando')
         }}/>
-        <GradientButton title='DADOS' description='hORÁRIOS DO MÊS ATUAL' onClick={() => setShowChart(!showChart)} green />
       </Buttons>
       <p className='paragraph'>
         <i>
@@ -339,7 +385,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }).then(res => {
     clients = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   if (!token) {

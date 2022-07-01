@@ -16,10 +16,9 @@ export default function commonQuestions({faqData, userName}) {
       <Head>
         <title>Smart Energia - FAQ</title>
       </Head>
-      <Header name={userName} />
-      <PageTitle title='Perguntas Frequentes' subtitle='Aqui estão algumas das perguntas que mais recebemos!' />
-      {/* <h1>Perguntas Frequentes</h1>
-      <p>Aqui estão algumas das perguntas que mais recebemos!</p> */}
+      <Header name={userName}>
+        <PageTitle title='Perguntas Frequentes' subtitle='Aqui estão algumas das perguntas que mais recebemos!' />
+      </Header>
       <section className='CommonQuestionsSection' >
       {
         faqData.map((value, index ) => {

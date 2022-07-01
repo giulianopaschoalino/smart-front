@@ -3,6 +3,11 @@ import styled from "styled-components"
 export const PldTableView = styled.main`
   width: 100%;
 
+  .actual {
+    font-weight: bold!important;
+    background-color: red!important;
+  }
+
   .tg{
     border-collapse:collapse;
     border-spacing:0;
@@ -22,7 +27,6 @@ export const PldTableView = styled.main`
     word-break:normal;
   }
 
-
   .tg th{
     border-color:#DDDFE1;
     border-style:solid;
@@ -35,7 +39,6 @@ export const PldTableView = styled.main`
     word-break:normal;
   }
   .tg .tg-8oo6{
-    color:#464a53;
     font-size:13px;
     text-align:center;
     vertical-align:top;
@@ -44,25 +47,22 @@ export const PldTableView = styled.main`
   }
   .tg .tg-uulg{
     background-color:#efefef;
-    color:#abafb3;
     font-size:14px;
     text-align:center;
     vertical-align:top
   }
   .tg .tg-gceh{
     background-color:#efefef;
-    color:#6a707e;
     font-size:14px;
     text-align:center;
     vertical-align:top
   }
   .tg .tg-0tzy{
-    color:#abafb3;
     font-size:14px;
     text-align:center;
     vertical-align:top
   }
-  .tg .tg-hq65{color:#6a707e;
+  .tg .tg-hq65{
     font-size:14px;
     text-align:center;
     vertical-align:top

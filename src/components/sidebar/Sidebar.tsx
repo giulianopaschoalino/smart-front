@@ -49,7 +49,9 @@ export default function Sidebar() {
   useEffect(() => {
     api.post('/notify').then(res => {
       setNotificationsCount(res.data)
-    }).catch(res => console.log(res))
+    }).catch(res => {
+      // console.log(res)
+    })
   }, [])
 
   return (
@@ -94,10 +96,10 @@ export default function Sidebar() {
       <RenderIf isTrue={role === '2'}>
         <SidebarView economiaDrawer={economiaDrawer} modalOpen={viewModal} >
           <div className='hamburger' onClick={() => setViewModal(!viewModal)} >
-            <Image src='/assets/hamburgerModal.svg' width={60} height={60} />
+            <Image src='/assets/hamburgerModal.svg' width={55} height={55} />
           </div>
           <div className='imageNext'>
-            <Image src='/assets/logo.svg' width={100} height={100} />
+            <Image src='/assets/logo.svg' width={150} height={150} />
           </div>
           <ul>
             <Link href='/dashboard'><li className={router.pathname=='/dashboard'? 'actualPath' : null} ><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Visão Geral'}</li></Link>
@@ -105,7 +107,7 @@ export default function Sidebar() {
               <div className='economiaDrawer drawer' >
                 <Link href='/grossSavings'><li className={router.pathname=='/grossSavings'? 'actualPathDrawer' : null}>Economia Bruta Anual</li></Link>
                 <Link href='/accumulatedSavings'><li className={router.pathname=='/accumulatedSavings'? 'actualPathDrawer' : null}>Economia Bruta Mensal</li></Link>
-                <Link href='/estimatedCost'><li className={router.pathname=='/estimatedCost'? 'actualPathDrawer' : null}>Cativo x Livre mensal</li></Link>
+                <Link href='/estimatedCost'><li className={router.pathname=='/estimatedCost'? 'actualPathDrawer' : null}>Cativo x Livre Mensal</li></Link>
                 <Link href='/costIndicator'><li className={router.pathname=='/costIndicator'? 'actualPathDrawer' : null}>Custo R$/MWh</li></Link>
               </div>
             <Link href='/telemetria'><li className={router.pathname=='/telemetria'? 'actualPath' : null}><Image src='/assets/sidebar/telemetryIcon.svg' width={25} height={25} />{'Telemetria >'}</li></Link>

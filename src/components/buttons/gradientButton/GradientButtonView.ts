@@ -20,12 +20,12 @@ export const GradientButtonView = styled.button`
   color: #FFFFFF;
 
   background: ${ props => props.color==='orange'?
-  'linear-gradient(200.86deg, #F48665 8.03%, #F48665  91.97%), #FFFFFF'
+  'linear-gradient(200.86deg, #e7992f 8.03%, #e7992f   91.97%), #FFFFFF'
   :
   props.color === 'purple'?
-  'linear-gradient(200.69deg, #9A56FF 9%, #D78AFD 98%), #FFFFFF'
+  'linear-gradient(200.69deg, #254f7f 9%, #254f7f 98%), #FFFFFF'
   :
-  'linear-gradient(200.69deg, #23BDB8 8.53%, #43E794 98%), #FFFFFF'
+  'linear-gradient(200.69deg, #018a8a 8.53%, #018a8a 98%), #FFFFFF'
   };
 
   box-shadow: 0.5px 3px 10px rgba(119, 119, 119, 0.1);
@@ -50,7 +50,7 @@ export const GradientButtonView = styled.button`
       font-family: 'Poppins';
       font-style: normal;
       font-weight: 700;
-      font-size: 12;
+      font-size: 11px;
 
       text-transform: uppercase;
     }

@@ -34,13 +34,6 @@ export const FaqView = styled.main`
     border: 1px solid #DDDDDD;
   }
 
-  /* .modal{
-    display: flex;
-    justify-self: flex-end;
-    align-self: center;
-    margin-left: 100px;
-
-  } */
   .btn2{
       background: #254F7F;
       border-radius: 8px;

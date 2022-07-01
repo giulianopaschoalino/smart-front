@@ -26,14 +26,6 @@ export default function index({userName, initialText}: any) {
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
   const [openSnackError, setOpenSnackError] = useState<boolean>(false)
 
-  console.log(initialText)
-
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-  };
-
   const handleChange = (event: SelectChangeEvent) => {
     setText(event.target.value);
   };
@@ -95,7 +87,6 @@ export default function index({userName, initialText}: any) {
       <br />
       <Editor
         onInit={(evt, editor) => editorRef.current = editor}
-        onChange={value => console.log(value)}
         onEditorChange={(newText) => setText(newText)}
         initialValue={initialText[0].about}
         init={{
@@ -127,9 +118,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.get('/aboutUs').then(res => {
     initialText = res.data.data
-    console.log(res.data.data)
+    // console.log(res.data.data)
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   if (!token) {

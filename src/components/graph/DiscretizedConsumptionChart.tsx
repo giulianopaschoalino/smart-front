@@ -48,7 +48,7 @@ export function DiscretizedConsumptionChart({ title, subtitle, dataProps, label,
               sum += data;
           });
           const percentage = (dataProps[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
-          const result = `${parseFloat(value).toFixed(0)}\n    ${percentage}`
+          const result = `${parseInt(value).toFixed(0)}\n    ${percentage}`
 
           return value==null? null : result
         },
@@ -80,6 +80,24 @@ export function DiscretizedConsumptionChart({ title, subtitle, dataProps, label,
         label: dataset,
         data: dataProps.map(value => value.consumo),
         backgroundColor: '#255488'
+      },
+      {
+        type: 'line' as const,
+        label: 'base',
+        data: dataProps.map(value => 500),
+        borderColor: 'rgb(0, 0, 0)',
+        fill: false,
+        backgroundColor: 'rgb(0, 0, 0)' ,
+        pointBorderColor: 'rgba(255, 145, 0, 0)',
+      },
+      {
+        type: 'line' as const,
+        label: 'tolerância',
+        data: dataProps.map(value => 525),
+        borderColor: 'rgb(255, 0, 0)',
+        fill: false,
+        backgroundColor: 'rgb(255, 0, 0)' ,
+        pointBorderColor: 'rgba(255, 145, 0, 0)',
       },
     ],
   }

@@ -18,8 +18,9 @@ export default function GrossSavings({graphData, years, userName}: any) {
       <Head>
         <title>Smart Energia - Economia Acumulada</title>
       </Head>
-      <Header name={userName} />
-      <PageTitle title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada anual - Valores em R$ mil' />
+      <Header name={userName}>
+        <PageTitle title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada Anual - Valores em R$ mil' />
+      </Header>
       <section>
         <SingleBar title='' subtitle=''
         dataset='Consolidada'
@@ -43,12 +44,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     graphData = res.data.data
     // console.log(graphData[0])
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   const years = graphData.map((value) => value.ano)
 
-  console.log(years)
   if (!token) {
     return {
       redirect: {

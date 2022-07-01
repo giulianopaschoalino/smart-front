@@ -30,11 +30,12 @@ interface pldInterface {
   clientMonth: any
 }
 
-export default function pld({tableData, graphByHourData, graphByMonthData, userName, clientMonth}: pldInterface) {
-  const router = useRouter()
-  const { region } = router.query
+export default function pld({tableData, userName, clientMonth}: pldInterface) {
+  const dateFormated = new Date()
 
-  const [date, setDate] = useState('');
+  const year_Month = `0${dateFormated.getMonth()}/${dateFormated.getFullYear()}`
+
+  const [date, setDate] = useState(`${dateFormated.getFullYear()}-${dateFormated.getUTCMonth()+1}-${dateFormated.getUTCDate()}`);
   const [select, setSelect] = useState('NORDESTE');
   const [page, setPage] = useState<string>('table')
   const [day, setDay] = useState<string>(null)
@@ -64,7 +65,9 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
       "order": [{ "field": "day_calc", "direction": "asc" }]
     }).then(res => {
       setDataByDay(res.data.data)
-    }).catch(exception => console.log(exception))
+    }).catch(exception => {
+      console.log(exception)
+    })
   }
 
   function getDataByHour() {
@@ -78,7 +81,9 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
       "order": [{ "field": "hour", "direction": "asc" }]
     }).then(res => {
       setSul(res.data.data)
-    }).catch(exception => console.log(exception))
+    }).catch(exception => {
+      // console.log(exception)
+    })
 
     api.post('/pld/schedule', {
       "limit": 20,
@@ -90,7 +95,9 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
       "order": [{ "field": "hour", "direction": "asc" }]
     }).then(res => {
       setSudeste(res.data.data)
-    }).catch(exception => console.log(exception))
+    }).catch(exception => {
+      // console.log(exception)
+    })
 
     api.post('/pld/schedule', {
       "limit": 20,
@@ -102,7 +109,9 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
       "order": [{ "field": "hour", "direction": "asc" }]
     }).then(res => {
       setNorte(res.data.data)
-    }).catch(exception => console.log(exception))
+    }).catch(exception => {
+      // console.log(exception)
+    })
 
     api.post('/pld/schedule', {
       "limit": 20,
@@ -114,7 +123,9 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
       "order": [{ "field": "hour", "direction": "asc" }]
     }).then(res => {
       setNordeste(res.data.data)
-    }).catch(exception => console.log(exception))
+    }).catch(exception => {
+      // console.log(exception)
+    })
   }
 
   function handleColorNorte(value, region) {
@@ -127,8 +138,6 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
     else if (tableData.result[1][`${region}_min`] - value <= tableData.result[1][`${region}_min`])
       return 'dullRed'
   }
-
-  const dateFormated = new Date()
 
   function downloadCSVFile(csv, filename) {
     const csv_file = new Blob(["\ufeff",csv], {type: "text/csv"});
@@ -166,7 +175,6 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
   useEffect(() => {
     getDataByHour()
     getDataByDay()
-    console.log(dataByDay)
   }, [date, day, select])
 
   return (
@@ -176,10 +184,11 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
       <Head>
         <title>Smart Energia - PLD</title>
       </Head>
-      <Header name={userName} />
       <RenderIf isTrue={page==='table'? true : false}>
-        <Link href='/dashboard' >{'< Voltar para Visão Geral'}</Link>
-        <PageTitle title='Tabela de consumo PLD' subtitle=''/>
+        <Header name={userName}>
+          <Link href='/dashboard' >{'< Voltar para Visão Geral'}</Link>
+          <PageTitle title='Tabela de consumo PLD' subtitle=''/>
+        </Header>
         <PldTableView>
           <table className="tg">
             <thead>
@@ -200,7 +209,7 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
                   return 0
                 }).map(data => {
                   return <>
-                    <tr>
+                    <tr className={data.year_month_formatted==year_Month? 'actual' : ''}>
                       <td className='tg-gceh'>{data.year_month_formatted}</td>
                       <td className={`tg-uulg ${handleColorNorte(parseFloat(data.norte), 'nordeste')}`}>{parseFloat(data.nordeste).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                       <td className={`tg-gceh ${handleColorNorte(parseFloat(data.norte), 'norte')}`}>{parseFloat(data.norte).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
@@ -331,7 +340,6 @@ export default function pld({tableData, graphByHourData, graphByMonthData, userN
           <PageTitle title='Resumo PLD - Horas' subtitle=''/>
           <section className='toolsbar'>
             <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={date} onChange={(value) => setDate(value.target.value)}/>
-            {/* <BasicButton title='Download (csv)' onClick={() => console.log()}/> */}
           </section>
           <LineChart data1={nordeste} data2={norte} data3={sudeste} data4={sul}
           dataset1='NORDESTE' dataset2='NORTE' dataset3='SUDESTE' dataset4='SUL'
@@ -354,7 +362,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await apiClient.post('/pld/list').then(res => {
     tableData = res.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   await apiClient.post('/pld', {
@@ -364,7 +372,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }).then(res => {
     clientMonth = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   if (!token) {

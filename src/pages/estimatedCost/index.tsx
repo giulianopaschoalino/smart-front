@@ -18,8 +18,9 @@ export default function EstimatedCost({graphData, userName}: any) {
       <Head>
         <title>Smart Energia - Custos Estimados</title>
       </Head>
-      <Header name={userName} />
-      <PageTitle title='Cativo x Livre mensal' subtitle='Comparativo de custo Estimado - Valores em R$' />
+      <Header name={userName}>
+        <PageTitle title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - Valores em R$ mil' />
+      </Header>
       <section>
         <LineBarChart2 data1={graphData} data2={graphData} data3={graphData}
         dataset1="Economia (R$)" dataset2='Cativo' dataset3='Livre'
@@ -38,9 +39,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/economy/estimates').then(res => {
     graphData = res.data.data
-    console.log(graphData)
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   if (!token) {

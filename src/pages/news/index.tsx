@@ -13,18 +13,16 @@ import getAPIClient from '../../services/ssrApi';
 import { Button, NewsView } from '../../styles/layouts/news/NewsView'
 
 export default function aboutUs({userName, news}: any) {
-  console.log(news.channel.item)
-
   return (
     <NewsView>
       <Head>
         <title>Smart Energia - Noticias</title>
       </Head>
-      {/* <Header name={userName} /> */}
-      <Banner title='Notícias' subtitle='Tudo de importante no setor de energia' imgSource='/assets/banners/news.png'/>
+      <Header name={userName} />
+      <Banner title='Notícias' subtitle='Tudo de importante no setor de energia' imgSource='/assets/banners/newsBanner.webp'/>
 
       {
-        news.channel.item.map(data => {
+        news.map(data => {
 
           return <>
             <section>
@@ -63,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await apiClient.get('/news').then(res => {
     news = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   if (!token) {

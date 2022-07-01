@@ -8,7 +8,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
-import React, { useContext, useState, useEffect,useCallback } from 'react'
+import React, { useContext, useState, useEffect,useCallback, useRef } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import RenderIf from '../utils/renderIf';
 import Snackbar from '@mui/material/Snackbar';
@@ -30,10 +30,11 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 export default function Home() {
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false);
   const [openSnackError, setOpenSnackError] = useState<boolean>(false);
-  const [openSnackSuccessDelete, setOpenSnackSuccessDelete] = useState<boolean>(false);
-  const [openSnackErrorDelete, setOpenSnackErrorDelete] = useState<boolean>(false);
+
+  const field = useRef(null)
 
   const [state, setstate] = useState(false);
+  const [focus, setFocus] = useState('email');
 
   const [values, setValues] = useState({
     password: null,
@@ -75,7 +76,7 @@ export default function Home() {
           }
         })
       } catch (exception){
-        console.log(exception)
+        // console.log(exception)
       }
     }
   }
@@ -123,17 +124,19 @@ export default function Home() {
 
 
         <TextField id="outlined-basic"
-        sx={{ m: 1, width: '90%' }} label="Login" value={email} variant="outlined"
+        sx={{ m: 1, width: '90%' }} label="Login" value={email} variant="outlined" onKeyDown={(e) => e.key==='Enter'? console.log(field.current.children[0].focus()) : null}
         onChange={value => {
         setEmail(value.target.value.toLowerCase())
         }}/>
         <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
+          <InputLabel htmlFor="outlined-adornment-password" >Senha</InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
             type={values.showPassword ? 'text' : 'password'}
             value={values.password}
             onChange={handleChange('password')}
+            ref={field}
+            onKeyDown={(e) => e.key==='Enter'? handleSignIn() : null}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton

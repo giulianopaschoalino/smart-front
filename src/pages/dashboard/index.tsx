@@ -22,16 +22,33 @@ import recoverUserInformation from '../../services/auth'
 import { parseCookies } from 'nookies'
 import { GetServerSideProps } from 'next'
 import getAPIClient from '../../services/ssrApi'
+import Chart2 from '../../components/graph/Chart2'
 
 export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears, acumulatedGraph, mapsInfo, userName, costIndicator} : any) {
+  const months = [
+    'Jan',
+    'Fev',
+    'Mar',
+    'Abr',
+    'Mai',
+    'Jun',
+    'Jul',
+    'Ago',
+    'Set',
+    'Out',
+    'Nov',
+    'Dez'
+  ]
+
   return (
     <DashboardView>
       <Head>
         <title>Smart Energia - Dashboard</title>
       </Head>
-      <Header name={userName} />
+      <Header name={userName}>
+        <PageTitle title='Visão Geral' subtitle='Bem Vindo a Smart Energia' />
+      </Header>
 
-      <PageTitle title='Visão Geral' subtitle='Bem Vindo a Smart Energia' />
       <Link href='pld'>
         <section className="cardsSection" >
           <MapCard title='R$/MWh' subtitle='' date='período' statistic='' imgSource='/moneyIcon.svg' />
@@ -44,25 +61,24 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
       </Link>
 
       <section className='dashboard'>
-        <GraphCard title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada anual - (Valores em R$ mil)'>
+        <GraphCard title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada Anual - (Valores em R$ mil)'>
           <SingleBar title='' subtitle=''
           dataset='Consolidada'
           dataProps={grossAnualGraph}
-          label={grossAnualYears} barLabel/>
+          label={grossAnualYears} barLabel miniature/>
         </GraphCard>
 
-        <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada mensal - (Valores em R$)' singleBar>
-          <SingleBar title='' subtitle=''
-          dataset='Acumulada'
-          dataProps={grossMensalGraph}
-          label={grossMensalYears}
-          barLabel/>
+        <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - (Valores em R$)' singleBar>
+          <Chart2 title='' subtitle=''
+          data1={grossMensalGraph.filter((value, index) => value.mes.slice(3, 8).includes('2021'))}
+          data2={grossMensalGraph.filter((value, index) => value.mes.slice(3, 8).includes('2022'))}
+          label={months} miniature/>
         </GraphCard>
 
-        <GraphCard title='Cativo x Livre mensal' subtitle='Comparativo de Custo Estimado - (Valores em R$/MWh)' singleBar>
+        <GraphCard title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - (Valores em R$/MWh)' singleBar>
           <LineBarChart2 data1={acumulatedGraph} data2={acumulatedGraph} data3={acumulatedGraph}
           label={ConsumoEstimado.label} dataset1='Custo' dataset2='Cativo' dataset3='Livre'
-          title='' subtitle='' barLabel hashurado/>
+          title='' subtitle='' barLabel hashurado miniature/>
         </GraphCard>
 
         <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh'>
@@ -70,7 +86,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
           data1={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
           // data1={graphData}
           data2={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
-          label={costIndicator.map(value => value.mes.slice(0, 3))} barLabel />
+          label={costIndicator.map(value => value.mes.slice(0, 3))} miniature/>
         </GraphCard>
       </section>
     </DashboardView>
@@ -91,31 +107,31 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await apiClient.post('/economy/grossAnnual').then(res => {
     grossAnualGraph = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   await apiClient.post('/economy/grossMonthly').then(res => {
     grossMensalGraph = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   await apiClient.post('/economy/estimates').then(res => {
     acumulatedGraph = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   await apiClient.post('/economy/MWh').then(res => {
     costIndicator = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   await apiClient.post('/pld/overview').then(res => {
     mapsInfo = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   const grossMensalYears = grossMensalGraph.map((value) => value.mes)
