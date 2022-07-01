@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { draw, generate } from 'patternomaly'
+
 import { Bar, Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -54,9 +56,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
     plugins: {
       datalabels: {
         display: true,
-        color: (value, ctx) => {
-          return value.dataset.label==='2021'? 'black' : 'white'
-        },
+        color: 'black',
         formatter: (value, ctx) => {
           let sum = 0;
           const dataArr = ctx.chart.data.datasets[0].data;
@@ -67,13 +67,10 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
 
           return value==null? null : result
         },
-        anchor: "start",
-        offset: 20,
+        anchor: "end",
         align: "end",
-        rotation: -90,
         font: {
           size: !miniature? 15 : 10,
-          weight: !miniature? 800 : 100
         }
       },
       legend: {
@@ -93,12 +90,16 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
       {
         label: dataset1? dataset1 : '2021',
         data: data1.map(value => value.custo_unit),
-        backgroundColor: '#C2D5FB',
+        backgroundColor: (value, ctx) => {
+          return data1[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
+        },
       },
       {
         label: dataset2? dataset2 : '2022',
         data: data2.map(value => value.custo_unit),
-        backgroundColor: '#255488',
+        backgroundColor: (value, ctx) => {
+          return data2[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
+        },
       }
     ],
   }

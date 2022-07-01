@@ -39,11 +39,15 @@ export const PldTableView = styled.main`
     word-break:normal;
   }
   .tg .tg-8oo6{
-    font-size:13px;
+    font-size:20px;
     text-align:center;
     vertical-align:top;
     padding: 10px 18px;
     text-align: center;
+
+    color: white;
+
+    background-color: #254F7F;
   }
   .tg .tg-uulg{
     background-color:#efefef;

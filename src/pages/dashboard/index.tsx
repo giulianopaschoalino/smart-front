@@ -61,27 +61,27 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
       </Link>
 
       <section className='dashboard'>
-        <GraphCard title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada Anual - (Valores em R$ mil)'>
+        <GraphCard title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada Anual - Valores em R$ mil'>
           <SingleBar title='' subtitle=''
           dataset='Consolidada'
           dataProps={grossAnualGraph}
           label={grossAnualYears} barLabel miniature/>
         </GraphCard>
 
-        <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - (Valores em R$)' singleBar>
+        <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ mil' singleBar>
           <Chart2 title='' subtitle=''
           data1={grossMensalGraph.filter((value, index) => value.mes.slice(3, 8).includes('2021'))}
           data2={grossMensalGraph.filter((value, index) => value.mes.slice(3, 8).includes('2022'))}
           label={months} miniature/>
         </GraphCard>
 
-        <GraphCard title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - (Valores em R$/MWh)' singleBar>
+        <GraphCard title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - Valores em R$ mil' singleBar>
           <LineBarChart2 data1={acumulatedGraph} data2={acumulatedGraph} data3={acumulatedGraph}
           label={ConsumoEstimado.label} dataset1='Custo' dataset2='Cativo' dataset3='Livre'
           title='' subtitle='' barLabel hashurado miniature/>
         </GraphCard>
 
-        <GraphCard title='Indicador de Custo' subtitle='Valores em R$/ MWh'>
+        <GraphCard title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'>
           <Chart title='' subtitle=''
           data1={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
           // data1={graphData}

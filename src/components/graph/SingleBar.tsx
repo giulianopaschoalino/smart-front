@@ -95,7 +95,7 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel
           return parseFloat(value.economia_acumulada).toFixed(2)
         }),
         backgroundColor: (value, ctx) => {
-          return dataProps[value.dataIndex]?.dad_estimado == false ? '#255488' : '#C2d5fb'
+          return dataProps[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
         },
       },
       {
