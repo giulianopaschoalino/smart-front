@@ -20,7 +20,7 @@ export const GradientButtonView = styled.button`
   color: #FFFFFF;
 
   background: ${ props => props.color==='orange'?
-  'linear-gradient(200.86deg, #e7992f 8.03%, #e7992f   91.97%), #FFFFFF'
+  'linear-gradient(200.86deg, #ff7f59 8.03%, #df4b1f 91.97%),#FFFFFF'
   :
   props.color === 'purple'?
   'linear-gradient(200.69deg, #254f7f 9%, #254f7f 98%), #FFFFFF'

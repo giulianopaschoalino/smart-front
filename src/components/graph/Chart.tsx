@@ -47,11 +47,11 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
   const options: any = {
     responsive: true,
     scales: {
-      yAxes: [{
-          gridLines: {
-              color: "rgba(0, 0, 0, 0)",
-          }
-      }]
+      x: {
+        grid: {
+          display: false
+        }
+      },
     },
     plugins: {
       datalabels: {

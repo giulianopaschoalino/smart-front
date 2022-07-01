@@ -255,11 +255,6 @@ export const Buttons = styled.div`
 
     color: #FFFFFF;
 
-    :nth-child(2) {
-      font-size: 11px;
-      background: linear-gradient(200.86deg, #F48665 8.03%, #F48665  91.97%), #FFFFFF;
-    }
-
     box-shadow: 0.5px 3px 10px rgba(119, 119, 119, 0.1);
 
     border-style: none;
