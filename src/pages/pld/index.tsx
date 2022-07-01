@@ -130,13 +130,13 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
 
   function handleColorNorte(value, region) {
     if (value <= tableData.result[1].norte_min)
-      return 'green'
+      return ''
     else if (value >= tableData.result[0][`${region}_max`])
-      return 'red'
+      return ''
     else if (tableData.result[0][`${region}_max`] - value > tableData.result[0][`${region}_max`]/2)
-      return 'dullGreen'
+      return ''
     else if (tableData.result[1][`${region}_min`] - value <= tableData.result[1][`${region}_min`])
-      return 'dullRed'
+      return ''
   }
 
   function downloadCSVFile(csv, filename) {

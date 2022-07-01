@@ -56,12 +56,15 @@ export const TableView = styled.div`
     word-break:normal;
   }
   .tg .tg-8oo6{
-    color:#464a53;
-    font-size:13px;
+    font-size:14px;
     text-align:center;
     vertical-align:top;
     padding: 10px 18px;
     text-align: center;
+
+    color: white;
+
+    background-color: #254F7F;
   }
   .tg .tg-uulg{
     background-color:#efefef;

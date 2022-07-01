@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import { Bar, Line } from 'react-chartjs-2';
 import {
@@ -11,9 +11,9 @@ import {
   Legend
 } from 'chart.js'
 
-import faker from 'faker'
+import { draw, generate } from 'patternomaly'
+
 import { ChartView } from './ChartView';
-import RenderIf from '../../utils/renderIf';
 import ChartTitle from './ChartTitle';
 // import { data } from './LineBarChart';
 
@@ -92,14 +92,17 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
       {
         label: dataset1? dataset1 : '2021',
         data: data1.map(value => value.economia_acumulada? value.economia_acumulada : 0),
-        backgroundColor: '#255488',
+        backgroundColor: (value, ctx) => {
+          return data2[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
+        },
       },
-      data2?
       {
         label: dataset2? dataset2 : '2022',
         data: data2.map(value => value.economia_acumulada? value.economia_acumulada : 0),
-        backgroundColor: '#C2D5FB',
-      } : null
+        backgroundColor: (value, ctx) => {
+          return data2[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
+        },
+      }
     ],
   }
 

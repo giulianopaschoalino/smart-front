@@ -147,7 +147,12 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
         </thead>
         <tbody>
           {
-            tableDataState.map((value, index) => {
+            tableDataState.sort((a, b) => {
+              if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
+              if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1
+
+              return 0
+            }).map((value, index) => {
               return <>
                 <tr>
                   <td key={index} className='tg-gceh'>{value.mes}</td>
