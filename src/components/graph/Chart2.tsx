@@ -63,7 +63,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
           dataArr.map(data => {
               sum += data;
           });
-          const percentage = (data1[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
+          const percentage = data1[ctx.dataIndex].econ_percentual? (data1[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%" : '';
           const result = `  ${parseInt(value)!=0? parseInt(value).toLocaleString('pt-br') : ''}\n    ${parseInt(value)!=0? percentage : ''}`
 
           return value==null? null : result
