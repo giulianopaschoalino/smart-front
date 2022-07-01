@@ -26,6 +26,7 @@ import { DiscretizedConsumptionChart } from '../../components/graph/DiscretizedC
 import DiscretizedConsumptionChartLine from '../../components/graph/DiscretizedConsumptionChartLine'
 import router, { useRouter } from 'next/router'
 import { DemRegXDemConChart } from '../../components/graph/DemRegXDemConChart'
+import RenderIf from '../../utils/renderIf'
 
 const style = {
   display: 'flex',
@@ -65,16 +66,17 @@ export default function chartTelemetry({userName}) {
   const {startDate, endDate, unity, discretization} = router.query
 
   async function getChartsData() {
-    console.log(router.query)
     await api.post('/telemetry/powerFactor', {
       "filters": [
-        {"type" : "=", "field": "med_5min.ponto", "value": unity},
-        {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
+        {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
+        {"type" : "between", "field": "dia_num", "value": ["2022-04-01", "2022-04-28"]}
       ]
-    }).then(res => {
+  }).then(res => {
+      console.log(res.data.data)
       setFatorPotenciaData(res.data.data)
     }).catch(res => {
-      console.log(res)
+      // console.log(res)
+      router.push('/telemetria')
     })
 
     await api.post('/telemetry/discretization', {
@@ -86,7 +88,8 @@ export default function chartTelemetry({userName}) {
     }).then(res => {
       setDiscretizedConsumptionDataReativa(res.data.data)
     }).catch(res => {
-      console.log(res)
+      // console.log(res)
+      router.push('/telemetria')
     })
 
   await api.post('/telemetry/discretization', {
@@ -98,7 +101,8 @@ export default function chartTelemetry({userName}) {
     }).then(res => {
       setDiscretizedConsumptionData(res.data.data)
     }).catch(res => {
-      console.log(res)
+      // console.log(res)
+      router.push('/telemetria')
     })
 
   await api.post('/telemetry/demand', {
@@ -109,13 +113,13 @@ export default function chartTelemetry({userName}) {
     }).then(res => {
       setDemRegXDemCon(res.data.data)
     }).catch(res => {
-      console.log(res)
+      // console.log(res)
+      router.push('/telemetria')
     })
   }
 
   useEffect(() => {
     getChartsData()
-    console.log(fatorPotenciaData)
   }, [])
 
   return (
@@ -137,27 +141,14 @@ export default function chartTelemetry({userName}) {
           </div>
           :
           <>
-            <div onClick={() => setOpenFatorPotencia(true)}>
-            <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData}
-              data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={FatorPotencia.label1} />
-            </div>
-            <Modal
-              open={openFatorPotencia}
-              onClose={handleCloseFatorPotencia}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData}
-                  data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={FatorPotencia.label1} />
-              </Box>
-            </Modal>
 
+          <RenderIf isTrue={discretization!=='1_hora'}>
             <div onClick={() => setOpenConsumoDiscretizado1(true)}>
               <DiscretizedConsumptionChartLine title={
                   discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
                   discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
-                } subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada' label={discretizedConsumptionDataReativa.map(data => parseFloat(data.reativa).toFixed(3))} />
+                } subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada'
+                label={discretizedConsumptionDataReativa.map(data => parseFloat(data.reativa).toFixed(3))} />
             </div>
             <Modal
               open={openConsumoDiscretizado1}
@@ -178,6 +169,7 @@ export default function chartTelemetry({userName}) {
                   discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
                   discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
                 } subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
+                <p style={{alignSelf: 'center', textAlign: 'center'}}>{`Mês - ${startDate.toString().split('-')[2]}/${startDate.toString().split('-')[1]}/${startDate.toString().split('-')[0]}`}</p>
             </div>
             <Modal
               open={openConsumoDiscretizado2}
@@ -192,6 +184,7 @@ export default function chartTelemetry({userName}) {
                 } subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
               </Box>
             </Modal>
+          </RenderIf>
 
             <div onClick={() => setOpenDemandaContratada(true)}>
               <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'} label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
@@ -204,6 +197,22 @@ export default function chartTelemetry({userName}) {
             >
               <Box sx={style}>
                 <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'} label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
+              </Box>
+            </Modal>
+
+            <div onClick={() => setOpenFatorPotencia(true)}>
+            <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData}
+              data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={fatorPotenciaData.map(value => parseFloat(value.dia_num))} />
+            </div>
+            <Modal
+              open={openFatorPotencia}
+              onClose={handleCloseFatorPotencia}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData}
+                  data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={fatorPotenciaData.map(value => parseFloat(value.dia_num))} />
               </Box>
             </Modal>
             </>
@@ -220,21 +229,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['user-name']: userName } = parseCookies(ctx)
   const { ['user-cod_client']: cod_client } = parseCookies(ctx)
 
-  const fatorPotenciaChart = []
-
-  console.log('olha os query ai', ctx.query)
-
-  // await apiClient.post('/telemetry/powerFactor', {
-	// 	"filters": [
-	// 		{"type" : "=", "field": "med_5min.ponto", "value": cod_client},
-	// 		{"type" : "between", "field": "dia_num", "value": ["2022-01-03", "2022-01-03"]}
-	// 	]
-  // }).then(res => {
-  //   fatorPotenciaChart = res.data
-  // }).catch(res => {
-  //   console.log(res)
-  // })
-
   if (!token) {
     return {
       redirect: {
@@ -247,7 +241,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       userName,
-      fatorPotenciaChart
     }
   }
 }

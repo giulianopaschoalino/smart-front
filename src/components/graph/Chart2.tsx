@@ -45,17 +45,17 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
   const options: any = {
     responsive: true,
     scales: {
-      yAxes: [{
-          gridLines: {
-              color: "rgba(0, 0, 0, 0)",
-          }
-      }]
+      x: {
+        grid: {
+          display: false
+        }
+      },
     },
     plugins: {
       datalabels: {
         display: true,
         color: (value, ctx) => {
-          return value.dataset.label==='2021'? 'black' : 'white'
+          return 'black'
         },
         formatter: (value, ctx) => {
           let sum = 0;
@@ -63,17 +63,16 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
           dataArr.map(data => {
               sum += data;
           });
-          const result = `${parseInt(value).toLocaleString('pt-br')}`
+          const percentage = (data1[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
+          const result = `  ${parseInt(value)!=0? parseInt(value).toLocaleString('pt-br') : ''}\n    ${parseInt(value)!=0? percentage : ''}`
 
           return value==null? null : result
         },
-        anchor: "start",
-        offset: 20,
+        anchor: "end",
+        offset: 0,
         align: "end",
-        rotation: -90,
         font: {
           size: !miniature? 15 : 10,
-          weight: !miniature? 800 : 100
         }
       },
       legend: {
@@ -92,14 +91,15 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
     datasets: [
       {
         label: dataset1? dataset1 : '2021',
-        data: data1.map(value => value.custo_unit),
-        backgroundColor: '#C2D5FB',
+        data: data1.map(value => value.economia_acumulada? value.economia_acumulada : 0),
+        backgroundColor: '#255488',
       },
+      data2?
       {
         label: dataset2? dataset2 : '2022',
-        data: data2.map(value => value.custo_unit),
-        backgroundColor: '#255488',
-      }
+        data: data2.map(value => value.economia_acumulada? value.economia_acumulada : 0),
+        backgroundColor: '#C2D5FB',
+      } : null
     ],
   }
 

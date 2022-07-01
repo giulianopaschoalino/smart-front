@@ -32,18 +32,13 @@ interface ChartInterface {
   title: string,
   subtitle: string,
   data1: any,
-  data2?: any,
-  data3?: any,
-  data4?: any,
   label: any,
   dataset1?: string,
-  dataset2?: string,
-  dataset3?: string,
-  dataset4?: string,
+
   barLabel?: boolean | undefined
 }
 
-export default function DiscretizedConsumptionChartLine({ title, subtitle, data1, data2, data3, data4, label, dataset1, dataset2, dataset3, dataset4, barLabel }: ChartInterface) {
+export default function DiscretizedConsumptionChartLine({ title, subtitle, data1, label, dataset1, barLabel }: ChartInterface) {
   const options: any = {
     responsive: true,
     plugins: {
@@ -71,13 +66,29 @@ export default function DiscretizedConsumptionChartLine({ title, subtitle, data1
   const labels = label;
 
   const data = {
-    labels,
+    labels: labels.map((value, index) => `${value} - ${data1[index].day_formatted}`),
     datasets: [
       {
         label: dataset1,
         data: data1.map(value => value.reativa),
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0)',
+      },
+      {
+        label: 'base',
+        data: data1.map(value => 500),
+        borderColor: 'rgb(0, 0, 0)',
+        fill: false,
+        backgroundColor: 'rgba(255, 145, 0, 0)' ,
+        pointBorderColor: 'rgba(255, 145, 0, 0)',
+      },
+      {
+        label: 'tolerância',
+        data: data1.map(value => 525),
+        borderColor: 'rgb(255, 0, 0)',
+        fill: false,
+        backgroundColor: 'rgba(255, 145, 0, 0)' ,
+        pointBorderColor: 'rgba(255, 145, 0, 0)',
       },
     ],
   }

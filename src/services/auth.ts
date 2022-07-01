@@ -59,7 +59,6 @@ export default async function recoverUserInformation(id) {
   let user: UserObjectType
 
   await api.get(`/user/${id}`).then(res => {
-    console.log(res)
     user = {
       name: res.data.user.name,
       email: res.data.user.email,
@@ -69,7 +68,7 @@ export default async function recoverUserInformation(id) {
       profile_picture: res.data.user.profile_picture
     }
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   return {

@@ -19,6 +19,7 @@ export const IndustryInfoView = styled.main`
     font-family: 'Poppins';
     font-size: 90%;
     color: #FFFFFF;
+    margin-top: 30px;
   }
 
   form {

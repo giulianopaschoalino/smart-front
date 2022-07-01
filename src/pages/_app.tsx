@@ -24,11 +24,8 @@ export function MyApp({ Component, pageProps, notificationsCount }: AppProps | a
   const router = useRouter()
   const rota = router.pathname
 
-  console.log('notifications: ', notificationsCount)
-
   useEffect(() => {
     const handleStart = (url) => {
-      console.log(`Loading: ${url}`)
       NProgress.start()
     }
     const handleStop = () => {
@@ -80,8 +77,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let notificationsCount
 
   await apiClient.post('/download').then(res => {
-    console.log(res)
-  }).catch(res => console.log(res))
+    // console.log(res)
+  }).catch(res => {
+    // console.log(res)
+  })
 
   if (!token) {
     return {

@@ -46,6 +46,13 @@ interface ChartInterface {
 export default function LineChart({ title, subtitle, data1, data2, data3, data4, label, dataset1, dataset2, dataset3, dataset4, barLabel }: ChartInterface) {
   const options: any = {
     responsive: true,
+    scales: {
+      x: {
+        grid: {
+          display: false
+        }
+      },
+    },
     plugins: {
       datalabels: {
         display: true,

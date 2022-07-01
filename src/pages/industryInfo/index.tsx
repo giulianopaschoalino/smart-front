@@ -36,10 +36,8 @@ export default function industryInfo({userName}: any) {
   function handleDownloadPdf() {
     api.get('/download').then(res => {
       window.open(res.data.path);
-      console.log(res.data);
       setOpenSnackSuccess(true)
     }).catch(res => {
-      console.log(res)
       setOpenSnackError(true)
     })
   }
@@ -59,11 +57,13 @@ export default function industryInfo({userName}: any) {
       <Head>
         <title>Smart Energia - Info de Setor</title>
       </Head>
-      <Header name={userName} />
-      <div className='title'>
+      <Header name={userName}>
         <PageTitle title='Info Setorial' subtitle='Clique em "Baixar PDF", para fazer download do PDF' />
-      </div>
+      </Header>
+
       <button onClick={() => handleDownloadPdf()}>Baixar PDF</button>
+
+      <p>Um resumo das atualizações gerais do Setor Elétrico, com dados sobre geração consumo, demanda, meteorologia baseadas em informações do ONS, CCEE, ANEEL, 10 Maiores Jornais e Revistas e CPTEC</p>
     </IndustryInfoView>
   )
 }

@@ -18,7 +18,7 @@ export const TelemetriaView = styled.main`
     left: 0;
 
     width: 100%;
-    height: 100vh;
+    height: 100%;
 
     z-index: 999;
   }
@@ -71,7 +71,7 @@ export const TelemetriaView = styled.main`
   }
 
   .sendButton {
-    width: 60px;
+    width: 100px;
     height: 40px;
 
     background:#254F7F;
@@ -201,7 +201,6 @@ export const TelemetriaView = styled.main`
   }
 
   .paragraph {
-    color: #22d1f0;
     text-align: center;
     margin-top: 60px;
   }
@@ -256,7 +255,8 @@ export const Buttons = styled.div`
 
     color: #FFFFFF;
 
-    :first-child {
+    :nth-child(2) {
+      font-size: 11px;
       background: linear-gradient(200.86deg, #F48665 8.03%, #F48665  91.97%), #FFFFFF;
     }
 

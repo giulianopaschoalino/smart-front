@@ -80,9 +80,6 @@ export function DemRegXDemConChart({
     data2,
     label,
     red,
-    dataset1,
-    dataset2,
-    dataset3,
     barLabel
   }: LineBarChartInterface) {
   const chartRef = useRef<ChartJS>(null);
@@ -126,13 +123,15 @@ export function DemRegXDemConChart({
         '#f00' : '#0c9200',
         borderWidth: 2,
         fill: false,
-        data: data1.map(value => value.dem_cont),
+        borderDash: [5, 5],
+        data: data1?.map(value => value.dem_cont),
+        pointBorderColor: 'rgba(255, 145, 0, 0)',
       },
       {
         type: 'bar' as const,
         label: 'Demanda Registrada',
         backgroundColor: '#255488',
-        data: data2.map(value => value.dem_reg),
+        data: data2?.map(value => value.dem_reg),
       },
     ],
   };

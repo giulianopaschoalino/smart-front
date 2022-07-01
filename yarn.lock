@@ -1390,11 +1390,6 @@
   version "2.11.5"
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.11.5.tgz"
 
-"@react-pdf-viewer/core@^3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@react-pdf-viewer/core/-/core-3.5.0.tgz#bb18b87330bfd01d5c31980b820ef58dc1c50a19"
-  integrity sha512-fu9vi8lzpFtQQqu8XUzSzp5aQYD5YxmJQ0CxOuRrANU7z1kft+TbdyiDOpWoeX2VC0/oyclBxUwleVYv+g1f1w==
-
 "@rushstack/eslint-patch@^1.1.3":
   version "1.1.3"
   resolved "https://registry.npmjs.org/@rushstack/eslint-patch/-/eslint-patch-1.1.3.tgz"
@@ -1967,6 +1962,7 @@ chart.js@^3.7.1:
 chartjs-plugin-datalabels@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/chartjs-plugin-datalabels/-/chartjs-plugin-datalabels-2.0.0.tgz#caacefb26803d968785071eab012dde8746c5939"
+  integrity sha512-WBsWihphzM0Y8fmQVm89+iy99mmgejmj5/jcsYqwxSioLRL/zqJ4Scv/eXq5ZqvG3TpojlGzZLeaOaSvDm7fwA==
 
 chownr@^2.0.0:
   version "2.0.0"
@@ -3642,6 +3638,7 @@ node-releases@^2.0.3:
 nookies@^2.5.2:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/nookies/-/nookies-2.5.2.tgz#cc55547efa982d013a21475bd0db0c02c1b35b27"
+  integrity sha512-x0TRSaosAEonNKyCrShoUaJ5rrT5KHRNZ5DwPCuizjgrnkpE5DRf3VL7AyyQin4htict92X1EQ7ejDbaHDVdYA==
   dependencies:
     cookie "^0.4.1"
     set-cookie-parser "^2.4.6"

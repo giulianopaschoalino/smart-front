@@ -83,7 +83,10 @@ export default function FatorPotenciaChart({ title, subtitle, data1, data2, labe
         label: dataset2? dataset2 : '',
         data: data2.map(value => value.f_ref),
         borderColor: 'rgb(0, 0, 0)' ,
+        fill: false,
+        borderDash: [5, 5],
         backgroundColor: 'rgba(255, 145, 0, 0)' ,
+        pointBorderColor: 'rgba(255, 145, 0, 0)',
       },
     ],
   }

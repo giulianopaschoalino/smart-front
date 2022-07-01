@@ -24,12 +24,19 @@ interface SingleBarInterface{
   label: Array<string>,
   dataset: string,
   barLabel?: boolean | undefined,
-  brutoAnual?: boolean | undefined,
+  miniature?: boolean | undefined,
 }
 
-export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel, brutoAnual }: SingleBarInterface) {
+export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel, miniature }: SingleBarInterface) {
   const options: object = {
     responsive: true,
+    scales: {
+      x: {
+        grid: {
+          display: false
+        }
+      },
+    },
     series: {
       downsample: {
         threshold: 1000
@@ -44,7 +51,7 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel
               sum += data;
           });
           const percentage = (dataProps[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
-          const result = `${parseFloat(value).toLocaleString('pt-br')}\n    ${percentage}`
+          const result = ` ${parseInt(value).toLocaleString('pt-br')}\n ${percentage}`
 
           return value==null? null : result
         },
@@ -54,11 +61,16 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel
         offset: -40,
         align: "start",
         font: {
-          size: 12
+          size: !miniature? 15 : 10
         }
       },
       legend: {
         position: 'bottom' as const,
+        labels: {
+          font: {
+            size: 16
+          }
+        }
       },
       title: {
         display: false,

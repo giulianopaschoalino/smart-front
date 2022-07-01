@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const HeaderView = styled.header`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 
   width: 100%;
 
@@ -27,6 +27,18 @@ export const HeaderView = styled.header`
       color: white;
 
       white-space: nowrap;
+    }
+  }
+
+  section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    :first-child {
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-direction: column;
     }
   }
 `

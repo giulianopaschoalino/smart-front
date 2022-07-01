@@ -105,7 +105,10 @@ export default function notification({clients, notifications, userName}: any) {
       title,
       body,
       users
-    }).then(res => setOpenSnackSuccess(true)).catch(res => setOpenSnackError(true))
+    }).then(res => {
+      setOpenSnackSuccess(true)
+      window.location.reload()
+    }).catch(res => setOpenSnackError(true))
   }
   async function handleDeleteNotification(id: any) {
     await id.map((value) => {

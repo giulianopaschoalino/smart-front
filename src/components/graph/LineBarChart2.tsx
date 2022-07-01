@@ -71,17 +71,23 @@ interface LineBarChartInterface {
   dataset3?: string,
   barLabel?: boolean | undefined,
   hashurado?: boolean | undefined,
+  miniature?: boolean | undefined,
 }
 
-export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red, dataset1, dataset2, dataset3, barLabel, hashurado }: LineBarChartInterface) {
+export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red, dataset1, dataset2, dataset3, barLabel, hashurado, miniature }: LineBarChartInterface) {
   const chartRef = useRef<ChartJS>(null);
-
-  const currentTime = new Date();
 
   const labels = label
 
   const options: any = {
     responsive: true,
+    scales: {
+      x: {
+        grid: {
+          display: false
+        }
+      },
+    },
     plugins: {
       datalabels: {
         display: true,
@@ -91,7 +97,7 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
         offset: -20,
         align: "start",
         font: {
-          size: 12
+          size: !miniature? 15 : 10
         },
         formatter: (value, ctx) => {
           let sum = 0;
@@ -99,7 +105,7 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
           dataArr.map(data => {
               sum += data;
           });
-          const result = `${parseFloat(value).toLocaleString('pt-br')}`
+          const result = `${parseInt(value).toLocaleString('pt-br')}`
 
           return value==null? null : result
         }
