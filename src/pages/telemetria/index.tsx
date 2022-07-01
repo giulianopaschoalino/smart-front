@@ -378,6 +378,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/units', {
 		"filters": [
+      {"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]},
 			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": id}
 		],
 		"fields": ["cod_smart_unidade", "codigo_scde"],
