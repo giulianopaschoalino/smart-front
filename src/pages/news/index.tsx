@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link'
@@ -26,7 +25,7 @@ export default function aboutUs({userName, news}: any) {
 
           return <>
             <section>
-              <h2 dangerouslySetInnerHTML={{__html: data.pubDate.slice(0, -5)}} />
+              <h2 dangerouslySetInnerHTML={{__html: data.pubDate.slice(0, -8)}} />
               <strong dangerouslySetInnerHTML={{__html: data.title}} />
               <strong>ANEEL APROVA REAJUSTE TARIFÁRIO ANUAL DA ENERGISA SERGIPE DE 16,46 % PARA O CONSUMIDOR RESIDENCIAL</strong>
               <br />
