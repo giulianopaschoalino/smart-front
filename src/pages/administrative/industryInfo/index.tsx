@@ -75,6 +75,8 @@ export default function industryInfo({userName, pdfUrl}: any) {
       </div>
 
       <BasicButton onClick={() => handleCreateClient()} title='Atualizar'/>
+      <BasicButton onClick={() => window.open(pdfUrl)} title='Visualizar arquivo mais recente'/>
+      <BasicButton onClick={() => console.log('')} title='Excluir último arquivo enviado'/>
 
       {/* <PDFViewer
           document={{
@@ -95,7 +97,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   api.get('/download').then(res => {
     pdfUrl = res.data.path
   }).catch(res => {
-    // console.log()
+    console.log(res)
   })
 
   if (!token) {
