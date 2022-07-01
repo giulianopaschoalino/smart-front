@@ -92,16 +92,18 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
       {
         label: dataset1? dataset1 : '2021',
         data: data1.map(value => value.economia_acumulada? value.economia_acumulada : 0),
-        backgroundColor: (value, ctx) => {
-          return data1[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
-        },
+        backgroundColor: '#255488'
+        // backgroundColor: (value, ctx) => {
+        //   return data1[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
+        // },
       },
       {
         label: dataset2? dataset2 : '2022',
         data: data2.map(value => value.economia_acumulada? value.economia_acumulada : 0),
-        backgroundColor: (value, ctx) => {
-          return data2[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
-        },
+        backgroundColor: '#255488'
+        // backgroundColor: (value, ctx) => {
+        //   return data2[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
+        // },
       }
     ],
   }
