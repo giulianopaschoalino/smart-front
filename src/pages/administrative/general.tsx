@@ -78,8 +78,9 @@ export default function index({userName, initialText}: any) {
           Não cadastrado!
         </Alert>
       </Snackbar>
-      <Header name={userName} admin/>
-      <PageTitle title='Sobre nós' subtitle='Alterar texto de sobre nós'/>
+      <Header name={userName} admin>
+        <PageTitle title='Sobre nós' subtitle='Alterar texto de sobre nós'/>
+      </Header>
       <div style={{width: '100%', display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start', marginTop: '30px', marginBottom: '10px'}}>
         <BasicButton title='Salvar Texto' onClick={() => handleRegisterAboutUs()}/>
       </div>
@@ -88,7 +89,7 @@ export default function index({userName, initialText}: any) {
       <Editor
         onInit={(evt, editor) => editorRef.current = editor}
         onEditorChange={(newText) => setText(newText)}
-        initialValue={initialText[0].about}
+        initialValue={initialText[0]?.about}
         init={{
           height: 500,
           width: '100%',

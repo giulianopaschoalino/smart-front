@@ -3,8 +3,6 @@ import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import React from 'react'
 
-import Chart from '../../components/graph/Chart'
-import { LineBarChart } from '../../components/graph/LineBarChart'
 import { LineBarChart2 } from '../../components/graph/LineBarChart2'
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle'
@@ -23,7 +21,7 @@ export default function EstimatedCost({graphData, userName}: any) {
       </Header>
       <section>
         <LineBarChart2 data1={graphData} data2={graphData} data3={graphData}
-        dataset1="Economia (R$)" dataset2='Cativo' dataset3='Livre'
+        dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
         label={ConsumoEstimado.label} title='' subtitle='' barLabel hashurado />
       </section>
     </EstimatedCostView>

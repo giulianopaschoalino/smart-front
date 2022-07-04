@@ -147,7 +147,7 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
       },
       {
         type: 'bar' as const,
-        label: dataset3? dataset3 : 'Dataset 2',
+        label: dataset3? dataset3 : 'Dataset 3',
         // backgroundColor: '#255488',
         backgroundColor: (value, ctx) => {
           return hashurado? data1[value.dataIndex]?.dad_estimado == false? '#255488' : pattern.draw('diagonal', '#255488') : '#255488'
@@ -163,7 +163,7 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
       {
         type: 'line',
         label: 'Estimado',
-        backgroundColor: pattern.draw('diagonal-right-left', '#C2d5fb'),
+        backgroundColor: '#C2d5fb',
         data: [],
       }
     ],
