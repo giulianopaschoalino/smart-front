@@ -11,6 +11,7 @@ import FormData from 'form-data';
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import getAPIClient from '../../../services/ssrApi'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -50,6 +51,14 @@ export default function industryInfo({userName, pdfUrl}: any) {
     })
   }
 
+  function handleDownloadPdf() {
+    api.get('/download').then(res => {
+      window.open(res.data.path);
+    }).catch(res => {
+      console.log(res)
+    })
+  }
+
   return (
     <IndustryInfoView>
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
@@ -75,7 +84,7 @@ export default function industryInfo({userName, pdfUrl}: any) {
       </div>
 
       <BasicButton onClick={() => handleCreateClient()} title='Atualizar'/>
-      <BasicButton onClick={() => window.open(pdfUrl)} title='Visualizar arquivo mais recente'/>
+      <BasicButton onClick={() => handleDownloadPdf()} title='Visualizar arquivo mais recente'/>
       <BasicButton onClick={() => console.log('')} title='Excluir último arquivo enviado'/>
 
       {/* <PDFViewer
@@ -89,15 +98,16 @@ export default function industryInfo({userName, pdfUrl}: any) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
 
   let pdfUrl=[]
 
-  api.get('/download').then(res => {
+  apiClient.get('/download').then(res => {
     pdfUrl = res.data.path
   }).catch(res => {
-    console.log(res)
+    console.log('exception', res)
   })
 
   if (!token) {

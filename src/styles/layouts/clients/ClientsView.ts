@@ -6,19 +6,6 @@ export const ClientsView = styled.main`
 
   width: 100%;
 
-  section {
-    display: flex;
-
-    width: 100%;
-
-    :nth-child(3) {
-      justify-content: space-between;
-
-      width: 18rem;
-
-      margin: 45px 0 22px 0;
-    }
-  }
   .btn2{
       background: #254F7F;
       border-radius: 8px;

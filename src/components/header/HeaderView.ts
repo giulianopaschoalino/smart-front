@@ -21,7 +21,7 @@ export const HeaderView = styled.header`
 
     padding: 14px;
 
-    margin-right: 20px;
+    margin-left: 20px;
 
     p{
       color: white;

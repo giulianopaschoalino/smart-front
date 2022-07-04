@@ -155,7 +155,7 @@ export const PldTableView = styled.main`
   }
 
   .btnDownload{
-    margin-top:6px;
+    margin-top: 25px;
   }
 `
 
@@ -168,6 +168,13 @@ export const PldGraphView = styled.main`
   flex-wrap: wrap;
 
   width: 100%;
+
+  .MuiOutlinedInput-input {
+    height: 30px;
+
+    outline: none;
+    border: none;
+  }
 
   .select {
     width: 20rem;

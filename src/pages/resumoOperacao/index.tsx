@@ -139,8 +139,8 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
             <th className='tg-8oo6'>Mês </th>
             <th className='tg-8oo6'>Unidade </th>
             <th className='tg-8oo6'>Operação</th>
-            <th className='tg-8oo6'>Contraparte</th>
             <th className='tg-8oo6'>Montante (MWh)</th>
+            <th className='tg-8oo6'>Contraparte</th>
             <th className='tg-8oo6'>ValorNF/Crédito(R$)</th>
             <th className='tg-8oo6'>Preço(R$/MWh)</th>
           </tr>
@@ -157,11 +157,11 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
                 <tr>
                   <td key={index} className='tg-gceh'>{value.mes}</td>
                   <td key={index} className='tg-gceh'>{value.cod_smart_unidade}</td>
-                  <td key={index} className='tg-uulg'>{value.operacao}</td>
-                  <td key={index} className='tg-gceh'>{value.contraparte}</td>
+                  <td key={index} className='tg-gceh'>{value.operacao}</td>
                   <td key={index} className='tg-gceh'>{parseFloat(value.montante_nf).toLocaleString('pt-br')}</td>
+                  <td key={index} className='tg-gceh'>{value.contraparte}</td>
                   <td key={index} className='tg-gceh'>{parseFloat(value.preco_nf).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                  <td key={index} className='tg-uulg'>{parseFloat(value.nf_c_icms).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                  <td key={index} className='tg-gceh'>{parseFloat(value.nf_c_icms).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                 </tr>
               </>
             })

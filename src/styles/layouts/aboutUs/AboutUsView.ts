@@ -3,16 +3,7 @@ import styled from "styled-components";
 export const AboutUsView = styled.main`
   width: 100%;
 
-  ul {
-    list-style: none;
-
-    li {
-      display: flex;
-      margin-bottom: 8px;
-
-      font-size: 98.98%;
-    }
-  }
+  font-weight: 300;
 
   article {
     display: flex;
@@ -20,6 +11,9 @@ export const AboutUsView = styled.main`
     align-items: center;
 
     aside {
+      position: absolute;
+      margin-bottom: 150px;
+
       display: flex;
       justify-content: center;
       align-items: center;

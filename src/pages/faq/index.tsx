@@ -2,6 +2,7 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import React from 'react'
+import Banner from '../../components/banner/Banner'
 import CommonQuestionsCard from '../../components/faqQuestionsCard/FaqQuestionsCard'
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle'
@@ -19,6 +20,7 @@ export default function commonQuestions({faqData, userName}) {
       <Header name={userName}>
         <PageTitle title='Perguntas Frequentes' subtitle='Aqui estão algumas das perguntas que mais recebemos!' />
       </Header>
+      <Banner title='Perguntas Frequentes' subtitle='Aqui estão algumas das perguntas que mais recebemos!' imgSource='/assets/banners/faq1.png'/>
       <section className='CommonQuestionsSection' >
       {
         faqData.length<1?

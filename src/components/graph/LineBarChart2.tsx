@@ -105,7 +105,7 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
           dataArr.map(data => {
               sum += data;
           });
-          const result = `${parseInt(value).toLocaleString('pt-br')}`
+          const result = `${(parseInt(value)/1000).toLocaleString('pt-br')}`
 
           return value==null? null : result
         }
@@ -120,7 +120,7 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
     },
   };
 
-  const data = data2? {
+  const data: any = data2? {
     labels,
     datasets: [
       {
@@ -129,11 +129,13 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
         borderColor: red?
         '#f00' : '#0c9200',
         datalabels: {
-          backgroundColor: 'white'
+          backgroundColor: 'white',
+          borderRadius: 8,
+          opacity: .8
         },
         borderWidth: 2,
         fill: false,
-        data: data1.map(value => value.economia_mensal),
+        data: data1.map(value => value.economia_mensal/1000),
       },
       {
         type: 'bar' as const,
@@ -141,7 +143,7 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
         backgroundColor: (value, ctx) => {
           return hashurado? data1[value.dataIndex]?.dad_estimado == false? '#C2D5FB' : pattern.draw('diagonal', '#C2D5FB') : '#C2D5FB'
         },
-        data: data3.map(value => value.custo_cativo),
+        data: data3.map(value => value.custo_cativo/1000),
       },
       {
         type: 'bar' as const,
@@ -150,8 +152,20 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
         backgroundColor: (value, ctx) => {
           return hashurado? data1[value.dataIndex]?.dad_estimado == false? '#255488' : pattern.draw('diagonal', '#255488') : '#255488'
         },
-        data: data2.map(value => value.custo_livre),
+        data: data2.map(value => value.custo_livre/1000),
       },
+      {
+        type: 'line',
+        label: 'Acumulado',
+        backgroundColor: '#255488',
+        data: [],
+      },
+      {
+        type: 'line',
+        label: 'Estimado',
+        backgroundColor: pattern.draw('diagonal-right-left', '#C2d5fb'),
+        data: [],
+      }
     ],
   } : {
     labels,

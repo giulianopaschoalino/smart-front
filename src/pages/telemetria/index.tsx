@@ -287,6 +287,7 @@ export default function Telemetria({userName, clients}: any) {
               <MenuItem value="15_min">15 minutos</MenuItem>
               <MenuItem value="1_hora">1 hora</MenuItem>
               <MenuItem value="1_dia">1 dia</MenuItem>
+              <MenuItem value="1_mes">1 mês</MenuItem>
             </Select>
           </FormControl>
         </div>
