@@ -91,7 +91,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
         type: 'bar',
         label: dataset1? dataset1 : '2021',
         data: data1.map(value => value.economia_acumulada? value.economia_acumulada : 0),
-        // backgroundColor: '#255488'
+        backgroundColor: '#255488'
         // backgroundColor: (value, ctx) => {
         //   return data1[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
         // },
@@ -108,13 +108,13 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
       {
         type: 'line',
         label: ['Acumulado'],
-        // backgroundColor: '#255488',
+        backgroundColor: '#255488',
         data: [],
       },
       {
         type: 'line',
         label: ['Estimado'],
-        // backgroundColor: draw('diagonal-right-left', '#C2d5fb'),
+        backgroundColor: draw('diagonal-right-left', '#C2d5fb'),
         data: [],
       }
     ],

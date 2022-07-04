@@ -120,7 +120,7 @@ export function LineBarChart2({ title, subtitle, data1, data2, data3, label, red
     },
   };
 
-  const data = data2? {
+  const data: any = data2? {
     labels,
     datasets: [
       {
