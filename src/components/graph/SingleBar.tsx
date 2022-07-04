@@ -32,6 +32,9 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel
     responsive: true,
     scales: {
       x: {
+        font: {
+          size: 20
+        },
         grid: {
           display: false
         }
@@ -58,10 +61,10 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel
         display: true,
         color: barLabel? 'black' : "rgba(255, 255, 255, 0)",
         anchor: "end",
-        offset: -40,
+        offset: -60,
         align: "start",
         font: {
-          size: !miniature? 15 : 10
+          size: !miniature? 22 : 10
         }
       },
       legend: {

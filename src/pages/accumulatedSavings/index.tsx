@@ -32,7 +32,7 @@ export default function AccumulatedSavings({graphData, years, userName}: any) {
         <title>Smart Energia - Economia Bruta Mensal</title>
       </Head>
       <Header name={userName}>
-        <PageTitle title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ mil' />
+        <PageTitle title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ x mil' />
       </Header>
       <section>
         <Chart2 title='' subtitle=''

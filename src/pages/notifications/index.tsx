@@ -8,6 +8,7 @@ import PageTitle from '../../components/pageTitle/PageTitle'
 import { api } from '../../services/api'
 import getAPIClient from '../../services/ssrApi'
 import { FaqView } from '../../styles/layouts/commonQuestions/FaqView'
+import Banner from '../../components/banner/Banner'
 
 export default function Notifications({notificationData, userName}: any) {
   return (
@@ -18,6 +19,7 @@ export default function Notifications({notificationData, userName}: any) {
       <Header name={userName}>
         <PageTitle title='Notificações' subtitle='Aqui estão as notificações publicadas para você!' />
       </Header>
+      <Banner title='Notificações' subtitle='Aqui estão as notificações publicadas para você!' imgSource='/assets/banners/notificacoes.jpg'/>
       <section className='CommonQuestionsSection' >
       {
         notificationData.length!=0?

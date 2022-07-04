@@ -5,18 +5,15 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies';
 import React, { useEffect, useState } from 'react'
 
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
-import { BasicButtonView } from '../../components/buttons/basicButton/BasicButtonView';
 import { LineBarChart } from '../../components/graph/LineBarChart';
 import LineChart from '../../components/graph/LineChart';
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle';
 import { api } from '../../services/api';
-import { EconomiaAcumulada } from '../../services/economiaAcumulada';
 import { EvolucaoPld } from '../../services/evolucaoPld';
 import getAPIClient from '../../services/ssrApi';
 import { GoBack, PldGraphView, PldTableView } from '../../styles/layouts/pld/PldView'
@@ -36,9 +33,9 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
   const year_Month = `0${dateFormated.getMonth()}/${dateFormated.getFullYear()}`
 
   const [date, setDate] = useState(`${dateFormated.getFullYear()}-${dateFormated.getUTCMonth()+1}-${dateFormated.getUTCDate()}`);
-  const [select, setSelect] = useState('NORDESTE');
+  const [select, setSelect] = useState('SUDESTE');
   const [page, setPage] = useState<string>('table')
-  const [day, setDay] = useState<string>(null)
+  const [month, setMonth] = useState<string>((dateFormated.getUTCMonth()+1).toString())
 
   const [dataByDay, setDataByDay] = useState([])
 
@@ -51,7 +48,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
     setSelect(event.target.value);
   };
   const handleChangeDay = (event: SelectChangeEvent) => {
-    setDay(event.target.value);
+    setMonth(event.target.value);
   };
 
   function getDataByDay() {
@@ -59,7 +56,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       "limit": 20,
       "offset": 0,
       "filters": [
-          {"type" : "=", "field" : "mes_ref", "value": `${day}/2022`, "row": true},
+          {"type" : "=", "field" : "mes_ref", "value": `${month}/2022`, "row": true},
           {"type" : "=", "field" : "pld.submercado", "value": select}
         ],
       "order": [{ "field": "day_calc", "direction": "asc" }]
@@ -175,19 +172,18 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
   useEffect(() => {
     getDataByHour()
     getDataByDay()
-  }, [date, day, select])
+    console.log(month)
+  }, [date, month, select])
 
   return (
-    <main style={{
-      width: '100%',
-    }}>
+    <main style={{width: '100%',}}>
       <Head>
         <title>Smart Energia - PLD</title>
       </Head>
       <RenderIf isTrue={page==='table'? true : false}>
         <Header name={userName}>
           <Link href='/dashboard' >{'< Voltar para Visão Geral'}</Link>
-          <PageTitle title='Tabela de consumo PLD' subtitle=''/>
+          <PageTitle title='Tabela de consumo PLD' subtitle='Tabela de consumo PLD'/>
         </Header>
         <PldTableView>
           <table className="tg">
@@ -211,14 +207,21 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
                   return <>
                     <tr className={data.year_month_formatted==year_Month? 'actual' : ''}>
                       <td className='tg-gceh'>{data.year_month_formatted}</td>
-                      <td className={`tg-uulg ${handleColorNorte(parseFloat(data.norte), 'nordeste')}`}>{parseFloat(data.nordeste).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                      <td className={`tg-gceh ${handleColorNorte(parseFloat(data.norte), 'norte')}`}>{parseFloat(data.norte).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                      <td className={`tg-gceh ${handleColorNorte(parseFloat(data.norte), 'sudeste')}`}>{parseFloat(data.sudeste).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                      <td className={`tg-uulg ${handleColorNorte(parseFloat(data.norte), 'sul')}`}>{parseFloat(data.sul).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td className={`tg-uulg`}>{parseFloat(data.nordeste).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td className={`tg-gceh`}>{parseFloat(data.norte).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td className={`tg-gceh`}>{parseFloat(data.sudeste).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td className={`tg-uulg`}>{parseFloat(data.sul).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                     </tr>
                   </>
                 })
               }
+              <tr>
+                <td className='tg-gceh'></td>
+                <td className={`tg-uulg`}></td>
+                <td className={`tg-gceh`}></td>
+                <td className={`tg-gceh`}></td>
+                <td className={`tg-uulg`}></td>
+              </tr>
               {
                 tableData.result.map((data, index) => {
                   if (index === 0) {
@@ -263,7 +266,6 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
           }} title='Download'/>
           </div>
           <section>
-
             <article onClick={() => setPage('perMouth')}>
               <p>Valores Diários</p>
             </article>
@@ -275,8 +277,10 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       </RenderIf>
 
       <RenderIf isTrue={page==='perMouth'? true : false}>
-        <GoBack onClick={() => setPage('table')}>{'< Voltar para tabela PLD'}</GoBack>
-        <PageTitle title='Resumo PLD - Diários' subtitle='Evolução PLD (R$/MWh)'/>
+        <Header name={userName}>
+          <GoBack onClick={() => setPage('table')}>{'< Voltar para tabela PLD'}</GoBack>
+          <PageTitle title='Resumo PLD - Diários' subtitle='Evolução PLD (R$/MWh)'/>
+        </Header>
         <PldGraphView>
           <section className='toolsbar'>
             <div className='select'>
@@ -306,7 +310,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
             }}>
               <InputLabel id="demo-simple-select-label">Mês</InputLabel>
               <Select
-                  value={day}
+                  value={month}
                   onChange={handleChangeDay}
                   displayEmpty
                   placeholder='dia'
@@ -328,18 +332,21 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
           </section>
           <LineBarChart
           data1={dataByDay} data3={dataByDay}
-          dataset1={'Economia'} dataset2={'barra1'} dataset3={'2021'}
+          dataset1={'Média'} dataset2={'barra1'} dataset3={'Diario'}
           label={EvolucaoPld.label}
           title='' subtitle='' />
         </PldGraphView>
       </RenderIf>
 
       <RenderIf isTrue={page==='perDate'? true : false}>
-        <GoBack onClick={() => setPage('table')}>{'< Voltar para tabela PLD'}</GoBack>
+        <Header name={userName}>
+          {/* <Link href='/dashboard' >{'< Voltar para Visão Geral'}</Link> */}
+          <GoBack onClick={() => setPage('table')}>{'< Voltar para tabela PLD'}</GoBack>
+          <PageTitle title='Resumo PLD - Horas' subtitle='Gráfico de resumo PLD - Horas (Média, Diário)'/>
+        </Header>
         <PldGraphView>
-          <PageTitle title='Resumo PLD - Horas' subtitle=''/>
           <section className='toolsbar'>
-            <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={date} onChange={(value) => setDate(value.target.value)}/>
+            <input type="date" data-date={date} data-date-format="DD MMMM YYYY" value={date} onChange={(value) => setDate(value.target.value)}/>
           </section>
           <LineChart data1={nordeste} data2={norte} data3={sudeste} data4={sul}
           dataset1='NORDESTE' dataset2='NORTE' dataset3='SUDESTE' dataset4='SUL'

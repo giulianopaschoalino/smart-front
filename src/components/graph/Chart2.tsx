@@ -64,7 +64,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
               sum += data;
           });
           const percentage = data1[ctx.dataIndex].econ_percentual? (data1[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%" : '';
-          const result = `  ${parseInt(value)!=0? parseInt(value).toLocaleString('pt-br') : ''}\n    ${parseInt(value)!=0? percentage : ''}`
+          const result = `  ${parseInt(value)!=0? percentage : ''}\n  ${parseInt(value)!=0? parseInt(value).toLocaleString('pt-br') : ''}`
 
           return value==null? null : result
         },
@@ -72,7 +72,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
         offset: 0,
         align: "end",
         font: {
-          size: !miniature? 15 : 10,
+          size: !miniature? 18 : 10,
         }
       },
       legend: {
@@ -104,6 +104,18 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
         // backgroundColor: (value, ctx) => {
         //   return data2[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
         // },
+      },
+      {
+        type: 'line',
+        label: 'Acumulado',
+        backgroundColor: '#255488',
+        data: [],
+      },
+      {
+        type: 'line',
+        label: 'Estimado',
+        backgroundColor: draw('diagonal-right-left', '#C2d5fb'),
+        data: [],
       }
     ],
   }

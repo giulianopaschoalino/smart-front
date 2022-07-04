@@ -90,7 +90,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
       {
         label: dataset1? dataset1 : '2021',
         data: data1.map(value => value.custo_unit),
-        backgroundColor: '#255488'
+        backgroundColor: '#C2d5fb'
         // backgroundColor: (value, ctx) => {
         //   return data1[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
         // },
@@ -98,7 +98,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
       {
         label: dataset2? dataset2 : '2022',
         data: data2.map(value => value.custo_unit),
-        backgroundColor: '#255488'
+        backgroundColor: '#C2d5fb'
         // backgroundColor: (value, ctx) => {
         //   return data2[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
         // },

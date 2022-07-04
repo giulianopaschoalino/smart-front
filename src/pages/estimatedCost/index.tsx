@@ -19,7 +19,7 @@ export default function EstimatedCost({graphData, userName}: any) {
         <title>Smart Energia - Custos Estimados</title>
       </Head>
       <Header name={userName}>
-        <PageTitle title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - Valores em R$ mil' />
+        <PageTitle title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - Valores em R$ x mil' />
       </Header>
       <section>
         <LineBarChart2 data1={graphData} data2={graphData} data3={graphData}

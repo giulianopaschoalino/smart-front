@@ -142,28 +142,7 @@ export default function chartTelemetry({userName}) {
           :
           <>
 
-          <RenderIf isTrue={discretization!=='1_hora'}>
-            <div onClick={() => setOpenConsumoDiscretizado1(true)}>
-              <DiscretizedConsumptionChartLine title={
-                  discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
-                  discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
-                } subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada'
-                label={discretizedConsumptionDataReativa.map(data => parseFloat(data.reativa).toFixed(3))} />
-            </div>
-            <Modal
-              open={openConsumoDiscretizado1}
-              onClose={handleCloseConsumoDiscretizado1}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <DiscretizedConsumptionChartLine title={
-                  discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
-                  discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
-                } subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada' label={discretizedConsumptionDataReativa.map(data => data.reativa)} />
-              </Box>
-            </Modal>
-
+          <RenderIf isTrue={discretization!=='1_dia' && discretization!=='1_mes'}>
             <div onClick={() => setOpenConsumoDiscretizado2(true)}>
               <DiscretizedConsumptionChart title={
                   discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
@@ -182,6 +161,27 @@ export default function chartTelemetry({userName}) {
                   discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
                   discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
                 } subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
+              </Box>
+            </Modal>
+
+            <div onClick={() => setOpenConsumoDiscretizado1(true)}>
+              <DiscretizedConsumptionChartLine title={
+                  discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
+                  discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
+                } subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada'
+                label={discretizedConsumptionDataReativa.map(data => parseFloat(data.reativa).toFixed(3))} />
+            </div>
+            <Modal
+              open={openConsumoDiscretizado1}
+              onClose={handleCloseConsumoDiscretizado1}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <DiscretizedConsumptionChartLine title={
+                  discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
+                  discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
+                } subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada' label={discretizedConsumptionDataReativa.map(data => data.reativa)} />
               </Box>
             </Modal>
           </RenderIf>

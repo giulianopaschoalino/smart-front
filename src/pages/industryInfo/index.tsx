@@ -11,6 +11,7 @@ import { IndustryInfoView } from '../../styles/layouts/industryInfo/IndustryInfo
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { useRouter } from 'next/router'
+import Banner from '../../components/banner/Banner'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -60,8 +61,9 @@ export default function industryInfo({userName}: any) {
       <Header name={userName}>
         <PageTitle title='Info Setorial' subtitle='Clique em "Baixar PDF", para fazer download do PDF' />
       </Header>
+      <Banner title='Info setorial' subtitle='Baixe o pdf para ver o info setorial' imgSource='/assets/banners/infoSetorial.jpg'/>
       <p>Um resumo das atualizações gerais do Setor Elétrico, com dados sobre geração consumo, demanda, meteorologia baseadas em informações do ONS, CCEE, ANEEL, 10 Maiores Jornais e Revistas e CPTEC</p>
-      <button onClick={() => handleDownloadPdf()}>Baixar PDF</button>
+      <button onClick={() => handleDownloadPdf()}>Clique aqui para baixar o arquivo em PDF</button>
 
     </IndustryInfoView>
   )

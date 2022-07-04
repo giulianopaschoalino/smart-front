@@ -20,7 +20,7 @@ export default function aboutUs({userName, text}) {
 
       <section dangerouslySetInnerHTML={{__html: text[0].about}}/>
       <article>
-        <aside style={{alignSelf: 'flex-end'}}>
+        <aside>
           <h2>Apoio a projetos sociais</h2>
           <div>
             <Image src='/assets/stamps/whiteStamp.png' width={200} height={200} />
