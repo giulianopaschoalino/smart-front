@@ -18,7 +18,7 @@ export default function aboutUs({userName, text}) {
       <Header name={userName}/>
       <Banner title='Quem Somos' subtitle='Soluções inteligentes em Gestão de Energia' imgSource='/assets/banners/aboutUsBanner.png' />
 
-      <section dangerouslySetInnerHTML={{__html: text[0].about}}/>
+      <section dangerouslySetInnerHTML={{__html: text[0]?.about}}/>
       <article>
         <aside>
           <h2>Apoio a projetos sociais</h2>

@@ -89,11 +89,11 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
     datasets: [
       {
         label: dataset1? dataset1 : '2021',
-        data: data1.map(value => value.custo_unit>0? value.custo_unit : ''),
-        // backgroundColor: '#255488'
-        backgroundColor: (value, ctx) => {
-          return data1[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
-        },
+        data: data1.map(value => value.custo_unit>0? value.custo_unit : null),
+        backgroundColor: '#255488'
+        // backgroundColor: (value, ctx) => {
+        //   return data1[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#255488');
+        // },
       },
       {
         label: dataset2? dataset2 : '2022',

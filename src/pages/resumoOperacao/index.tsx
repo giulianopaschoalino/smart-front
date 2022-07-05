@@ -127,7 +127,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
             <MenuItem value={''}>Todos</MenuItem>
             {
               clientMonth.map((value) => {
-                return <MenuItem key={1} value={value.mes}>{monthLabels[parseFloat(value.mes.slice(3, 4))-1]}</MenuItem>
+                return <MenuItem key={1} value={value.mes}>{value.mes}</MenuItem>
               })
             }
           </Select>

@@ -203,6 +203,14 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
                   if (parseFloat(a.year_month_formatted.slice(0,2)) < parseFloat(b.year_month_formatted.slice(1,2))) return -1
 
                   return 0
+                }).sort((a, b) => {
+                  if (parseFloat(a.year_month_formatted.slice(3,7)) > parseFloat(b.year_month_formatted.slice(3,7))) return 1
+                  if (parseFloat(a.year_month_formatted.slice(3,7)) < parseFloat(b.year_month_formatted.slice(3,7))) return -1
+
+                  console.log(a.year_month_formatted.slice(3,7))
+                  console.log(b.year_month_formatted.slice(3,7))
+
+                  return 0
                 }).map(data => {
                   return <>
                     <tr className={data.year_month_formatted==year_Month? 'actual' : ''}>
