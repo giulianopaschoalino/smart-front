@@ -8,7 +8,6 @@ export const ChartCardView = styled.article`
   flex-direction: column;
 
   width: 100%;
-  max-height: 2rem;
 
   background: #F8F8F8;
 	box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
