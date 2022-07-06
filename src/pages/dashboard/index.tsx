@@ -23,6 +23,9 @@ import { parseCookies } from 'nookies'
 import { GetServerSideProps } from 'next'
 import getAPIClient from '../../services/ssrApi'
 import Chart2 from '../../components/graph/Chart2'
+import { GrossAnulChart } from '../../components/graph/grossAnualChart/GrossAnualChart'
+import CostIndicatorChart from '../../components/graph/costIndicatorChart'
+import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart'
 
 export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears, acumulatedGraph, mapsInfo, userName, costIndicator} : any) {
   const months = [
@@ -62,10 +65,15 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
 
       <section className='dashboard'>
         <GraphCard title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada Anual - Valores em R$ x mil'>
-          <SingleBar title='' subtitle=''
+          {/* <SingleBar title='' subtitle=''
           dataset='Consolidada'
           dataProps={grossAnualGraph}
-          label={grossAnualYears} barLabel miniature/>
+          label={grossAnualYears} barLabel miniature/> */}
+          <GrossAnulChart title='' subtitle=''
+            dataset='Consolidada'
+
+            dataProps={grossAnualGraph}
+            label={grossAnualYears} barLabel bruta miniature/>
         </GraphCard>
 
         <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ x mil' singleBar>
@@ -76,17 +84,24 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
         </GraphCard>
 
         <GraphCard title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - Valores em R$ x mil' singleBar>
-          <LineBarChart2 data1={acumulatedGraph} data2={acumulatedGraph} data3={acumulatedGraph}
-          label={ConsumoEstimado.label} dataset1='Custo' dataset2='Cativo' dataset3='Livre'
-          title='' subtitle='' barLabel hashurado miniature/>
+          <CativoXLivreChart data1={acumulatedGraph} data2={acumulatedGraph} data3={acumulatedGraph}
+            dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
+            label={ConsumoEstimado.label} title='' subtitle='' barLabel hashurado miniature/>
         </GraphCard>
 
         <GraphCard title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'>
-          <Chart title='' subtitle=''
+          {/* <Chart title='' subtitle=''
           data1={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
           // data1={graphData}
           data2={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
-          label={costIndicator.map(value => value.mes.slice(0, 3))} miniature/>
+          label={costIndicator.map(value => value.mes.slice(0, 3))} miniature/> */}
+          <CostIndicatorChart title='' subtitle=''
+            data1={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
+            // data1={graphData}
+            data2={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
+            label={months}
+            miniature
+          />
         </GraphCard>
       </section>
     </DashboardView>

@@ -3,6 +3,12 @@ import styled from "styled-components"
 export const PldTableView = styled.main`
   width: 100%;
 
+  table {
+    p {
+      font-size: 12px;
+    }
+  }
+
   .actual {
     font-weight: bold!important;
     background-color: red!important;
@@ -181,6 +187,17 @@ export const PldGraphView = styled.main`
   }
 
   .toolsbar {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start!important;
+
+    flex-direction: row;
+
+    p {
+      margin: 0;
+    }
+  }
+  .toolsbar2 {
     display: flex;
     justify-content: center;
     align-items: flex-start!important;

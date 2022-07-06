@@ -42,6 +42,7 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
   }
   const options: object = {
     responsive: true,
+    is3D: true,
     scales: {
       x: {
         font: {
