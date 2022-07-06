@@ -2,10 +2,13 @@ import styled from 'styled-components'
 
 export const TableView = styled.div`
   display: flex;
+
   padding: 2.5rem;
+
   justify-content: center;
   flex-direction: column;
   align-items: flex-start;
+
   width: 100%;
   height: 100%;
 
@@ -19,11 +22,11 @@ export const TableView = styled.div`
 
   .select{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 
     margin-bottom: 25px;
 
-    width: 20rem;
+    width: 30rem;
   }
 
   .tg{
@@ -40,7 +43,7 @@ export const TableView = styled.div`
     font-family:Poppins;
     font-size: 10px;
     overflow:hidden;
-    padding:17px 30px;
+    padding: 17px 20px;
     word-break:normal;
   }
 

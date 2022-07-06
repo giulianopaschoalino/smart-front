@@ -2,6 +2,7 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import React from 'react'
+import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart'
 
 import { LineBarChart2 } from '../../components/graph/LineBarChart2'
 import Header from '../../components/header/Header'
@@ -20,7 +21,7 @@ export default function EstimatedCost({graphData, userName}: any) {
         <PageTitle title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - Valores em R$ x mil' />
       </Header>
       <section>
-        <LineBarChart2 data1={graphData} data2={graphData} data3={graphData}
+        <CativoXLivreChart data1={graphData} data2={graphData} data3={graphData}
         dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
         label={ConsumoEstimado.label} title='' subtitle='' barLabel hashurado />
       </section>
