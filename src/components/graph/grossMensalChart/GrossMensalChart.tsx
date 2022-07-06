@@ -13,8 +13,8 @@ import {
 
 import { draw, generate } from 'patternomaly'
 
-import { ChartView } from './ChartView';
-import ChartTitle from './ChartTitle';
+import { GrossMensalChartView } from './GrossMensalChartView';
+import ChartTitle from '../ChartTitle';
 // import { data } from './LineBarChart';
 
 ChartJS.register(
@@ -29,16 +29,28 @@ ChartJS.register(
 interface ChartInterface {
   title: string,
   subtitle: string,
+
   data1: any,
   data2: any,
+
   single?: any
   label: any,
-  dataset1?: string,
-  dataset2?: string,
+
   miniature?: boolean | undefined
 }
 
-export default function Chart({ title, data1, data2, label, subtitle, dataset1, dataset2, miniature }: ChartInterface) {
+export default function GrossMensalChart({ title, data1, data2, label, subtitle, miniature }: ChartInterface) {
+  function spacement(string) {
+    let spaces = '⠀'
+    let i=Math.abs(string)
+
+    while (i <= 1) {
+      i--
+      spaces = spaces + `⠀`
+    }
+
+    return spaces
+  }
 
   const labels = label;
 
@@ -67,7 +79,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
               sum += data;
           });
           const percentage = data1[ctx.dataIndex]?.econ_percentual? (data1[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%" : '';
-          const result = `${parseInt(value)!=0? percentage : ''}\n  ${parseInt(value)!=0? parseInt(value).toLocaleString('pt-br') : ''}`
+          const result = `⠀${spacement(parseInt(value+3).toLocaleString('pt-br'))}${parseInt(value)!=0? percentage : ''}\n${parseInt(value)!=0? parseInt(value).toLocaleString('pt-br') : ''}`
 
           return value==null? null : result
         },
@@ -90,7 +102,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
   };
 
   const data: any = {
-    labels,
+    labels: data1.map(value => value.mes),
     datasets: [
       {
         type: 'bar',
@@ -108,7 +120,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
   }
 
   return (
-    <ChartView>
+    <GrossMensalChartView>
       {/* <RenderIf isTrue={single? true : false} >
         <Bar
           options={options}
@@ -119,6 +131,6 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
       <ChartJs
         options={options}
         data={data} type={'bar'} />
-    </ChartView>
+    </GrossMensalChartView>
   )
 }

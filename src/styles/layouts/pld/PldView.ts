@@ -180,6 +180,18 @@ export const PldGraphView = styled.main`
     width: 20rem;
   }
 
+  .toolsbar {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start!important;
+
+    flex-direction: column;
+
+    p {
+      margin: 0;
+    }
+  }
+
   input {
     width: 20rem;
     height: 3.5rem;

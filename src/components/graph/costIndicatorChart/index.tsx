@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { Bar, Line, Chart as ChartJs } from 'react-chartjs-2';
+import { draw } from 'patternomaly'
+
+import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,11 +13,8 @@ import {
   Legend
 } from 'chart.js'
 
-import { draw, generate } from 'patternomaly'
-
-import { ChartView } from './ChartView';
-import ChartTitle from './ChartTitle';
-// import { data } from './LineBarChart';
+import { CostIndicatorChartView } from './CostIndicatorChartView';
+import ChartTitle from '../ChartTitle';
 
 ChartJS.register(
   CategoryScale,
@@ -33,12 +32,10 @@ interface ChartInterface {
   data2: any,
   single?: any
   label: any,
-  dataset1?: string,
-  dataset2?: string,
   miniature?: boolean | undefined
 }
 
-export default function Chart({ title, data1, data2, label, subtitle, dataset1, dataset2, miniature }: ChartInterface) {
+export default function CostIndicatorChart({ title, data1, data2, label, subtitle, miniature }: ChartInterface) {
 
   const labels = label;
 
@@ -46,6 +43,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
     responsive: true,
     scales: {
       x: {
+        stacked: true,
         grid: {
           display: false
         }
@@ -66,16 +64,14 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
           dataArr.map(data => {
               sum += data;
           });
-          const percentage = data1[ctx.dataIndex]?.econ_percentual? (data1[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%" : '';
-          const result = `${parseInt(value)!=0? percentage : ''}\n  ${parseInt(value)!=0? parseInt(value).toLocaleString('pt-br') : ''}`
+          const result = `${parseInt(value).toLocaleString('pt-br')}`
 
           return value==null? null : result
         },
         anchor: "end",
-        offset: 0,
         align: "end",
         font: {
-          size: !miniature? 18 : 10,
+          size: !miniature? 15 : 10,
         }
       },
       legend: {
@@ -89,26 +85,30 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
     },
   };
 
-  const data: any = {
+  const data = {
     labels,
     datasets: [
       {
-        type: 'bar',
-        label: 'Acumulado',
-        data: data1.map(value => value?.economia_acumulada),
-        backgroundColor: '#255488'
+        label: '2021',
+        data: data1.map(value => value.custo_unit>0? value.custo_unit : null),
+        backgroundColor: '#C2d5fb'
+        // backgroundColor: (value, ctx) => {
+        //   return data1[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#255488');
+        // },
       },
       {
-        type: 'bar',
-        label: 'Estimado',
-        data: data2.map(value => value.dad_estimado? value?.economia_acumulada : null),
-        backgroundColor: draw('diagonal-right-left', '#C2d5fb')
-      },
+        label: '2022',
+        data: data2.map(value => value.custo_unit>0? value.custo_unit : null),
+        // backgroundColor: '#255488'
+        backgroundColor: (value, ctx) => {
+          return data2[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#255488');
+        },
+      }
     ],
   }
 
   return (
-    <ChartView>
+    <CostIndicatorChartView>
       {/* <RenderIf isTrue={single? true : false} >
         <Bar
           options={options}
@@ -116,9 +116,10 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
         />
       </RenderIf> */}
       <ChartTitle title={title} subtitle={subtitle} />
-      <ChartJs
+      <Bar
         options={options}
-        data={data} type={'bar'} />
-    </ChartView>
+        data={data}
+      />
+    </CostIndicatorChartView>
   )
 }

@@ -22,7 +22,6 @@ export default function GradientButton({ title, description, orange, purple, gre
   return (
     <GradientButtonView color={orange? 'orange' : purple? 'purple' : green? 'green' : 'orange'} onClick={() => handleClick()}>
       <p>{title}</p>
-      <p>{description}</p>
     </GradientButtonView>
   )
 }

@@ -4,6 +4,7 @@ import { parseCookies } from 'nookies'
 import React from 'react'
 
 import Chart2 from '../../components/graph/Chart2'
+import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensalChart'
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle'
 
@@ -35,10 +36,11 @@ export default function AccumulatedSavings({graphData, years, userName}: any) {
         <PageTitle title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ x mil' />
       </Header>
       <section>
-        <Chart2 title='' subtitle=''
-        data1={graphData.filter((value, index) => value.mes.slice(3, 8).includes('2021'))}
-        data2={graphData.filter((value, index) => value.mes.slice(3, 8).includes('2022'))}
-        label={months}/>
+        <GrossMensalChart title='' subtitle=''
+          data1={graphData}
+          data2={graphData}
+          label={months}
+        />
         {/* <SingleBar title='' subtitle='' dataset='Consolidada'
           dataProps={graphData}
           label={years} barLabel/> */}

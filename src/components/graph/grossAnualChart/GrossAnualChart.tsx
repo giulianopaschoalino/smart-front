@@ -4,8 +4,8 @@ import { draw, generate } from 'patternomaly'
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
-import ChartTitle from './ChartTitle';
-import { ChartView } from './ChartView';
+import { GrossAnualChartView } from './GrossAnualChartView';
+import ChartTitle from '../ChartTitle';
 
 ChartJS.register(
   CategoryScale,
@@ -28,7 +28,18 @@ interface SingleBarInterface{
   bruta?: boolean | undefined
 }
 
-export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel, miniature, bruta }: SingleBarInterface) {
+export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, barLabel, miniature, bruta }: SingleBarInterface) {
+  function spacement(string) {
+    let spaces = '⠀'
+    let i=Math.abs(string)
+
+    while (i <= 1) {
+      i--
+      spaces = spaces + `⠀`
+    }
+
+    return spaces
+  }
   const options: object = {
     responsive: true,
     scales: {
@@ -36,6 +47,11 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel
         font: {
           size: 20
         },
+        grid: {
+          display: false
+        }
+      },
+      y: {
         grid: {
           display: false
         }
@@ -55,7 +71,7 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel
               sum += data;
           });
           const percentage = (dataProps[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
-          const result = ` ${parseInt(value).toLocaleString('pt-br')}\n ${percentage}`
+          const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}${percentage}\n${parseInt(value).toLocaleString('pt-br')}`
 
           return value==null? null : result
         },
@@ -119,9 +135,9 @@ export function SingleBar({ title, subtitle, dataProps, label, dataset, barLabel
   }
 
   return (
-    <ChartView>
+    <GrossAnualChartView>
       <ChartTitle title={title} subtitle={subtitle} />
       <Bar options={options} data={data} />
-    </ChartView>
+    </GrossAnualChartView>
   )
 }

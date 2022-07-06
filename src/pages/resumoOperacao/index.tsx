@@ -93,7 +93,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
         <title>Smart Energia - Resumo de Operação</title>
       </Head>
       <Header name={userName}>
-        <PageTitle title='Resumo de Operações' subtitle='Operações detalhadas' />
+        <PageTitle title='Resumo de Operações' subtitle='Operações de compra e venda - Mensal' />
       </Header>
       <h3>Filtrar por Unidade e/ou Mês</h3>
       <div className='select'>
@@ -115,7 +115,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
           </Select>
         </FormControl>
 
-        <FormControl fullWidth sx={{mt: 2}}>
+        <FormControl fullWidth sx={{ml: 2}}>
           <InputLabel id="demo-simple-select-label">Mês</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -141,18 +141,14 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
             <th className='tg-8oo6'>Operação</th>
             <th className='tg-8oo6'>Montante (MWh)</th>
             <th className='tg-8oo6'>Contraparte</th>
-            <th className='tg-8oo6'>ValorNF/Crédito(R$)</th>
             <th className='tg-8oo6'>Preço(R$/MWh)</th>
+            <th className='tg-8oo6'>ValorNF/Crédito(R$)</th>
           </tr>
         </thead>
         <tbody>
           {
-            tableDataState.sort((a, b) => {
-              if (parseFloat(a.mes.slice(0,2)) > parseFloat(b.mes.slice(1,2))) return 1
-              if (parseFloat(a.mes.slice(0,2)) < parseFloat(b.mes.slice(1,2))) return -1
-
-              return 0
-            }).map((value, index) => {
+            tableDataState.map((value, index) => {
+              if (value.mes.slice(4,7) != '2020')
               return <>
                 <tr>
                   <td key={index} className='tg-gceh'>{value.mes}</td>

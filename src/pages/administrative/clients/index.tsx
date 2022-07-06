@@ -99,10 +99,6 @@ export default function clients({ clients, userName }) {
     setOpenSnackSuccessDelete(false)
   }
 
-  function onChange(e) {
-    setLogo(e.target.files[0])
-  }
-
   function handleCreateClient({
     name,
     email,
@@ -149,12 +145,15 @@ export default function clients({ clients, userName }) {
       newImageUrls.push(URL.createObjectURL(image))
     )
     setImageURLs(newImageUrls)
+
+    console.log('ola')
   }, [images])
 
   function onImageChange(e: any) {
+    console.log('olá');
     setImages([...e.target.files])
     setLogo(e.target.files[0])
-    // console.log(e);
+    console.log(e.target.files[0]);
   }
 
   return (
@@ -315,15 +314,16 @@ export default function clients({ clients, userName }) {
           <InputUploadView>
             <div className="imgContainer">
               <article>
-                {imageURLS.map((imageSrc, index) => (
-                  <Image
+                {imageURLS.map((imageSrc, index) => {
+                  console.log('olá')
+                  return <Image
                     src={imageSrc}
                     key={index}
                     width={30}
                     height={30}
                     className="image"
                   />
-                ))}
+                })}
               </article>
             </div>
             <div className="update">

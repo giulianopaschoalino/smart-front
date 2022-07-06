@@ -48,6 +48,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
     responsive: true,
     scales: {
       x: {
+        stacked: true,
         grid: {
           display: false
         }

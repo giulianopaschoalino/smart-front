@@ -4,6 +4,7 @@ import { parseCookies } from 'nookies'
 import React from 'react'
 
 import Chart from '../../components/graph/Chart'
+import CostIndicatorChart from '../../components/graph/costIndicatorChart'
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle'
 import getAPIClient from '../../services/ssrApi'
@@ -34,11 +35,12 @@ export default function CostIndicator({graphData, userName}: any) {
         <PageTitle title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'/>
       </Header>
       <section>
-        <Chart title='' subtitle=''
-        data1={graphData.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
-        // data1={graphData}
-        data2={graphData.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
-        label={months}/>
+        <CostIndicatorChart title='' subtitle=''
+          data1={graphData.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
+          // data1={graphData}
+          data2={graphData.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
+          label={months}
+        />
       </section>
     </CostIndicatorView>
   )
