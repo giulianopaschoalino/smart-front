@@ -32,7 +32,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
 
   const year_Month = `0${dateFormated.getMonth()}/${dateFormated.getFullYear()}`
 
-  const [date, setDate] = useState(`${dateFormated.getFullYear()}-${dateFormated.getUTCMonth()+1}-${dateFormated.getUTCDate()}`);
+  const [date, setDate] = useState(`${dateFormated.getFullYear()}-${dateFormated.getMonth()}-${dateFormated.getUTCDate()}`);
   const [select, setSelect] = useState('SUDESTE');
   const [page, setPage] = useState<string>('table')
   const [month, setMonth] = useState<string>((dateFormated.getUTCMonth()+1).toString())
@@ -189,11 +189,11 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
           <table className="tg">
             <thead>
               <tr>
-                <th className='tg-8oo6'>Mês</th>
-                <th className='tg-8oo6'>Nordeste</th>
-                <th className='tg-8oo6'>Norte</th>
-                <th className='tg-8oo6'>Sudeste</th>
-                <th className='tg-8oo6'>Sul</th>
+                <th className='tg-8oo6'>Mês<p>(R$/MWh)</p></th>
+                <th className='tg-8oo6'>Nordeste<p>(R$/MWh)</p></th>
+                <th className='tg-8oo6'>Norte<p>(R$/MWh)</p></th>
+                <th className='tg-8oo6'>Sudeste<p>(R$/MWh)</p></th>
+                <th className='tg-8oo6'>Sul<p>(R$/MWh)</p></th>
               </tr>
             </thead>
             <tbody>
@@ -202,20 +202,20 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
                   return <>
                     <tr className={data.year_month_formatted==year_Month? 'actual' : ''}>
                       <td className='tg-gceh'>{data.year_month_formatted}</td>
-                      <td className={`tg-uulg`}>{parseFloat(data.nordeste).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2}).replace('R$', 'R$/MWh')}</td>
-                      <td className={`tg-gceh`}>{parseFloat(data.norte).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2}).replace('R$', 'R$/MWh')}</td>
-                      <td className={`tg-gceh`}>{parseFloat(data.sudeste).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2}).replace('R$', 'R$/MWh')}</td>
-                      <td className={`tg-uulg`}>{parseFloat(data.sul).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2}).replace('R$', 'R$/MWh')}</td>
+                      <td className={`tg-uulg`}>{parseFloat(data.nordeste).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td className={`tg-gceh`}>{parseFloat(data.norte).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td className={`tg-gceh`}>{parseFloat(data.sudeste).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td className={`tg-uulg`}>{parseFloat(data.sul).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                     </tr>
                   </>
                 })
               }
               <tr>
-                <td className='tg-gceh'></td>
-                <td className={`tg-uulg`}></td>
-                <td className={`tg-gceh`}></td>
-                <td className={`tg-gceh`}></td>
-                <td className={`tg-uulg`}></td>
+                <td></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
               </tr>
               {
                 tableData.result.map((data, index) => {
@@ -274,7 +274,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       <RenderIf isTrue={page==='perMouth'? true : false}>
         <Header name={userName}>
           <GoBack onClick={() => setPage('table')}>{'< Voltar para PLD Histórico'}</GoBack>
-          <PageTitle title='Resumo PLD - Valores Diários' subtitle='Evolução PLD (R$/MWh)'/>
+          <PageTitle title='Resumo PLD - Valores Diários' subtitle='Evolução PLD - Valores em R$/MWh'/>
         </Header>
         <PldGraphView>
           <section className='toolsbar'>
@@ -336,10 +336,10 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       <RenderIf isTrue={page==='perDate'? true : false}>
         <Header name={userName}>
           <GoBack onClick={() => setPage('table')}>{'< Voltar para PLD Histórico'}</GoBack>
-          <PageTitle title='Resumo PLD - Valores Horários' subtitle='Evolução PLD (R$/MWh)'/>
+          <PageTitle title='Resumo PLD - Valores Horários' subtitle='Evolução PLD - Valores em R$/MWh'/>
         </Header>
         <PldGraphView>
-          <section className='toolsbar'>
+          <section className='toolsbar2'>
             <p>Selecione o mês: </p>
             <input type="date" data-date={date} data-date-format="DD MMMM YYYY" value={date} onChange={(value) => setDate(value.target.value)}/>
           </section>

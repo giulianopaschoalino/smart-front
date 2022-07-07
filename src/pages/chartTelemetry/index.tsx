@@ -112,48 +112,50 @@ export default function chartTelemetry({userName}) {
         {"type" : "between", "field": "dia_num", "value": ["2022-01-01", "2022-01-31"]}
       ]
   }).then(res => {
-      console.log(res.data.data)
-      setFatorPotenciaData(res.data.data)
-    }).catch(res => {
-      console.log(res)
-      // router.push('/telemetria')
-    })
+        console.log(res.data.data)
+        setFatorPotenciaData(res.data.data)
+      }).catch(res => {
+        console.log(res)
+        // router.push('/telemetria')
+      })
 
     await api.post('/telemetry/discretization', {
       "type": "1_mes",
       "filters": [
-        {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"}
+          {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"}
+        ]
+    }
+    ).then(res => {
+        setDiscretizedConsumptionDataReativa(res.data.data)
+      }).catch(res => {
+        console.log(res)
+        // router.push('/telemetria')
+      })
+
+    await api.post('/telemetry/discretization', {
+      "type": "1_mes",
+      "filters": [
+          {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"}
+        ]
+    }
+    ).then(res => {
+        setDiscretizedConsumptionData(res.data.data)
+      }).catch(res => {
+        console.log(res)
+        // router.push('/telemetria')
+      })
+
+    await api.post('/telemetry/demand', {
+      "filters": [
+        {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
+        {"type" : "between", "field": ["dia_num"], "value": ["2022-01-03", "2022-01-03"]}
       ]
     }).then(res => {
-      setDiscretizedConsumptionDataReativa(res.data.data)
-    }).catch(res => {
-      console.log(res)
-      // router.push('/telemetria')
-    })
-
-  await api.post('/telemetry/discretization', {
-    "type": "1__mes",
-    "filters": [
-      {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"}
-    ]
-    }).then(res => {
-      setDiscretizedConsumptionData(res.data.data)
-    }).catch(res => {
-      console.log(res)
-      // router.push('/telemetria')
-    })
-
-  await api.post('/telemetry/demand', {
-    "filters": [
-      {"type" : "=", "field": "med_5min.ponto", "value": unity},
-      {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
-    ]
-    }).then(res => {
-      setDemRegXDemCon(res.data.data)
-    }).catch(res => {
-      console.log(res)
-      // router.push('/telemetria')
-    })
+        setDemRegXDemCon(res.data.data)
+      }).catch(res => {
+        console.log(res)
+        // router.push('/telemetria')
+      })
   }
 
   useEffect(() => {
