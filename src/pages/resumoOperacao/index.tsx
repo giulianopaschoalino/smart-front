@@ -18,7 +18,7 @@ import { api } from '../../services/api';
 // import { dados } from '../services/DadosTabelaResumoOperacao';
 import data from '../../services/dados.json'
 import getAPIClient from '../../services/ssrApi';
-import { Pagination, TableView } from '../../styles/layouts/ResumoOperacao/ResumoOperacaoView';
+import { Pagination, TableHeader, TableView } from '../../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 
 export default function ResumoOperacao({tableData, clientsData, userName, clientMonth}: any) {
   const csvData = tableData;
@@ -60,6 +60,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
   }
 
   useEffect(() => {
+    console.log(month)
     if (unidade!=='' || month!==''){
       api.post('/operation/summary', month && !unidade? {
         "filters": [
@@ -95,44 +96,54 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
       <Header name={userName}>
         <PageTitle title='Resumo de Operações' subtitle='Operações de compra e venda - Mensal' />
       </Header>
-      <h3>Filtrar por Unidade e/ou Mês</h3>
-      <div className='select'>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={unidade}
-            label="Unidade"
-            onChange={handleChangeUnidade}
-          >
-            <MenuItem key={1} value={''}>Todas</MenuItem>
-            {
-              clientsData.map((value) => {
-                return <MenuItem key={1} value={value.cod_smart_unidade}>{value.cod_smart_unidade}</MenuItem>
-              })
-            }
-          </Select>
-        </FormControl>
+      <TableHeader>
+        <article>
+          <h3>Filtrar por Unidade e/ou Mês</h3>
+          <div className='select'>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={unidade}
+                label="Unidade"
+                onChange={handleChangeUnidade}
+              >
+                <MenuItem key={1} value={''}>Todas</MenuItem>
+                {
+                  clientsData.map((value) => {
+                    return <MenuItem key={1} value={value.cod_smart_unidade}>{value.cod_smart_unidade}</MenuItem>
+                  })
+                }
+              </Select>
+            </FormControl>
 
-        <FormControl fullWidth sx={{ml: 2}}>
-          <InputLabel id="demo-simple-select-label">Mês</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={month}
-            label="Month"
-            onChange={handleChangeMonth}
-          >
-            <MenuItem value={''}>Todos</MenuItem>
-            {
-              clientMonth.map((value) => {
-                return <MenuItem key={1} value={value.mes}>{value.mes}</MenuItem>
-              })
-            }
-          </Select>
-        </FormControl>
-      </div>
+            <FormControl fullWidth sx={{ml: 2}}>
+              <InputLabel id="demo-simple-select-label">Mês</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={month}
+                label="Month"
+                onChange={handleChangeMonth}
+              >
+                <MenuItem value={''}>Todos</MenuItem>
+                {
+                  clientMonth.map((value) => {
+                    return <MenuItem key={1} value={value.mes}>{value.mes}</MenuItem>
+                  })
+                }
+              </Select>
+            </FormControl>
+          </div>
+        </article>
+        <article>
+          <BasicButton title='Baixar CSV' onClick={() => {
+            const html = document.querySelector("table").outerHTML;
+            htmlToCSV(html, "resumo_operacao.csv");
+          }}/>
+        </article>
+      </TableHeader>
       <table className="tg">
         <thead>
           <tr>
@@ -149,8 +160,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
           {
             tableDataState.map((value, index) => {
               if (value.mes.slice(4,7) != '2020')
-              return <>
-                <tr>
+              return <tr>
                   <td key={index} className='tg-gceh'>{value.mes}</td>
                   <td key={index} className='tg-gceh'>{value.cod_smart_unidade}</td>
                   <td key={index} className='tg-gceh'>{value.operacao}</td>
@@ -159,16 +169,12 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
                   <td key={index} className='tg-gceh'>{parseFloat(value.preco_nf).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                   <td key={index} className='tg-gceh'>{parseFloat(value.nf_c_icms).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                 </tr>
-              </>
             })
           }
         </tbody>
       </table>
       <div className='btn'>
-        <BasicButton title='Baixar CSV' onClick={() => {
-          const html = document.querySelector("table").outerHTML;
-          htmlToCSV(html, "resumo_operacao.csv");
-        }}/>
+
       </div>
     </TableView>
   )

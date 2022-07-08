@@ -60,9 +60,7 @@ ChartJS.register(
 interface LineBarChartInterface {
   title: string,
   subtitle: string,
-  data1: any,
-  data2?: any,
-  data3: any,
+  chartData: any,
   red?: any,
   label: any,
   dataset1?: string,
@@ -73,7 +71,7 @@ interface LineBarChartInterface {
   miniature?: boolean | undefined,
 }
 
-export function CativoXLivreChart({ title, subtitle, data1, data2, data3, label, red, dataset1, dataset2, dataset3, barLabel, hashurado, miniature }: LineBarChartInterface) {
+export function CativoXLivreChart({ title, subtitle, chartData, label, red, dataset1, dataset2, dataset3, barLabel, hashurado, miniature }: LineBarChartInterface) {
   const chartRef = useRef<ChartJS>(null);
 
   const labels = label
@@ -109,7 +107,7 @@ export function CativoXLivreChart({ title, subtitle, data1, data2, data3, label,
           dataArr.map(data => {
               sum += data;
           });
-          const result = `${(parseInt(value)/1000).toLocaleString('pt-br')}`
+          const result = `${(parseFloat(value)).toLocaleString('pt-br')}`
 
           return value==null? null : result
         }
@@ -138,36 +136,48 @@ export function CativoXLivreChart({ title, subtitle, data1, data2, data3, label,
         },
         borderWidth: 2,
         fill: false,
-        data: data1.map(value => value.economia_mensal),
+        data: chartData.map(value => value.economia_mensal),
       },
       {
         type: 'bar' as const,
         label: 'Cativo',
         backgroundColor: (value, ctx) => {
-          return hashurado? data1[value.dataIndex]?.dad_estimado == false? '#C2D5FB' : pattern.draw('diagonal', '#C2D5FB') : '#C2D5FB'
+          return '#C2D5FB'
         },
-        data: data3.map(value => value.custo_cativo),
+        data: chartData.map(value => {
+          if (!value.dad_estimado)
+          return value.custo_cativo
+        }),
       },
       {
         type: 'bar' as const,
         label: 'Livre',
         // backgroundColor: '#255488',
         backgroundColor: (value, ctx) => {
-          return hashurado? data1[value.dataIndex]?.dad_estimado == false? '#255488' : pattern.draw('diagonal', '#255488') : '#255488'
+          return '#255488'
         },
-        data: data2.map(value => value.custo_livre),
+        data: chartData.map(value => {
+          if (!value.dad_estimado)
+          return value.custo_livre
+        }),
       },
       {
-        type: 'line',
-        label: 'Est. Livre',
-        backgroundColor: pattern.draw('diagonal', '#255488'),
-        data: [],
-      },
-      {
-        type: 'line',
+        type: 'bar',
         label: 'Est. Cativo',
         backgroundColor: pattern.draw('diagonal', '#C2D5FB'),
-        data: [],
+        data: chartData.map(value => {
+          if (value.dad_estimado)
+          return value.custo_cativo
+        }),
+      },
+      {
+        type: 'bar',
+        label: 'Est. Livre',
+        backgroundColor: pattern.draw('diagonal', '#255488'),
+        data: chartData.map(value => {
+          if (value.dad_estimado)
+          return value.custo_livre
+        }),
       }
     ],
   }

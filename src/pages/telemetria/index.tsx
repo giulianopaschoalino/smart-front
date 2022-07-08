@@ -23,6 +23,13 @@ import getAPIClient from '../../services/ssrApi';
 import router from 'next/router';
 import { DemRegXDemConChart } from '../../components/graph/DemRegXDemConChart';
 
+import TextField from '@mui/material/TextField';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import Stack from '@mui/material/Stack';
+import BasicButton from '../../components/buttons/basicButton/BasicButton';
+
 const style = {
   position: 'absolute' as const,
   top: '50%',
@@ -44,8 +51,8 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 export default function Telemetria({userName, clients}: any) {
   const [unity, setUnity] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [discretization, setDiscretization] = useState('');
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
@@ -110,8 +117,19 @@ export default function Telemetria({userName, clients}: any) {
 
   const [demRegXDemCon, setDemRegXDemCon] = useState(null);
 
+  const [value, setValue] = React.useState<Date | null>(
+    new Date(),
+  );
+
+  const handleChangeStartDate = (newValue: Date | null) => {
+    setStartDate(newValue)
+  };
+  const handleChangeEndDate = (newValue: Date | null) => {
+    setEndDate(newValue)
+  };
+
   async function getTableData() {
-    if (startDate!=='' && endDate!=='' && send)
+    if (startDate.toLocaleDateString()!=='' && endDate.toLocaleDateString()!=='' && send)
       setOpen(true)
       await api.post('/telemetry/powerFactor', {
         "type": discretization,
@@ -137,12 +155,12 @@ export default function Telemetria({userName, clients}: any) {
   }
 
   function handleVerifyFields() {
-    if (unity != '' && startDate != '' && endDate != '' && discretization != '') {
+    if (unity != '' && startDate.toLocaleDateString() != '' && endDate.toLocaleDateString() != '' && discretization != '') {
       router.push({
         pathname: '/chartTelemetry',
         query: {
-          startDate,
-          endDate,
+          'startDate': startDate.toLocaleDateString(),
+          'endDate': endDate.toLocaleDateString(),
           discretization,
           unity
         },
@@ -256,17 +274,40 @@ export default function Telemetria({userName, clients}: any) {
           </FormControl>
         </div>
 
-        <div className='select'>
+        {/* <div className='select'>
           <p className='title' >Data inicial</p>
           <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={startDate}
           onChange={(value) => setStartDate(value.target.value)} min="2021-01-01"/>
-        </div>
+        </div> */}
 
-        <div className='select'>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <div className='select datePicker'>
+            <p className='title' >Data inicial</p>
+            <DesktopDatePicker
+              label="Date desktop"
+              inputFormat="dd/MM/yyyy"
+              value={startDate}
+              onChange={handleChangeStartDate}
+              renderInput={(params) => <TextField {...params}/>}
+            />
+          </div>
+          <div className='select datePicker'>
+            <p className='title' >Data final</p>
+            <DesktopDatePicker
+              label="Date desktop"
+              inputFormat="dd/MM/yyyy"
+              value={endDate}
+              onChange={handleChangeEndDate}
+              renderInput={(params) => <TextField {...params} sx={{ml: 1}}/>}
+            />
+          </div>
+        </LocalizationProvider>
+
+        {/* <div className='select'>
           <p className='title' >Data final</p>
           <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={endDate}
           onChange={(value) => setEndDate(value.target.value)} min="2021-01-01"/>
-        </div>
+        </div> */}
 
         <div className='select'>
           <p className='title' >Discretização</p>
@@ -291,13 +332,13 @@ export default function Telemetria({userName, clients}: any) {
             </Select>
           </FormControl>
         </div>
-      <button className='sendButton' onClick={() => {
-        setSend(true)
-        getTableData()
-      }}>Selecionar!</button>
+        <BasicButton title='Selecionar!' onClick={() => {
+          setSend(true)
+          getTableData()
+        }}/>
       </section>
 
-      <RenderIf isTrue={startDate!=='' && endDate!=='' && tableData===null && exception === false && send}>
+      <RenderIf isTrue={startDate.toLocaleDateString()!=='' && endDate.toLocaleDateString()!=='' && tableData===null && exception === false && send}>
         <div className='modal'>
           <div id="preloader_1">
             <span></span>
@@ -308,7 +349,7 @@ export default function Telemetria({userName, clients}: any) {
           </div>
         </div>
       </RenderIf>
-      <RenderIf isTrue={startDate!=='' && endDate!=='' && tableData!==null}>
+      <RenderIf isTrue={startDate.toLocaleDateString()!=='' && endDate.toLocaleDateString()!=='' && tableData!==null}>
         <table className="tg">
           <thead>
             <tr>

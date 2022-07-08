@@ -2,7 +2,7 @@ import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { draw, generate } from 'patternomaly'
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Chart } from 'react-chartjs-2';
 
 import { GrossAnualChartView } from './GrossAnualChartView';
 import ChartTitle from '../ChartTitle';
@@ -40,11 +40,13 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
 
     return spaces
   }
-  const options: object = {
+
+  const options: any = {
     responsive: true,
     is3D: true,
     scales: {
       x: {
+        grouped: false,
         font: {
           size: 20
         },
@@ -102,7 +104,7 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
 
   let labels: string[];
   if (bruta) {
-    labels = label.map(value => value.replace('2021', 'até 2021'))
+    labels = label.map(value => value.replace('2021', 'Até 2021'))
   } else {
     labels = label
   }
@@ -111,26 +113,29 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
     labels,
     datasets: [
       {
-        label: 'Estimado',
-        data: [],
-        backgroundColor: '#C2d5fb',
-      },
-      {
+        type: 'bar',
         label: dataset,
         data: dataProps.map((value, index) => {
+          if (!value.dad_estimado)
           return parseFloat(value.economia_acumulada).toFixed(2)
         }),
         backgroundColor: (value, ctx) => {
-          return dataProps[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#C2d5fb');
+          return '#255488'
         },
       },
       {
-        label: '',
-        data: [dataProps[0]?.economia_acumulada?dataProps[0].economia_acumulada*1.1 : 1],
-        backgroundColor: 'transparent',
+        type: 'bar',
+        label: 'Estimado',
+        data: dataProps.map((value, index) => {
+          if (value.dad_estimado)
+          return parseFloat(value.economia_acumulada).toFixed(2)
+        }),
         datalabels: {
           display: false
-        }
+        },
+        backgroundColor: (value, ctx) => {
+          return draw('diagonal-right-left', '#C2d5fb');
+        },
       },
     ],
   }
@@ -138,7 +143,7 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
   return (
     <GrossAnualChartView>
       <ChartTitle title={title} subtitle={subtitle} />
-      <Bar options={options} data={data} />
+      <Chart options={options} data={data} type='bar'/>
     </GrossAnualChartView>
   )
 }

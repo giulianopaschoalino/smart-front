@@ -215,8 +215,8 @@ export const TelemetriaView = styled.main`
 
     .select {
       display: flex;
-      justify-content: center;
       align-items: flex-start;
+      justify-content: center;
 
       flex-direction: column;
     }

@@ -54,7 +54,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
 
       <Link href='pld'>
         <section className="cardsSection" >
-          <MapCard title='R$/MWh' subtitle='' date='período' statistic='' imgSource='/moneyIcon.svg' />
+          <MapCard title='R$/MWh' subtitle='' date={`período - ${new Date().toLocaleDateString()}`} statistic='' imgSource='/moneyIcon.svg' />
           {
             mapsInfo.map(value => {
               return <MapCard key={value.submarket} title='S' subtitle={value.submarket} statistic={parseFloat(value.value).toFixed(2)} imgSource='/SUL.svg' />
@@ -84,7 +84,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
         </GraphCard>
 
         <GraphCard title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - Valores em R$ x mil' singleBar>
-          <CativoXLivreChart data1={acumulatedGraph} data2={acumulatedGraph} data3={acumulatedGraph}
+          <CativoXLivreChart chartData={acumulatedGraph}
             dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
             label={ConsumoEstimado.label} title='' subtitle='' barLabel hashurado miniature/>
         </GraphCard>
