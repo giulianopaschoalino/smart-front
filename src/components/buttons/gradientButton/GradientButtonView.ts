@@ -6,7 +6,6 @@ export const GradientButtonView = styled.button`
   align-items: center;
 
   flex-direction: column;
-  border-radius: 2px;
 
   width: 30%;
   min-width: 240px;
@@ -30,7 +29,42 @@ export const GradientButtonView = styled.button`
 
   box-shadow: 0.5px 3px 10px rgba(119, 119, 119, 0.1);
 
+  border-radius: 8px!important;
   border-style: none;
+
+  :hover {
+    transition: all 0.2s linear;
+    transform: scale(1.1);
+  }
+
+  svg {
+    width: 404px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    height: 110px;
+  }
+
+  rect {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-dasharray: 422, 0;
+    transition: all 0.35s linear;
+  }
+
+  :hover {
+    background: rgba($red, 0);
+    letter-spacing: 1px;
+
+
+    rect {
+      stroke-width: 5;
+      stroke-dasharray: 15, 310;
+      stroke-dashoffset: 48;
+      transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+  }
 
   * {
     margin: 0;

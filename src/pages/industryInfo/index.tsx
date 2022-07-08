@@ -59,7 +59,6 @@ export default function industryInfo({userName}: any) {
         <title>Smart Energia - Info de Setor</title>
       </Head>
       <Header name={userName}>
-        <PageTitle title='Info Setorial' subtitle='Clique em "Baixar PDF", para fazer download do PDF' />
       </Header>
       <Banner title='Info setorial' subtitle='Baixe o pdf para ver o info setorial' imgSource='/assets/banners/infoSetorial.jpg'/>
       <p>Um resumo das atualizações gerais do Setor Elétrico, com dados sobre geração consumo, demanda, meteorologia baseadas em informações do ONS, CCEE, ANEEL, 10 Maiores Jornais e Revistas e CPTEC</p>

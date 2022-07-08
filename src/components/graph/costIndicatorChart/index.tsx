@@ -49,6 +49,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
         }
       },
       y: {
+        stacked: true,
         grid: {
           display: false
         }
@@ -91,17 +92,23 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
       {
         label: '2021',
         data: data1.map(value => value.custo_unit>0? value.custo_unit : null),
-        backgroundColor: '#C2d5fb'
-        // backgroundColor: (value, ctx) => {
-        //   return data1[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#255488');
-        // },
+        // backgroundColor: '#C2d5fb'
+        backgroundColor: (value, ctx) => {
+          if (value.dad_estimado)
+            return draw('diagonal-right-left', '#C2d5fb');
+          else
+            return '#C2d5fb'
+        },
       },
       {
         label: '2022',
         data: data2.map(value => value.custo_unit>0? value.custo_unit : null),
         // backgroundColor: '#255488'
         backgroundColor: (value, ctx) => {
-          return data2[value.dataIndex]?.dad_estimado == false ? '#255488' : draw('diagonal-right-left', '#255488');
+          if (value.dad_estimado)
+            return draw('diagonal-right-left', '#255488');
+          else
+            return '#255488'
         },
       }
     ],

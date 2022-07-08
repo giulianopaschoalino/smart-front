@@ -12,8 +12,7 @@ export const AboutUsView = styled.main`
 
     aside {
       position: relative;
-      /* margin-bottom: 150px; */
-
+      bottom: 220px;
       display: flex;
       justify-content: center;
       align-items: center;

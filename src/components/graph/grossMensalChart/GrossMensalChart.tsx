@@ -11,6 +11,8 @@ import {
   Legend
 } from 'chart.js'
 
+import document from 'next/document';
+
 import { draw, generate } from 'patternomaly'
 
 import { GrossMensalChartView } from './GrossMensalChartView';
@@ -79,7 +81,7 @@ export default function GrossMensalChart({ title, data1, data2, label, subtitle,
               sum += data;
           });
           const percentage = data1[ctx.dataIndex]?.econ_percentual? (data1[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%" : '';
-          const result = `⠀${spacement(parseInt(value+3).toLocaleString('pt-br'))}${parseInt(value)!=0? percentage : ''}\n${parseInt(value)!=0? parseInt(value).toLocaleString('pt-br') : ''}`
+          const result = `${spacement(parseInt(value+3).toLocaleString('pt-br'))}${parseInt(value)!=0? percentage : ''}\n${parseInt(value)!=0? parseInt(value).toLocaleString('pt-br') : ''}`
 
           return value==null? null : result
         },

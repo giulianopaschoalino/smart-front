@@ -3,9 +3,15 @@ import styled from "styled-components"
 export const PldTableView = styled.main`
   width: 100%;
 
+  border-radius: 8px!important;
+
   table {
     p {
       font-size: 12px;
+    }
+
+    thead {
+      border-radius: 8px!important;
     }
   }
 
@@ -134,6 +140,8 @@ export const PldTableView = styled.main`
     align-items: center;
 
     article {
+      position: relative;
+
       display: flex;
       justify-content: center;
       align-items: center;
@@ -143,13 +151,53 @@ export const PldTableView = styled.main`
 
       margin: 40px;
 
-      border-radius: 20px;
+      background: #255488;
+      color: white;
+
+      border-radius: 8px;
       box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
       -webkit-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
       -moz-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
-      background: #F8F8F8;
 
       cursor: pointer;
+
+      background: darken($red, 1.5%);
+
+      background: linear-gradient(200.69deg, #254f7f 9%, #3183e0 98%), #FFFFFF;
+
+      :hover {
+        transition: all 0.2s linear;
+        transform: scale(1.1);
+      }
+
+      svg {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+
+      rect {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 2;
+        stroke-dasharray: 422, 0;
+        transition: all 0.35s linear;
+      }
+    }
+
+    .btn-1:hover {
+      background: rgba($red, 0);
+      letter-spacing: 1px;
+
+
+      rect {
+        stroke-width: 5;
+        stroke-dasharray: 15, 310;
+        stroke-dashoffset: 48;
+        transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
+      }
     }
   }
 
@@ -161,7 +209,13 @@ export const PldTableView = styled.main`
   }
 
   .btnDownload{
-    margin-top: 25px;
+    width: fit-content;
+    margin-bottom: 15px;
+    :hover {
+      position: relative;
+      transition: all 0.2s linear;
+      transform: translateY(-6px);
+    }
   }
 `
 
@@ -276,4 +330,16 @@ export const NewTableLine = styled.section`
 
     margin: 0 0 10px 0;
   }
+`
+
+export const TableHeader = styled.label`
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  flex-direction: row;
+
+  padding: 0 40px 0 40px
 `

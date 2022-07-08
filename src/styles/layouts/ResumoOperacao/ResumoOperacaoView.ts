@@ -20,15 +20,6 @@ export const TableView = styled.div`
     margin-top: 10px;
   }
 
-  .select{
-    display: flex;
-    flex-direction: row;
-
-    margin-bottom: 25px;
-
-    width: 30rem;
-  }
-
   .tg{
     border-collapse:collapse;
     border-spacing:0;
@@ -81,7 +72,7 @@ export const TableView = styled.div`
     color:#6a707e;
     font-size:14px;
     text-align:center;
-    vertical-align:top
+    vertical-align:top;
   }
   .tg .tg-0tzy{
     color:#abafb3;
@@ -120,7 +111,38 @@ export const TableView = styled.div`
   .teste {
     width: 10rem;
   }
+
+  table, th:last-child{
+    border: transparent;
+    border-top-right-radius: 20px;
+  }
+
+  table, th:first-child {
+    border: transparent;
+    border-top-left-radius: 20px;
+  }
+
+  .radius {
+    background-color: red!important;
+  }
 `;
+
+export const TableHeader = styled.section`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  width: 100%;
+
+  margin-bottom: 25px;
+
+  .select{
+    display: flex;
+    flex-direction: row;
+
+    width: 30rem;
+  }
+`
 
 export const Pagination = styled.div`
   display: flex;
