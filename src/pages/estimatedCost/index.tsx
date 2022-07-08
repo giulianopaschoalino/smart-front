@@ -49,7 +49,7 @@ export default function EstimatedCost({graphData, userName, clients}: any) {
       <section>
         <CativoXLivreChart chartData={graphData}
         dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
-        label={ConsumoEstimado.label} title='' subtitle='' barLabel hashurado />
+        label={ConsumoEstimado.label} title='' subtitle='' barLabel hashurado/>
       </section>
     </EstimatedCostView>
   )

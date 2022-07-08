@@ -40,7 +40,7 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
   }
 
   async function signIn({email, password}: SignInData) {
-    await signOut()
+    signOut()
 
     const { token, user, exception }: any = await signInRequest({
       email,

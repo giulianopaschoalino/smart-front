@@ -118,6 +118,16 @@ export const PldTableView = styled.main`
     color: black!important;
   }
 
+  table, th:last-child{
+    border: transparent;
+    border-top-right-radius: 20px;
+  }
+
+  table, th:first-child {
+    border: transparent;
+    border-top-left-radius: 20px;
+  }
+
   h3{
     font-weight: 600;
     font-size: 22px;

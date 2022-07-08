@@ -100,41 +100,49 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
         <article>
           <h3>Filtrar por Unidade e/ou Mês</h3>
           <div className='select'>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={unidade}
-                label="Unidade"
-                onChange={handleChangeUnidade}
-              >
-                <MenuItem key={1} value={''}>Todas</MenuItem>
-                {
-                  clientsData.map((value) => {
-                    return <MenuItem key={1} value={value.cod_smart_unidade}>{value.cod_smart_unidade}</MenuItem>
-                  })
-                }
-              </Select>
-            </FormControl>
+            <div>
+              <p>Selecionar unidade:</p>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={unidade}
+                  label="Unidade"
+                  onChange={handleChangeUnidade}
+                  fullWidth
+                >
+                  <MenuItem key={1} value={''}>Todas</MenuItem>
+                  {
+                    clientsData.map((value) => {
+                      return <MenuItem key={1} value={value.cod_smart_unidade}>{value.cod_smart_unidade}</MenuItem>
+                    })
+                  }
+                </Select>
+              </FormControl>
+            </div>
 
-            <FormControl fullWidth sx={{ml: 2}}>
-              <InputLabel id="demo-simple-select-label">Mês</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={month}
-                label="Month"
-                onChange={handleChangeMonth}
-              >
-                <MenuItem value={''}>Todos</MenuItem>
-                {
-                  clientMonth.map((value) => {
-                    return <MenuItem key={1} value={value.mes}>{value.mes}</MenuItem>
-                  })
-                }
-              </Select>
-            </FormControl>
+            <div>
+              <p>Selecionar mês:</p>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Mês</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={month}
+                  label="Month"
+                  onChange={handleChangeMonth}
+                  fullWidth
+                >
+                  <MenuItem value={''}>Todos</MenuItem>
+                  {
+                    clientMonth.map((value) => {
+                      return <MenuItem key={1} value={value.mes}>{value.mes}</MenuItem>
+                    })
+                  }
+                </Select>
+              </FormControl>
+            </div>
           </div>
         </article>
         <article>
@@ -198,18 +206,24 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     // console.log(res)
   })
 
-  await apiClient.post('/operation', {
-    "filters": [],
-    "fields": ["cod_smart_unidade"],
-    "distinct": true
+  await apiClient.post('/units', {
+		"filters": [
+      {"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]},
+			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": id}
+		],
+		"fields": ["cod_smart_unidade", "codigo_scde"],
+		"distinct": true
   }).then(res => {
+    console.log(res.data.data)
     clientsData = res.data.data
   }).catch(res => {
-    // console.log(res)
+    console.log(res)
   })
 
   await apiClient.post('/operation', {
-    "filters": [],
+    "filters": [
+      {"type" : ">=", "field":"dados_te.mes", "value":1, "interval": "year"}
+    ],
     "fields": ["mes"],
     "distinct": true
   }).then(res => {

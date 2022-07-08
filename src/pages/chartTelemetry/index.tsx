@@ -1,45 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { SingleBar } from '../../components/graph/SingleBar'
 import { ChatTelemetryView } from '../../styles/layouts/ChatTelemetry/ChatTelemetryView'
-// import router, { useRouter } from 'next/router'
 
-import { FatorPotencia } from '../../services/fatorPotencia'
-import { ConsumoDecretizadoBar } from '../../services/consumoDiscretizadoBar'
-import { ConsumoDecretizadoLine } from '../../services/consumoDiscretizadoLine'
-import LineChart from '../../components/graph/LineChart'
-import { LineBarChart } from '../../components/graph/LineBarChart'
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle'
 import Head from 'next/head'
 
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
 import getAPIClient from '../../services/ssrApi'
-import { api } from '../../services/api'
 import FatorPotenciaChart from '../../components/graph/fatorPotenciaChart'
-// import { DemRegXDemConChart } from '../components/graph/demRegXDemConChart'
+
 import { DiscretizedConsumptionChart } from '../../components/graph/DiscretizedConsumptionChart'
 import DiscretizedConsumptionChartLine from '../../components/graph/DiscretizedConsumptionChartLine'
-import router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { DemRegXDemConChart } from '../../components/graph/DemRegXDemConChart'
 import RenderIf from '../../utils/renderIf'
-
-const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  position: 'absolute' as const,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '80%',
-  bgcolor: 'white',
-  p: 5,
-};
+import { getPowerFactorData } from '../../services/charts/telemetry/getPowerFactor'
+import { getDemand } from '../../services/charts/telemetry/getDemand'
+import { getDiscretization } from '../../services/charts/telemetry/getDiscretization'
 
 export default function chartTelemetry({userName}) {
   const [fatorPotenciaData, setFatorPotenciaData] = useState(null);
@@ -53,109 +31,30 @@ export default function chartTelemetry({userName}) {
 
   const {startDate, endDate, unity, discretization} = router.query
 
-  // async function getChartsData() {
-  //   await api.post('/telemetry/powerFactor', {
-  //     "filters": [
-  //       {"type" : "=", "field": "med_5min.ponto", "value": unity},
-  //       {"type" : "between", "field": "dia_num", "value": ["2022-04-01", "2022-04-28"]}
-  //     ]
-  // }).then(res => {
-  //     console.log(res.data.data)
-  //     setFatorPotenciaData(res.data.data)
-  //   }).catch(res => {
-  //     // console.log(res)
-  //     router.push('/telemetria')
-  //   })
+  const { '@smartAuth-token': token } = parseCookies()
 
-  //   await api.post('/telemetry/discretization', {
-  //     "type": discretization? discretization : "5_min",
-  //     "filters": [
-  //         {"type" : "=", "field": "med_5min.ponto", "value": unity},
-  //         {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
-  //       ]
-  //   }).then(res => {
-  //     setDiscretizedConsumptionDataReativa(res.data.data)
-  //   }).catch(res => {
-  //     // console.log(res)
-  //     router.push('/telemetria')
-  //   })
+  function getChartsData() {
+    console.log(token)
+    getPowerFactorData("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
+      .then(result => setFatorPotenciaData(result))
+      .catch(exception => console.log(exception))
 
-  // await api.post('/telemetry/discretization', {
-  //   "type": discretization? discretization : "5_min",
-  //   "filters": [
-  //       {"type" : "=", "field": "med_5min.ponto", "value": unity},
-  //       {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
-  //     ]
-  //   }).then(res => {
-  //     setDiscretizedConsumptionData(res.data.data)
-  //   }).catch(res => {
-  //     // console.log(res)
-  //     router.push('/telemetria')
-  //   })
+    getDiscretization("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
+      .then(result => setDiscretizedConsumptionDataReativa(result))
+      .catch(exception => console.log(exception))
 
-  // await api.post('/telemetry/demand', {
-  //   "filters": [
-  //     {"type" : "=", "field": "med_5min.ponto", "value": unity},
-  //     {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
-  //   ]
-  //   }).then(res => {
-  //     setDemRegXDemCon(res.data.data)
-  //   }).catch(res => {
-  //     // console.log(res)
-  //     router.push('/telemetria')
-  //   })
-  // }
-  async function getChartsData() {
-    await api.post('/telemetry/powerFactor', {
-      "filters": [
-        {"type" : "=", "field": "med_5min.ponto", "value": "PRAXCUENTR101P"},
-        {"type" : "between", "field": "dia_num", "value": ["2022-01-01", "2022-01-31"]}
-      ]
-  }).then(res => {
-        console.log(res.data.data)
-        setFatorPotenciaData(res.data.data)
-      }).catch(res => {
-        console.log(res)
-        // router.push('/telemetria')
-      })
+    getDiscretization("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
+      .then(result => setDiscretizedConsumptionData(result))
+      .catch(exception => console.log(exception))
 
-    await api.post('/telemetry/discretization', {
-      "type": "1_mes",
-      "filters": [
-          {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"}
-        ]
-    }
-    ).then(res => {
-        setDiscretizedConsumptionDataReativa(res.data.data)
-      }).catch(res => {
-        console.log(res)
-        // router.push('/telemetria')
-      })
+    getDemand("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
+      .then(result => setDemRegXDemCon(result))
+      .catch(exception => console.log(exception))
 
-    await api.post('/telemetry/discretization', {
-      "type": "1_mes",
-      "filters": [
-          {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"}
-        ]
-    }
-    ).then(res => {
-        setDiscretizedConsumptionData(res.data.data)
-      }).catch(res => {
-        console.log(res)
-        // router.push('/telemetria')
-      })
-
-    await api.post('/telemetry/demand', {
-      "filters": [
-        {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"},
-        {"type" : "between", "field": ["dia_num"], "value": ["2022-01-03", "2022-01-03"]}
-      ]
-    }).then(res => {
-        setDemRegXDemCon(res.data.data)
-      }).catch(res => {
-        console.log(res)
-        // router.push('/telemetria')
-      })
+    // setFatorPotenciaData(res.data.data)
+    // setDiscretizedConsumptionDataReativa(res.data.data)
+    // setDiscretizedConsumptionData(res.data.data)
+    // setDemRegXDemCon(res.data.data)
   }
 
   useEffect(() => {

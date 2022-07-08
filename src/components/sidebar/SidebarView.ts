@@ -236,3 +236,44 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
     }
   }
 `
+
+export const ModalContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  article {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 50%;
+
+    margin-top: 4em;
+    button {
+      width: 10em;
+      height: 4em;
+
+      cursor: pointer;
+
+      background: #254F7F;
+      border-radius: 8px;
+      border-style: none;
+
+      font-family: 'Poppins';
+      font-size: 90%;
+
+      transition: all 350ms ease-in;
+
+      :hover {
+        transform: scale(1.02);
+        opacity: 0.9;
+        box-shadow: rgb(0, 0, 0, 0.2) 0px 2px 4px -1px;
+      }
+
+      color: #FFFFFF;
+    }
+  }
+`
