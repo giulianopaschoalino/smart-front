@@ -12,18 +12,21 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { api } from '../../services/api';
 
 import RenderIf from '../../utils/renderIf';
-import { SidebarView } from './SidebarView'
+import { ModalContainer, SidebarView } from './SidebarView'
 
 const style = {
   position: 'absolute' as const,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  height: 500,
+  width: 680,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+
+  borderRadius: 1
 };
 
 export default function Sidebar() {
@@ -126,13 +129,18 @@ export default function Sidebar() {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
             >
-            <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Deseja realmente sair ?
-              </Typography>
-              <Link href='/'><Button variant="contained" onClick={() => signOut()} sx={{mt:5}}>Sim</Button></Link>
-              <Button variant="contained" onClick={handleClose} color="error" sx={{mt:5 ,ml:1}}>Não</Button>
-            </Box>
+              <Box sx={style}>
+                <ModalContainer>
+                  <Image src='/assets/marca1.png' width={250} height={200}/>
+                  <Typography id="modal-modal-title" variant="h6" component="h2">
+                    Deseja realmente sair ?
+                  </Typography>
+                  <article>
+                    <Link href='/'><button onClick={() => signOut()}>Sair</button></Link>
+                    <button onClick={handleClose} color="error">Voltar</button>
+                  </article>
+                </ModalContainer>
+              </Box>
           </Modal>
           </ul>
           <aside>

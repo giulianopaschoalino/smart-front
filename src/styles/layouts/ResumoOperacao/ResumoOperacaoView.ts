@@ -138,9 +138,20 @@ export const TableHeader = styled.section`
 
   .select{
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
 
     width: 30rem;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+
+      align-items: flex-start;
+      flex-direction: column;
+
+      width: 95%;
+    }
   }
 `
 

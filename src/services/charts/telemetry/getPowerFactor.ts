@@ -1,4 +1,5 @@
-import { api } from "../../api"
+import axios from "axios"
+import { parseCookies } from "nookies"
 
 export async function getPowerFactorData(
     unity: string,
@@ -6,12 +7,17 @@ export async function getPowerFactorData(
     endDate: string,
     discretization: string
   ) {
-  const { data } = await api.post('/telemetry/powerFactor', {
-    "filters": [
-      {"type" : "=", "field": `${discretization}.ponto`, "value": unity},
-      {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
-    ]
+  const { '@smartAuth-token': token } = parseCookies()
+  console.log(token.replace(/"/g, ''))
+  const { data } = await axios.post('https://smart-energia-api.herokuapp.com/api/telemetry/powerFactor', {
+		"filters": [
+			{"type" : "=", "field": "med_5min.ponto", "value": "PRAXCUENTR101P"},
+			{"type" : "between", "field": "dia_num", "value": ["2022-01-01", "2022-01-31"]}
+		]
+}, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
   })
-
   return data.data
 }
