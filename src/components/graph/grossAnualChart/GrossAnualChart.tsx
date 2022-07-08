@@ -74,7 +74,7 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
               sum += data;
           });
           const percentage = (dataProps[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
-          const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}${percentage}\n${parseInt(value).toLocaleString('pt-br')}`
+          const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}  ${percentage}\n${parseInt(value).toLocaleString('pt-br')}`
 
           return value==null? null : result
         },

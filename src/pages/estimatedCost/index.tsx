@@ -72,6 +72,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 		"fields": ["cod_smart_unidade", "codigo_scde"],
 		"distinct": true
   }).then(res => {
+    console.log(res.data.data)
     clients = res.data.data
   }).catch(res => {
     // console.log(res)

@@ -20,7 +20,7 @@ import data from '../../services/dados.json'
 import getAPIClient from '../../services/ssrApi';
 import { Pagination, TableHeader, TableView } from '../../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 
-export default function ResumoOperacao({tableData, clientsData, userName, clientMonth}: any) {
+export default function ResumoOperacao({tableData, clients, userName, clientMonth}: any) {
   const csvData = tableData;
 
   const [month, setMonth] = useState('');
@@ -114,7 +114,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
                 >
                   <MenuItem key={1} value={''}>Todas</MenuItem>
                   {
-                    clientsData.map((value) => {
+                    clients.map((value) => {
                       return <MenuItem key={1} value={value.cod_smart_unidade}>{value.cod_smart_unidade}</MenuItem>
                     })
                   }
@@ -195,7 +195,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['user-name']: userName } = parseCookies(ctx)
 
   let tableData = [];
-  let clientsData = [];
   let clientMonth = [];
 
   await apiClient.post('/operation/summary', {
@@ -206,6 +205,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     // console.log(res)
   })
 
+  let clients = [];
+
   await apiClient.post('/units', {
 		"filters": [
       {"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]},
@@ -215,9 +216,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 		"distinct": true
   }).then(res => {
     console.log(res.data.data)
-    clientsData = res.data.data
+    clients = res.data.data
   }).catch(res => {
-    console.log(res)
+    // console.log(res)
   })
 
   await apiClient.post('/operation', {
@@ -244,7 +245,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       tableData,
-      clientsData,
+      clients,
       clientMonth,
       userName
     }

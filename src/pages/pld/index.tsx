@@ -210,13 +210,13 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
   }, [])
 
   return (
-    <main style={{width: '100%',}}>
+    <main style={{width: '100%'}}>
       <Head>
         <title>Smart Energia - PLD</title>
       </Head>
       <div id='title'/>
       <Header name={userName}>
-        <PageTitle title='PLD Histórico' subtitle='Tabela de consumo PLD'/>
+        <PageTitle title='PLD' subtitle='Evolução PLD - Valores em R$/MWh'/>
       </Header>
       <TableHeader>
         <Tabs value={page} onChange={(e, nv) => setPage(nv)} aria-label="">
@@ -236,7 +236,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
           <table className="tg">
             <thead>
               <tr>
-                <th className='tg-8oo6'>Mês<p>(R$/MWh)</p></th>
+                <th className='tg-8oo6'>Mês</th>
                 <th className='tg-8oo6'>Nordeste<p>(R$/MWh)</p></th>
                 <th className='tg-8oo6'>Norte<p>(R$/MWh)</p></th>
                 <th className='tg-8oo6'>Sudeste<p>(R$/MWh)</p></th>
@@ -301,7 +301,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
               }
             </tbody>
           </table>
-          <section>
+          {/* <section>
             <article onClick={() => setPage(1)} className="btn btn-1">
             <svg height='100px'>
               <rect x="0" y="0" fill="none" width="100%" height="100%"/>
@@ -314,7 +314,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
               </svg>
               <p>Valores Horários</p>
             </article>
-          </section>
+          </section> */}
         </PldTableView>
       </RenderIf>
 

@@ -11,7 +11,7 @@ export const PldTableView = styled.main`
     }
 
     thead {
-      border-radius: 8px!important;
+      /* border-radius: 2px!important; */
     }
   }
 
@@ -120,12 +120,12 @@ export const PldTableView = styled.main`
 
   table, th:last-child{
     border: transparent;
-    border-top-right-radius: 20px;
+    border-top-right-radius: 8px;
   }
 
   table, th:first-child {
     border: transparent;
-    border-top-left-radius: 20px;
+    border-top-left-radius: 8px;
   }
 
   h3{
