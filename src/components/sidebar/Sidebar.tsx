@@ -89,11 +89,16 @@ export default function Sidebar() {
             aria-describedby="modal-modal-description"
             >
             <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Deseja realmente sair ?
-              </Typography>
-              <Link href='/'><Button variant="contained" sx={{mt:5}} onClick={() => signOut()}>Sim</Button></Link>
-              <Button variant="contained" onClick={handleClose} color="error" sx={{mt:5 ,ml:1}}>Não</Button>
+              <ModalContainer>
+                <Image src='/assets/marca1.png' width={250} height={200}/>
+                <Typography id="modal-modal-title" variant="subtitle2" component="p" style={{color: 'gray'}}>
+                  Deseja realmente sair ?
+                </Typography>
+                <article>
+                  <Link href='/'><button onClick={() => signOut()}>Sair</button></Link>
+                  <button onClick={handleClose} color="error">Voltar</button>
+                </article>
+              </ModalContainer>
             </Box>
           </Modal>
           </ul>

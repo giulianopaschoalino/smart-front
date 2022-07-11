@@ -3,7 +3,7 @@ import styled from 'styled-components'
 interface SidebarViewInterface {
   economiaDrawer: boolean | null,
   modalOpen: boolean | null,
-  pldDrawer: boolean | undefined
+  pldDrawer?: boolean | undefined
 }
 
 export const SidebarView = styled.nav<SidebarViewInterface>`
