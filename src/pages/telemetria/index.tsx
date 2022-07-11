@@ -122,9 +122,11 @@ export default function Telemetria({userName, clients}: any) {
   );
 
   const handleChangeStartDate = (newValue: Date | null) => {
+    console.log(newValue)
     setStartDate(newValue)
   };
   const handleChangeEndDate = (newValue: Date | null) => {
+    console.log(newValue)
     setEndDate(newValue)
   };
 
@@ -327,7 +329,7 @@ export default function Telemetria({userName, clients}: any) {
                       :
                       new Date(startDate).setUTCDate(startDate.getUTCDate()+1)
                   }
-              onChange={handleChangeEndDate}
+              onChange={(newValue: any) => handleChangeEndDate(newValue)}
               renderInput={(params) => <TextField {...params} sx={{ml: 1}}/>}
             />
           </div>
