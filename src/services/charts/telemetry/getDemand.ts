@@ -8,14 +8,14 @@ export async function getDemand(
     discretization: string
   ) {
   const { '@smartAuth-token': token } = parseCookies()
-  const { data } = await axios.post('https://smart-energia-api.herokuapp.com/api/telemetry/powerFactor', {
+  const { data } = await axios.post('https://smart-energia-api.herokuapp.com/api/telemetry/demand', {
 		"filters": [
 			{"type" : "=", "field": `${discretization}.ponto`, "value": unity},
 			{"type" : "between", "field": ["dia_num"], "value": [startDate, endDate]}
 		]
   }, {
     headers: {
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer 1260|RHfh3uMsEfHwCTqxKOhy1CEIr34UIln9OFdf5Fc8`
     }
   })
 

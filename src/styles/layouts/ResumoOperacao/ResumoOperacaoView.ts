@@ -60,44 +60,13 @@ export const TableView = styled.div`
 
     background-color: #254F7F;
   }
-  .tg .tg-uulg{
-    background-color:#efefef;
-    color:#abafb3;
-    font-size:14px;
-    text-align:center;
-    vertical-align:top
-  }
+
   .tg .tg-gceh{
     background-color:#efefef;
     color:#6a707e;
     font-size:14px;
     text-align:center;
     vertical-align:top;
-  }
-  .tg .tg-0tzy{
-    color:#abafb3;
-    font-size:14px;
-    text-align:center;
-    vertical-align:top
-  }
-  .tg .tg-hq65{color:#6a707e;
-    font-size:14px;
-    text-align:center;
-    vertical-align:top
-  }
-
-  .tg .tg-baqh{
-    text-align:center;
-    vertical-align:top
-  }
-  .tg .tg-0lax{
-    text-align:left;
-    vertical-align:top
-  }
-  .tg .tg-womg{
-    background-color:#dddfe1;
-    text-align:center;
-    vertical-align:top
   }
 
   h3{
@@ -114,16 +83,12 @@ export const TableView = styled.div`
 
   table, th:last-child{
     border: transparent;
-    border-top-right-radius: 20px;
+    border-top-right-radius: 8px;
   }
 
   table, th:first-child {
     border: transparent;
-    border-top-left-radius: 20px;
-  }
-
-  .radius {
-    background-color: red!important;
+    border-top-left-radius: 8px;
   }
 `;
 

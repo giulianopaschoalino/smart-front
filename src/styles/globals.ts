@@ -52,16 +52,15 @@ export const GlobalStyle = createGlobalStyle`
       .MuiInputBase-input,
       .MuiInputBase-inputAdornedEnd,
       .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input{
-        /* background-color: red!important; */
-        /* border: none!important;
-        outline: 0 */
-        height: 45px;
+        /* background-color: red; */
+        /* position: relative; */
+        height:68px;
       }
 
       .MuiFormControl-root,
       .MuiTextField-root,
       .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
-        margin-top: 8px;
+        /* margin-top: 8px; */
       }
 
       .MuiOutlinedInput-input,
@@ -84,10 +83,37 @@ export const GlobalStyle = createGlobalStyle`
       .MuiIconButton-edgeEnd,
       .MuiIconButton-sizeMedium,
       .css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root {
-        margin-bottom: 5px;
         width: 30px;
         height: 30px;
       }
     }
 
+    .MuiInputLabel-root
+    .MuiInputLabel-formControl, .MuiInputLabel-animated,
+    .MuiInputLabel-shrink,
+    .MuiInputLabel-outlined,
+    .MuiFormLabel-root,
+    .MuiFormLabel-colorPrimary,
+    .MuiFormLabel-filled,
+    .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+      color: rgba(0, 0, 0, 0.6);
+      font-family: "Roboto","Helvetica","Arial",sans-serif;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.4375em;
+      letter-spacing: 0.00938em;
+      padding: 0;
+      position: relative;
+      display: block;
+      transform-origin: top left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: calc(133% - 24px);
+      position: absolute;
+      left: 0;
+      user-select: none;
+      z-index: 1;
+      pointer-events: auto;
+    }
 `;

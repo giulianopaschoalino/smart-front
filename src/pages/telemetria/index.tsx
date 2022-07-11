@@ -267,7 +267,7 @@ export default function Telemetria({userName, clients}: any) {
               {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
               {
                 clients.map((value) => {
-                  return <MenuItem key={1} value={value.codigo_scde}>{value.cod_smart_unidade}</MenuItem>
+                  return <MenuItem key={1} value={value.codigo_scde}>{value.unidade}</MenuItem>
                 })
               }
             </Select>
@@ -420,12 +420,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/units', {
 		"filters": [
-      {"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]},
-			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": id}
+			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": 180201211},
+			{"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]}
 		],
-		"fields": ["cod_smart_unidade", "codigo_scde"],
+		"fields": [
+			"unidade",
+			"cod_smart_unidade",
+			"codigo_scde"],
 		"distinct": true
   }).then(res => {
+    console.log(res.data)
     clients = res.data.data
   }).catch(res => {
     // console.log(res)

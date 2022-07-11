@@ -43,13 +43,11 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
     responsive: true,
     scales: {
       x: {
-        stacked: true,
         grid: {
           display: false
         }
       },
       y: {
-        stacked: true,
         grid: {
           display: false
         }
@@ -58,7 +56,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
     plugins: {
       datalabels: {
         display: true,
-        color: 'black',
+        color: '#255488',
         formatter: (value, ctx) => {
           let sum = 0;
           const dataArr = ctx.chart.data.datasets[0].data;

@@ -1,23 +1,26 @@
 import styled from "styled-components"
 
-export const PldTableView = styled.main`
+export const PldTableView = styled.div`
   width: 100%;
 
   border-radius: 8px!important;
+
+  border-color:#DDDFE1;
+  border-style:solid;
+  border-width: 1px;
+
+  background-color: #EFEFEF;
+
+  margin-top: 38px;
 
   table {
     p {
       font-size: 12px;
     }
-
-    thead {
-      /* border-radius: 2px!important; */
-    }
   }
 
   .actual {
     font-weight: bold!important;
-    background-color: red!important;
   }
 
   .tg{
@@ -25,7 +28,6 @@ export const PldTableView = styled.main`
     border-spacing:0;
     font-family:Poppins;
     width: 100%;
-
   }
 
   .tg td{
@@ -38,6 +40,7 @@ export const PldTableView = styled.main`
     padding:17px 30px;
     word-break:normal;
   }
+
 
   .tg th{
     border-color:#DDDFE1;
@@ -53,7 +56,7 @@ export const PldTableView = styled.main`
   .tg .tg-8oo6{
     font-size:20px;
     text-align:center;
-    vertical-align:top;
+    vertical-align:center;
     padding: 10px 18px;
     text-align: center;
 
@@ -62,60 +65,25 @@ export const PldTableView = styled.main`
     background-color: #254F7F;
   }
   .tg .tg-uulg{
-    background-color:#efefef;
     font-size:14px;
     text-align:center;
-    vertical-align:top
+    vertical-align:top;
+
+    :first-child {
+      background-color: red;
+    }
+    :last-child {
+      border-right-color: transparent;
+    }
   }
+
   .tg .tg-gceh{
-    background-color:#efefef;
     font-size:14px;
     text-align:center;
-    vertical-align:top
-  }
-  .tg .tg-0tzy{
-    font-size:14px;
-    text-align:center;
-    vertical-align:top
-  }
-  .tg .tg-hq65{
-    font-size:14px;
-    text-align:center;
-    vertical-align:top
-  }
-
-  .tg .tg-baqh{
-    text-align:center;
-    vertical-align:top
-  }
-  .tg .tg-0lax{
-    text-align:left;
-    vertical-align:top
-  }
-  .tg .tg-womg{
-    background-color:#dddfe1;
-    text-align:center;
-    vertical-align:top
-  }
-
-  .green {
-    background-color: #0F9D58!important;
-    color: black!important;
-  }
-
-  .dullGreen {
-    background-color: #AED094!important;
-    color: black!important;
-  }
-
-  .red {
-    background-color: #DB4437!important;
-    color: black!important;
-  }
-
-  .dullRed {
-    background-color: #FFAA95!important;
-    color: black!important;
+    vertical-align:top;
+    :first-child {
+      border-left-color: transparent;
+    }
   }
 
   table, th:last-child{
@@ -257,16 +225,22 @@ export const PldGraphView = styled.main`
 
     flex-direction: row;
 
+    padding-bottom: 13px;
+
     p {
       margin: 0;
     }
   }
   .toolsbar2 {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start!important;
 
     flex-direction: column;
+
+    margin-bottom: 9px;
+
+    /* transform: translateY(-8px); */
 
     p {
       margin: 0;
@@ -274,10 +248,10 @@ export const PldGraphView = styled.main`
   }
 
   input {
-    width: 20rem;
+    width: 16.6rem;
     height: 3.5rem;
 
-    padding: 14px;
+    /* padding: 14px; */
 
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 400;
@@ -306,6 +280,8 @@ export const PldGraphView = styled.main`
 
     width: 100%;
   }
+
+
 
   footer {
     label {

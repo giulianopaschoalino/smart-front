@@ -29,6 +29,8 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
 
   const monthLabels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'ago', 'set', 'out', 'nov', 'dez']
 
+  const { ['user-id']: id } = parseCookies()
+
   const handleChangeMonth = (event: SelectChangeEvent) => {
     setMonth(event.target.value);
   };
@@ -60,7 +62,7 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
   }
 
   useEffect(() => {
-    console.log(month)
+    console.log(unidade)
     if (unidade!=='' || month!==''){
       api.post('/operation/summary', month && !unidade? {
         "filters": [
@@ -80,9 +82,7 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
       } : {}
       ).then(res => {
         setTableDataState(res.data.data)
-      }).catch(res => {
-        // console.log(res)
-      })
+      }).catch(res => console.log(res))
     } else {
       setTableDataState(tableData)
     }
@@ -98,7 +98,6 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
       </Header>
       <TableHeader>
         <article>
-          <h3>Filtrar por Unidade e/ou Mês</h3>
           <div className='select'>
             <div>
               <p>Selecionar unidade:</p>
@@ -115,7 +114,7 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
                   <MenuItem key={1} value={''}>Todas</MenuItem>
                   {
                     clients.map((value) => {
-                      return <MenuItem key={1} value={value.cod_smart_unidade}>{value.cod_smart_unidade}</MenuItem>
+                      return <MenuItem key={value.cod_smart_unidade} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
                     })
                   }
                 </Select>
@@ -137,7 +136,7 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
                   <MenuItem value={''}>Todos</MenuItem>
                   {
                     clientMonth.map((value) => {
-                      return <MenuItem key={1} value={value.mes}>{value.mes}</MenuItem>
+                      return <MenuItem key={value.mes} value={value.mes}>{value.mes}</MenuItem>
                     })
                   }
                 </Select>
@@ -169,13 +168,13 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
             tableDataState.map((value, index) => {
               if (value.mes.slice(4,7) != '2020')
               return <tr>
-                  <td key={index} className='tg-gceh'>{value.mes}</td>
-                  <td key={index} className='tg-gceh'>{value.cod_smart_unidade}</td>
-                  <td key={index} className='tg-gceh'>{value.operacao}</td>
-                  <td key={index} className='tg-gceh'>{parseFloat(value.montante_nf).toLocaleString('pt-br')}</td>
-                  <td key={index} className='tg-gceh'>{value.contraparte}</td>
-                  <td key={index} className='tg-gceh'>{parseFloat(value.preco_nf).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                  <td key={index} className='tg-gceh'>{parseFloat(value.nf_c_icms).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                  <td key={value.mes} className='tg-gceh'>{value.mes}</td>
+                  <td key={value.cod_smart_unidade} className='tg-gceh'>{value.cod_smart_unidade}</td>
+                  <td key={value.operacao} className='tg-gceh'>{value.operacao}</td>
+                  <td key={value.montante_nf} className='tg-gceh'>{parseFloat(value.montante_nf).toLocaleString('pt-br')}</td>
+                  <td key={value.contraparte} className='tg-gceh'>{value.contraparte}</td>
+                  <td key={value.preco_nf} className='tg-gceh'>{parseFloat(value.preco_nf).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                  <td key={value.nf_c_icms} className='tg-gceh'>{parseFloat(value.nf_c_icms).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
                 </tr>
             })
           }
@@ -201,25 +200,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     "filters": []
   }).then(res => {
     tableData = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   let clients = [];
-
-  await apiClient.post('/units', {
-		"filters": [
-      {"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]},
-			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": id}
-		],
-		"fields": ["cod_smart_unidade", "codigo_scde"],
-		"distinct": true
-  }).then(res => {
-    console.log(res.data.data)
-    clients = res.data.data
-  }).catch(res => {
-    // console.log(res)
-  })
 
   await apiClient.post('/operation', {
     "filters": [
@@ -229,6 +212,21 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     "distinct": true
   }).then(res => {
     clientMonth = res.data.data
+  })
+
+  await apiClient.post('/units', {
+		"filters": [
+			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": 180201211},
+			{"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]}
+		],
+		"fields": [
+			"unidade",
+			"cod_smart_unidade",
+			"codigo_scde"],
+		"distinct": true
+  }).then(res => {
+    console.log(res.data)
+    clients = res.data.data
   }).catch(res => {
     // console.log(res)
   })

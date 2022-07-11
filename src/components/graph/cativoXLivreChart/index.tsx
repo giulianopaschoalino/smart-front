@@ -93,7 +93,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
     plugins: {
       datalabels: {
         display: true,
-        color: barLabel? 'black' : "rgba(255, 255, 255, 0)",
+        color: '#255488',
         // backgroundColor: '#255488',
         anchor: "end",
         offset: -20,
