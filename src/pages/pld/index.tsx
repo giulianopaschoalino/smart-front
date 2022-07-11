@@ -17,7 +17,7 @@ import PageTitle from '../../components/pageTitle/PageTitle';
 import { api } from '../../services/api';
 import { EvolucaoPld } from '../../services/evolucaoPld';
 import getAPIClient from '../../services/ssrApi';
-import { GoBack, PldGraphView, PldTableView, TableHeader } from '../../styles/layouts/pld/PldView'
+import { GoBack, PldGraphView, PldTableMinMaxView, PldTableView, TableHeader } from '../../styles/layouts/pld/PldView'
 import RenderIf from '../../utils/renderIf'
 
 import Tabs from '@mui/material/Tabs';
@@ -277,7 +277,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
             </article>
           </section> */}
         </PldTableView>
-        <PldTableView>
+        <PldTableMinMaxView>
           <table className='tg'>
             <tbody>
               {
@@ -317,7 +317,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
               }
             </tbody>
           </table>
-        </PldTableView>
+        </PldTableMinMaxView>
       </RenderIf>
 
       {/* grafico de grafico por seleção de data (mês)*/}
@@ -410,7 +410,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
         </PldGraphView>
       </RenderIf>
       {pageYPosition > 300 && <a href="#title" style={{position: 'fixed', right: '50px', bottom: '100px'}}>
-        <Fab sx={{backgroundColor: "#254F7F"}} aria-label="add">
+        <Fab aria-label="add">
           <NavigationIcon />
         </Fab>
       </a>}
