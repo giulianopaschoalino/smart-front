@@ -36,6 +36,7 @@
     "axios": "^0.27.2",
     "chart.js": "^3.7.1",
     "chartjs-plugin-datalabels": "^2.0.0",
+    "chartjs-plugin-style": "^0.5.0",
     "date-fns": "^2.28.0",
     "eslint-plugin-react": "^7.29.4",
     "eslit": "^6.0.0",

@@ -37,33 +37,9 @@ export const GradientButtonView = styled.button`
     transform: scale(1.1);
   }
 
-  svg {
-    width: 404px;
-    left: 0;
-    position: absolute;
-    top: 0;
-    height: 110px;
-  }
-
-  rect {
-    fill: none;
-    stroke: #fff;
-    stroke-width: 2;
-    stroke-dasharray: 422, 0;
-    transition: all 0.35s linear;
-  }
-
   :hover {
     background: rgba($red, 0);
     letter-spacing: 1px;
-
-
-    rect {
-      stroke-width: 5;
-      stroke-dasharray: 15, 310;
-      stroke-dashoffset: 48;
-      transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
-    }
   }
 
   * {
@@ -72,21 +48,11 @@ export const GradientButtonView = styled.button`
   }
 
   p {
-    :first-child {
-      font-family: 'Poppins';
-      font-style: normal;
-      font-weight: 700;
-      font-size: calc(20px);
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
 
-      text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    }
-    :last-child {
-      font-family: 'Poppins';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 11px;
-
-      text-transform: uppercase;
-    }
+    text-transform: uppercase;
   }
 `

@@ -2,7 +2,8 @@ import styled from 'styled-components'
 
 interface SidebarViewInterface {
   economiaDrawer: boolean | null,
-  modalOpen: boolean | null
+  modalOpen: boolean | null,
+  pldDrawer: boolean | undefined
 }
 
 export const SidebarView = styled.nav<SidebarViewInterface>`
@@ -91,6 +92,9 @@ export const SidebarView = styled.nav<SidebarViewInterface>`
 
     .economiaDrawer {
       display: ${props => props.economiaDrawer? 'block' : 'none'};
+    }
+    .pldDrawer {
+      display: ${props => props.pldDrawer? 'block' : 'none'};
     }
   }
 
@@ -254,7 +258,7 @@ export const ModalContainer = styled.div`
     margin-top: 4em;
     button {
       width: 10em;
-      height: 4em;
+      height: 3em;
 
       cursor: pointer;
 

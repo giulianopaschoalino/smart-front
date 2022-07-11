@@ -2,13 +2,17 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
-import { GetServerSideProps } from 'next';
+
 import Image from 'next/image'
 import Link from 'next/link'
+
 import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies';
 import React, { useContext, useEffect, useState } from 'react'
+
 import { AuthContext } from '../../contexts/AuthContext';
+import { MenuContext } from '../../contexts/menu/MenuContext';
+
 import { api } from '../../services/api';
 
 import RenderIf from '../../utils/renderIf';
@@ -30,6 +34,8 @@ const style = {
 };
 
 export default function Sidebar() {
+  const {pldMenu, setPldMenu, economyMenu, setEconomyMenu} = useContext(MenuContext)
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -37,6 +43,8 @@ export default function Sidebar() {
   const { signOut } = useContext(AuthContext)
 
   const [ economiaDrawer, setEconomiaDrawer ] = useState(false)
+  const [ pldDrawer, setPldDrawer ] = useState(false)
+
   const [ notificationsCount, setNotificationsCount ] = useState<number>(0)
 
   const [ viewModal, setViewModal ] = useState(false)
@@ -97,7 +105,7 @@ export default function Sidebar() {
       </RenderIf>
 
       <RenderIf isTrue={role === '2'}>
-        <SidebarView economiaDrawer={economiaDrawer} modalOpen={viewModal} >
+        <SidebarView economiaDrawer={economiaDrawer} pldDrawer={pldDrawer} modalOpen={viewModal} >
           <div className='hamburger' onClick={() => setViewModal(!viewModal)} >
             <Image src='/assets/hamburgerModal.svg' width={55} height={55} />
           </div>
@@ -106,17 +114,22 @@ export default function Sidebar() {
           </div>
           <ul>
             <Link href='/dashboard'><li className={router.pathname=='/dashboard'? 'actualPath' : null} ><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Visão Geral'}</li></Link>
-            <li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/grossSavings' || router.pathname=='/accumulatedSavings' || router.pathname=='/estimatedCost' || router.pathname=='/costIndicator' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Economia >'}</li>
-              <div className='economiaDrawer drawer' >
-                <Link href='/grossSavings'><li className={router.pathname=='/grossSavings'? 'actualPathDrawer' : null}>Economia Bruta Anual</li></Link>
-                <Link href='/accumulatedSavings'><li className={router.pathname=='/accumulatedSavings'? 'actualPathDrawer' : null}>Economia Bruta Mensal</li></Link>
-                <Link href='/estimatedCost'><li className={router.pathname=='/estimatedCost'? 'actualPathDrawer' : null}>Cativo x Livre Mensal</li></Link>
-                <Link href='/costIndicator'><li className={router.pathname=='/costIndicator'? 'actualPathDrawer' : null}>Custo R$/MWh</li></Link>
-              </div>
+            <Link href='/economy'><li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/grossSavings' || router.pathname=='/accumulatedSavings' || router.pathname=='/estimatedCost' || router.pathname=='/costIndicator' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Economia'}</li></Link>
+              {/* <div className='economiaDrawer drawer'>
+                <Link href='/economy'><li onClick={() => setEconomyMenu(0)} className={economyMenu===0? 'actualPathDrawer' : null}>Economia Bruta Anual</li></Link>
+                <Link href='/economy'><li onClick={() => setEconomyMenu(1)} className={economyMenu===1? 'actualPathDrawer' : null}>Economia Bruta Mensal</li></Link>
+                <Link href='/economy'><li onClick={() => setEconomyMenu(2)} className={economyMenu===2? 'actualPathDrawer' : null}>Cativo x Livre Mensal</li></Link>
+                <Link href='/economy'><li onClick={() => setEconomyMenu(3)} className={economyMenu===3? 'actualPathDrawer' : null}>Custo R$/MWh</li></Link>
+              </div> */}
             <Link href='/telemetria'><li className={router.pathname=='/telemetria'? 'actualPath' : null}><Image src='/assets/sidebar/telemetryIcon.svg' width={25} height={25} />{'Telemetria'}</li></Link>
             <Link href='/resumoOperacao'><li className={router.pathname=='/resumoOperacao'? 'actualPath' : null} ><Image src='/assets/sidebar/summaryOperationsIcon.svg' width={25} height={25} />{'Resumo de Op. '}</li></Link>
             <Link href='/news'><li className={router.pathname=='/news'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'Notícias'}</li></Link>
-            <Link href='/pld'><li className={router.pathname=='/pld'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'PLD'}</li></Link>
+            <li onClick={() => setPldDrawer(!pldDrawer)} className={router.pathname=='/pld'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'PLD >'}</li>
+              <div className='pldDrawer drawer'>
+                <Link href='/pld'><li onClick={() => setPldMenu(0)} className={pldMenu==0? 'actualPathDrawer' : null}>PLD Histórico</li></Link>
+                <Link href='/pld'><li onClick={() => setPldMenu(1)} className={pldMenu===1? 'actualPathDrawer' : null}>Valores Diários</li></Link>
+                <Link href='/pld'><li onClick={() => setPldMenu(2)} className={pldMenu===2? 'actualPathDrawer' : null}>Valores Horários</li></Link>
+              </div>
             <Link href='/industryInfo'><li className={router.pathname=='/industryInfo'? 'actualPath' : null}><Image src='/assets/sidebar/sectorialInfoIcon.svg' width={25} height={25} />{'Info Setorial'}</li></Link>
             {/* <Link href='/consumption'><li className={router.pathname=='/consumption'? 'actualPath' : null} ><Image src='/assets/sidebar/consumptionIcon.svg' width={25} height={25} />{'Consumo'}</li></Link> */}
             <Link href='/notifications'><li className={router.pathname=='/notifications'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificações'}<div className='notification' style={{display: notificationsCount<=0||notificationsCount===undefined? 'none' : 'inherit'}}><p>{notificationsCount}</p></div></li></Link>
@@ -124,15 +137,15 @@ export default function Sidebar() {
             <Link href='/faq'><li className={router.pathname=='/faq'? 'actualPath' : null}><Image src='/assets/sidebar/saqIcon.svg' width={25} height={25} />{'FAQ'}</li></Link>
             <button onClick={handleOpen}><Image src='/assets/logout.svg' width={25} height={25} />{'Sair'}</button>
             <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
                 <ModalContainer>
                   <Image src='/assets/marca1.png' width={250} height={200}/>
-                  <Typography id="modal-modal-title" variant="h6" component="h2">
+                  <Typography id="modal-modal-title" variant="subtitle2" component="p" style={{color: 'gray'}}>
                     Deseja realmente sair ?
                   </Typography>
                   <article>
@@ -141,7 +154,7 @@ export default function Sidebar() {
                   </article>
                 </ModalContainer>
               </Box>
-          </Modal>
+            </Modal>
           </ul>
           <aside>
             <p>Nossos Gerentes estão prontos para atendê-los</p>

@@ -19,6 +19,7 @@ import '../styles/nprogress/nprogress.css'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
 import getAPIClient from '../services/ssrApi'
+import { MenuProvider } from '../contexts/menu/MenuContext'
 
 export function MyApp({ Component, pageProps, notificationsCount }: AppProps | any) {
   const router = useRouter()
@@ -45,25 +46,27 @@ export function MyApp({ Component, pageProps, notificationsCount }: AppProps | a
 
   return (
     <AuthProvider>
-      <AppView>
-        <Head>
-          <link rel="icon" type="imagem/png" href="/assets/logose.png" />
-          <meta name="viewport" content="viewport-fit=cover" />
-        </Head>
-        <Home />
-        <VerifyEmail />
-        <ForgotPassword />
-        <GlobalStyle />
-        {
-          rota != '/' && rota != '/forgotPassword' && rota != '/verifyEmail'?
-            <>
-              <Sidebar />
-              <Component {...pageProps} />
-            </>
-            :
-            null
-        }
-      </AppView>
+      <MenuProvider>
+        <AppView>
+          <Head>
+            <link rel="icon" type="imagem/png" href="/assets/logose.png" />
+            <meta name="viewport" content="viewport-fit=cover" />
+          </Head>
+          <Home />
+          <VerifyEmail />
+          <ForgotPassword />
+          <GlobalStyle />
+          {
+            rota != '/' && rota != '/forgotPassword' && rota != '/verifyEmail'?
+              <>
+                <Sidebar />
+                <Component {...pageProps} />
+              </>
+              :
+              null
+          }
+        </AppView>
+      </MenuProvider>
     </AuthProvider>
   )
 }

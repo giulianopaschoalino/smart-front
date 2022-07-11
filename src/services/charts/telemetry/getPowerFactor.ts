@@ -14,9 +14,9 @@ export async function getPowerFactorData(
 			{"type" : "=", "field": "med_5min.ponto", "value": "PRAXCUENTR101P"},
 			{"type" : "between", "field": "dia_num", "value": ["2022-01-01", "2022-01-31"]}
 		]
-}, {
+  }, {
     headers: {
-      'Authorization': `Bearer 1260|RHfh3uMsEfHwCTqxKOhy1CEIr34UIln9OFdf5Fc8`
+      'Authorization': `Bearer 1292|E4jbc5ZWmgCCBMOVn4PvPx56MUbf4nUg5MNgxjmP`
     }
   })
   return data.data

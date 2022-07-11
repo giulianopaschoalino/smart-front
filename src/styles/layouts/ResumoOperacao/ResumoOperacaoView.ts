@@ -62,7 +62,7 @@ export const TableView = styled.div`
   }
 
   .tg .tg-gceh{
-    background-color:#efefef;
+    background-color: transparent;
     color:#6a707e;
     font-size:14px;
     text-align:center;
@@ -81,7 +81,11 @@ export const TableView = styled.div`
     width: 10rem;
   }
 
-  table, th:last-child{
+  table, th {
+    vertical-align: middle;
+  }
+
+  table, th:last-child {
     border: transparent;
     border-top-right-radius: 8px;
   }
@@ -89,6 +93,13 @@ export const TableView = styled.div`
   table, th:first-child {
     border: transparent;
     border-top-left-radius: 8px;
+  }
+
+  table, td {
+    border: transparent;
+    border-top-left-radius: 8px;
+
+    text-overflow: ellipsis;
   }
 `;
 
@@ -154,5 +165,37 @@ export const NewTableLine = styled.section`
     width: 100%;
 
     margin: 0 0 10px 0;
+  }
+`
+
+export const TableBodyView = styled.section`
+  border-radius: 8px;
+
+  background-color: #EFEFEF;
+
+  width: 100%;
+
+  border: rgb(221,223,225);
+  border-style:solid;
+  border-width: 1px;
+
+  tr {
+    :last-child {
+      /* background-color: red; */
+
+      border-bottom-color: transparent;
+
+      td {
+        :first-child {
+          border-left-color: transparent;
+          border-bottom-color: transparent;
+          /* background-color: red; */
+        }
+        :last-child {
+          border-right-color: transparent;
+          border-bottom-color: transparent;
+        }
+      }
+    }
   }
 `

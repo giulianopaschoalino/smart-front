@@ -92,7 +92,7 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
         position: 'bottom' as const,
         labels: {
           font: {
-            size: 16,
+            size: 12,
           }
         }
       },
@@ -144,7 +144,7 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
   return (
     <GrossAnualChartView>
       <ChartTitle title={title} subtitle={subtitle} />
-      <Chart options={options} data={data} type='bar'/>
+      <Chart options={options} data={data} type='bar' height={150}/>
     </GrossAnualChartView>
   )
 }

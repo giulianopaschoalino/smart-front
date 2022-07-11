@@ -12,7 +12,7 @@ export default function aboutUs({userName, text}) {
   return (
     <AboutUsView>
       <Head>
-        <title>Smart Energia - About Us</title>
+        <title>Smart Energia - Sobre nós</title>
       </Head>
 
       <Header name={userName}/>

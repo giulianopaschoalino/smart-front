@@ -195,6 +195,18 @@ export const PldTableView = styled.div`
       transform: translateY(-6px);
     }
   }
+
+  .space {
+    background-color: #F7F7F7;
+
+    border-color: transparent;
+
+    border-bottom-color: #DDDFE1;
+
+    height: 15px!important;
+
+    padding: 0!important;
+  }
 `
 
 export const PldGraphView = styled.main`

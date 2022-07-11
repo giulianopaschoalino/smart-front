@@ -10,9 +10,5 @@ export const AccumulatedSavingsView = styled.main`
     display: flex;
     justify-content: center;
     align-items: center;
-
-    canvas {
-      width: 80%;
-    }
   }
 `

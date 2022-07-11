@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart'
 
 // material ui imports
@@ -16,8 +16,25 @@ import { ConsumoEstimado } from '../../services/consumoEstimado'
 import getAPIClient from '../../services/ssrApi'
 import { EstimatedCostView } from '../../styles/layouts/economy/estimatedCost/EstimatedCostView'
 
+import { api } from '../../services/api'
+
 export default function EstimatedCost({graphData, userName, clients}: any) {
-  const [unity, setUnity] = useState('');
+  const [unity, setUnity] = useState<string>(null);
+
+  const [graphDataState, setGraphDataState] = useState(null);
+
+  useEffect(() => {
+    api.post('/economy/estimates', unity!==''?{
+      "filters": [
+        {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity}
+      ]
+    }:{}).then(res => {
+      setGraphDataState(res.data.data)
+      console.log()
+    }).catch(res => {
+      // console.log(res)
+    })
+  }, [unity])
 
   return (
     <EstimatedCostView>
@@ -41,13 +58,13 @@ export default function EstimatedCost({graphData, userName, clients}: any) {
           {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> !!OPÇAO COM DADOS TESTES!! */}
           {
             clients.map((value) => {
-              return <MenuItem key={1} value={value.codigo_scde}>{value.cod_smart_unidade}</MenuItem>
+              return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
             })
           }
         </Select>
       </FormControl>
       <section>
-        <CativoXLivreChart chartData={graphData}
+        <CativoXLivreChart chartData={unity!==null? graphDataState : graphData}
         dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
         label={ConsumoEstimado.label} title='' subtitle='' barLabel hashurado/>
       </section>
@@ -66,12 +83,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/units', {
 		"filters": [
-      {"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]},
-			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": id}
+			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": 180201211},
+			{"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]}
 		],
-		"fields": ["cod_smart_unidade", "codigo_scde"],
+		"fields": [
+			"unidade",
+			"cod_smart_unidade",
+			"codigo_scde"],
 		"distinct": true
-  }).then(res => {
+}).then(res => {
     console.log(res.data.data)
     clients = res.data.data
   }).catch(res => {

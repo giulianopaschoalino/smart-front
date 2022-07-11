@@ -18,7 +18,7 @@ import { api } from '../../services/api';
 // import { dados } from '../services/DadosTabelaResumoOperacao';
 import data from '../../services/dados.json'
 import getAPIClient from '../../services/ssrApi';
-import { Pagination, TableHeader, TableView } from '../../styles/layouts/ResumoOperacao/ResumoOperacaoView';
+import { Pagination, TableBodyView, TableHeader, TableView } from '../../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 
 export default function ResumoOperacao({tableData, clients, userName, clientMonth}: any) {
   const csvData = tableData;
@@ -100,13 +100,12 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
         <article>
           <div className='select'>
             <div>
-              <p>Selecionar unidade:</p>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={unidade}
+                  value={clients.length > 1? unidade : clients[0]}
                   label="Unidade"
                   onChange={handleChangeUnidade}
                   fullWidth
@@ -122,7 +121,6 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
             </div>
 
             <div>
-              <p>Selecionar mês:</p>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Mês</InputLabel>
                 <Select
@@ -135,7 +133,16 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
                 >
                   <MenuItem value={''}>Todos</MenuItem>
                   {
-                    clientMonth.map((value) => {
+                    clientMonth.sort((a, b) => {
+                      if (parseFloat(a.mes.slice(0, 2)) < parseFloat(b.mes.slice(0, 2)))
+                      if (parseFloat(a.mes.slice(3, 7)) > parseFloat(b.mes.slice(3, 7))) return -1
+                      else return 1
+                      if (parseFloat(a.mes.slice(0, 2)) > parseFloat(b.mes.slice(0, 2)))
+                      if (parseFloat(a.mes.slice(3, 7)) < parseFloat(b.mes.slice(3, 7))) return 1
+                      else return -1
+
+                      return 0
+                    }).map((value) => {
                       return <MenuItem key={value.mes} value={value.mes}>{value.mes}</MenuItem>
                     })
                   }
@@ -151,38 +158,37 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
           }}/>
         </article>
       </TableHeader>
-      <table className="tg">
-        <thead>
-          <tr>
-            <th className='tg-8oo6'>Mês </th>
-            <th className='tg-8oo6'>Unidade </th>
-            <th className='tg-8oo6'>Operação</th>
-            <th className='tg-8oo6'>Montante (MWh)</th>
-            <th className='tg-8oo6'>Contraparte</th>
-            <th className='tg-8oo6'>Preço(R$/MWh)</th>
-            <th className='tg-8oo6'>ValorNF/Crédito(R$)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            tableDataState.map((value, index) => {
-              if (value.mes.slice(4,7) != '2020')
-              return <tr>
-                  <td key={value.mes} className='tg-gceh'>{value.mes}</td>
-                  <td key={value.cod_smart_unidade} className='tg-gceh'>{value.cod_smart_unidade}</td>
-                  <td key={value.operacao} className='tg-gceh'>{value.operacao}</td>
-                  <td key={value.montante_nf} className='tg-gceh'>{parseFloat(value.montante_nf).toLocaleString('pt-br')}</td>
-                  <td key={value.contraparte} className='tg-gceh'>{value.contraparte}</td>
-                  <td key={value.preco_nf} className='tg-gceh'>{parseFloat(value.preco_nf).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                  <td key={value.nf_c_icms} className='tg-gceh'>{parseFloat(value.nf_c_icms).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                </tr>
-            })
-          }
-        </tbody>
-      </table>
-      <div className='btn'>
-
-      </div>
+      <TableBodyView>
+        <table className="tg">
+          <thead>
+            <tr>
+              <th className='tg-8oo6'>Mês </th>
+              <th className='tg-8oo6'>Unidade </th>
+              <th className='tg-8oo6'>Operação</th>
+              <th className='tg-8oo6'>Contraparte</th>
+              <th className='tg-8oo6'>Montante (MWh)</th>
+              <th className='tg-8oo6'>Preço(R$/MWh)</th>
+              <th className='tg-8oo6'>ValorNF/Crédito(R$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              tableDataState.map((value, index) => {
+                if (value.mes.slice(4,7) != '2020')
+                return <tr>
+                    <td key={value.mes} className='tg-gceh'>{value.mes}</td>
+                    <td key={value.cod_smart_unidade} className='tg-gceh'>{value.cod_smart_unidade}</td>
+                    <td key={value.operacao} className='tg-gceh'>{value.operacao}</td>
+                    <td key={value.contraparte} className='tg-gceh'>{value.contraparte}</td>
+                    <td key={value.montante_nf} className='tg-gceh'>{parseFloat(value.montante_nf).toLocaleString('pt-br')}</td>
+                    <td key={value.preco_nf} className='tg-gceh'>{parseFloat(value.preco_nf).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                    <td key={value.nf_c_icms} className='tg-gceh'>{parseFloat(value.nf_c_icms).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                  </tr>
+              })
+            }
+          </tbody>
+        </table>
+      </TableBodyView>
     </TableView>
   )
 }

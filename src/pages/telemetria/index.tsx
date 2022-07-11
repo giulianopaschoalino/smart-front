@@ -274,41 +274,6 @@ export default function Telemetria({userName, clients}: any) {
           </FormControl>
         </div>
 
-        {/* <div className='select'>
-          <p className='title' >Data inicial</p>
-          <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={startDate}
-          onChange={(value) => setStartDate(value.target.value)} min="2021-01-01"/>
-        </div> */}
-
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <div className='select datePicker'>
-            <p className='title' >Data inicial</p>
-            <DesktopDatePicker
-              label="Date desktop"
-              inputFormat="dd/MM/yyyy"
-              value={startDate}
-              onChange={handleChangeStartDate}
-              renderInput={(params) => <TextField {...params}/>}
-            />
-          </div>
-          <div className='select datePicker'>
-            <p className='title' >Data final</p>
-            <DesktopDatePicker
-              label="Date desktop"
-              inputFormat="dd/MM/yyyy"
-              value={endDate}
-              onChange={handleChangeEndDate}
-              renderInput={(params) => <TextField {...params} sx={{ml: 1}}/>}
-            />
-          </div>
-        </LocalizationProvider>
-
-        {/* <div className='select'>
-          <p className='title' >Data final</p>
-          <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={endDate}
-          onChange={(value) => setEndDate(value.target.value)} min="2021-01-01"/>
-        </div> */}
-
         <div className='select'>
           <p className='title' >Discretização</p>
           <FormControl sx={{ m: 1, minWidth: 120, width: 200 }} size="small">
@@ -332,6 +297,40 @@ export default function Telemetria({userName, clients}: any) {
             </Select>
           </FormControl>
         </div>
+
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <div className='select datePicker'>
+            <p className='title' >Data inicial</p>
+            <DesktopDatePicker
+              label="Date desktop"
+              inputFormat="dd/MM/yyyy"
+              value={startDate}
+              onChange={handleChangeStartDate}
+              renderInput={(params) => <TextField {...params}/>}
+            />
+          </div>
+          <div className='select datePicker'>
+            <p className='title' >Data final</p>
+            <DesktopDatePicker
+              label="Date desktop"
+              inputFormat="dd/MM/yyyy"
+              value={endDate}
+              maxDate={discretization === '1_mes'? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
+                :
+                discretization === '1_dia'?new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
+                  :
+                  discretization === '1_hora'?new Date(startDate).setUTCMonth(startDate.getUTCMonth()+1)
+                    :
+                    discretization === '15_min'?new Date(startDate).setUTCDate(startDate.getUTCDate()+7)
+                      :
+                      new Date(startDate).setUTCDate(startDate.getUTCDate()+1)
+                  }
+              onChange={handleChangeEndDate}
+              renderInput={(params) => <TextField {...params} sx={{ml: 1}}/>}
+            />
+          </div>
+        </LocalizationProvider>
+
         <BasicButton title='Selecionar!' onClick={() => {
           setSend(true)
           getTableData()

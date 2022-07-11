@@ -132,7 +132,7 @@ export default function GrossMensalChart({ title, data1, data2, label, subtitle,
       <ChartTitle title={title} subtitle={subtitle} />
       <ChartJs
         options={options}
-        data={data} type={'bar'} />
+        data={data} type={'bar'} height={'156'}/>
     </GrossMensalChartView>
   )
 }

@@ -7,7 +7,7 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { parseCookies } from 'nookies';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
 import { LineBarChart } from '../../components/graph/LineBarChart';
@@ -29,6 +29,7 @@ import TextField from '@mui/material/TextField';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MenuContext } from '../../contexts/menu/MenuContext';
 
 interface pldInterface {
   tableData: any,
@@ -39,6 +40,8 @@ interface pldInterface {
 }
 
 export default function pld({tableData, userName, clientMonth}: pldInterface) {
+  const {pldMenu, setPldMenu} = useContext(MenuContext)
+
   const dateFormated = new Date()
 
   const year_Month = `0${dateFormated.getMonth()+1}/${dateFormated.getFullYear()}`
@@ -47,8 +50,6 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
   const [select, setSelect] = useState('SUDESTE');
 
   // rendering page
-  const [page, setPage] = useState<number>(0)
-
   const [month, setMonth] = useState<any>(new Date().toLocaleDateString().slice(3, 10))
 
   const [dataByDay, setDataByDay] = useState([])
@@ -218,13 +219,13 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
         <PageTitle title='PLD' subtitle='Evolução PLD - Valores em R$/MWh'/>
       </Header>
       <TableHeader>
-        <Tabs value={page} onChange={(e, nv) => setPage(nv)} aria-label="">
+        <Tabs value={pldMenu} onChange={(e, nv) => setPldMenu(nv)} aria-label="">
           <Tab label="Pld Histórico"/>
           <Tab label="Valores Diários"/>
           <Tab label="Valores Horários"/>
         </Tabs>
         <div className='btnDownload'>
-          <RenderIf isTrue={page === 0}>
+          <RenderIf isTrue={pldMenu === 0}>
             <BasicButton onClick={() => {
               const html = document.querySelector("table").outerHTML;
               htmlToCSV(html, "tabela_PLD.csv");
@@ -233,7 +234,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
         </div>
       </TableHeader>
 
-      <RenderIf isTrue={page===0}>
+      <RenderIf isTrue={pldMenu===0}>
         <PldTableView>
           <table className="tg">
             <thead>
@@ -259,19 +260,32 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
                   </>
                 })
               }
-              <tr>
-                <td style={{borderColor: 'transparent', borderBottomColor: '#DDDFE1'}}></td>
-                <td style={{borderColor: 'transparent', borderBottomColor: '#DDDFE1'}}></td>
-                <td style={{borderColor: 'transparent', borderBottomColor: '#DDDFE1'}}></td>
-                <td style={{borderColor: 'transparent', borderBottomColor: '#DDDFE1'}}></td>
-                <td style={{borderColor: 'transparent', borderBottomColor: '#DDDFE1'}}></td>
-              </tr>
+            </tbody>
+          </table>
+          {/* <section>
+            <article onClick={() => setPage(1)} className="btn btn-1">
+            <svg height='100px'>
+              <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+            </svg>
+              <p>Valores Diários</p>
+            </article>
+            <article onClick={() => setPage(2)} className="btn btn-1">
+              <svg height='100px'>
+                <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+              </svg>
+              <p>Valores Horários</p>
+            </article>
+          </section> */}
+        </PldTableView>
+        <PldTableView>
+          <table className='tg'>
+            <tbody>
               {
                 tableData.result.map((data, index) => {
                   if (index === 0) {
                     return <>
-                      <tr  style={{borderTopLeftRadius: 8}}>
-                        <td className='tg-gceh'>Máximo</td>
+                      <tr>
+                        <td style={{borderTopLeftRadius: 8}} className='tg-gceh'>Máximo</td>
                         <td className='tg-uulg'>{parseFloat(data.nordeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                         <td className='tg-gceh'>{parseFloat(data.norte_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                         <td className='tg-gceh'>{parseFloat(data.sudeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
@@ -303,25 +317,11 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
               }
             </tbody>
           </table>
-          {/* <section>
-            <article onClick={() => setPage(1)} className="btn btn-1">
-            <svg height='100px'>
-              <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-            </svg>
-              <p>Valores Diários</p>
-            </article>
-            <article onClick={() => setPage(2)} className="btn btn-1">
-              <svg height='100px'>
-                <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-              </svg>
-              <p>Valores Horários</p>
-            </article>
-          </section> */}
         </PldTableView>
       </RenderIf>
 
       {/* grafico de grafico por seleção de data (mês)*/}
-      <RenderIf isTrue={page===1}>
+      <RenderIf isTrue={pldMenu===1}>
         <PldGraphView>
           <section className='toolsbar'>
             <div className='select'>
@@ -386,7 +386,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       </RenderIf>
 
       {/* grafico de grafico por seleção de data INTEIRA*/}
-      <RenderIf isTrue={page===2}>
+      <RenderIf isTrue={pldMenu===2}>
         <PldGraphView>
           <section className='toolsbar2'>
             {/* <p>Selecione a data: </p> */}
