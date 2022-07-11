@@ -60,44 +60,13 @@ export const TableView = styled.div`
 
     background-color: #254F7F;
   }
-  .tg .tg-uulg{
-    background-color:#efefef;
-    color:#abafb3;
-    font-size:14px;
-    text-align:center;
-    vertical-align:top
-  }
+
   .tg .tg-gceh{
-    background-color:#efefef;
+    background-color: transparent;
     color:#6a707e;
     font-size:14px;
     text-align:center;
     vertical-align:top;
-  }
-  .tg .tg-0tzy{
-    color:#abafb3;
-    font-size:14px;
-    text-align:center;
-    vertical-align:top
-  }
-  .tg .tg-hq65{color:#6a707e;
-    font-size:14px;
-    text-align:center;
-    vertical-align:top
-  }
-
-  .tg .tg-baqh{
-    text-align:center;
-    vertical-align:top
-  }
-  .tg .tg-0lax{
-    text-align:left;
-    vertical-align:top
-  }
-  .tg .tg-womg{
-    background-color:#dddfe1;
-    text-align:center;
-    vertical-align:top
   }
 
   h3{
@@ -112,18 +81,25 @@ export const TableView = styled.div`
     width: 10rem;
   }
 
-  table, th:last-child{
+  table, th {
+    vertical-align: middle;
+  }
+
+  table, th:last-child {
     border: transparent;
-    border-top-right-radius: 20px;
+    border-top-right-radius: 8px;
   }
 
   table, th:first-child {
     border: transparent;
-    border-top-left-radius: 20px;
+    border-top-left-radius: 8px;
   }
 
-  .radius {
-    background-color: red!important;
+  table, td {
+    border: transparent;
+    border-top-left-radius: 8px;
+
+    text-overflow: ellipsis;
   }
 `;
 
@@ -189,5 +165,37 @@ export const NewTableLine = styled.section`
     width: 100%;
 
     margin: 0 0 10px 0;
+  }
+`
+
+export const TableBodyView = styled.section`
+  border-radius: 8px;
+
+  background-color: #EFEFEF;
+
+  width: 100%;
+
+  border: rgb(221,223,225);
+  border-style:solid;
+  border-width: 1px;
+
+  tr {
+    :last-child {
+      /* background-color: red; */
+
+      border-bottom-color: transparent;
+
+      td {
+        :first-child {
+          border-left-color: transparent;
+          border-bottom-color: transparent;
+          /* background-color: red; */
+        }
+        :last-child {
+          border-right-color: transparent;
+          border-bottom-color: transparent;
+        }
+      }
+    }
   }
 `

@@ -122,9 +122,11 @@ export default function Telemetria({userName, clients}: any) {
   );
 
   const handleChangeStartDate = (newValue: Date | null) => {
+    console.log(newValue)
     setStartDate(newValue)
   };
   const handleChangeEndDate = (newValue: Date | null) => {
+    console.log(newValue)
     setEndDate(newValue)
   };
 
@@ -251,7 +253,7 @@ export default function Telemetria({userName, clients}: any) {
       <section>
         <div className='select'>
           <p className='title' >Unidade</p>
-          <FormControl sx={{ m: 1, minWidth: 120, width: 200 }} size="small">
+          <FormControl sx={{ minWidth: 120, width: 200 }} size="small">
             <InputLabel id="demo-select-small">Unidade</InputLabel>
             <Select
               labelId="demo-select-small"
@@ -259,6 +261,7 @@ export default function Telemetria({userName, clients}: any) {
               value={unity}
               label="Unidade"
               onChange={value => setUnity(value.target.value)}
+              sx={{height: 63, mb: 0.5}}
               fullWidth
             >
               <MenuItem value="">
@@ -267,47 +270,12 @@ export default function Telemetria({userName, clients}: any) {
               {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
               {
                 clients.map((value) => {
-                  return <MenuItem key={1} value={value.codigo_scde}>{value.cod_smart_unidade}</MenuItem>
+                  return <MenuItem key={1} value={value.codigo_scde}>{value.unidade}</MenuItem>
                 })
               }
             </Select>
           </FormControl>
         </div>
-
-        {/* <div className='select'>
-          <p className='title' >Data inicial</p>
-          <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={startDate}
-          onChange={(value) => setStartDate(value.target.value)} min="2021-01-01"/>
-        </div> */}
-
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <div className='select datePicker'>
-            <p className='title' >Data inicial</p>
-            <DesktopDatePicker
-              label="Date desktop"
-              inputFormat="dd/MM/yyyy"
-              value={startDate}
-              onChange={handleChangeStartDate}
-              renderInput={(params) => <TextField {...params}/>}
-            />
-          </div>
-          <div className='select datePicker'>
-            <p className='title' >Data final</p>
-            <DesktopDatePicker
-              label="Date desktop"
-              inputFormat="dd/MM/yyyy"
-              value={endDate}
-              onChange={handleChangeEndDate}
-              renderInput={(params) => <TextField {...params} sx={{ml: 1}}/>}
-            />
-          </div>
-        </LocalizationProvider>
-
-        {/* <div className='select'>
-          <p className='title' >Data final</p>
-          <input type="date" data-date="" data-date-format="DD MMMM YYYY" value={endDate}
-          onChange={(value) => setEndDate(value.target.value)} min="2021-01-01"/>
-        </div> */}
 
         <div className='select'>
           <p className='title' >Discretização</p>
@@ -319,6 +287,7 @@ export default function Telemetria({userName, clients}: any) {
               value={discretization}
               label="Unidade"
               onChange={value => setDiscretization(value.target.value)}
+              sx={{height: 63, mb: 0.5}}
               fullWidth
             >
               <MenuItem value="">
@@ -332,6 +301,40 @@ export default function Telemetria({userName, clients}: any) {
             </Select>
           </FormControl>
         </div>
+
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <div className='select datePicker'>
+            <p className='title' >Data inicial</p>
+            <DesktopDatePicker
+              label="Date desktop"
+              inputFormat="dd/MM/yyyy"
+              value={startDate}
+              onChange={handleChangeStartDate}
+              renderInput={(params) => <TextField {...params}/>}
+            />
+          </div>
+          <div className='select datePicker' style={{marginRight: 10}}>
+            <p className='title' >Data final</p>
+            <DesktopDatePicker
+              label="Date desktop"
+              inputFormat="dd/MM/yyyy"
+              value={endDate}
+              maxDate={discretization === '1_mes'? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
+                :
+                discretization === '1_dia'?new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
+                  :
+                  discretization === '1_hora'?new Date(startDate).setUTCMonth(startDate.getUTCMonth()+1)
+                    :
+                    discretization === '15_min'?new Date(startDate).setUTCDate(startDate.getUTCDate()+7)
+                      :
+                      new Date(startDate).setUTCDate(startDate.getUTCDate()+1)
+                  }
+              onChange={(newValue: any) => handleChangeEndDate(newValue)}
+              renderInput={(params) => <TextField {...params} sx={{ml: 1}}/>}
+            />
+          </div>
+        </LocalizationProvider>
+
         <BasicButton title='Selecionar!' onClick={() => {
           setSend(true)
           getTableData()
@@ -413,19 +416,24 @@ export default function Telemetria({userName, clients}: any) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
-  const { ['user-client_id']: id } = parseCookies(ctx)
+  const { ['user-client_id']: client_id } = parseCookies(ctx)
+
   const apiClient = getAPIClient(ctx)
 
   let clients = []
 
   await apiClient.post('/units', {
 		"filters": [
-      {"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]},
-			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": id}
+			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": client_id},
+			{"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]}
 		],
-		"fields": ["cod_smart_unidade", "codigo_scde"],
+		"fields": [
+			"unidade",
+			"cod_smart_unidade",
+			"codigo_scde"],
 		"distinct": true
   }).then(res => {
+    console.log(res.data)
     clients = res.data.data
   }).catch(res => {
     // console.log(res)

@@ -18,9 +18,13 @@ import { api } from '../../services/api';
 // import { dados } from '../services/DadosTabelaResumoOperacao';
 import data from '../../services/dados.json'
 import getAPIClient from '../../services/ssrApi';
-import { Pagination, TableHeader, TableView } from '../../styles/layouts/ResumoOperacao/ResumoOperacaoView';
+import { Pagination, TableBodyView, TableHeader, TableView } from '../../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 
-export default function ResumoOperacao({tableData, clientsData, userName, clientMonth}: any) {
+import Fab from '@mui/material/Fab';
+
+import NavigationIcon from '@mui/icons-material/Navigation';
+
+export default function ResumoOperacao({tableData, clients, userName, clientMonth}: any) {
   const csvData = tableData;
 
   const [month, setMonth] = useState('');
@@ -29,12 +33,21 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
 
   const monthLabels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'ago', 'set', 'out', 'nov', 'dez']
 
+  const { ['user-id']: id } = parseCookies()
+
   const handleChangeMonth = (event: SelectChangeEvent) => {
     setMonth(event.target.value);
   };
   const handleChangeUnidade = (event: SelectChangeEvent) => {
     setUnidade(event.target.value);
   };
+
+  const [ pageYPosition, setPageYPosition ] = useState(0);
+
+  function getPageYAfterScroll(){
+    setPageYPosition(window.scrollY);
+    console.log(window.scrollY)
+  }
 
   function downloadCSVFile(csv, filename) {
     const csv_file = new Blob(["\ufeff",csv], {type: "text/csv"});
@@ -60,7 +73,7 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
   }
 
   useEffect(() => {
-    console.log(month)
+    console.log(unidade)
     if (unidade!=='' || month!==''){
       api.post('/operation/summary', month && !unidade? {
         "filters": [
@@ -80,13 +93,15 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
       } : {}
       ).then(res => {
         setTableDataState(res.data.data)
-      }).catch(res => {
-        // console.log(res)
-      })
+      }).catch(res => console.log(res))
     } else {
       setTableDataState(tableData)
     }
   }, [month, unidade])
+
+  useEffect(() => {
+    window?.addEventListener('scroll', getPageYAfterScroll);
+  }, [])
 
   return (
     <TableView>
@@ -97,25 +112,23 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
         <PageTitle title='Resumo de Operações' subtitle='Operações de compra e venda - Mensal' />
       </Header>
       <TableHeader>
-        <article>
-          <h3>Filtrar por Unidade e/ou Mês</h3>
+        <article id='select'>
           <div className='select'>
             <div>
-              <p>Selecionar unidade:</p>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={unidade}
+                  value={clients.length > 1? unidade : clients[0]}
                   label="Unidade"
                   onChange={handleChangeUnidade}
                   fullWidth
                 >
                   <MenuItem key={1} value={''}>Todas</MenuItem>
                   {
-                    clientsData.map((value) => {
-                      return <MenuItem key={1} value={value.cod_smart_unidade}>{value.cod_smart_unidade}</MenuItem>
+                    clients.map((value) => {
+                      return <MenuItem key={value.cod_smart_unidade} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
                     })
                   }
                 </Select>
@@ -123,7 +136,6 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
             </div>
 
             <div>
-              <p>Selecionar mês:</p>
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Mês</InputLabel>
                 <Select
@@ -136,8 +148,17 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
                 >
                   <MenuItem value={''}>Todos</MenuItem>
                   {
-                    clientMonth.map((value) => {
-                      return <MenuItem key={1} value={value.mes}>{value.mes}</MenuItem>
+                    clientMonth.sort((a, b) => {
+                      if (parseFloat(a.mes.slice(0, 2)) < parseFloat(b.mes.slice(0, 2)))
+                      if (parseFloat(a.mes.slice(3, 7)) > parseFloat(b.mes.slice(3, 7))) return -1
+                      else return 1
+                      if (parseFloat(a.mes.slice(0, 2)) > parseFloat(b.mes.slice(0, 2)))
+                      if (parseFloat(a.mes.slice(3, 7)) < parseFloat(b.mes.slice(3, 7))) return 1
+                      else return -1
+
+                      return 0
+                    }).map((value) => {
+                      return <MenuItem key={value.mes} value={value.mes}>{value.mes}</MenuItem>
                     })
                   }
                 </Select>
@@ -152,38 +173,42 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
           }}/>
         </article>
       </TableHeader>
-      <table className="tg">
-        <thead>
-          <tr>
-            <th className='tg-8oo6'>Mês </th>
-            <th className='tg-8oo6'>Unidade </th>
-            <th className='tg-8oo6'>Operação</th>
-            <th className='tg-8oo6'>Montante (MWh)</th>
-            <th className='tg-8oo6'>Contraparte</th>
-            <th className='tg-8oo6'>Preço(R$/MWh)</th>
-            <th className='tg-8oo6'>ValorNF/Crédito(R$)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            tableDataState.map((value, index) => {
-              if (value.mes.slice(4,7) != '2020')
-              return <tr>
-                  <td key={index} className='tg-gceh'>{value.mes}</td>
-                  <td key={index} className='tg-gceh'>{value.cod_smart_unidade}</td>
-                  <td key={index} className='tg-gceh'>{value.operacao}</td>
-                  <td key={index} className='tg-gceh'>{parseFloat(value.montante_nf).toLocaleString('pt-br')}</td>
-                  <td key={index} className='tg-gceh'>{value.contraparte}</td>
-                  <td key={index} className='tg-gceh'>{parseFloat(value.preco_nf).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                  <td key={index} className='tg-gceh'>{parseFloat(value.nf_c_icms).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                </tr>
-            })
-          }
-        </tbody>
-      </table>
-      <div className='btn'>
-
-      </div>
+      <TableBodyView>
+        <table className="tg">
+          <thead>
+            <tr>
+              <th className='tg-8oo6'>Mês </th>
+              <th className='tg-8oo6'>Unidade </th>
+              <th className='tg-8oo6'>Operação</th>
+              <th className='tg-8oo6'>Contraparte</th>
+              <th className='tg-8oo6'>Montante (MWh)</th>
+              <th className='tg-8oo6'>Preço(R$/MWh)</th>
+              <th className='tg-8oo6'>ValorNF/Crédito(R$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              tableDataState?.map((value, index) => {
+                if (value.mes.slice(4,7) != '2020')
+                return <tr>
+                    <td key={value.mes} className='tg-gceh'>{value.mes}</td>
+                    <td key={value.cod_smart_unidade} className='tg-gceh'>{value.cod_smart_unidade}</td>
+                    <td key={value.operacao} className='tg-gceh'>{value.operacao}</td>
+                    <td key={value.contraparte} className='tg-gceh'>{value.contraparte}</td>
+                    <td key={value.montante_nf} className='tg-gceh'>{parseFloat(value.montante_nf).toLocaleString('pt-br')}</td>
+                    <td key={value.preco_nf} className='tg-gceh'>{parseFloat(value.preco_nf).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                    <td key={value.nf_c_icms} className='tg-gceh'>{parseFloat(value.nf_c_icms).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                  </tr>
+              })
+            }
+          </tbody>
+        </table>
+      </TableBodyView>
+      {pageYPosition > 300 && <a href="#select" style={{position: 'fixed', right: '50px', bottom: '100px'}}>
+        <Fab aria-label="add">
+          <NavigationIcon />
+        </Fab>
+      </a>}
     </TableView>
   )
 }
@@ -191,34 +216,19 @@ export default function ResumoOperacao({tableData, clientsData, userName, client
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
-  const { ['user-id']: id } = parseCookies(ctx)
+  const { ['user-client_id']: client_id } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
 
   let tableData = [];
-  let clientsData = [];
   let clientMonth = [];
 
   await apiClient.post('/operation/summary', {
     "filters": []
   }).then(res => {
     tableData = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
-  await apiClient.post('/units', {
-		"filters": [
-      {"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]},
-			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": id}
-		],
-		"fields": ["cod_smart_unidade", "codigo_scde"],
-		"distinct": true
-  }).then(res => {
-    console.log(res.data.data)
-    clientsData = res.data.data
-  }).catch(res => {
-    console.log(res)
-  })
+  let clients = [];
 
   await apiClient.post('/operation', {
     "filters": [
@@ -228,6 +238,21 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     "distinct": true
   }).then(res => {
     clientMonth = res.data.data
+  })
+
+  await apiClient.post('/units', {
+		"filters": [
+			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": client_id},
+			{"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]}
+		],
+		"fields": [
+			"unidade",
+			"cod_smart_unidade",
+			"codigo_scde"],
+		"distinct": true
+  }).then(res => {
+    console.log(res.data)
+    clients = res.data.data
   }).catch(res => {
     // console.log(res)
   })
@@ -244,7 +269,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       tableData,
-      clientsData,
+      clients,
       clientMonth,
       userName
     }

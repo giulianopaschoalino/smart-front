@@ -19,7 +19,7 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "additional.d.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "additional.d.ts", "src/contexts/economy/EconomyContext.tss"],
   "exclude": [
     "node_modules"
   ]

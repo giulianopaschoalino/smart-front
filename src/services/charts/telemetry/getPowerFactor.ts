@@ -9,14 +9,14 @@ export async function getPowerFactorData(
   ) {
   const { '@smartAuth-token': token } = parseCookies()
   console.log(token.replace(/"/g, ''))
-  const { data } = await axios.post('https://smart-energia-api.herokuapp.com/api/telemetry/powerFactor', {
+  const { data } = await axios.post('http://smart-energia-api.herokuapp.com/api/telemetry/powerFactor', {
 		"filters": [
 			{"type" : "=", "field": "med_5min.ponto", "value": "PRAXCUENTR101P"},
 			{"type" : "between", "field": "dia_num", "value": ["2022-01-01", "2022-01-31"]}
 		]
-}, {
+  }, {
     headers: {
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer 1292|E4jbc5ZWmgCCBMOVn4PvPx56MUbf4nUg5MNgxjmP`
     }
   })
   return data.data

@@ -20,10 +20,10 @@ import { getDemand } from '../../services/charts/telemetry/getDemand'
 import { getDiscretization } from '../../services/charts/telemetry/getDiscretization'
 
 export default function chartTelemetry({userName}) {
-  const [fatorPotenciaData, setFatorPotenciaData] = useState(null);
-  const [demRegXDemCon, setDemRegXDemCon] = useState(null);
-  const [discretizedConsumptionData, setDiscretizedConsumptionData] = useState(null);
-  const [discretizedConsumptionDataReativa, setDiscretizedConsumptionDataReativa] = useState(null);
+  const [fatorPotenciaData, setFatorPotenciaData] = useState([]);
+  const [demRegXDemCon, setDemRegXDemCon] = useState([]);
+  const [discretizedConsumptionData, setDiscretizedConsumptionData] = useState([]);
+  const [discretizedConsumptionDataReativa, setDiscretizedConsumptionDataReativa] = useState([]);
 
   const { ['user-cod_client']: cod_client } = parseCookies()
 
@@ -37,19 +37,19 @@ export default function chartTelemetry({userName}) {
     console.log(token)
     getPowerFactorData("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
       .then(result => setFatorPotenciaData(result))
-      .catch(exception => console.log(exception))
+      .catch(exception => console.log('exeption', exception))
 
-    getDiscretization("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
-      .then(result => setDiscretizedConsumptionDataReativa(result))
-      .catch(exception => console.log(exception))
+    // getDiscretization("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
+    //   .then(result => setDiscretizedConsumptionDataReativa(result))
+    //   .catch(exception => console.log(exception))
 
-    getDiscretization("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
-      .then(result => setDiscretizedConsumptionData(result))
-      .catch(exception => console.log(exception))
+    // getDiscretization("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
+    //   .then(result => setDiscretizedConsumptionData(result))
+    //   .catch(exception => console.log(exception))
 
-    getDemand("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
-      .then(result => setDemRegXDemCon(result))
-      .catch(exception => console.log(exception))
+    // getDemand("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
+    //   .then(result => setDemRegXDemCon(result))
+    //   .catch(exception => console.log(exception))
 
     // setFatorPotenciaData(res.data.data)
     // setDiscretizedConsumptionDataReativa(res.data.data)
@@ -70,7 +70,7 @@ export default function chartTelemetry({userName}) {
       <PageTitle title='Telemetria - Graficos' subtitle='Gráficos' />
       <section className='chartContainer'>
         {
-          demRegXDemCon==null?
+          demRegXDemCon===null?
           <div id="preloader_1">
             <span></span>
             <span></span>
@@ -82,12 +82,13 @@ export default function chartTelemetry({userName}) {
           <>
 
           <RenderIf isTrue={discretization!=='1_dia' && discretization!=='1_mes'}>
+          {/* <RenderIf isTrue={true}> */}
             <div>
               <DiscretizedConsumptionChart title={
                   discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
                   discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
                 } subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
-                <p style={{alignSelf: 'center', textAlign: 'center'}}>{`Mês - ${startDate.toString().split('-')[2]}/${startDate.toString().split('-')[1]}/${startDate.toString().split('-')[0]}`}</p>
+                <p style={{alignSelf: 'center', textAlign: 'center'}}>{`Mês - ${startDate}`}</p>
             </div>
 
             <div>
@@ -100,7 +101,9 @@ export default function chartTelemetry({userName}) {
           </RenderIf>
 
             <div>
-              <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'} label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
+              <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon}
+              dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'}
+              label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
             </div>
 
             <div>

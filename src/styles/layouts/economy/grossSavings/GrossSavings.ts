@@ -6,16 +6,6 @@ export const GrossSavingsView = styled.main`
 
   width: 100%;
 
-  span {
-    color: #969BA0;
-
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-  }
-
   section {
     display: flex;
     justify-content: center;

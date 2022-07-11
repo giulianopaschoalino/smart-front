@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // material ui imports
 import MenuItem from '@mui/material/MenuItem';
@@ -14,6 +14,7 @@ import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle'
 import getAPIClient from '../../services/ssrApi'
 import { CostIndicatorView } from '../../styles/layouts/economy/costIndicator/CostIndicatorView'
+import { api } from '../../services/api';
 
 export default function CostIndicator({graphData, userName, clients}: any) {
   const [unity, setUnity] = useState('');
@@ -32,6 +33,21 @@ export default function CostIndicator({graphData, userName, clients}: any) {
     'Nov',
     'Dez'
   ]
+
+  const [graphDataState, setGraphDataState] = useState([]);
+
+  useEffect(() => {
+    api.post('/economy/estimates', unity!==''?{
+      "filters": [
+        {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity}
+      ]
+    }:{}).then(res => {
+      setGraphDataState(res.data.data)
+      console.log()
+    }).catch(res => {
+      // console.log(res)
+    })
+  }, [unity])
 
   return (
     <CostIndicatorView>
@@ -55,15 +71,19 @@ export default function CostIndicator({graphData, userName, clients}: any) {
           {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
           {
             clients.map((value) => {
-              return <MenuItem key={1} value={value.codigo_scde}>{value.cod_smart_unidade}</MenuItem>
+              return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
             })
           }
         </Select>
       </FormControl>
       <section>
         <CostIndicatorChart title='' subtitle=''
-          data1={graphData.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
-          data2={graphData.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
+          data1={unity!==''? graphDataState.filter((value, index) => value.mes.slice(4, 8).includes('2021'))
+            :
+          graphData.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
+          data2={unity!==''? graphDataState.filter((value, index) => value.mes.slice(4, 8).includes('2022'))
+            :
+          graphData.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
           label={months}
         />
       </section>
@@ -75,7 +95,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
-  const { ['user-client_id']: id } = parseCookies(ctx)
+  const { ['user-client_id']: client_id } = parseCookies(ctx)
+
 
   let graphData = [];
 
@@ -83,12 +104,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/units', {
 		"filters": [
-      {"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]},
-			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": id}
+			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": client_id},
+			{"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]}
 		],
-		"fields": ["cod_smart_unidade", "codigo_scde"],
+		"fields": [
+			"unidade",
+			"cod_smart_unidade",
+			"codigo_scde"],
 		"distinct": true
-  }).then(res => {
+}).then(res => {
+    console.log(res.data.data)
     clients = res.data.data
   }).catch(res => {
     // console.log(res)

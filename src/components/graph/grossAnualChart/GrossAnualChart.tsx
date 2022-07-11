@@ -6,6 +6,7 @@ import { Bar, Chart } from 'react-chartjs-2';
 
 import { GrossAnualChartView } from './GrossAnualChartView';
 import ChartTitle from '../ChartTitle';
+import { blue } from '@mui/material/colors';
 
 ChartJS.register(
   CategoryScale,
@@ -74,24 +75,24 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
               sum += data;
           });
           const percentage = (dataProps[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
-          const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}${percentage}\n${parseInt(value).toLocaleString('pt-br')}`
+          const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}  ${percentage}\n${parseInt(value).toLocaleString('pt-br')}`
 
           return value==null? null : result
         },
         display: true,
-        color: barLabel? 'black' : "rgba(255, 255, 255, 0)",
+        color: '#255488',
         anchor: "end",
         offset: -60,
         align: "start",
         font: {
-          size: !miniature? 22 : 10
+          size: !miniature? 22 : 10,
         }
       },
       legend: {
         position: 'bottom' as const,
         labels: {
           font: {
-            size: 16
+            size: 12,
           }
         }
       },
@@ -115,6 +116,8 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
       {
         type: 'bar',
         label: dataset,
+        stacked: true,
+
         data: dataProps.map((value, index) => {
           if (!value.dad_estimado)
           return parseFloat(value.economia_acumulada).toFixed(2)
@@ -125,14 +128,12 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
       },
       {
         type: 'bar',
+        stacked: true,
         label: 'Estimado',
         data: dataProps.map((value, index) => {
           if (value.dad_estimado)
           return parseFloat(value.economia_acumulada).toFixed(2)
         }),
-        datalabels: {
-          display: false
-        },
         backgroundColor: (value, ctx) => {
           return draw('diagonal-right-left', '#C2d5fb');
         },
@@ -143,7 +144,7 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
   return (
     <GrossAnualChartView>
       <ChartTitle title={title} subtitle={subtitle} />
-      <Chart options={options} data={data} type='bar'/>
+      <Chart options={options} data={data} type='bar' height={150}/>
     </GrossAnualChartView>
   )
 }

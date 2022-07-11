@@ -1,14 +1,11 @@
 import styled from "styled-components"
 
 export const GrossMensalChartView = styled.div`
-  width: 100%;
+  width: 90%;
 
-  div{
-    /* margin-top: 10px; */
-  }
+  transform: translateY(-25px);
 
   @media (max-width: 900px) {
     min-width: 20rem
   }
-
 `

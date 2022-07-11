@@ -26,6 +26,7 @@ import Chart2 from '../../components/graph/Chart2'
 import { GrossAnulChart } from '../../components/graph/grossAnualChart/GrossAnualChart'
 import CostIndicatorChart from '../../components/graph/costIndicatorChart'
 import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart'
+import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensalChart'
 
 export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears, acumulatedGraph, mapsInfo, userName, costIndicator} : any) {
   const months = [
@@ -46,7 +47,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
   return (
     <DashboardView>
       <Head>
-        <title>Smart Energia - Dashboard</title>
+        <title>Smart Energia - Visão Geral</title>
       </Head>
       <Header name={userName}>
         <PageTitle title='Visão Geral' subtitle='Bem Vindo a Smart Energia' />
@@ -77,10 +78,12 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
         </GraphCard>
 
         <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ x mil' singleBar>
-          <Chart2 title='' subtitle=''
-          data1={grossMensalGraph.filter((value, index) => value.mes.slice(3, 8).includes('2021'))}
-          data2={grossMensalGraph.filter((value, index) => value.mes.slice(3, 8).includes('2022'))}
-          label={months} miniature/>
+        <GrossMensalChart title='' subtitle=''
+          data1={grossMensalGraph}
+          data2={grossMensalGraph}
+          label={grossMensalGraph.map((value) => value.mes)}
+          miniature
+        />
         </GraphCard>
 
         <GraphCard title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - Valores em R$ x mil' singleBar>

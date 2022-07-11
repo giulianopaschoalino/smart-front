@@ -93,7 +93,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
     plugins: {
       datalabels: {
         display: true,
-        color: barLabel? 'black' : "rgba(255, 255, 255, 0)",
+        color: '#255488',
         // backgroundColor: '#255488',
         anchor: "end",
         offset: -20,
@@ -107,7 +107,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
           dataArr.map(data => {
               sum += data;
           });
-          const result = `${(parseFloat(value)).toLocaleString('pt-br')}`
+          const result = `${(parseInt(value)).toLocaleString('pt-br')}`
 
           return value==null? null : result
         }
@@ -136,7 +136,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
         },
         borderWidth: 2,
         fill: false,
-        data: chartData.map(value => value.economia_mensal),
+        data: chartData.map(value => parseInt(value.economia_mensal)),
       },
       {
         type: 'bar' as const,
@@ -146,7 +146,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
         },
         data: chartData.map(value => {
           if (!value.dad_estimado)
-          return value.custo_cativo
+          return parseInt(value.custo_cativo)
         }),
       },
       {
@@ -158,7 +158,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
         },
         data: chartData.map(value => {
           if (!value.dad_estimado)
-          return value.custo_livre
+          return parseInt(value.custo_livre)
         }),
       },
       {
@@ -167,7 +167,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
         backgroundColor: pattern.draw('diagonal', '#C2D5FB'),
         data: chartData.map(value => {
           if (value.dad_estimado)
-          return value.custo_cativo
+          return parseInt(value.custo_cativo)
         }),
       },
       {
@@ -176,7 +176,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
         backgroundColor: pattern.draw('diagonal', '#255488'),
         data: chartData.map(value => {
           if (value.dad_estimado)
-          return value.custo_livre
+          return parseInt(value.custo_livre)
         }),
       }
     ],
