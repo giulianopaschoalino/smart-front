@@ -251,7 +251,7 @@ export default function Telemetria({userName, clients}: any) {
       <section>
         <div className='select'>
           <p className='title' >Unidade</p>
-          <FormControl sx={{ m: 1, minWidth: 120, width: 200 }} size="small">
+          <FormControl sx={{ minWidth: 120, width: 200 }} size="small">
             <InputLabel id="demo-select-small">Unidade</InputLabel>
             <Select
               labelId="demo-select-small"
@@ -259,6 +259,7 @@ export default function Telemetria({userName, clients}: any) {
               value={unity}
               label="Unidade"
               onChange={value => setUnity(value.target.value)}
+              sx={{height: 63, mb: 0.5}}
               fullWidth
             >
               <MenuItem value="">
@@ -284,6 +285,7 @@ export default function Telemetria({userName, clients}: any) {
               value={discretization}
               label="Unidade"
               onChange={value => setDiscretization(value.target.value)}
+              sx={{height: 63, mb: 0.5}}
               fullWidth
             >
               <MenuItem value="">
@@ -309,7 +311,7 @@ export default function Telemetria({userName, clients}: any) {
               renderInput={(params) => <TextField {...params}/>}
             />
           </div>
-          <div className='select datePicker'>
+          <div className='select datePicker' style={{marginRight: 10}}>
             <p className='title' >Data final</p>
             <DesktopDatePicker
               label="Date desktop"

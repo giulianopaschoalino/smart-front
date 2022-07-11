@@ -171,9 +171,6 @@ export const TelemetriaView = styled.main`
 
   input {
     width: 15rem;
-    height: 2.5rem;
-
-    padding: 14px;
 
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 400;
@@ -219,6 +216,18 @@ export const TelemetriaView = styled.main`
       justify-content: center;
 
       flex-direction: column;
+      height: 10em;
+
+      :nth-child(1) {
+        label {
+          margin-top: 10px;
+        }
+      }
+      :nth-child(2) {
+        label {
+          margin-top: 10px;
+        }
+      }
     }
   }
 `;
