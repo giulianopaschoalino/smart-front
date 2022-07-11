@@ -76,14 +76,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
-  const { ['user-client_id']: id } = parseCookies(ctx)
+  const { ['user-client_id']: client_id } = parseCookies(ctx)
 
   let graphData = [];
   let clients = [];
 
   await apiClient.post('/units', {
 		"filters": [
-			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": 180201211},
+			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": client_id},
 			{"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]}
 		],
 		"fields": [

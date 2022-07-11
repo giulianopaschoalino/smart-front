@@ -20,6 +20,10 @@ import data from '../../services/dados.json'
 import getAPIClient from '../../services/ssrApi';
 import { Pagination, TableBodyView, TableHeader, TableView } from '../../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 
+import Fab from '@mui/material/Fab';
+
+import NavigationIcon from '@mui/icons-material/Navigation';
+
 export default function ResumoOperacao({tableData, clients, userName, clientMonth}: any) {
   const csvData = tableData;
 
@@ -37,6 +41,13 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
   const handleChangeUnidade = (event: SelectChangeEvent) => {
     setUnidade(event.target.value);
   };
+
+  const [ pageYPosition, setPageYPosition ] = useState(0);
+
+  function getPageYAfterScroll(){
+    setPageYPosition(window.scrollY);
+    console.log(window.scrollY)
+  }
 
   function downloadCSVFile(csv, filename) {
     const csv_file = new Blob(["\ufeff",csv], {type: "text/csv"});
@@ -88,6 +99,10 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
     }
   }, [month, unidade])
 
+  useEffect(() => {
+    window?.addEventListener('scroll', getPageYAfterScroll);
+  }, [])
+
   return (
     <TableView>
       <Head>
@@ -97,7 +112,7 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
         <PageTitle title='Resumo de Operações' subtitle='Operações de compra e venda - Mensal' />
       </Header>
       <TableHeader>
-        <article>
+        <article id='select'>
           <div className='select'>
             <div>
               <FormControl fullWidth>
@@ -173,7 +188,7 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
           </thead>
           <tbody>
             {
-              tableDataState.map((value, index) => {
+              tableDataState?.map((value, index) => {
                 if (value.mes.slice(4,7) != '2020')
                 return <tr>
                     <td key={value.mes} className='tg-gceh'>{value.mes}</td>
@@ -189,6 +204,11 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
           </tbody>
         </table>
       </TableBodyView>
+      {pageYPosition > 300 && <a href="#select" style={{position: 'fixed', right: '50px', bottom: '100px'}}>
+        <Fab aria-label="add">
+          <NavigationIcon />
+        </Fab>
+      </a>}
     </TableView>
   )
 }
@@ -196,7 +216,7 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
-  const { ['user-id']: id } = parseCookies(ctx)
+  const { ['user-client_id']: client_id } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
 
   let tableData = [];
@@ -222,7 +242,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/units', {
 		"filters": [
-			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": 180201211},
+			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": client_id},
 			{"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]}
 		],
 		"fields": [
