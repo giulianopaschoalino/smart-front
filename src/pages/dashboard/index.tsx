@@ -23,7 +23,7 @@ import { parseCookies } from 'nookies'
 import { GetServerSideProps } from 'next'
 import getAPIClient from '../../services/ssrApi'
 import Chart2 from '../../components/graph/Chart2'
-import { GrossAnulChart } from '../../components/graph/grossAnualChart/GrossAnualChart'
+import { GrossAnualChart } from '../../components/graph/grossAnualChart/GrossAnualChart'
 import CostIndicatorChart from '../../components/graph/costIndicatorChart'
 import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart'
 import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensalChart'
@@ -55,7 +55,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
 
       <Link href='pld'>
         <section className="cardsSection" >
-          <MapCard title='R$/MWh' subtitle='' date={`período - ${new Date().toLocaleDateString()}`} statistic='' imgSource='/moneyIcon.svg' />
+          <MapCard title='R$/MWh' subtitle='' date={`${new Date().getUTCMonth()+1}/${new Date().getUTCFullYear()}`} statistic='' imgSource='/moneyIcon.svg' />
           {
             mapsInfo.map(value => {
               return <MapCard key={value.submarket} title='S' subtitle={value.submarket} statistic={parseFloat(value.value).toFixed(2)} imgSource='/SUL.svg' />
@@ -66,13 +66,8 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
 
       <section className='dashboard'>
         <GraphCard title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada Anual - Valores em R$ x mil'>
-          {/* <SingleBar title='' subtitle=''
-          dataset='Consolidada'
-          dataProps={grossAnualGraph}
-          label={grossAnualYears} barLabel miniature/> */}
-          <GrossAnulChart title='' subtitle=''
+          <GrossAnualChart title='' subtitle=''
             dataset='Consolidada'
-
             dataProps={grossAnualGraph}
             label={grossAnualYears} barLabel bruta miniature/>
         </GraphCard>
@@ -93,11 +88,6 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
         </GraphCard>
 
         <GraphCard title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'>
-          {/* <Chart title='' subtitle=''
-          data1={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
-          // data1={graphData}
-          data2={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
-          label={costIndicator.map(value => value.mes.slice(0, 3))} miniature/> */}
           <CostIndicatorChart title='' subtitle=''
             data1={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
             // data1={graphData}

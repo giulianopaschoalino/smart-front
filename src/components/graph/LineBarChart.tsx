@@ -114,7 +114,7 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
     },
   };
 
-  console.log(label.length)
+  console.log(data3)
 
   const data = data2? {
     labels: label.length < 28? ['1', '2', '3', '4', '5', '6', '7', '8', '8', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'] : label,
@@ -146,7 +146,7 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
         backgroundColor: (value, ctx) => {
           return hashurado? parseInt(value.dataIndex+1) <= currentTime.getMonth()? '#255488' : pattern.draw('diagonal', '#255488') : '#255488'
         },
-        data: data2.map(value => value.value),
+        data: data3.map(value => value.value),
       },
     ],
   } : {
@@ -158,8 +158,8 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
         borderColor: red?
         '#f00' : '#0c9200',
         borderWidth: 2,
-        fill: false,
-        data: data1.map(value => value.value),
+        fill: true,
+        data: data1.map(value => value),
       },
       {
         type: 'bar' as const,

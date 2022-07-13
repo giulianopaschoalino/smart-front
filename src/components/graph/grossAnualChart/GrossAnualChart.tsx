@@ -29,15 +29,11 @@ interface SingleBarInterface{
   bruta?: boolean | undefined
 }
 
-export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, barLabel, miniature, bruta }: SingleBarInterface) {
+export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, barLabel, miniature, bruta }: SingleBarInterface) {
   function spacement(string) {
-    let spaces = '⠀'
-    let i=Math.abs(string)
+    const spaces = string.length===1?'' : string.length===2? '⠀⠀⠀⠀' : string.length===3? '⠀⠀⠀' : string.length===4? '⠀⠀' : string.length===5? '⠀' : ''
 
-    while (i <= 1) {
-      i--
-      spaces = spaces + `⠀`
-    }
+    console.log(string.length)
 
     return spaces
   }
@@ -75,7 +71,7 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
               sum += data;
           });
           const percentage = (dataProps[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
-          const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}  ${percentage}\n${parseInt(value).toLocaleString('pt-br')}`
+          const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}${percentage}\n${parseInt(value).toLocaleString('pt-br')}${spacement(parseInt(value).toLocaleString('pt-br'))}`
 
           return value==null? null : result
         },

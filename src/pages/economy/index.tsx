@@ -30,7 +30,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MenuContext } from '../../contexts/menu/MenuContext';
-import { GrossAnulChart } from '../../components/graph/grossAnualChart/GrossAnualChart';
+import { GrossAnualChart } from '../../components/graph/grossAnualChart/GrossAnualChart';
 import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensalChart';
 import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart';
 import { ConsumoEstimado } from '../../services/consumoEstimado';
@@ -106,7 +106,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
 
       <RenderIf isTrue={economyMenu===0}>
         <section>
-          <GrossAnulChart title='' subtitle=''
+          <GrossAnualChart title='' subtitle=''
             dataset='Consolidada'
 
             dataProps={anual}

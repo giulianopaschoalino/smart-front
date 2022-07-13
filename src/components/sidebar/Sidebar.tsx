@@ -119,7 +119,7 @@ export default function Sidebar() {
           </div>
           <ul>
             <Link href='/dashboard'><li className={router.pathname=='/dashboard'? 'actualPath' : null} ><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Visão Geral'}</li></Link>
-            <Link href='/economy'><li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/grossSavings' || router.pathname=='/accumulatedSavings' || router.pathname=='/estimatedCost' || router.pathname=='/costIndicator' ? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Economia'}</li></Link>
+            <Link href='/economy'><li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/economy'? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Economia'}</li></Link>
               {/* <div className='economiaDrawer drawer'>
                 <Link href='/economy'><li onClick={() => setEconomyMenu(0)} className={economyMenu===0? 'actualPathDrawer' : null}>Economia Bruta Anual</li></Link>
                 <Link href='/economy'><li onClick={() => setEconomyMenu(1)} className={economyMenu===1? 'actualPathDrawer' : null}>Economia Bruta Mensal</li></Link>

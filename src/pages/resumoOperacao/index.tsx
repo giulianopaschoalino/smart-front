@@ -28,10 +28,8 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
   const csvData = tableData;
 
   const [month, setMonth] = useState('');
-  const [unidade, setUnidade] = useState('');
+  const [unidade, setUnidade] = useState(clients[0].cod_smart_unidade);
   const [tableDataState, setTableDataState] = useState<any>([]);
-
-  const monthLabels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'ago', 'set', 'out', 'nov', 'dez']
 
   const { ['user-id']: id } = parseCookies()
 
@@ -120,7 +118,7 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={clients.length > 1? unidade : clients[0]}
+                  value={unidade}
                   label="Unidade"
                   onChange={handleChangeUnidade}
                   fullWidth
