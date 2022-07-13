@@ -78,7 +78,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         display: true,
         color: '#255488',
         anchor: "end",
-        offset: -60,
+        offset: !miniature? -60 : -30,
         align: "start",
         font: {
           size: !miniature? 22 : 10,

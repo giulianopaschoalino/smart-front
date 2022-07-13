@@ -35,6 +35,7 @@ import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensa
 import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart';
 import { ConsumoEstimado } from '../../services/consumoEstimado';
 import CostIndicatorChart from '../../components/graph/costIndicatorChart';
+import { EconomyView } from '../../styles/layouts/economy/economy';
 
 export default function economy({userName, anual, years, brutaMensal, yearsBrutaMensal, catLiv, clients, indicatorCost}: any) {
   const {economyMenu, setEconomyMenu} = useContext(MenuContext)
@@ -86,7 +87,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
   }, [unity])
 
   return (
-    <main style={{width: '100%'}}>
+    <EconomyView style={{width: '100%'}}>
       <Head>
         <title>Smart Energia - PLD</title>
       </Head>
@@ -182,7 +183,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
         />
       </section>
       </RenderIf>
-    </main>
+    </EconomyView>
   )
 }
 
