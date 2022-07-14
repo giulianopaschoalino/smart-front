@@ -4,7 +4,7 @@ import { parseCookies } from 'nookies'
 import React from 'react'
 
 import Chart from '../../components/graph/Chart'
-import { GrossAnulChart } from '../../components/graph/grossAnualChart/GrossAnualChart'
+import { GrossAnualChart } from '../../components/graph/grossAnualChart/GrossAnualChart'
 import { SingleBar } from '../../components/graph/SingleBar'
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle'
@@ -23,7 +23,7 @@ export default function GrossSavings({graphData, years, userName}: any) {
         <PageTitle title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada Anual - Valores em R$ x mil' />
       </Header>
       <section>
-        <GrossAnulChart title='' subtitle=''
+        <GrossAnualChart title='' subtitle=''
         dataset='Consolidada'
 
         dataProps={graphData}
