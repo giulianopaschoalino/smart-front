@@ -1,12 +1,11 @@
 import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { draw, generate } from 'patternomaly'
-import React from 'react';
-import { Bar, Chart } from 'react-chartjs-2';
+import { draw } from 'patternomaly'
+import React, { useEffect } from 'react';
+import { Chart } from 'react-chartjs-2';
 
 import { GrossAnualChartView } from './GrossAnualChartView';
 import ChartTitle from '../ChartTitle';
-import { blue } from '@mui/material/colors';
 
 ChartJS.register(
   CategoryScale,
@@ -29,25 +28,20 @@ interface SingleBarInterface{
   bruta?: boolean | undefined
 }
 
-export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, barLabel, miniature, bruta }: SingleBarInterface) {
+export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, barLabel, miniature, bruta }: SingleBarInterface) {
   function spacement(string) {
-    let spaces = '⠀'
-    let i=Math.abs(string)
+    const spaces = string.length===1?'' : string.length===2? '⠀⠀⠀⠀' : string.length===3? '⠀⠀⠀' : string.length===4? '⠀⠀' : string.length===5? '⠀' : ''
 
-    while (i <= 1) {
-      i--
-      spaces = spaces + `⠀`
-    }
+    console.log(string.length)
 
     return spaces
   }
 
   const options: any = {
     responsive: true,
-    is3D: true,
     scales: {
       x: {
-        grouped: false,
+        stacked: true,
         font: {
           size: 20
         },
@@ -56,6 +50,7 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
         }
       },
       y: {
+        stacked: true,
         grid: {
           display: false
         }
@@ -75,14 +70,14 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
               sum += data;
           });
           const percentage = (dataProps[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
-          const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}  ${percentage}\n${parseInt(value).toLocaleString('pt-br')}`
+          const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}${percentage}\n${parseInt(value).toLocaleString('pt-br')}${spacement(parseInt(value).toLocaleString('pt-br'))}`
 
           return value==null? null : result
         },
         display: true,
         color: '#255488',
         anchor: "end",
-        offset: -60,
+        offset: !miniature? -55 : -30,
         align: "start",
         font: {
           size: !miniature? 22 : 10,
@@ -105,7 +100,7 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
 
   let labels: string[];
   if (bruta) {
-    labels = label.map(value => value.replace('2021', 'Até 2021'))
+    labels = [`Até ${new Date().getFullYear()-1}`, `${new Date().getFullYear()}`]
   } else {
     labels = label
   }
@@ -117,26 +112,20 @@ export function GrossAnulChart({ title, subtitle, dataProps, label, dataset, bar
         type: 'bar',
         label: dataset,
         stacked: true,
-
-        data: dataProps.map((value, index) => {
-          if (!value.dad_estimado)
-          return parseFloat(value.economia_acumulada).toFixed(2)
+        data: dataProps.filter(value => value.dad_estimado === false).map((value, index) => {
+          return parseFloat(value.economia_acumulada)
         }),
-        backgroundColor: (value, ctx) => {
-          return '#255488'
-        },
+        backgroundColor: '#255488'
       },
       {
         type: 'bar',
         stacked: true,
         label: 'Estimado',
-        data: dataProps.map((value, index) => {
+        data: dataProps.filter(value => value.ano === '2022').map((value, index) => {
           if (value.dad_estimado)
-          return parseFloat(value.economia_acumulada).toFixed(2)
+            return parseFloat(value.economia_acumulada)
         }),
-        backgroundColor: (value, ctx) => {
-          return draw('diagonal-right-left', '#C2d5fb');
-        },
+        backgroundColor: draw('diagonal-right-left', '#C2d5fb'),
       },
     ],
   }

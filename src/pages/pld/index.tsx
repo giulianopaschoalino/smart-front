@@ -83,11 +83,9 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
   function getDataByDay() {
     console.log(month)
     api.post('/pld/daily', {
-      "limit": 20,
-      "offset": 0,
       "filters": [
-          {"type" : "=", "field" : "mes_ref", "value": month, "row": true},
-          {"type" : "=", "field" : "pld.submercado", "value": select}
+          {"type" : "=", "field" : "year_month_formatted", "value": month},
+          {"type" : "=", "field" : "submarket", "value": select}
         ],
       "order": [{ "field": "day_calc", "direction": "asc" }]
     }).then(res => {
@@ -185,8 +183,9 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
   function htmlToCSV(html, filename) {
     const data = [];
     const rows = document.querySelectorAll("table tr");
+    // const rows = document.getElementsByClassName('tabela');
 
-    for (let i = 0; i < rows.length; i++) {
+    for (let i = rows.length/2; i < rows.length; i++) {
       const row = [], cols: any = rows[i].querySelectorAll("td, th");
 
       for (let j = 0; j < cols.length; j++) {
@@ -196,7 +195,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       data.push(row.join(";"));
     }
 
-    downloadCSVFile(data.join("\n").replace('(R$/MWh)', ''), filename);
+    downloadCSVFile(data.join("\n"), filename);
   }
 
   useEffect(() => {
@@ -236,7 +235,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
 
       <RenderIf isTrue={pldMenu===0}>
         <PldTableView>
-          <table className="tg">
+          <table className='tg'>
             <thead>
               <tr>
                 <th className='tg-8oo6'>Mês</th>
@@ -262,20 +261,6 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
               }
             </tbody>
           </table>
-          {/* <section>
-            <article onClick={() => setPage(1)} className="btn btn-1">
-            <svg height='100px'>
-              <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-            </svg>
-              <p>Valores Diários</p>
-            </article>
-            <article onClick={() => setPage(2)} className="btn btn-1">
-              <svg height='100px'>
-                <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-              </svg>
-              <p>Valores Horários</p>
-            </article>
-          </section> */}
         </PldTableView>
         <PldTableMinMaxView>
           <table className='tg'>
@@ -318,9 +303,73 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
             </tbody>
           </table>
         </PldTableMinMaxView>
+
+        <PldTableView display={false}>
+          <table className="tg tabela" style={{display: 'none'}}>
+            <thead>
+              <tr className='tr'>
+                <th className='tg-8oo6'>Mês</th>
+                <th className='tg-8oo6'>Nordeste</th>
+                <th className='tg-8oo6'>Norte</th>
+                <th className='tg-8oo6'>Sudeste</th>
+                <th className='tg-8oo6'>Sul</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                tableData.data.map(data => {
+                  return <>
+                    <tr className={`${data.year_month_formatted==year_Month? 'actual' : ''} tr`}>
+                      <td className='tg-gceh'>{data.year_month_formatted}</td>
+                      <td className={`tg-uulg`}>{parseFloat(data.nordeste).toLocaleString('pt-br',{currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                      <td className={`tg-gceh`}>{parseFloat(data.norte).toLocaleString('pt-br',{currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                      <td className={`tg-gceh`}>{parseFloat(data.sudeste).toLocaleString('pt-br',{currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                      <td className={`tg-uulg`}>{parseFloat(data.sul).toLocaleString('pt-br',{currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    </tr>
+                  </>
+                })
+              }
+              {
+                tableData.result.map((data, index) => {
+                  if (index === 0) {
+                    return <>
+                      <tr className='tr'>
+                        <td style={{borderTopLeftRadius: 8}} className='tg-gceh'>Máximo</td>
+                        <td className='tg-uulg'>{parseFloat(data.nordeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td className='tg-gceh'>{parseFloat(data.norte_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td className='tg-gceh'>{parseFloat(data.sudeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td className='tg-uulg'>{parseFloat(data.sul_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                      </tr>
+                    </>
+                  } else if (index===1) {
+                    return <>
+                      <tr className='tr'>
+                        <td className='tg-gceh'>Mínimo</td>
+                        <td className='tg-uulg'>{parseFloat(data.nordeste_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td className='tg-gceh'>{parseFloat(data.norte_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td className='tg-gceh'>{parseFloat(data.sudeste_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td className='tg-uulg'>{parseFloat(data.sul_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                      </tr>
+                    </>
+                  } else if (index===2) {
+                    return <>
+                      <tr className='tr'>
+                        <td className='tg-gceh' style={{borderBottomColor: 'transparent'}}>Desv. Padrão</td>
+                        <td className='tg-uulg' style={{borderBottomColor: 'transparent'}}>{parseFloat(data.nordeste_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-gceh' style={{borderBottomColor: 'transparent'}}>{parseFloat(data.norte_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-gceh' style={{borderBottomColor: 'transparent'}}>{parseFloat(data.sudeste_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-uulg' style={{borderBottomColor: 'transparent'}}>{parseFloat(data.sul_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      </tr>
+                    </>
+                  }
+                })
+              }
+            </tbody>
+          </table>
+        </PldTableView>
       </RenderIf>
 
-      {/* grafico de grafico por seleção de data (mês)*/}
+      {/* grafico de grafico por seleção de data (mês) (diario)*/}
       <RenderIf isTrue={pldMenu===1}>
         <PldGraphView>
           <section className='toolsbar'>
@@ -376,7 +425,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
               </FormControl>
           </section>
           <LineBarChart
-          data1={dataByDay} data3={dataByDay}
+          data1={dataByDay.map(value => value.mmovel)} data3={dataByDay}
           dataset1={'Média'} dataset2={'barra1'} dataset3={'Diario'}
           label={dataByDay.map((value, index) => {
             return value.day_formatted
@@ -385,7 +434,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
         </PldGraphView>
       </RenderIf>
 
-      {/* grafico de grafico por seleção de data INTEIRA*/}
+      {/* grafico de grafico por seleção de data INTEIRA (horario)*/}
       <RenderIf isTrue={pldMenu===2}>
         <PldGraphView>
           <section className='toolsbar2'>

@@ -30,11 +30,12 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MenuContext } from '../../contexts/menu/MenuContext';
-import { GrossAnulChart } from '../../components/graph/grossAnualChart/GrossAnualChart';
+import { GrossAnualChart } from '../../components/graph/grossAnualChart/GrossAnualChart';
 import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensalChart';
 import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart';
 import { ConsumoEstimado } from '../../services/consumoEstimado';
 import CostIndicatorChart from '../../components/graph/costIndicatorChart';
+import { EconomyView } from '../../styles/layouts/economy/economy';
 
 export default function economy({userName, anual, years, brutaMensal, yearsBrutaMensal, catLiv, clients, indicatorCost}: any) {
   const {economyMenu, setEconomyMenu} = useContext(MenuContext)
@@ -86,7 +87,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
   }, [unity])
 
   return (
-    <main style={{width: '100%'}}>
+    <EconomyView style={{width: '100%'}}>
       <Head>
         <title>Smart Energia - PLD</title>
       </Head>
@@ -106,7 +107,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
 
       <RenderIf isTrue={economyMenu===0}>
         <section>
-          <GrossAnulChart title='' subtitle=''
+          <GrossAnualChart title='' subtitle=''
             dataset='Consolidada'
 
             dataProps={anual}
@@ -182,7 +183,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
         />
       </section>
       </RenderIf>
-    </main>
+    </EconomyView>
   )
 }
 

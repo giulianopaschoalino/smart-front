@@ -41,7 +41,6 @@ export const PldTableMinMaxView = styled.div`
     word-break:normal;
   }
 
-
   .tg th{
     border-color:#DDDFE1;
     border-style:solid;
@@ -208,7 +207,9 @@ export const PldTableMinMaxView = styled.div`
     padding: 0!important;
   }
 `
-export const PldTableView = styled.div`
+
+export const PldTableView = styled.div<{display?: boolean}>`
+  display: ${props => props.display? 'none' : 'block'};
   width: 100%;
 
   border-radius: 8px!important;

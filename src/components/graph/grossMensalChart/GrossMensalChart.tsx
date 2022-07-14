@@ -43,13 +43,9 @@ interface ChartInterface {
 
 export default function GrossMensalChart({ title, data1, data2, label, subtitle, miniature }: ChartInterface) {
   function spacement(string) {
-    let spaces = '⠀'
-    let i=Math.abs(string)
+    const spaces = string.length===1?'' : string.length===2? '⠀⠀⠀⠀' : string.length===3? '⠀⠀⠀' : string.length===4? '⠀⠀' : string.length===5? '⠀' : ''
 
-    while (i <= 1) {
-      i--
-      spaces = spaces + `⠀`
-    }
+    console.log(string.length)
 
     return spaces
   }
