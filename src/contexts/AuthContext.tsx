@@ -3,7 +3,7 @@ import Router from 'next/router'
 
 import { destroyCookie, setCookie } from "nookies";
 
-import { signInRequest } from "../services/auth";
+import { logout, signInRequest } from "../services/auth";
 import { api } from "../services/api";
 
 type UserType = {
@@ -37,6 +37,8 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     destroyCookie(null, 'user-role')
     destroyCookie(null, 'user-id')
     destroyCookie(null, '@smartAuth-token')
+
+    logout()
   }
 
   async function signIn({email, password}: SignInData) {

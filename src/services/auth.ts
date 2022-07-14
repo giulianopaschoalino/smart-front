@@ -2,10 +2,6 @@ import { api } from "./api";
 
 export const TOKEN_KEY = "@smartAuth-token";
 
-export const logout = () => {
-  localStorage.removeItem(TOKEN_KEY);
-};
-
 interface SignInRequestData {
   email: string,
   password: string
@@ -80,4 +76,13 @@ export default async function recoverUserInformation(id) {
       profile_picture: user?.profile_picture
     }
   }
+}
+
+export async function logout() {
+  await api.post('/auth/logout', {})
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  .then(res => {})
+  .catch(res => {
+    console.log(res)
+  })
 }
