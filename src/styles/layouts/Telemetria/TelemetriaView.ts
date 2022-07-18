@@ -362,7 +362,14 @@ export const Uploads = styled.div`
   padding-right: 100px;
 `;
 
+export const TableHeader = styled.label`
+  width: 100%;
 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
+  flex-direction: row;
 
-
+  padding: 0 40px 0 40px
+`
