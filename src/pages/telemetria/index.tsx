@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
 import Banner from '../../components/banner/Banner';
-import { TelemetriaView, Buttons} from '../../styles/layouts/Telemetria/TelemetriaView';
+import { TelemetriaView, Buttons, TableHeader} from '../../styles/layouts/Telemetria/TelemetriaView';
 import GradientButton from '../../components/buttons/gradientButton/GradientButton'
 import Header from '../../components/header/Header';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Link from 'next/link';
 import Head from 'next/head';
-import { start } from 'nprogress';
-import LineChart from '../../components/graph/LineChart';
-import { FatorPotencia } from '../../services/fatorPotencia';
+
 import RenderIf from '../../utils/renderIf';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
@@ -23,24 +20,17 @@ import getAPIClient from '../../services/ssrApi';
 import router from 'next/router';
 import { DemRegXDemConChart } from '../../components/graph/DemRegXDemConChart';
 
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+
 import TextField from '@mui/material/TextField';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import Stack from '@mui/material/Stack';
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
-
-const style = {
-  position: 'absolute' as const,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import { DiscretizedConsumptionChart } from '../../components/graph/DiscretizedConsumptionChart';
+import DiscretizedConsumptionChartLine from '../../components/graph/DiscretizedConsumptionChartLine';
+import FatorPotenciaChart from '../../components/graph/fatorPotenciaChart';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -58,6 +48,7 @@ export default function Telemetria({userName, clients}: any) {
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
   const [openSnackError, setOpenSnackError] = useState<boolean>(false)
   const [openSnackFields, setOpenSnackFields] = useState<boolean>(false)
+
   const handleCloseSnack = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -106,7 +97,7 @@ export default function Telemetria({userName, clients}: any) {
 
   const [tableData, setTableData] = useState(null)
 
-  const [date, setDate] = useState('');
+  const [menu, setMenu] = useState(0);
 
   const [showChart, setShowChart] = useState(false);
 
@@ -115,11 +106,7 @@ export default function Telemetria({userName, clients}: any) {
 
   const [open, setOpen] = useState(false);
 
-  const [demRegXDemCon, setDemRegXDemCon] = useState(null);
-
-  const [value, setValue] = React.useState<Date | null>(
-    new Date(),
-  );
+  // const [demRegXDemCon, setDemRegXDemCon] = useState(null);
 
   const handleChangeStartDate = (newValue: Date | null) => {
     console.log(newValue)
@@ -150,10 +137,6 @@ export default function Telemetria({userName, clients}: any) {
         setOpenSnackError(true)
         setOpenSnackSuccess(false)
       })
-  }
-
-  function openSnackFieldError() {
-    setOpenSnackFields(true)
   }
 
   function handleVerifyFields() {
@@ -188,6 +171,34 @@ export default function Telemetria({userName, clients}: any) {
       })
   }
 
+  const [fatorPotenciaData, setFatorPotenciaData] = useState([]);
+  const [demRegXDemCon, setDemRegXDemCon] = useState([]);
+  const [discretizedConsumptionData, setDiscretizedConsumptionData] = useState([]);
+  const [discretizedConsumptionDataReativa, setDiscretizedConsumptionDataReativa] = useState([]);
+  function getChartsData() {
+    // console.log(token)
+    // getPowerFactorData("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
+    //   .then(result => setFatorPotenciaData(result))
+    //   .catch(exception => console.log('exeption', exception))
+
+    // getDiscretization("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
+    //   .then(result => setDiscretizedConsumptionDataReativa(result))
+    //   .catch(exception => console.log(exception))
+
+    // getDiscretization("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
+    //   .then(result => setDiscretizedConsumptionData(result))
+    //   .catch(exception => console.log(exception))
+
+    // getDemand("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
+    //   .then(result => setDemRegXDemCon(result))
+    //   .catch(exception => console.log(exception))
+
+    // setFatorPotenciaData(res.data.data)
+    // setDiscretizedConsumptionDataReativa(res.data.data)
+    // setDiscretizedConsumptionData(res.data.data)
+    // setDemRegXDemCon(res.data.data)
+  }
+
   useEffect(() => {
     setSend(false)
   }, [startDate, endDate])
@@ -196,7 +207,6 @@ export default function Telemetria({userName, clients}: any) {
     if (send===true)
       getChartData()
   }, [send])
-
 
   return(
     <TelemetriaView>
@@ -253,7 +263,7 @@ export default function Telemetria({userName, clients}: any) {
       <section>
         <div className='select'>
           <p className='title' >Unidade</p>
-          <FormControl sx={{ minWidth: 120, width: 200 }} size="small">
+          <FormControl sx={{ minWidth: 100, width: 200 }} size="small">
             <InputLabel id="demo-select-small">Unidade</InputLabel>
             <Select
               labelId="demo-select-small"
@@ -306,7 +316,7 @@ export default function Telemetria({userName, clients}: any) {
           <div className='select datePicker'>
             <p className='title' >Data inicial</p>
             <DesktopDatePicker
-              label="Date desktop"
+              label="Data inicial"
               inputFormat="dd/MM/yyyy"
               value={startDate}
               onChange={handleChangeStartDate}
@@ -316,7 +326,7 @@ export default function Telemetria({userName, clients}: any) {
           <div className='select datePicker' style={{marginRight: 10}}>
             <p className='title' >Data final</p>
             <DesktopDatePicker
-              label="Date desktop"
+              label="Data final"
               inputFormat="dd/MM/yyyy"
               value={endDate}
               maxDate={discretization === '1_mes'? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
@@ -340,6 +350,56 @@ export default function Telemetria({userName, clients}: any) {
           getTableData()
         }}/>
       </section>
+
+      <RenderIf isTrue={!!unity && !!discretization}>
+        <TableHeader>
+          <Tabs value={menu} onChange={(e, nv) => setMenu(nv)} aria-label="">
+            <Tab label="Discretização em 1 hora"/>
+            <Tab label="Discretização em 1 minuto"/>
+            <Tab label="Demanda"/>
+            <Tab label="Fator Potencia"/>
+          </Tabs>
+        </TableHeader>
+
+        <RenderIf isTrue={discretization!=='1_dia' && discretization!=='1_mes'}>
+        {/* <RenderIf isTrue={true}> */}
+          <RenderIf isTrue={menu===0}>
+            <div>
+              <DiscretizedConsumptionChart title={
+                  discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
+                  discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
+                } subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
+                <p style={{alignSelf: 'center', textAlign: 'center'}}>{`Mês - ${startDate}`}</p>
+            </div>
+          </RenderIf>
+
+          <RenderIf isTrue={menu===1}>
+            <div>
+              <DiscretizedConsumptionChartLine title={
+                  discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
+                  discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
+                } subtitle='' data1={discretizedConsumptionDataReativa} dataset1='Demanda registrada'
+                label={discretizedConsumptionDataReativa.map(data => parseFloat(data.reativa).toFixed(3))} />
+            </div>
+          </RenderIf>
+        </RenderIf>
+
+        <RenderIf isTrue={menu===2}>
+          <div>
+            <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon}
+            dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'}
+            label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
+          </div>
+        </RenderIf>
+
+        <RenderIf isTrue={menu===3}>
+          <div>
+          <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData}
+            data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={fatorPotenciaData.map(value => parseFloat(value.dia_num))} />
+          </div>
+        </RenderIf>
+      </RenderIf>
+
 
       <RenderIf isTrue={startDate.toLocaleDateString()!=='' && endDate.toLocaleDateString()!=='' && tableData===null && exception === false && send}>
         <div className='modal'>

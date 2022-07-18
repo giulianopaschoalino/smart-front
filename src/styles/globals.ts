@@ -54,6 +54,7 @@ export const GlobalStyle = createGlobalStyle`
       .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input{
         /* background-color: red; */
         /* position: relative; */
+        width: 100%;
         height:68px;
       }
 
