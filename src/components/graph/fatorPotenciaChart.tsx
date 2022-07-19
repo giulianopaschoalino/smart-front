@@ -46,6 +46,18 @@ interface ChartInterface {
 export default function FatorPotenciaChart({ title, subtitle, data1, data2, label, dataset1, dataset2, dataset3, dataset4, barLabel }: ChartInterface) {
   const options: any = {
     responsive: true,
+    scales: {
+      x: {
+        grid: {
+          display: false
+        }
+      },
+      y: {
+        grid: {
+          display: false
+        }
+      },
+    },
     plugins: {
       datalabels: {
         display: true,
@@ -93,7 +105,7 @@ export default function FatorPotenciaChart({ title, subtitle, data1, data2, labe
 
   return (
     <ChartView>
-      <ChartTitle title={title} subtitle={subtitle} />
+      {/* <ChartTitle title={title} subtitle={subtitle} /> */}
       <Line options={options} data={data} />
     </ChartView>
   )

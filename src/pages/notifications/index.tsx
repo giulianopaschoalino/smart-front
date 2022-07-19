@@ -17,8 +17,9 @@ export default function Notifications({notificationData, userName}: any) {
         <title>Smart Energia - Notificações</title>
       </Head>
       <Header name={userName}>
+        <PageTitle title='Notificações' subtitle='Aqui estão as notificações publicadas para você!'/>
       </Header>
-      <Banner title='Notificações' subtitle='Aqui estão as notificações publicadas para você!' imgSource='/assets/banners/notificacoes.jpg'/>
+      {/* <Banner title='Notificações' subtitle='Aqui estão as notificações publicadas para você!' imgSource='/assets/banners/notificacoes.jpg'/> */}
       <section className='CommonQuestionsSection' >
       {
         notificationData.length!=0?

@@ -84,12 +84,22 @@ export function DemRegXDemConChart({
   }: LineBarChartInterface) {
   const chartRef = useRef<ChartJS>(null);
 
-  const currentTime = new Date();
-
   const labels = label
 
   const options: any = {
     responsive: true,
+    scales: {
+      x: {
+        grid: {
+          display: false
+        }
+      },
+      y: {
+        grid: {
+          display: false
+        }
+      },
+    },
     plugins: {
       datalabels: {
         display: true,
@@ -144,7 +154,7 @@ export function DemRegXDemConChart({
 
   return (
     <ChartView>
-      <ChartTitle title={title} subtitle={subtitle}/>
+      {/* <ChartTitle title={title} subtitle={subtitle}/> */}
       <div>
         <Chart ref={chartRef} type='bar' options={options} data={data} />
       </div>

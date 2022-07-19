@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const ChartView = styled.div`
-  width: 90%;
+  min-width: 90%;
 
   div{
     /* margin-top: 10px; */

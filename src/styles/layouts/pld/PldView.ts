@@ -444,13 +444,11 @@ export const PldGraphView = styled.main`
     justify-content: center;
     align-items: flex-start!important;
 
+    align-self: flex-start;
+
     flex-direction: row;
 
-    padding-bottom: 13px;
-
-    p {
-      margin: 0;
-    }
+    flex-wrap: nowrap;
   }
   .toolsbar2 {
     display: flex;
@@ -459,7 +457,7 @@ export const PldGraphView = styled.main`
 
     flex-direction: column;
 
-    margin-bottom: 9px;
+    /* margin-bottom: 9px; */
 
     /* transform: translateY(-8px); */
 

@@ -93,13 +93,13 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
       </Head>
       <div id='title'/>
       <Header name={userName}>
-        <PageTitle title='Economia' subtitle='Graficos de economia'/>
+        <PageTitle title='Economia' subtitle='Gráficos de economia'/>
       </Header>
 
       <TableHeader>
         <Tabs value={economyMenu} onChange={(e, nv) => setEconomyMenu(nv)} aria-label="">
-          <Tab label="Bruta Anual"/>
-          <Tab label="Bruta Mensal"/>
+          <Tab label="Acumulada Anual"/>
+          <Tab label="Acumulada Mensal"/>
           <Tab label="Cativo x Livre Mensal"/>
           <Tab label="Custo R$/MWh"/>
         </Tabs>
@@ -125,25 +125,27 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
       </RenderIf>
 
       <RenderIf isTrue={economyMenu===2}>
-        <FormControl sx={{ m: 1, minWidth: 120, width: 200 }} size="small">
-          <InputLabel id="demo-select-small">Unidade</InputLabel>
-          <Select
-            labelId="demo-select-small"
-            id="demo-select-small"
-            value={unity}
-            label="Unidade"
-            onChange={value => setUnity(value.target.value)}
-            fullWidth
-          >
-            <MenuItem value="">Todas</MenuItem>
-            {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> !!OPÇAO COM DADOS TESTES!! */}
-            {
-              clients.map((value) => {
-                return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
-              })
-            }
-          </Select>
-        </FormControl>
+        <div style={{paddingLeft: '7%'}}>
+          <FormControl sx={{ m: 1, minWidth: 120, width: 200 }} size="small">
+            <InputLabel id="demo-select-small">Unidade</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={unity}
+              label="Unidade"
+              onChange={value => setUnity(value.target.value)}
+              fullWidth
+            >
+              <MenuItem value="">Todas</MenuItem>
+              {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> !!OPÇAO COM DADOS TESTES!! */}
+              {
+                clients.map((value) => {
+                  return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
+                })
+              }
+            </Select>
+          </FormControl>
+        </div>
         <section>
           <CativoXLivreChart chartData={unity!==''? catLivDataState : catLiv}
           dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
@@ -152,25 +154,27 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
       </RenderIf>
 
       <RenderIf isTrue={economyMenu===3}>
-      <FormControl sx={{ m: 1, minWidth: 120, width: 200 }} size="small">
-        <InputLabel id="demo-select-small">Unidade</InputLabel>
-        <Select
-          labelId="demo-select-small"
-          id="demo-select-small"
-          value={unity}
-          label="Unidade"
-          onChange={value => setUnity(value.target.value)}
-          fullWidth
-        >
-          <MenuItem value="">Todas</MenuItem>
-          {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
-          {
-            clients.map((value) => {
-              return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
-            })
-          }
-        </Select>
-      </FormControl>
+        <div style={{paddingLeft: '7%'}}>
+          <FormControl sx={{ m: 1, minWidth: 120, width: 200 }} size="small">
+            <InputLabel id="demo-select-small">Unidade</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={unity}
+              label="Unidade"
+              onChange={value => setUnity(value.target.value)}
+              fullWidth
+            >
+              <MenuItem value="">Todas</MenuItem>
+              {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
+              {
+                clients.map((value) => {
+                  return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
+                })
+              }
+            </Select>
+          </FormControl>
+        </div>
       <section>
         <CostIndicatorChart title='' subtitle=''
           data1={unity!=''? indicatorDataState?.filter((value, index) => value.mes.slice(4, 8).includes('2021'))

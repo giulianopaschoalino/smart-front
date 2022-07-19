@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
 export const TelemetriaView = styled.main`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
   padding: 20px;
   width: 100%;
 
@@ -18,7 +24,7 @@ export const TelemetriaView = styled.main`
     left: 0;
 
     width: 100%;
-    height: 100%;
+    height: 100vh;
 
     z-index: 999;
   }
@@ -37,11 +43,9 @@ export const TelemetriaView = styled.main`
     position:absolute;
     animation: preloader_1 1.5s  infinite ease-in-out;
   }
-
   #preloader_1 span:nth-child(2){
     left:11px;
     animation-delay: .2s;
-
   }
   #preloader_1 span:nth-child(3){
     left:22px;
@@ -172,6 +176,8 @@ export const TelemetriaView = styled.main`
   input {
     width: 15rem;
 
+    height: 10px!important;
+
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 400;
 
@@ -179,6 +185,12 @@ export const TelemetriaView = styled.main`
     border: solid gray 1px;
 
     background-color: #F9F9F9;
+  }
+
+  .input {
+    .MuiInputLabel-root, .MuiInputLabel-formControl {
+      margin-top: 11px;
+    }
   }
 
   span {
@@ -216,7 +228,7 @@ export const TelemetriaView = styled.main`
       justify-content: center;
 
       flex-direction: column;
-      height: 10em;
+      /* height: 10em; */
 
       :nth-child(1) {
         label {
@@ -362,7 +374,7 @@ export const Uploads = styled.div`
   padding-right: 100px;
 `;
 
-export const TableHeader = styled.label`
+export const TableHeader = styled.div`
   width: 100%;
 
   display: flex;
@@ -372,4 +384,18 @@ export const TableHeader = styled.label`
   flex-direction: row;
 
   padding: 0 40px 0 40px
+`
+
+export const ChartFilters = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center!important;
+
+  align-self: flex-start;
+
+  width: 100%;
+
+  margin-top: 20px;
+
+  /* margin-left: 108px; */
 `
