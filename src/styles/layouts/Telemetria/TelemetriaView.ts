@@ -176,6 +176,8 @@ export const TelemetriaView = styled.main`
   input {
     width: 15rem;
 
+    height: 63px!important;
+
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 400;
 
@@ -373,7 +375,7 @@ export const Uploads = styled.div`
 `;
 
 export const TableHeader = styled.div`
-  width: 100%;
+  width: 90%;
 
   display: flex;
   align-items: center;
@@ -391,7 +393,7 @@ export const ChartFilters = styled.section`
 
   align-self: flex-start;
 
-  width: 100%;
+  width: 90%;
 
   margin-top: 20px;
 

@@ -442,24 +442,28 @@ export const PldGraphView = styled.main`
   .toolsbar {
     display: flex;
     justify-content: center;
-    align-items: flex-start!important;
+    align-items: flex-start;
 
     align-self: flex-start;
 
     flex-direction: row;
 
     flex-wrap: nowrap;
+
+    width: 90%!important;
+
+    padding-left: 25px;
   }
   .toolsbar2 {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start!important;
 
-    flex-direction: column;
+    min-width: 320px;
 
-    /* margin-bottom: 9px; */
+    padding-left: 25px;
 
-    /* transform: translateY(-8px); */
+    width: 100%;
 
     p {
       margin: 0;
@@ -468,9 +472,7 @@ export const PldGraphView = styled.main`
 
   input {
     width: 16.6rem;
-    height: 3.5rem;
-
-    /* padding: 14px; */
+    height: 63px;
 
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 400;
@@ -479,34 +481,6 @@ export const PldGraphView = styled.main`
     border: solid gray 1px;
 
     background-color: #F9F9F9;
-  }
-
-  section {
-    display: flex;
-    align-items: center;
-
-    flex-wrap: wrap;
-
-    :first-child {
-      justify-content: flex-start;
-      align-items: center;
-    }
-    :nth-child(2) {
-      margin-top: 50px;
-      margin-bottom: 50px;
-      justify-content: space-evenly;
-    }
-
-    width: 100%;
-  }
-
-
-
-  footer {
-    label {
-      cursor: pointer;
-      margin: 20px;
-    }
   }
 `
 

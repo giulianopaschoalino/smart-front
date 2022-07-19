@@ -40,8 +40,12 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-
   .datePicker {
+    .MuiOutlinedInput-input, .MuiInputBase-input, .MuiInputBase-inputAdornedEnd, .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+      padding: 0 0 0 15px;
+      width: 100%;
+      height: 63px!important;
+    }
       .css-1u3bzj6-MuiFormControl-root-MuiTextField-root,
       .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root,
       .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root,
@@ -54,8 +58,8 @@ export const GlobalStyle = createGlobalStyle`
       .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input{
         /* background-color: red; */
         /* position: relative; */
-        width: 100%;
-        height:68px;
+        /* width: 100%;
+        height:63px; */
       }
 
       .MuiFormControl-root,
@@ -76,7 +80,7 @@ export const GlobalStyle = createGlobalStyle`
       .MuiOutlinedInput-input,
       .MuiInputBase-input .MuiInputBase-inputAdornedEnd,
       .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
-        padding-top: 6px;
+        /* padding-top: 6px; */
       }
 
       .MuiButtonBase-root,
@@ -84,8 +88,8 @@ export const GlobalStyle = createGlobalStyle`
       .MuiIconButton-edgeEnd,
       .MuiIconButton-sizeMedium,
       .css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root {
-        width: 30px;
-        height: 30px;
+        /* width: 30px;
+        height: 30px; */
       }
     }
 
@@ -97,7 +101,7 @@ export const GlobalStyle = createGlobalStyle`
     .MuiFormLabel-colorPrimary,
     .MuiFormLabel-filled,
     .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
-      color: rgba(0, 0, 0, 0.6);
+      /* color: rgba(0, 0, 0, 0.6);
       font-family: "Roboto","Helvetica","Arial",sans-serif;
       font-weight: 400;
       font-size: 1rem;
@@ -115,6 +119,6 @@ export const GlobalStyle = createGlobalStyle`
       left: 0;
       user-select: none;
       z-index: 1;
-      pointer-events: auto;
+      pointer-events: auto; */
     }
 `;
