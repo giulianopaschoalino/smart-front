@@ -35,9 +35,9 @@ export default function chartTelemetry({userName}) {
 
   function getChartsData() {
     console.log(token)
-    getPowerFactorData("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
-      .then(result => setFatorPotenciaData(result))
-      .catch(exception => console.log('exeption', exception))
+    // getPowerFactorData("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
+    //   .then(result => setFatorPotenciaData(result))
+    //   .catch(exception => console.log('exeption', exception))
 
     // getDiscretization("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
     //   .then(result => setDiscretizedConsumptionDataReativa(result))
