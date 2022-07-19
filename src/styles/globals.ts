@@ -40,7 +40,6 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-
   .datePicker {
     .MuiOutlinedInput-input, .MuiInputBase-input, .MuiInputBase-inputAdornedEnd, .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
       padding: 0 0 0 15px;

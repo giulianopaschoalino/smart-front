@@ -375,7 +375,7 @@ export const Uploads = styled.div`
 `;
 
 export const TableHeader = styled.div`
-  width: 100%;
+  width: 90%;
 
   display: flex;
   align-items: center;
@@ -393,7 +393,7 @@ export const ChartFilters = styled.section`
 
   align-self: flex-start;
 
-  width: 100%;
+  width: 90%;
 
   margin-top: 20px;
 

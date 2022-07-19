@@ -372,7 +372,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       {/* grafico de grafico por seleção de data (mês) (diario)*/}
       <RenderIf isTrue={pldMenu===1}>
         <PldGraphView>
-          <section className='toolsbar'>
+          <section className='toolsbar2'>
             <FormControl sx={{
               width: '320px'
             }}>
@@ -388,36 +388,36 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
                   <MenuItem value={'SUL'}>Sul</MenuItem>
                   <MenuItem value={'SUDESTE'}>Sudeste</MenuItem>
                 </Select>
-              </FormControl>
-              <FormControl sx={{
-                width: '320px',
-                ml: 1
-              }}>
-                <InputLabel id="demo-simple-select-label">Mês</InputLabel>
-                <Select
-                    value={month}
-                    onChange={handleChangeDay}
-                    displayEmpty
-                    placeholder='dia'
-                    label="Age"
-                  >
-                    <MenuItem value={'0'}>Nenhum</MenuItem>
-                    {
-                      clientMonth.sort((a, b) => {
-                        if (parseFloat(a.mes_ref.slice(0, 2)) < parseFloat(b.mes_ref.slice(0, 2)))
-                        if (parseFloat(a.mes_ref.slice(3, 7)) > parseFloat(b.mes_ref.slice(3, 7))) return -1
-                        else return 1
-                        if (parseFloat(a.mes_ref.slice(0, 2)) > parseFloat(b.mes_ref.slice(0, 2)))
-                        if (parseFloat(a.mes_ref.slice(3, 7)) < parseFloat(b.mes_ref.slice(3, 7))) return 1
-                        else return -1
+            </FormControl>
+            <FormControl sx={{
+              width: '320px',
+              ml: 1
+            }}>
+              <InputLabel id="demo-simple-select-label">Mês</InputLabel>
+              <Select
+                  value={month}
+                  onChange={handleChangeDay}
+                  displayEmpty
+                  placeholder='dia'
+                  label="Age"
+                >
+                  <MenuItem value={'0'}>Nenhum</MenuItem>
+                  {
+                    clientMonth.sort((a, b) => {
+                      if (parseFloat(a.mes_ref.slice(0, 2)) < parseFloat(b.mes_ref.slice(0, 2)))
+                      if (parseFloat(a.mes_ref.slice(3, 7)) > parseFloat(b.mes_ref.slice(3, 7))) return -1
+                      else return 1
+                      if (parseFloat(a.mes_ref.slice(0, 2)) > parseFloat(b.mes_ref.slice(0, 2)))
+                      if (parseFloat(a.mes_ref.slice(3, 7)) < parseFloat(b.mes_ref.slice(3, 7))) return 1
+                      else return -1
 
-                        return 0
-                      }).map((data, index) => {
-                        return <MenuItem key={index} value={data.mes_ref}>{data.mes_ref}</MenuItem>
-                      })
-                    }
-                </Select>
-              </FormControl>
+                      return 0
+                    }).map((data, index) => {
+                      return <MenuItem key={index} value={data.mes_ref}>{data.mes_ref}</MenuItem>
+                    })
+                  }
+              </Select>
+            </FormControl>
           </section>
           <LineBarChart
           data1={dataByDay.map(value => value.mmovel)} data3={dataByDay}
@@ -441,7 +441,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
                   inputFormat="dd/MM/yyyy"
                   value={date}
                   onChange={handleChangeDate}
-                  renderInput={(params) => <TextField {...params}/>}
+                  renderInput={(params) => <TextField {...params} style={{minWidth: '320px'}}/>}
                 />
               </div>
             </LocalizationProvider>
