@@ -1,23 +1,18 @@
 import axios from "axios"
 import { parseCookies } from "nookies"
+import { api } from "../../api"
 
 export async function getPowerFactorData(
     unity: string,
-    startDate: string,
-    endDate: string,
+    startDate: Date,
+    endDate: Date,
     discretization: string
   ) {
-  const { '@smartAuth-token': token } = parseCookies()
-  console.log(token.replace(/"/g, ''))
-  const { data } = await axios.post('http://smart-energia-api.herokuapp.com/api/telemetry/powerFactor', {
+  const { data } = await api.post('http://smart-energia-api.herokuapp.com/api/telemetry/powerFactor', {
 		"filters": [
-			{"type" : "=", "field": "med_5min.ponto", "value": "PRAXCUENTR101P"},
-			{"type" : "between", "field": "dia_num", "value": ["2022-01-01", "2022-01-31"]}
+			{"type" : "=", "field": "med_5min.ponto", "value": unity},
+			{"type" : "between", "field": "dia_num", "value": [startDate.toLocaleDateString().split('/').reverse().join('-'), endDate.toLocaleDateString().split('/').reverse().join('-')]}
 		]
-  }, {
-    headers: {
-      'Authorization': `Bearer 1292|E4jbc5ZWmgCCBMOVn4PvPx56MUbf4nUg5MNgxjmP`
-    }
   })
   return data.data
 }

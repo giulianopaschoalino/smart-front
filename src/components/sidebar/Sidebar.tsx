@@ -129,12 +129,12 @@ export default function Sidebar() {
             <Link href='/telemetria'><li className={router.pathname=='/telemetria'? 'actualPath' : null}><Image src='/assets/sidebar/telemetryIcon.svg' width={25} height={25} />{'Telemetria'}</li></Link>
             <Link href='/resumoOperacao'><li className={router.pathname=='/resumoOperacao'? 'actualPath' : null} ><Image src='/assets/sidebar/summaryOperationsIcon.svg' width={25} height={25} />{'Resumo de Op. '}</li></Link>
             <Link href='/news'><li className={router.pathname=='/news'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'Notícias'}</li></Link>
-            <li onClick={() => setPldDrawer(!pldDrawer)} className={router.pathname=='/pld'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'PLD >'}</li>
-              <div className='pldDrawer drawer'>
+            <Link href='/pld'><li onClick={() => setPldDrawer(!pldDrawer)} className={router.pathname=='/pld'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'PLD >'}</li></Link>
+              {/* <div className='pldDrawer drawer'>
                 <Link href='/pld'><li onClick={() => setPldMenu(0)} className={pldMenu==0? 'actualPathDrawer' : null}>PLD Histórico</li></Link>
                 <Link href='/pld'><li onClick={() => setPldMenu(1)} className={pldMenu===1? 'actualPathDrawer' : null}>Valores Diários</li></Link>
                 <Link href='/pld'><li onClick={() => setPldMenu(2)} className={pldMenu===2? 'actualPathDrawer' : null}>Valores Horários</li></Link>
-              </div>
+              </div> */}
             <Link href='/industryInfo'><li className={router.pathname=='/industryInfo'? 'actualPath' : null}><Image src='/assets/sidebar/sectorialInfoIcon.svg' width={25} height={25} />{'Info Setorial'}</li></Link>
             {/* <Link href='/consumption'><li className={router.pathname=='/consumption'? 'actualPath' : null} ><Image src='/assets/sidebar/consumptionIcon.svg' width={25} height={25} />{'Consumo'}</li></Link> */}
             <Link href='/notifications'><li className={router.pathname=='/notifications'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificações'}<div className='notification' style={{display: notificationsCount<=0||notificationsCount===undefined? 'none' : 'inherit'}}><p>{notificationsCount}</p></div></li></Link>

@@ -5,6 +5,7 @@ import { parseCookies } from 'nookies'
 import React from 'react'
 import Banner from '../../components/banner/Banner'
 import Header from '../../components/header/Header'
+import PageTitle from '../../components/pageTitle/PageTitle'
 import getAPIClient from '../../services/ssrApi'
 import { AboutUsView } from '../../styles/layouts/aboutUs/AboutUsView'
 
@@ -15,8 +16,10 @@ export default function aboutUs({userName, text}) {
         <title>Smart Energia - Sobre nós</title>
       </Head>
 
-      <Header name={userName}/>
-      <Banner title='Quem Somos' subtitle='Soluções inteligentes em Gestão de Energia' imgSource='/assets/banners/aboutUsBanner.png' />
+      <Header name={userName}>
+        <PageTitle title='Quem Somos' subtitle='Soluções inteligentes em Gestão de Energia'/>
+      </Header>
+      {/* <Banner title='Quem Somos' subtitle='Soluções inteligentes em Gestão de Energia' imgSource='/assets/banners/aboutUsBanner.png' /> */}
 
       <section dangerouslySetInnerHTML={{__html: text[0]?.about}}/>
       <article>

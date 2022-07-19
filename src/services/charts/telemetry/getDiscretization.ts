@@ -1,24 +1,28 @@
 import axios from "axios"
 import { parseCookies } from "nookies"
+import { api } from "../../api"
+
+const { '@smartAuth-token': token } = parseCookies()
 
 export async function getDiscretization(
     unity: string,
-    startDate: string,
-    endDate: string,
+    startDate: Date,
+    endDate: Date,
     discretization: string
   ) {
-  const { '@smartAuth-token': token } = parseCookies()
-  const { data } = await axios.post('https://smart-energia-api.herokuapp.com/api/telemetry/discretization', {
-    "type": discretization,
-    "filters": [
-        {"type" : "=", "field": "med_5min.ponto", "value": unity}
-      ]
-    }, {
-      headers: {
-        'Authorization': `Bearer 1260|RHfh3uMsEfHwCTqxKOhy1CEIr34UIln9OFdf5Fc8`
+    console.log(new Date(startDate).toLocaleDateString().split('/').reverse().join('-'), endDate.toLocaleDateString())
+    const { data } = await api.post('/telemetry/discretization', {
+      "type": discretization,
+      // "type": "1_hora",
+      "filters": [
+          {"type" : "=", "field": "med_5min.ponto", "value": unity},
+          {"type" : "between", "field": "dia_num", "value": [startDate.toLocaleDateString().split('/').reverse().join('-'), endDate.toLocaleDateString().split('/').reverse().join('-')]}
+        ]
+      // "filters": [
+      //     {"type" : "=", "field": "med_5min.ponto", "value": "RSZFNAENTR101P"}
+      //   ]
       }
-    }
-  )
+    )
 
   return data.data
 }

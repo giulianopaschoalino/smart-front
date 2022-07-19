@@ -50,8 +50,6 @@ export default function GrossMensalChart({ title, data1, data2, label, subtitle,
     return spaces
   }
 
-  const labels = label;
-
   const options: any = {
     responsive: true,
     scales: {
@@ -104,7 +102,7 @@ export default function GrossMensalChart({ title, data1, data2, label, subtitle,
     datasets: [
       {
         type: 'bar',
-        label: 'Acumulado',
+        label: 'Consolidado',
         data: data1.map(value => value?.economia_acumulada),
         backgroundColor: '#255488'
       },

@@ -8,6 +8,7 @@ import React from 'react'
 import Banner from '../../components/banner/Banner'
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
 import Header from '../../components/header/Header'
+import PageTitle from '../../components/pageTitle/PageTitle';
 import getAPIClient from '../../services/ssrApi';
 import { Button, NewsView } from '../../styles/layouts/news/NewsView'
 
@@ -17,11 +18,13 @@ export default function aboutUs({userName, news}: any) {
       <Head>
         <title>Smart Energia - Noticias</title>
       </Head>
-      <Header name={userName} />
-      <Banner title='Notícias' subtitle='Tudo de importante no setor de energia' imgSource='/assets/banners/newsBanner.webp'/>
+      <Header name={userName}>
+        <PageTitle title='Notícias' subtitle='Tudo de importante no setor de energia'/>
+      </Header>
+      {/* <Banner title='Notícias' subtitle='Tudo de importante no setor de energia' imgSource='/assets/banners/newsBanner.webp'/> */}
 
       {
-        news.map(data => {
+        news.slice(0, 3).map(data => {
 
           return <>
             <section>

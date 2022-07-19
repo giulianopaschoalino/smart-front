@@ -153,7 +153,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
     })
   }
 
-  function handleColorNorte(value, region) {
+  function handleColor(value, region) {
     if (value <= tableData.result[1].norte_min)
       return ''
     else if (value >= tableData.result[0][`${region}_max`])
@@ -373,9 +373,8 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       <RenderIf isTrue={pldMenu===1}>
         <PldGraphView>
           <section className='toolsbar'>
-            <div className='select'>
             <FormControl sx={{
-              width: '100%'
+              width: '320px'
             }}>
               <InputLabel id="demo-simple-select-label">Região</InputLabel>
                 <Select
@@ -383,9 +382,6 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
                   onChange={handleChange}
                   displayEmpty
                   label='Região'
-                  sx={{
-                    width: '100%'
-                  }}
                 >
                   <MenuItem value={'NORTE'}>Norte</MenuItem>
                   <MenuItem value={'NORDESTE'}>Nordeste</MenuItem>
@@ -393,34 +389,33 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
                   <MenuItem value={'SUDESTE'}>Sudeste</MenuItem>
                 </Select>
               </FormControl>
-            </div>
-            <FormControl sx={{
-              width: '22%',
-              ml: 1
-            }}>
-              <InputLabel id="demo-simple-select-label">Mês</InputLabel>
-              <Select
-                  value={month}
-                  onChange={handleChangeDay}
-                  displayEmpty
-                  placeholder='dia'
-                  label="Age"
-                >
-                  <MenuItem value={'0'}>Nenhum</MenuItem>
-                  {
-                    clientMonth.sort((a, b) => {
-                      if (parseFloat(a.mes_ref.slice(0, 2)) < parseFloat(b.mes_ref.slice(0, 2)))
-                      if (parseFloat(a.mes_ref.slice(3, 7)) > parseFloat(b.mes_ref.slice(3, 7))) return -1
-                      else return 1
-                      if (parseFloat(a.mes_ref.slice(0, 2)) > parseFloat(b.mes_ref.slice(0, 2)))
-                      if (parseFloat(a.mes_ref.slice(3, 7)) < parseFloat(b.mes_ref.slice(3, 7))) return 1
-                      else return -1
+              <FormControl sx={{
+                width: '320px',
+                ml: 1
+              }}>
+                <InputLabel id="demo-simple-select-label">Mês</InputLabel>
+                <Select
+                    value={month}
+                    onChange={handleChangeDay}
+                    displayEmpty
+                    placeholder='dia'
+                    label="Age"
+                  >
+                    <MenuItem value={'0'}>Nenhum</MenuItem>
+                    {
+                      clientMonth.sort((a, b) => {
+                        if (parseFloat(a.mes_ref.slice(0, 2)) < parseFloat(b.mes_ref.slice(0, 2)))
+                        if (parseFloat(a.mes_ref.slice(3, 7)) > parseFloat(b.mes_ref.slice(3, 7))) return -1
+                        else return 1
+                        if (parseFloat(a.mes_ref.slice(0, 2)) > parseFloat(b.mes_ref.slice(0, 2)))
+                        if (parseFloat(a.mes_ref.slice(3, 7)) < parseFloat(b.mes_ref.slice(3, 7))) return 1
+                        else return -1
 
-                      return 0
-                    }).map((data, index) => {
-                      return <MenuItem key={index} value={data.mes_ref}>{data.mes_ref}</MenuItem>
-                    })
-                  }
+                        return 0
+                      }).map((data, index) => {
+                        return <MenuItem key={index} value={data.mes_ref}>{data.mes_ref}</MenuItem>
+                      })
+                    }
                 </Select>
               </FormControl>
           </section>
