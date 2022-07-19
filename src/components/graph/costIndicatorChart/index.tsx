@@ -63,7 +63,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
           dataArr.map(data => {
               sum += data;
           });
-          const result = `${(parseFloat(value)/10).toLocaleString('pt-br').slice(0, 4)}`
+          const result = `${parseInt((parseInt(value)/10).toLocaleString('pt-br'))}`
 
           return value==null? null : result
         },

@@ -103,7 +103,7 @@ export default function GrossMensalChart({ title, data1, data2, label, subtitle,
       {
         type: 'bar',
         label: 'Consolidado',
-        data: data1.map(value => value?.economia_acumulada),
+        data: data1.map(value => !value.dad_estimado? value?.economia_acumulada : null),
         backgroundColor: '#255488'
       },
       {

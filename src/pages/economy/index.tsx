@@ -175,17 +175,17 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
             </Select>
           </FormControl>
         </div>
-      <section>
-        <CostIndicatorChart title='' subtitle=''
-          data1={unity!=''? indicatorDataState?.filter((value, index) => value.mes.slice(4, 8).includes('2021'))
-            :
-          indicatorCost?.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
-          data2={unity!=''? indicatorDataState?.filter((value, index) => value.mes.slice(4, 8).includes('2022'))
-            :
-          indicatorCost?.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
-          label={months}
-        />
-      </section>
+        <section>
+          <CostIndicatorChart title='' subtitle=''
+            data1={unity!=''? indicatorDataState?.filter((value, index) => value.mes.slice(4, 8).includes('2021'))
+              :
+            indicatorCost?.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
+            data2={unity!=''? indicatorDataState?.filter((value, index) => value.mes.slice(4, 8).includes('2022'))
+              :
+            indicatorCost?.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
+            label={months}
+          />
+        </section>
       </RenderIf>
     </EconomyView>
   )

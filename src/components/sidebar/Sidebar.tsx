@@ -129,7 +129,7 @@ export default function Sidebar() {
             <Link href='/telemetria'><li className={router.pathname=='/telemetria'? 'actualPath' : null}><Image src='/assets/sidebar/telemetryIcon.svg' width={25} height={25} />{'Telemetria'}</li></Link>
             <Link href='/resumoOperacao'><li className={router.pathname=='/resumoOperacao'? 'actualPath' : null} ><Image src='/assets/sidebar/summaryOperationsIcon.svg' width={25} height={25} />{'Resumo de Op. '}</li></Link>
             <Link href='/news'><li className={router.pathname=='/news'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'Notícias'}</li></Link>
-            <Link href='/pld'><li onClick={() => setPldDrawer(!pldDrawer)} className={router.pathname=='/pld'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'PLD >'}</li></Link>
+            <Link href='/pld'><li onClick={() => setPldDrawer(!pldDrawer)} className={router.pathname=='/pld'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'PLD'}</li></Link>
               {/* <div className='pldDrawer drawer'>
                 <Link href='/pld'><li onClick={() => setPldMenu(0)} className={pldMenu==0? 'actualPathDrawer' : null}>PLD Histórico</li></Link>
                 <Link href='/pld'><li onClick={() => setPldMenu(1)} className={pldMenu===1? 'actualPathDrawer' : null}>Valores Diários</li></Link>

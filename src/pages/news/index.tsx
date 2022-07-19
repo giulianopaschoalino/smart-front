@@ -14,42 +14,44 @@ import { Button, NewsView } from '../../styles/layouts/news/NewsView'
 
 export default function aboutUs({userName, news}: any) {
   return (
-    <NewsView>
+    <main style={{display: 'flex', flexDirection: 'column'}}>
       <Head>
         <title>Smart Energia - Noticias</title>
       </Head>
       <Header name={userName}>
         <PageTitle title='Notícias' subtitle='Tudo de importante no setor de energia'/>
       </Header>
-      {/* <Banner title='Notícias' subtitle='Tudo de importante no setor de energia' imgSource='/assets/banners/newsBanner.webp'/> */}
+      <NewsView>
+        {/* <Banner title='Notícias' subtitle='Tudo de importante no setor de energia' imgSource='/assets/banners/newsBanner.webp'/> */}
 
-      {
-        news.slice(0, 3).map(data => {
+        {
+          news.slice(0, 3).map(data => {
 
-          return <>
-            <section>
-              <h2 dangerouslySetInnerHTML={{__html: data.pubDate.slice(0, -8)}} />
-              <strong dangerouslySetInnerHTML={{__html: data.title}} />
-              <strong>ANEEL APROVA REAJUSTE TARIFÁRIO ANUAL DA ENERGISA SERGIPE DE 16,46 % PARA O CONSUMIDOR RESIDENCIAL</strong>
-              <br />
-              <br />
-              {
-                <p dangerouslySetInnerHTML={{__html: data.description}} className='description'/>
-              }
-              <Button>
-              <fieldset>
-              <legend> <BasicButton title='Ver Mais...' onClick={() => window.open(data.guid)}/></legend>
-              </fieldset>
-              </Button>
-            </section>
-          </>
-        })
-      }
+            return <>
+              <section>
+                <h2 dangerouslySetInnerHTML={{__html: data.pubDate.slice(0, -8)}} />
+                <strong dangerouslySetInnerHTML={{__html: data.title}} />
+                <strong>ANEEL APROVA REAJUSTE TARIFÁRIO ANUAL DA ENERGISA SERGIPE DE 16,46 % PARA O CONSUMIDOR RESIDENCIAL</strong>
+                <br />
+                <br />
+                {
+                  <p dangerouslySetInnerHTML={{__html: data.description}} className='description'/>
+                }
+                <Button>
+                <fieldset>
+                <legend> <BasicButton title='Ver Mais...' onClick={() => window.open(data.guid)}/></legend>
+                </fieldset>
+                </Button>
+              </section>
+            </>
+          })
+        }
 
-      <a href='https://www.energiasmart.com.br/noticias/'
-      target={"_blank"}
-      rel={"noreferrer"}><BasicButton title='Noticias Atualizadas' onClick={() => console.log()}/></a>
-    </NewsView>
+        <a href='https://www.energiasmart.com.br/noticias/'
+        target={"_blank"}
+        rel={"noreferrer"}><BasicButton title='Noticias Atualizadas' onClick={() => console.log()}/></a>
+      </NewsView>
+    </main>
   )
 }
 
