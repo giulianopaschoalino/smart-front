@@ -176,8 +176,6 @@ export const TelemetriaView = styled.main`
   input {
     width: 15rem;
 
-    height: 10px!important;
-
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 400;
 
