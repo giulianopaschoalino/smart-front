@@ -3,6 +3,16 @@ import styled from 'styled-components'
 export const EconomyView = styled.main`
   width: 100%;
 
+  background: #F8F8F8;
+  box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  -webkit-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  -moz-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  border-radius: 20px;
+
+  background-color: #FFFFFF;
+
+  margin-top: 10px;
+
   .MuiInputLabel-root, .MuiInputLabel-formControl {
     margin-top: 11px;
   }
@@ -11,6 +21,9 @@ export const EconomyView = styled.main`
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .chartBox {
   }
 
   input {

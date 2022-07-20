@@ -37,8 +37,6 @@ import { ConsumoEstimado } from '../../services/consumoEstimado';
 import CostIndicatorChart from '../../components/graph/costIndicatorChart';
 import { EconomyView } from '../../styles/layouts/economy/economy';
 
-import dynamic from 'next/dynamic';
-
 export default function economy({userName, anual, years, brutaMensal, yearsBrutaMensal, catLiv, clients, indicatorCost}: any) {
   const {economyMenu, setEconomyMenu} = useContext(MenuContext)
 
@@ -69,7 +67,6 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
       ]
     }:{}).then(res => {
       setCatLivDataState(res.data.data)
-      console.log()
     }).catch(res => {
       // console.log(res)
     })
@@ -89,113 +86,124 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
   }, [unity])
 
   return (
-    <EconomyView>
+    <main style={{width: '100%'}}>
       <Head>
-        <title>Smart Energia - PLD</title>
+        <title>Smart Energia - Economia</title>
       </Head>
       <div id='title'/>
       <Header name={userName}>
         <PageTitle title='Economia' subtitle='Gráficos de economia'/>
       </Header>
+      <EconomyView>
+        <TableHeader>
+          <Tabs value={economyMenu} onChange={(e, nv) => setEconomyMenu(nv)} aria-label="">
+            <Tab label="Acumulada Anual"/>
+            <Tab label="Acumulada Mensal"/>
+            <Tab label="Cativo x Livre Mensal"/>
+            <Tab label="Custo R$/MWh"/>
+          </Tabs>
+        </TableHeader>
+        {
+          economyMenu === 0?
+          <p style={{marginLeft: '3%'}}>Economia Bruta Anual - Valores em R$ x mil</p>
+          :
+          economyMenu === 1?
+          <p style={{marginLeft: '3%'}}>Economia Bruta Mensal - Valores em R$ x mil</p>
+          :
+          economyMenu === 2?
+          <p style={{marginLeft: '3%'}}>Economia Estimada x Consolidada - Valores em R$ x mil</p>
+          :
+          <p style={{marginLeft: '3%'}}>Economia Custo R$/MWH - Valores em R$ x mil</p>
+        }
+        {
+          typeof window === 'undefined' || typeof window === undefined? null :
+          <>
+            <RenderIf isTrue={economyMenu===0}>
+              <section>
+                <GrossAnualChart title='' subtitle=''
+                  dataset='Consolidada'
 
-      <TableHeader>
-        <Tabs value={economyMenu} onChange={(e, nv) => setEconomyMenu(nv)} aria-label="">
-          <Tab label="Acumulada Anual"/>
-          <Tab label="Acumulada Mensal"/>
-          <Tab label="Cativo x Livre Mensal"/>
-          <Tab label="Custo R$/MWh"/>
-        </Tabs>
-      </TableHeader>
+                  dataProps={anual}
+                  label={years} barLabel bruta
+                />
+              </section>
+            </RenderIf>
 
-      {
-        typeof window === 'undefined' || typeof window === undefined? null :
-        <>
-          <RenderIf isTrue={economyMenu===0}>
-            <section>
-              <GrossAnualChart title='' subtitle=''
-                dataset='Consolidada'
+            <RenderIf isTrue={economyMenu===1}>
+              <section>
+                <GrossMensalChart title='' subtitle=''
+                  data1={brutaMensal}
+                  data2={brutaMensal}
+                  label={yearsBrutaMensal}
+                />
+              </section>
+            </RenderIf>
 
-                dataProps={anual}
-                label={years} barLabel bruta
-              />
-            </section>
-          </RenderIf>
+            <RenderIf isTrue={economyMenu===2}>
+              <div style={{paddingLeft: '3%'}}>
+                <FormControl sx={{ m: 1, minWidth: 120, width: 200, height: '64px' }} size="small">
+                  <InputLabel id="demo-select-small">Unidade</InputLabel>
+                  <Select
+                    labelId="demo-select-small"
+                    id="demo-select-small"
+                    value={unity}
+                    label="Unidade"
+                    sx={{height: '64px'}}
+                    onChange={value => setUnity(value.target.value)}
+                    fullWidth
+                  >
+                    <MenuItem value="">Todas</MenuItem>
+                    {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> !!OPÇAO COM DADOS TESTES!! */}
+                    {
+                      clients.map((value) => {
+                        return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
+                      })
+                    }
+                  </Select>
+                </FormControl>
+              </div>
+              <section>
+                <CativoXLivreChart chartData={unity!==''? catLivDataState : catLiv}
+                dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
+                label={ConsumoEstimado.label} title='' subtitle='' barLabel hashurado/>
+              </section>
+            </RenderIf>
 
-          <RenderIf isTrue={economyMenu===1}>
-            <section>
-              <GrossMensalChart title='' subtitle=''
-                data1={brutaMensal}
-                data2={brutaMensal}
-                label={yearsBrutaMensal}
-              />
-            </section>
-          </RenderIf>
-
-          <RenderIf isTrue={economyMenu===2}>
-            <div style={{paddingLeft: '7%'}}>
-              <FormControl sx={{ m: 1, minWidth: 120, width: 200, height: '64px' }} size="small">
-                <InputLabel id="demo-select-small">Unidade</InputLabel>
-                <Select
-                  labelId="demo-select-small"
-                  id="demo-select-small"
-                  value={unity}
-                  label="Unidade"
-                  sx={{height: '64px'}}
-                  onChange={value => setUnity(value.target.value)}
-                  fullWidth
-                >
-                  <MenuItem value="">Todas</MenuItem>
-                  {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> !!OPÇAO COM DADOS TESTES!! */}
-                  {
-                    clients.map((value) => {
-                      return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
-                    })
-                  }
-                </Select>
-              </FormControl>
-            </div>
-            <section>
-              <CativoXLivreChart chartData={unity!==''? catLivDataState : catLiv}
-              dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
-              label={ConsumoEstimado.label} title='' subtitle='' barLabel hashurado/>
-            </section>
-          </RenderIf>
-
-          <RenderIf isTrue={economyMenu===3}>
-            <div style={{paddingLeft: '3%'}}>
-              <FormControl sx={{ m: 1, minWidth: 120, width: 200 }} size="small">
-                <InputLabel id="demo-select-small">Unidade</InputLabel>
-                <Select
-                  labelId="demo-select-small"
-                  id="demo-select-small"
-                  value={unity}
-                  sx={{height: '64px'}}
-                  label="Unidade"
-                  onChange={value => setUnity(value.target.value)}
-                  fullWidth
-                >
-                  <MenuItem value="">Todas</MenuItem>
-                  {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
-                  {
-                    clients.map((value) => {
-                      return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
-                    })
-                  }
-                </Select>
-              </FormControl>
-            </div>
-            <section>
-              <CostIndicatorChart title='' subtitle=''
-                data1={indicatorDataState?.filter((value, index) => value.mes.slice(0, 4).includes('2021'))}
-                data2={indicatorDataState?.filter((value, index) => value.mes.slice(0, 4).includes('2022'))}
-                label={months}
-              />
-            </section>
-          </RenderIf>
-        </>
-      }
-
-    </EconomyView>
+            <RenderIf isTrue={economyMenu===3}>
+              <div style={{paddingLeft: '3%'}}>
+                <FormControl sx={{ m: 1, minWidth: 120, width: 200 }} size="small">
+                  <InputLabel id="demo-select-small">Unidade</InputLabel>
+                  <Select
+                    labelId="demo-select-small"
+                    id="demo-select-small"
+                    value={unity}
+                    sx={{height: '64px'}}
+                    label="Unidade"
+                    onChange={value => setUnity(value.target.value)}
+                    fullWidth
+                  >
+                    <MenuItem value="">Todas</MenuItem>
+                    {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
+                    {
+                      clients.map((value) => {
+                        return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
+                      })
+                    }
+                  </Select>
+                </FormControl>
+              </div>
+              <section>
+                <CostIndicatorChart title='' subtitle=''
+                  data1={indicatorDataState?.filter((value, index) => value.mes.slice(0, 4).includes('2021'))}
+                  data2={indicatorDataState?.filter((value, index) => value.mes.slice(0, 4).includes('2022'))}
+                  label={months}
+                />
+              </section>
+            </RenderIf>
+          </>
+        }
+      </EconomyView>
+    </main>
   )
 }
 

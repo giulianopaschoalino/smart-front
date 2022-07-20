@@ -66,12 +66,12 @@ interface LineBarChartInterface {
   dataset1?: string,
   dataset2?: string,
   dataset3?: string,
-  barLabel?: boolean | undefined,
-  hashurado?: boolean | undefined,
   miniature?: boolean | undefined,
+  barLabel?: boolean | undefined,
+  hashurado?: boolean | undefined
 }
 
-export function CativoXLivreChart({ title, subtitle, chartData, label, red, dataset1, dataset2, dataset3, barLabel, hashurado, miniature }: LineBarChartInterface) {
+export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1, dataset2, dataset3, barLabel, hashurado, miniature }: LineBarChartInterface) {
   const chartRef = useRef<ChartJS>(null);
 
   const labels = label
@@ -141,9 +141,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
       {
         type: 'bar' as const,
         label: 'Cativo',
-        backgroundColor: (value, ctx) => {
-          return '#C2D5FB'
-        },
+        backgroundColor: '#C2D5FB',
         data: chartData?.map(value => {
           if (!value.dad_estimado)
           return parseInt(value.custo_cativo)
@@ -152,11 +150,8 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
       {
         type: 'bar' as const,
         label: 'Livre',
-        // backgroundColor: '#255488',
-        backgroundColor: (value, ctx) => {
-          return '#255488'
-        },
-        data: chartData?.map(value => {
+        backgroundColor: '#255488',
+        data: chartData?.filter(value => !value.dad_estimad? true : false).map(value => {
           if (!value.dad_estimado)
           return parseInt(value.custo_livre)
         }),

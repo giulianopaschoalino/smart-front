@@ -17,7 +17,7 @@ export const ChartTitleView = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 30px;
 
   flex-direction: column;
 
