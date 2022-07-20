@@ -102,7 +102,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
         type: 'bar',
         label: 'Estimado',
         data: data2.map(value => value.dad_estimado? value?.economia_acumulada : null),
-        backgroundColor: draw('diagonal-right-left', '#C2d5fb')
+        backgroundColor: document ? document ? draw('diagonal-right-left', '#C2d5fb') : null: null
       },
     ],
   }

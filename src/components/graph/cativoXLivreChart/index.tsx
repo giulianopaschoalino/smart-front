@@ -136,7 +136,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
         },
         borderWidth: 2,
         fill: false,
-        data: chartData.map(value => parseInt(value.economia_mensal)),
+        data: chartData?.map(value => parseInt(value.economia_mensal)),
       },
       {
         type: 'bar' as const,
@@ -144,7 +144,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
         backgroundColor: (value, ctx) => {
           return '#C2D5FB'
         },
-        data: chartData.map(value => {
+        data: chartData?.map(value => {
           if (!value.dad_estimado)
           return parseInt(value.custo_cativo)
         }),
@@ -156,7 +156,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
         backgroundColor: (value, ctx) => {
           return '#255488'
         },
-        data: chartData.map(value => {
+        data: chartData?.map(value => {
           if (!value.dad_estimado)
           return parseInt(value.custo_livre)
         }),
@@ -165,7 +165,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
         type: 'bar',
         label: 'Est. Cativo',
         backgroundColor: pattern.draw('diagonal', '#C2D5FB'),
-        data: chartData.map(value => {
+        data: chartData?.map(value => {
           if (value.dad_estimado)
           return parseInt(value.custo_cativo)
         }),
@@ -174,7 +174,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, red, data
         type: 'bar',
         label: 'Est. Livre',
         backgroundColor: pattern.draw('diagonal', '#255488'),
-        data: chartData.map(value => {
+        data: chartData?.map(value => {
           if (value.dad_estimado)
           return parseInt(value.custo_livre)
         }),

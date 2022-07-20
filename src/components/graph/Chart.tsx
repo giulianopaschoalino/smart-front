@@ -101,7 +101,7 @@ export default function Chart({ title, data1, data2, label, subtitle, dataset1, 
         data: data2.map(value => value.custo_unit>0? value.custo_unit : null),
         // backgroundColor: '#C2d5fb'
         backgroundColor: (value, ctx) => {
-          return data2[value.dataIndex]?.dad_estimado == false ? '#C2d5fb' : draw('diagonal-right-left', '#C2d5fb');
+          return data2[value.dataIndex]?.dad_estimado == false ? '#C2d5fb' : document ? document ? draw('diagonal-right-left', '#C2d5fb') : null: null;
         },
       }
     ],

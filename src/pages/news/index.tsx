@@ -49,7 +49,8 @@ export default function aboutUs({userName, news}: any) {
 
         <a href='https://www.energiasmart.com.br/noticias/'
         target={"_blank"}
-        rel={"noreferrer"}><BasicButton title='Noticias Atualizadas' onClick={() => console.log()}/></a>
+        rel={"noreferrer"}>Ver Mais</a>
+
       </NewsView>
     </main>
   )

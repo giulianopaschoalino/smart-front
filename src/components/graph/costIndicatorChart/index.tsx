@@ -89,7 +89,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
     datasets: [
       {
         label: '2021',
-        data: data1.map(value => value.custo_unit>0? value.custo_unit : null),
+        data: data1?.map(value => value.custo_unit>0? value.custo_unit : null),
         // backgroundColor: '#C2d5fb'
         backgroundColor: (value, ctx) => {
           if (value.dad_estimado)
@@ -100,7 +100,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
       },
       {
         label: '2022',
-        data: data2.map(value => value.custo_unit>0? value.custo_unit : null),
+        data: data2?.map(value => value.custo_unit>0? value.custo_unit : null),
         // backgroundColor: '#255488'
         backgroundColor: (value, ctx) => {
           if (value.dad_estimado)

@@ -155,7 +155,7 @@ export function DemRegXDemConChart({
   return (
     <ChartView>
       {/* <ChartTitle title={title} subtitle={subtitle}/> */}
-      <div>
+      <div style={{width: '90%'}}>
         <Chart ref={chartRef} type='bar' options={options} data={data} />
       </div>
     </ChartView>

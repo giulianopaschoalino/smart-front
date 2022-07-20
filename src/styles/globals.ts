@@ -44,7 +44,7 @@ export const GlobalStyle = createGlobalStyle`
     .MuiOutlinedInput-input, .MuiInputBase-input, .MuiInputBase-inputAdornedEnd, .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
       padding: 0 0 0 15px;
       width: 100%;
-      height: 63px!important;
+      height: 63px;
     }
       .css-1u3bzj6-MuiFormControl-root-MuiTextField-root,
       .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root,

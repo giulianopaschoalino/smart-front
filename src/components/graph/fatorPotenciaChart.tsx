@@ -82,6 +82,8 @@ export default function FatorPotenciaChart({ title, subtitle, data1, data2, labe
 
   const labels = label;
 
+  console.log(data1)
+
   const data = {
     labels,
     datasets: [
@@ -106,7 +108,9 @@ export default function FatorPotenciaChart({ title, subtitle, data1, data2, labe
   return (
     <ChartView>
       {/* <ChartTitle title={title} subtitle={subtitle} /> */}
-      <Line options={options} data={data} />
+      <div style={{width: '90%'}}>
+        <Line options={options} data={data} />
+      </div>
     </ChartView>
   )
 }

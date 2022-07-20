@@ -98,7 +98,7 @@ export function DiscretizedConsumptionChart({ title, subtitle, dataProps, label,
   return (
     <ChartView>
       {/* <ChartTitle title={title} subtitle={subtitle}/> */}
-      <div>
+      <div style={{width: '90%'}}>
         <Chart type='bar' options={options} data={data} />
       </div>
     </ChartView>

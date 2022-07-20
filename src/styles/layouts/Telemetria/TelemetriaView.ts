@@ -7,7 +7,7 @@ export const TelemetriaView = styled.main`
 
   flex-direction: column;
 
-  padding: 20px;
+  padding: 0;
   width: 100%;
 
   .modal {
@@ -95,14 +95,12 @@ export const TelemetriaView = styled.main`
   table {
     display: none;
   }
-
   .tg{
     border-collapse:collapse;
     border-spacing:0;
     font-family:Poppins;
     width: 100%;
   }
-
   .tg td{
     border-color:#DDDFE1;
     border-style:solid;
@@ -113,7 +111,6 @@ export const TelemetriaView = styled.main`
     padding:17px 30px;
     word-break:normal;
   }
-
   .tg th{
     border-color:#DDDFE1;
     border-style:solid;
@@ -158,7 +155,6 @@ export const TelemetriaView = styled.main`
     text-align:center;
     vertical-align:top
   }
-
   .tg .tg-baqh{
     text-align:center;
     vertical-align:top
@@ -171,6 +167,10 @@ export const TelemetriaView = styled.main`
     background-color:#dddfe1;
     text-align:center;
     vertical-align:top
+  }
+
+  canvas {
+    align-self: center;
   }
 
   input {
@@ -383,13 +383,15 @@ export const TableHeader = styled.div`
 
   flex-direction: row;
 
-  padding: 0 40px 0 40px
+  /* padding: 0 40px 0 40px */
 `
 
 export const ChartFilters = styled.section`
   display: flex;
-  align-items: center;
-  justify-content: center!important;
+  align-items: flex-start;
+  justify-content: flex-start!important;
+
+  margin-left: 72px;
 
   align-self: flex-start;
 
