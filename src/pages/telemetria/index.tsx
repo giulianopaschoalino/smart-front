@@ -122,6 +122,7 @@ export default function Telemetria({userName, clients}: any) {
   };
 
   async function getTableData() {
+    const html = document.querySelector("table")?.outerHTML;
     if (startDate.toLocaleDateString()!=='' && endDate.toLocaleDateString()!=='' && send)
       setOpen(true)
       await api.post('/telemetry/powerFactor', {
@@ -135,6 +136,7 @@ export default function Telemetria({userName, clients}: any) {
         setOpenSnackError(false)
         setOpenSnackSuccess(true)
         setOpen(false)
+        htmlToCSV(html, "telemetria.csv")
       }).catch(res => {
         setSend(false)
         setException(true)
@@ -162,13 +164,16 @@ export default function Telemetria({userName, clients}: any) {
   }
 
   async function getChartData() {
+    const html = document.querySelector("table")?.outerHTML;
     await api.post('/telemetry/demand', {
+      "type": discretization,
       "filters": [
         {"type" : "=", "field": "med_5min.ponto", "value": unity},
-        {"type" : "between", "field": "dia_num", "value": [startDate, endDate]}
+        {"type" : "between", "field": "dia_num", "value": [currentDate, currentDate]}
       ]
       }).then(res => {
         setDemRegXDemCon(res.data.data)
+        htmlToCSV(html, "telemetria.csv")
       }).catch(res => {
         // console.log(res)
         router.push('/telemetria')
@@ -663,7 +668,7 @@ export default function Telemetria({userName, clients}: any) {
           {/* <GradientButton title='GRÁFICO' description='CLIQUE AQUI PARA GERAR GRÁFICO DO PERÍODO SELECIONADO' onClick={() => handleVerifyFields()} orange /> */}
           <GradientButton title='DOWNLOADS' description={`CLIQUE AQUI PARA BAIXAR OS DADOS EM FORMATO EXCEL DO PERÍODO SELECIONADO`} green onClick={() => {
             if (send) {
-              const html = document.querySelector("table").outerHTML;
+              const html = document.querySelector("table")?.outerHTML;
               htmlToCSV(html, "telemetria.csv");
             }
             else {
