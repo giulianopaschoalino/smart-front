@@ -162,7 +162,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
           </RenderIf>
 
           <RenderIf isTrue={economyMenu===3}>
-            <div style={{paddingLeft: '7%'}}>
+            <div style={{paddingLeft: '3%'}}>
               <FormControl sx={{ m: 1, minWidth: 120, width: 200 }} size="small">
                 <InputLabel id="demo-select-small">Unidade</InputLabel>
                 <Select
@@ -186,8 +186,8 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
             </div>
             <section>
               <CostIndicatorChart title='' subtitle=''
-                data1={indicatorDataState?.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
-                data2={indicatorDataState?.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
+                data1={indicatorDataState?.filter((value, index) => value.mes.slice(0, 4).includes('2021'))}
+                data2={indicatorDataState?.filter((value, index) => value.mes.slice(0, 4).includes('2022'))}
                 label={months}
               />
             </section>

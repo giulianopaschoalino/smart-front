@@ -29,7 +29,7 @@ export default function Header({name, admin, children}: headerInterface) {
           !admin && profile_picture?
           <Image src={profile_picture} height={100} width={108}/>
           :
-          <Image src='https://kluppdevelopment.s3.sa-east-1.amazonaws.com/avatars/zcgw6O0FxZgxRmIs97WMcUddKurQJcIqSxBLStSc.png' height={75} width={108}/>
+          <Image src='/assets/marca1.png' height={75} width={108}/>
         }
         <div className='icon' >
           <p>

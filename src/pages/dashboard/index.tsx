@@ -92,9 +92,9 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
 
             <GraphCard title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'>
               <CostIndicatorChart title='' subtitle=''
-                data1={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
+                data1={costIndicator.filter((value, index) => value.mes.slice(0, 4).includes('2021'))}
                 // data1={graphData}
-                data2={costIndicator.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
+                data2={costIndicator.filter((value, index) => value.mes.slice(0, 4).includes('2022'))}
                 label={months}
                 miniature
               />
