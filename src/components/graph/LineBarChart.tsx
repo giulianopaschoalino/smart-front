@@ -179,9 +179,7 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
   return (
     <ChartView>
       <ChartTitle title={title} subtitle={subtitle}/>
-      <div>
-        <Chart ref={chartRef} type='bar' options={options} data={data} />
-      </div>
+      <Chart ref={chartRef} type='bar' options={options} data={data} />
     </ChartView>
   )
 }

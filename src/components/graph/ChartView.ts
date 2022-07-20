@@ -1,7 +1,11 @@
 import styled from "styled-components"
 
 export const ChartView = styled.div`
-  width: 100%!important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
 
   div{
     /* margin-top: 10px; */
