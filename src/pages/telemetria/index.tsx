@@ -121,6 +121,10 @@ export default function Telemetria({userName, clients}: any) {
     setEndDate(newValue)
   };
 
+  console.log(currentDate.slice(0, 8) + '01')
+
+  const [demRegXDemCon2, setDemRegXDemCon2] = useState([]);
+
   async function getTableData() {
     const html = document.querySelector("table")?.outerHTML;
     if (startDate.toLocaleDateString()!=='' && endDate.toLocaleDateString()!=='' && send)
@@ -129,7 +133,7 @@ export default function Telemetria({userName, clients}: any) {
         "type": discretization,
         "filters": [
             {"type" : "=", "field": "med_5min.ponto", "value": unity},
-            {"type" : "between", "field": "dia_num", "value": [currentDate, currentDate]}
+            {"type" : "between", "field": "dia_num", "value": [currentDate.slice(0, 8) + '01', currentDate]}
           ]
       }).then(res => {
         setTableData(res.data.data)
@@ -169,14 +173,14 @@ export default function Telemetria({userName, clients}: any) {
       "type": discretization,
       "filters": [
         {"type" : "=", "field": "med_5min.ponto", "value": unity},
-        {"type" : "between", "field": "dia_num", "value": [currentDate, currentDate]}
+        {"type" : "between", "field": "dia_num", "value": [currentDate.slice(0, 8) + '01', currentDate]}
       ]
       }).then(res => {
-        setDemRegXDemCon(res.data.data)
+        setDemRegXDemCon2(res.data.data)
         htmlToCSV(html, "telemetria.csv")
       }).catch(res => {
         // console.log(res)
-        router.push('/telemetria')
+        // router.push('/telemetria')
       })
   }
 
@@ -606,9 +610,9 @@ export default function Telemetria({userName, clients}: any) {
                 }}/>
               </div>
             </ChartFilters>
-            <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon}
+            <DemRegXDemConChart data1={demRegXDemCon2} data2={demRegXDemCon2}
               dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'}
-              label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
+              label={demRegXDemCon2?.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
           </RenderIf>
         </RenderIf>
 
@@ -623,7 +627,7 @@ export default function Telemetria({userName, clients}: any) {
             </div>
           </div>
         </RenderIf>
-        <RenderIf isTrue={startDate.toLocaleDateString()!=='' && endDate.toLocaleDateString()!=='' && tableData!==null}>
+        <RenderIf isTrue={true}>
           <table className="tg">
             <thead>
               <tr>
