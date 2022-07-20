@@ -43,7 +43,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
       x: {
         stacked: true,
         font: {
-          size: 20
+          size: 30
         },
         grid: {
           display: false
@@ -75,13 +75,16 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
           return value==null? null : result
         },
         display: true,
-        color: '#255488',
         anchor: "end",
-        offset: !miniature? -55 : -30,
+        offset: !miniature?20 : -30,
         align: "start",
         font: {
-          size: !miniature? 22 : 10,
-        }
+          size: !miniature? 30 : 10,
+        },
+        color: (value) => {
+          console.log(value.dataset.label)
+          return value.dataset.label==='Consolidada'? '#fff' : '#255488'
+        },
       },
       legend: {
         position: 'bottom' as const,
@@ -96,6 +99,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         text: '',
       },
     },
+
   };
 
   let labels: string[];
@@ -115,7 +119,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         data: dataProps.filter(value => value.dad_estimado === false).map((value, index) => {
           return parseFloat(value.economia_acumulada)
         }),
-        backgroundColor: '#255488'
+        backgroundColor: '#255488',
       },
       {
         type: 'bar',
