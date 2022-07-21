@@ -82,7 +82,4 @@ export async function logout() {
   await api.post('/auth/logout', {})
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   .then(res => {})
-  .catch(res => {
-    console.log(res)
-  })
 }

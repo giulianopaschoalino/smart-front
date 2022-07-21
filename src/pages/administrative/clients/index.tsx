@@ -145,15 +145,11 @@ export default function clients({ clients, userName }) {
       newImageUrls.push(URL.createObjectURL(image))
     )
     setImageURLs(newImageUrls)
-
-    console.log('ola')
   }, [images])
 
   function onImageChange(e: any) {
-    console.log('olá');
     setImages([...e.target.files])
     setLogo(e.target.files[0])
-    console.log(e.target.files[0]);
   }
 
   return (
@@ -315,7 +311,6 @@ export default function clients({ clients, userName }) {
             <div className="imgContainer">
               <article>
                 {imageURLS.map((imageSrc, index) => {
-                  console.log('olá')
                   return <Image
                     src={imageSrc}
                     key={index}

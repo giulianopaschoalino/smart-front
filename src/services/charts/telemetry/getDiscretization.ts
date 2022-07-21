@@ -10,7 +10,6 @@ export async function getDiscretization(
     endDate: Date,
     discretization: string
   ) {
-    console.log(new Date(startDate).toLocaleDateString().split('/').reverse().join('-'), endDate.toLocaleDateString())
     const { data } = await api.post('/telemetry/discretization', {
       "type": discretization,
       // "type": "1_hora",

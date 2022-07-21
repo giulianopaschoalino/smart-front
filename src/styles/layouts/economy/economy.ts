@@ -13,20 +13,23 @@ export const EconomyView = styled.main`
 
   margin-top: 10px;
 
-  .MuiInputLabel-root, .MuiInputLabel-formControl {
-    margin-top: 11px;
-  }
-
   section {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
+  .MuiInputLabel-outlined {
+    margin-top: 11px;
+  }
+  .Mui-focused {
+    margin-top: 0!important;
+  }
+
   .chartBox {
   }
 
-  input {
+  /* input {
     width: 16.6rem;
     height: 63px!important;
 
@@ -37,5 +40,5 @@ export const EconomyView = styled.main`
     border: solid gray 1px;
 
     background-color: #F9F9F9;
-  }
+  } */
 `

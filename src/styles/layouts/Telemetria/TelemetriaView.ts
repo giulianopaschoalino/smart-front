@@ -188,8 +188,11 @@ export const TelemetriaView = styled.main`
   }
 
   .input {
-    .MuiInputLabel-root, .MuiInputLabel-formControl {
+    .MuiInputLabel-outlined {
       margin-top: 11px;
+    }
+    .Mui-focused {
+      margin-top: 0!important;
     }
   }
 

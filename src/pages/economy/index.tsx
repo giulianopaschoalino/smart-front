@@ -105,15 +105,15 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
         </TableHeader>
         {
           economyMenu === 0?
-          <p style={{marginLeft: '3%'}}>Economia Bruta Anual - Valores em R$ x mil</p>
+          <p style={{marginLeft: '3%'}}>Economia Bruta Estimada e Acumulada Anual - Valores em R$ x mil</p>
           :
           economyMenu === 1?
-          <p style={{marginLeft: '3%'}}>Economia Bruta Mensal - Valores em R$ x mil</p>
+          <p style={{marginLeft: '3%'}}>Economia Bruta Estimada e Acumulada Anual - Valores em R$ x mil</p>
           :
           economyMenu === 2?
-          <p style={{marginLeft: '3%'}}>Economia Estimada x Consolidada - Valores em R$ x mil</p>
+          <p style={{marginLeft: '3%'}}>Comparativo de Custo Estimado - Valores em R$ x mil</p>
           :
-          <p style={{marginLeft: '3%'}}>Economia Custo R$/MWH - Valores em R$ x mil</p>
+          <p style={{marginLeft: '3%'}}>Indicador de Custo - Valores em R$/MWh</p>
         }
         {
           typeof window === 'undefined' || typeof window === undefined? null :
@@ -141,7 +141,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
 
             <RenderIf isTrue={economyMenu===2}>
               <div style={{paddingLeft: '3%'}}>
-                <FormControl sx={{ m: 1, minWidth: 120, width: 200, height: '64px' }} size="small">
+                <FormControl sx={{ m: 1, minWidth: 120, width: 200, height: '65px'}} size="small">
                   <InputLabel id="demo-select-small">Unidade</InputLabel>
                   <Select
                     labelId="demo-select-small"
@@ -248,7 +248,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 			"codigo_scde"],
 		"distinct": true
 }).then(res => {
-    console.log(res.data.data)
     clients = res.data.data
   }).catch(res => {
     // console.log(res)

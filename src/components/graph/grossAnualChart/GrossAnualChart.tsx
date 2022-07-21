@@ -32,8 +32,6 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
   function spacement(string) {
     const spaces = string.length===1?'' : string.length===2? '' : string.length===3? ' ' : string.length===4? '  ' : string.length===5? '   ' : ''
 
-    console.log(string.length)
-
     return spaces
   }
 
@@ -76,13 +74,12 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         },
         display: true,
         anchor: "end",
-        offset: !miniature?20 : -30,
+        offset: !miniature?20 : 10,
         align: "start",
         font: {
           size: !miniature? 30 : 10,
         },
         color: (value) => {
-          console.log(value.dataset.label)
           return value.dataset.label==='Consolidada'? '#fff' : '#255488'
         },
       },
