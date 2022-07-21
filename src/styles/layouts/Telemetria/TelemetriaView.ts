@@ -187,6 +187,15 @@ export const TelemetriaView = styled.main`
     background-color: #F9F9F9;
   }
 
+  .input {
+    .MuiInputLabel-outlined {
+      margin-top: 11px;
+    }
+    .Mui-focused {
+      margin-top: 0!important;
+    }
+  }
+
   span {
     font-family: 'Inter';
     font-style: normal;

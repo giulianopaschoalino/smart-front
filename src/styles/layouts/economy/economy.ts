@@ -19,6 +19,13 @@ export const EconomyView = styled.main`
     align-items: center;
   }
 
+  .MuiInputLabel-outlined {
+    margin-top: 11px;
+  }
+  .Mui-focused {
+    margin-top: 0!important;
+  }
+
   .chartBox {
   }
 

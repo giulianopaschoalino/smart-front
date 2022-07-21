@@ -40,12 +40,12 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  .MuiInputLabel-outlined {
+  /* .MuiInputLabel-outlined {
     margin-top: 11px;
   }
   .Mui-focused {
     margin-top: 0!important;
-  }
+  } */
 
   .datePicker {
     .MuiOutlinedInput-input, .MuiInputBase-input, .MuiInputBase-inputAdornedEnd, .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
