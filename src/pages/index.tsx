@@ -124,7 +124,7 @@ export default function Home() {
 
 
         <TextField id="outlined-basic"
-        sx={{ m: 1, width: '90%' }} label="Login" value={email} variant="outlined" onKeyDown={(e) => e.key==='Enter'? console.log(field.current.children[0].focus()) : null}
+        sx={{ m: 1, width: '90%' }} label="Login" value={email} variant="outlined" onKeyDown={(e) => e.key==='Enter'? field.current.children[0].focus() : null}
         onChange={value => {
         setEmail(value.target.value.toLowerCase())
         }}/>

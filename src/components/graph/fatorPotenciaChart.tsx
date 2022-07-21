@@ -82,8 +82,6 @@ export default function FatorPotenciaChart({ title, subtitle, data1, data2, labe
 
   const labels = label;
 
-  console.log(data1)
-
   const data = {
     labels,
     datasets: [

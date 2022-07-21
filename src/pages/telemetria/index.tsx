@@ -113,15 +113,11 @@ export default function Telemetria({userName, clients}: any) {
   const [open, setOpen] = useState(false);
 
   const handleChangeStartDate = (newValue: Date | null) => {
-    console.log(newValue)
     setStartDate(newValue)
   };
   const handleChangeEndDate = (newValue: Date | null) => {
-    console.log(newValue)
     setEndDate(newValue)
   };
-
-  console.log(currentDate.slice(0, 8) + '01')
 
   const [demRegXDemCon2, setDemRegXDemCon2] = useState([]);
 

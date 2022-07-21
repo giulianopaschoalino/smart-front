@@ -44,7 +44,6 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
 
   function getPageYAfterScroll(){
     setPageYPosition(window.scrollY);
-    console.log(window.scrollY)
   }
 
   function downloadCSVFile(csv, filename) {
@@ -71,7 +70,6 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
   }
 
   useEffect(() => {
-    console.log(unidade)
     if (unidade!=='' || month!==''){
       api.post('/operation/summary', month && !unidade? {
         "filters": [
@@ -91,7 +89,7 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
       } : {}
       ).then(res => {
         setTableDataState(res.data.data)
-      }).catch(res => console.log(res))
+      })
     } else {
       setTableDataState(tableData)
     }
@@ -249,7 +247,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 			"codigo_scde"],
 		"distinct": true
   }).then(res => {
-    console.log(res.data)
     clients = res.data.data
   }).catch(res => {
     // console.log(res)

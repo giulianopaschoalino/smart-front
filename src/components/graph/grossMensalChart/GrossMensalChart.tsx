@@ -46,8 +46,6 @@ export default function GrossMensalChart({ title, data1, data2, label, subtitle,
     const spaces = string.length===1?'' : string.length===2? '' : string.length===3? ' ' : string.length===4? '  ' : string.length===5? '   ' : ''
     // const spaces = string.length===1?'' : string.length===2? '⠀⠀⠀⠀' : string.length===3? '⠀⠀⠀' : string.length===4? '⠀⠀' : string.length===5? '⠀' : ''
 
-    console.log(string.length)
-
     return spaces
   }
 

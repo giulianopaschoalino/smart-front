@@ -187,12 +187,6 @@ export const TelemetriaView = styled.main`
     background-color: #F9F9F9;
   }
 
-  .input {
-    .MuiInputLabel-root, .MuiInputLabel-formControl {
-      margin-top: 11px;
-    }
-  }
-
   span {
     font-family: 'Inter';
     font-style: normal;

@@ -62,7 +62,6 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
 
   function getPageYAfterScroll(){
     setPageYPosition(window.scrollY);
-    console.log(window.scrollY)
   }
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -70,18 +69,14 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
   };
   const handleChangeDay = (event: SelectChangeEvent) => {
     setMonth(event.target.value);
-    console.log(new Date().toLocaleDateString().slice(3, 10))
-    console.log('select', event.target.value)
   };
 
   const handleChangeDate = (newValue: Date | null) => {
     setDate(newValue)
 
-    console.log(newValue.toLocaleDateString().replace('/', '-').split('-').reverse().join('-'))
   };
 
   function getDataByDay() {
-    console.log(month)
     api.post('/pld/daily', {
       "filters": [
           {"type" : "=", "field" : "year_month_formatted", "value": month},
@@ -91,7 +86,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
     }).then(res => {
       setDataByDay(res.data.data)
     }).catch(exception => {
-      console.log(exception)
+      // console.log(exception)
     })
   }
 
@@ -201,7 +196,6 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
   useEffect(() => {
     getDataByHour()
     getDataByDay()
-    console.log(month)
   }, [date, month, select])
 
   useEffect(() => {

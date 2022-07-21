@@ -25,7 +25,6 @@ export default function industryInfo({userName, pdfUrl}: any) {
 
   const [pdf, setPdf] = useState<any>();
   function onChange(e) {
-    console.log(e.target.files)
     setPdf(e.target.files[0])
   }
 
@@ -55,7 +54,7 @@ export default function industryInfo({userName, pdfUrl}: any) {
     api.get('/download').then(res => {
       window.open(res.data.path);
     }).catch(res => {
-      console.log(res)
+      // console.log(res)
     })
   }
 
@@ -79,7 +78,7 @@ export default function industryInfo({userName, pdfUrl}: any) {
         <PageTitle title='Info Setorial' subtitle='Realize o upload da última versão de info setorial' />
         <form action="">
           <label htmlFor="">Escolher arquivo</label>
-          <input type="file" name='arquivo' id='arquivo' onChange={onChange}/>
+          <input type="file" name='arquivo' placeholder='' id='arquivo' onChange={onChange}/>
         </form>
       </div>
 
@@ -107,7 +106,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   apiClient.get('/download').then(res => {
     pdfUrl = res.data.path
   }).catch(res => {
-    console.log('exception', res)
+    // console.log('exception', res)
   })
 
   if (!token) {

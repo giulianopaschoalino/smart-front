@@ -43,7 +43,6 @@ export default function CostIndicator({graphData, userName, clients}: any) {
       ]
     }:{}).then(res => {
       setGraphDataState(res.data.data)
-      console.log()
     }).catch(res => {
       // console.log(res)
     })
@@ -113,7 +112,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 			"codigo_scde"],
 		"distinct": true
 }).then(res => {
-    console.log(res.data.data)
     clients = res.data.data
   }).catch(res => {
     // console.log(res)

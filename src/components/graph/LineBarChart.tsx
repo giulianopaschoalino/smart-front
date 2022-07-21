@@ -114,8 +114,6 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
     },
   };
 
-  console.log(data3)
-
   const data = data2? {
     labels: label.length < 28? ['1', '2', '3', '4', '5', '6', '7', '8', '8', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'] : label,
     datasets: [
