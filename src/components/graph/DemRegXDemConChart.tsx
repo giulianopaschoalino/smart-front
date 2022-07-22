@@ -92,12 +92,22 @@ export function DemRegXDemConChart({
       x: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: 16
+          }
+        },
       },
       y: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: 16
+          }
+        },
       },
     },
     plugins: {
@@ -140,8 +150,9 @@ export function DemRegXDemConChart({
       {
         type: 'bar' as const,
         label: 'Demanda Registrada',
-        backgroundColor: '#255488',
         data: data2?.map(value => value.dem_reg),
+        borderRadius: 8,
+        backgroundColor: '#255488',
       },
     ],
   };
@@ -154,7 +165,6 @@ export function DemRegXDemConChart({
 
   return (
     <ChartView>
-      {/* <ChartTitle title={title} subtitle={subtitle}/> */}
       <div style={{width: '90%'}}>
         <Chart ref={chartRef} type='bar' options={options} data={data} />
       </div>

@@ -144,25 +144,6 @@ export default function Telemetria({userName, clients}: any) {
         setOpenSnackSuccess(false)
       })
   }
-
-  function handleVerifyFields() {
-    if (unity != '' && startDate.toLocaleDateString() != '' && endDate.toLocaleDateString() != '' && discretization != '') {
-      router.push({
-        pathname: '/chartTelemetry',
-        query: {
-          'startDate': startDate.toLocaleDateString(),
-          'endDate': endDate.toLocaleDateString(),
-          discretization,
-          unity
-        },
-      })
-      return true
-    } else {
-      setOpenSnackFields(true)
-      return false
-    }
-  }
-
   async function getChartData() {
     const html = document.querySelector("table")?.outerHTML;
     await api.post('/telemetry/demand', {
@@ -194,12 +175,6 @@ export default function Telemetria({userName, clients}: any) {
     if (send===true)
       getChartData()
   }, [send])
-
-  useEffect(() => {
-    // getDiscretization("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
-    //   .then(result => setDiscretizedConsumptionData(result))
-    //   .catch(exception => console.log(exception))
-  }, [discretization])
 
   return(
     <main style={{width: '100%'}}>
@@ -243,7 +218,7 @@ export default function Telemetria({userName, clients}: any) {
           severity="error"
           sx={{ width: '100%' }}
         >
-          Verifique os campos!
+          Verifique os campos e tente novamente!
         </Alert>
       </Snackbar>
 
@@ -351,9 +326,10 @@ export default function Telemetria({userName, clients}: any) {
               </LocalizationProvider>
               <div className='select'>
                 <BasicButton title='Selecionar!' onClick={() => {
+                  setSend(true)
                   getDiscretization(unity, startDate, endDate, discretization)
-                    .then(result => setDiscretizedConsumptionData(result))
-                    .catch(exception => console.log(exception))
+                    .then(result => {setDiscretizedConsumptionData(result); setSend(false)})
+                    .catch(exception => {setSend(false); setOpenSnackFields(true)})
                 }}/>
               </div>
             </ChartFilters>
@@ -447,9 +423,10 @@ export default function Telemetria({userName, clients}: any) {
               </LocalizationProvider>
               <div className='select'>
                 <BasicButton title='Selecionar!' onClick={() => {
+                  setSend(true)
                   getDemand(unity, startDate, endDate, discretization)
-                    .then(result => setDemRegXDemCon(result))
-                    .catch(exception => console.log(exception))
+                    .then(result => {setDemRegXDemCon(result); setSend(false)})
+                    .catch(exception => {setSend(false); setOpenSnackFields(true)})
                 }}/>
               </div>
             </ChartFilters>
@@ -539,9 +516,10 @@ export default function Telemetria({userName, clients}: any) {
               </LocalizationProvider>
               <div className='select'>
                 <BasicButton title='Selecionar!' onClick={() => {
+                  setSend(true)
                   getPowerFactorData(unity, startDate, endDate, discretization)
-                    .then(result => setFatorPotenciaData(result))
-                    .catch(exception => console.log(exception))
+                    .then(result => {setFatorPotenciaData(result); setSend(false)})
+                    .catch(exception => {setSend(false); setOpenSnackFields(true)})
                 }}/>
               </div>
             </ChartFilters>
@@ -598,11 +576,12 @@ export default function Telemetria({userName, clients}: any) {
                   </Select>
                 </FormControl>
               </div>
-              <div className='select'>
+              <div style={{marginBottom: '8px'}}>
                 <BasicButton title='Selecionar!' onClick={() => {
+                  setSend(true)
                   getDemand(unity, startDate, endDate, discretization)
-                    .then(result => setDiscretizedConsumptionData(result))
-                    .catch(exception => console.log(exception))
+                    .then(result => {setDiscretizedConsumptionData(result); setSend(false)})
+                    .catch(exception => {setSend(false); setOpenSnackFields(true)})
                 }}/>
               </div>
             </ChartFilters>

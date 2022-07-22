@@ -12,28 +12,30 @@ import { FaqView } from '../../styles/layouts/commonQuestions/FaqView'
 
 export default function commonQuestions({faqData, userName}) {
   return (
-    <FaqView>
+    <main style={{width: '100%'}}>
       <Head>
         <title>Smart Energia - FAQ</title>
       </Head>
       <Header name={userName}>
         <PageTitle title='Perguntas Frequentes' subtitle='Aqui estão algumas das perguntas que mais recebemos!'/>
       </Header>
-      {/* <Banner title='Perguntas Frequentes' subtitle='Aqui estão algumas das perguntas que mais recebemos!' imgSource='/assets/banners/faq1.png'/> */}
-      <section className='CommonQuestionsSection' >
-      {
-        faqData.length<1?
-        <p>Nenhuma pergunta no momento!</p>
+      <FaqView>
+        {/* <Banner title='Perguntas Frequentes' subtitle='Aqui estão algumas das perguntas que mais recebemos!' imgSource='/assets/banners/faq1.png'/> */}
+        <section className='CommonQuestionsSection' >
+        {
+          faqData.length!==0?
+          faqData.map((value, index ) => {
+            return <>
+              <CommonQuestionsCard key={index} question={value.question} answer={value.answer}/>
+              <hr />
+            </>
+          })
           :
-        faqData.map((value, index ) => {
-          return <>
-            <CommonQuestionsCard key={index} question={value.question} answer={value.answer}/>
-            <hr />
-          </>
-        })
-      }
-      </section>
-    </FaqView>
+          <p>Nenhuma pergunta no momento!</p>
+          }
+        </section>
+      </FaqView>
+    </main>
   )
 }
 
@@ -47,7 +49,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await apiClient.get('/faq').then(res => {
     faqData = res.data.data
   }).catch(res => {
-    // console.log(res)
+    console.log(res)
   })
 
   if (!token) {

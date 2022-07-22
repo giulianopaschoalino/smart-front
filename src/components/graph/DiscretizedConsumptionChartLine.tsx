@@ -70,6 +70,7 @@ export default function DiscretizedConsumptionChartLine({ title, subtitle, data1
     datasets: [
       {
         label: dataset1,
+        borderRadius: 8,
         data: data1.map(value => value.reativa),
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0)',
@@ -77,6 +78,7 @@ export default function DiscretizedConsumptionChartLine({ title, subtitle, data1
       {
         label: 'base',
         data: data1.map(value => 500),
+        borderRadius: 8,
         borderColor: 'rgb(0, 0, 0)',
         fill: false,
         backgroundColor: 'rgba(255, 145, 0, 0)' ,
@@ -85,6 +87,7 @@ export default function DiscretizedConsumptionChartLine({ title, subtitle, data1
       {
         label: 'tolerância',
         data: data1.map(value => 525),
+        borderRadius: 8,
         borderColor: 'rgb(255, 0, 0)',
         fill: false,
         backgroundColor: 'rgba(255, 145, 0, 0)' ,

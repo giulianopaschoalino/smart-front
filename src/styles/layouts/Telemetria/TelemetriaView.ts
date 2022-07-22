@@ -191,7 +191,7 @@ export const TelemetriaView = styled.main`
     .MuiInputLabel-outlined {
       margin-top: 11px;
     }
-    .Mui-focused {
+    .Mui-focused, .MuiInputLabel-shrink {
       margin-top: 0!important;
     }
   }
@@ -226,23 +226,7 @@ export const TelemetriaView = styled.main`
     flex-wrap: wrap;
 
     .select {
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-
-      flex-direction: column;
-      /* height: 10em; */
-
-      :nth-child(1) {
-        label {
-          margin-top: 10px;
-        }
-      }
-      :nth-child(2) {
-        label {
-          margin-top: 10px;
-        }
-      }
+      margin-bottom: 17px;// input margin bottom
     }
   }
 `;

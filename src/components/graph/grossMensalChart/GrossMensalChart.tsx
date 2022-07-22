@@ -55,12 +55,22 @@ export default function GrossMensalChart({ title, data1, data2, label, subtitle,
       x: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: !miniature? 16 : 10
+          }
+        },
       },
       y: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: !miniature? 16 : 10
+          }
+        },
       },
     },
     plugins: {
@@ -103,25 +113,23 @@ export default function GrossMensalChart({ title, data1, data2, label, subtitle,
         type: 'bar',
         label: 'Consolidado',
         data: data1.map(value => !value.dad_estimado? value?.economia_acumulada : null),
-        backgroundColor: '#255488'
+        borderRadius: 8,
+        backgroundColor: '#255488',
+        stack: '0'
       },
       {
         type: 'bar',
         label: 'Estimado',
         data: data2.map(value => value.dad_estimado? value?.economia_acumulada : null),
-        backgroundColor: draw('diagonal-right-left', '#C2d5fb')
+        borderRadius: 8,
+        backgroundColor: draw('diagonal-right-left', '#C2d5fb'),
+        stack: '0'
       },
     ],
   }
 
   return (
     <GrossMensalChartView>
-      {/* <RenderIf isTrue={single? true : false} >
-        <Bar
-          options={options}
-          data={graphData}
-        />
-      </RenderIf> */}
       <ChartTitle title={title} subtitle={subtitle} />
       <ChartJs
         options={options}

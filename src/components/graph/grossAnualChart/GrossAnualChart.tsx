@@ -40,18 +40,32 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
     scales: {
       x: {
         stacked: true,
-        font: {
-          size: 30
-        },
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: !miniature? 16 : 10
+          }
+        },
       },
       y: {
         stacked: true,
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: !miniature? 16 : 10
+          }
+        },
+        // title: {
+        //   display: true,
+        //   text: 'titleY',
+        //   font: {
+        //     size: 00
+        //   }
+        // }
       },
     },
     series: {
@@ -85,11 +99,6 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
       },
       legend: {
         position: 'bottom' as const,
-        labels: {
-          font: {
-            size: 12,
-          }
-        }
       },
       title: {
         display: false,
@@ -116,6 +125,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         data: dataProps.filter(value => value.dad_estimado === false).map((value, index) => {
           return parseFloat(value.economia_acumulada)
         }),
+        borderRadius: 10,
         backgroundColor: '#255488',
       },
       {
@@ -124,8 +134,9 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         label: 'Estimado',
         data: dataProps.filter(value => value.ano === '2022').map((value, index) => {
           if (value.dad_estimado)
-            return parseFloat(value.economia_acumulada)
+          return parseFloat(value.economia_acumulada)
         }),
+        borderRadius: 10,
         backgroundColor: draw('diagonal-right-left', '#C2d5fb'),
       },
     ],

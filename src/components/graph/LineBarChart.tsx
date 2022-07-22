@@ -88,7 +88,22 @@ export function LineBarChart({ title, subtitle, data1, data2, data3, label, red,
       x: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: 16
+          }
+        },
+      },
+      y: {
+        grid: {
+          display: false
+        },
+        ticks: {
+          font: {
+            size: 16
+          }
+        },
       },
     },
     plugins: {

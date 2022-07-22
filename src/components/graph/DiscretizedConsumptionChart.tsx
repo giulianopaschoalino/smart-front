@@ -40,12 +40,22 @@ export function DiscretizedConsumptionChart({ title, subtitle, dataProps, label,
       x: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: 16
+          }
+        },
       },
       y: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: 16
+          }
+        },
       },
     },
     plugins: {
@@ -68,6 +78,7 @@ export function DiscretizedConsumptionChart({ title, subtitle, dataProps, label,
       {
         type: 'line' as const,
         label: 'reativa',
+        borderRadius: 8,
         borderColor: '#F00' ,
         fill: false,
         borderDash: [5, 5],
@@ -78,8 +89,9 @@ export function DiscretizedConsumptionChart({ title, subtitle, dataProps, label,
       {
         type: 'bar' as const,
         label: 'consumo',
-        backgroundColor: '#74acec',
         data: dataProps.map(value => value.consumo),
+        borderRadius: 8,
+        backgroundColor: '#74acec',
       },
       // {
       //   type: 'line' as const,
@@ -97,7 +109,6 @@ export function DiscretizedConsumptionChart({ title, subtitle, dataProps, label,
 
   return (
     <ChartView>
-      {/* <ChartTitle title={title} subtitle={subtitle}/> */}
       <div style={{width: '90%'}}>
         <Chart type='bar' options={options} data={data} />
       </div>

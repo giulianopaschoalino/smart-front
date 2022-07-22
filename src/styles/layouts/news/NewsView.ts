@@ -84,7 +84,7 @@ export const NewsView = styled.main`
     align-items: center;
     margin-top: 1px;
 
-    width: 140px;
+    width: 170px;
     height: 45px;
 
     cursor: pointer;
