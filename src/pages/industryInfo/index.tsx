@@ -44,7 +44,7 @@ export default function industryInfo({userName}: any) {
   }
 
   return (
-    <IndustryInfoView>
+    <main style={{width: '100%'}}>
       <Snackbar open={openSnackSuccess} autoHideDuration={4000} onClose={handleCloseSnack}>
         <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
           Pdf baixado Sucesso!
@@ -61,11 +61,13 @@ export default function industryInfo({userName}: any) {
       <Header name={userName}>
         <PageTitle title='Info setorial' subtitle='Baixe o pdf para ver o info setorial'/>
       </Header>
-      {/* <Banner title='Info setorial' subtitle='Baixe o pdf para ver o info setorial' imgSource='/assets/banners/infoSetorial.jpg'/> */}
-      <p>Um resumo das atualizações gerais do Setor Elétrico, com dados sobre geração consumo, demanda, meteorologia baseadas em informações do ONS, CCEE, ANEEL, 10 Maiores Jornais e Revistas e CPTEC</p>
-      <button onClick={() => handleDownloadPdf()}>Clique aqui para baixar o arquivo em PDF</button>
+      <IndustryInfoView>
+        {/* <Banner title='Info setorial' subtitle='Baixe o pdf para ver o info setorial' imgSource='/assets/banners/infoSetorial.jpg'/> */}
+        <p>Um resumo das atualizações gerais do Setor Elétrico, com dados sobre geração consumo, demanda, meteorologia baseadas em informações do ONS, CCEE, ANEEL, 10 Maiores Jornais e Revistas e CPTEC</p>
+        <button onClick={() => handleDownloadPdf()}>Clique aqui para baixar o arquivo em PDF</button>
 
-    </IndustryInfoView>
+      </IndustryInfoView>
+    </main>
   )
 }
 

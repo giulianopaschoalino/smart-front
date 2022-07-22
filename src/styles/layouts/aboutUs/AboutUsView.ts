@@ -5,6 +5,14 @@ export const AboutUsView = styled.main`
 
   font-weight: 300;
 
+  background: #F8F8F8;
+  box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  -webkit-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  -moz-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  border-radius: 20px;
+
+  background-color: #FFFFFF;
+
   article {
     display: flex;
     justify-content: flex-end;

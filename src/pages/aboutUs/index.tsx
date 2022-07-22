@@ -11,7 +11,7 @@ import { AboutUsView } from '../../styles/layouts/aboutUs/AboutUsView'
 
 export default function aboutUs({userName, text}) {
   return (
-    <AboutUsView>
+    <main style={{width: '100%'}}>
       <Head>
         <title>Smart Energia - Sobre nós</title>
       </Head>
@@ -19,19 +19,21 @@ export default function aboutUs({userName, text}) {
       <Header name={userName}>
         <PageTitle title='Quem Somos' subtitle='Soluções inteligentes em Gestão de Energia'/>
       </Header>
-      {/* <Banner title='Quem Somos' subtitle='Soluções inteligentes em Gestão de Energia' imgSource='/assets/banners/aboutUsBanner.png' /> */}
+      <AboutUsView>
+        {/* <Banner title='Quem Somos' subtitle='Soluções inteligentes em Gestão de Energia' imgSource='/assets/banners/aboutUsBanner.png' /> */}
 
-      <section dangerouslySetInnerHTML={{__html: text[0]?.about}}/>
-      <article>
-        <aside>
-          <h2>Apoio a projetos sociais</h2>
-          <div>
-            <Image src='/assets/stamps/whiteStamp.png' width={200} height={200} />
-            <Image src='/assets/stamps/blueStamp.png' width={200} height={200} />
-          </div>
-        </aside>
-      </article>
-    </AboutUsView>
+        <section dangerouslySetInnerHTML={{__html: text[0]?.about}}/>
+        <article>
+          <aside>
+            <h2>Apoio a projetos sociais</h2>
+            <div>
+              <Image src='/assets/stamps/whiteStamp.png' width={200} height={200} />
+              <Image src='/assets/stamps/blueStamp.png' width={200} height={200} />
+            </div>
+          </aside>
+        </article>
+      </AboutUsView>
+    </main>
   )
 }
 
