@@ -3,6 +3,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { draw } from 'patternomaly'
 import React, { useEffect } from 'react';
 import { Chart } from 'react-chartjs-2';
+import 'chartjs-plugin-style';
 
 import { GrossAnualChartView } from './GrossAnualChartView';
 import ChartTitle from '../ChartTitle';
@@ -14,7 +15,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  ChartDataLabels
+  ChartDataLabels,
 );
 
 interface SingleBarInterface{
@@ -59,13 +60,6 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
             size: !miniature? 16 : 10
           }
         },
-        // title: {
-        //   display: true,
-        //   text: 'titleY',
-        //   font: {
-        //     size: 00
-        //   }
-        // }
       },
     },
     series: {
@@ -88,7 +82,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         },
         display: true,
         anchor: "end",
-        offset: !miniature?20 : 10,
+        offset: !miniature? 5 : 5,
         align: "start",
         font: {
           size: !miniature? 30 : 10,

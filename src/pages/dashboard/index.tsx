@@ -75,7 +75,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
                 label={grossAnualYears} barLabel bruta miniature/>
             </GraphCard>
 
-            <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ x mil' singleBar>
+            <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ x mil'>
             <GrossMensalChart title='' subtitle=''
               data1={grossMensalGraph}
               data2={grossMensalGraph}
@@ -84,7 +84,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
             />
             </GraphCard>
 
-            <GraphCard title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - Valores em R$ x mil' singleBar>
+            <GraphCard title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - Valores em R$ x mil'>
               <CativoXLivreChart chartData={acumulatedGraph}
                 dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
                 label={ConsumoEstimado.label} title='' subtitle='' barLabel hashurado miniature/>
