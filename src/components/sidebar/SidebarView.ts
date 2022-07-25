@@ -255,10 +255,12 @@ export const ModalContainer = styled.div`
 
     width: 50%;
 
-    margin-top: 4em;
+    margin-top: 2em;
     button {
-      width: 10em;
+      min-width: 10em;
       height: 3em;
+
+      margin-right: 10px;
 
       cursor: pointer;
 
