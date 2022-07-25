@@ -13,7 +13,7 @@ export const ChartCardView = styled.article`
 	box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
 	-webkit-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
 	-moz-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
-  border-radius: 20px;
+  border-radius: 10px;
 
   background-color: #FFFFFF;
 
