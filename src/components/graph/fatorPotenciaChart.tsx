@@ -50,12 +50,22 @@ export default function FatorPotenciaChart({ title, subtitle, data1, data2, labe
       x: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: 16
+          }
+        },
       },
       y: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: 16
+          }
+        },
       },
     },
     plugins: {

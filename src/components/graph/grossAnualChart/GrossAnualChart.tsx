@@ -3,6 +3,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { draw } from 'patternomaly'
 import React, { useEffect } from 'react';
 import { Chart } from 'react-chartjs-2';
+import 'chartjs-plugin-style';
 
 import { GrossAnualChartView } from './GrossAnualChartView';
 import ChartTitle from '../ChartTitle';
@@ -14,7 +15,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  ChartDataLabels
+  ChartDataLabels,
 );
 
 interface SingleBarInterface{
@@ -40,18 +41,25 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
     scales: {
       x: {
         stacked: true,
-        font: {
-          size: 30
-        },
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: !miniature? 16 : 10
+          }
+        },
       },
       y: {
         stacked: true,
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: !miniature? 16 : 10
+          }
+        },
       },
     },
     series: {
@@ -74,7 +82,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         },
         display: true,
         anchor: "end",
-        offset: !miniature?20 : 10,
+        offset: !miniature? 5 : 5,
         align: "start",
         font: {
           size: !miniature? 30 : 10,
@@ -85,11 +93,6 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
       },
       legend: {
         position: 'bottom' as const,
-        labels: {
-          font: {
-            size: 12,
-          }
-        }
       },
       title: {
         display: false,
@@ -116,6 +119,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         data: dataProps.filter(value => value.dad_estimado === false).map((value, index) => {
           return parseFloat(value.economia_acumulada)
         }),
+        borderRadius: 10,
         backgroundColor: '#255488',
       },
       {
@@ -124,8 +128,9 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         label: 'Estimado',
         data: dataProps.filter(value => value.ano === '2022').map((value, index) => {
           if (value.dad_estimado)
-            return parseFloat(value.economia_acumulada)
+          return parseFloat(value.economia_acumulada)
         }),
+        borderRadius: 10,
         backgroundColor: draw('diagonal-right-left', '#C2d5fb'),
       },
     ],

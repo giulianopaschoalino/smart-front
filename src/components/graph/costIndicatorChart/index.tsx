@@ -45,12 +45,22 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
       x: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: !miniature? 16 : 10
+          }
+        },
       },
       y: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: !miniature? 16 : 10
+          }
+        },
       },
     },
     plugins: {
@@ -90,36 +100,32 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
       {
         label: '2021',
         data: data1?.map(value => value.custo_unit>0? value.custo_unit : null),
-        // backgroundColor: '#C2d5fb'
+        borderRadius: 8,
         backgroundColor: (value, ctx) => {
           if (value.dad_estimado)
             return draw('diagonal-right-left', '#C2d5fb');
           else
             return '#C2d5fb'
         },
+        stack: '0'
       },
       {
         label: '2022',
         data: data2?.map(value => value.custo_unit>0? value.custo_unit : null),
-        // backgroundColor: '#255488'
+        borderRadius: 8,
         backgroundColor: (value, ctx) => {
           if (value.dad_estimado)
             return draw('diagonal-right-left', '#255488');
           else
             return '#255488'
         },
+        stack: '0'
       }
     ],
   }
 
   return (
     <CostIndicatorChartView>
-      {/* <RenderIf isTrue={single? true : false} >
-        <Bar
-          options={options}
-          data={graphData}
-        />
-      </RenderIf> */}
       <ChartTitle title={title} subtitle={subtitle} />
       <Bar
         options={options}

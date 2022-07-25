@@ -50,7 +50,22 @@ export default function LineChart({ title, subtitle, data1, data2, data3, data4,
       x: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: 16
+          }
+        },
+      },
+      y: {
+        grid: {
+          display: false
+        },
+        ticks: {
+          font: {
+            size: 16
+          }
+        },
       },
     },
     plugins: {

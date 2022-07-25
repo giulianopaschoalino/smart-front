@@ -428,6 +428,16 @@ export const PldGraphView = styled.main`
 
   width: 100%;
 
+  background: #F8F8F8;
+  box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  -webkit-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  -moz-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  border-radius: 20px;
+
+  background-color: #FFFFFF;
+
+  margin-top: 38px;
+
   .MuiOutlinedInput-input {
     height: 30px;
 

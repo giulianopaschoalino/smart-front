@@ -7,8 +7,18 @@ export const TelemetriaView = styled.main`
 
   flex-direction: column;
 
-  padding: 0;
+  padding: 15px 0 0 0;
   width: 100%;
+
+  background: #F8F8F8;
+  box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  -webkit-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  -moz-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  border-radius: 20px;
+
+  background-color: #FFFFFF;
+
+  /* margin-top: 10px; */
 
   .modal {
     position: absolute;
@@ -191,7 +201,7 @@ export const TelemetriaView = styled.main`
     .MuiInputLabel-outlined {
       margin-top: 11px;
     }
-    .Mui-focused {
+    .Mui-focused, .MuiInputLabel-shrink {
       margin-top: 0!important;
     }
   }
@@ -226,23 +236,7 @@ export const TelemetriaView = styled.main`
     flex-wrap: wrap;
 
     .select {
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-
-      flex-direction: column;
-      /* height: 10em; */
-
-      :nth-child(1) {
-        label {
-          margin-top: 10px;
-        }
-      }
-      :nth-child(2) {
-        label {
-          margin-top: 10px;
-        }
-      }
+      margin-bottom: 17px;// input margin bottom
     }
   }
 `;

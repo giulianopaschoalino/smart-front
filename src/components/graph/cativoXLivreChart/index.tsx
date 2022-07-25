@@ -82,12 +82,22 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
       x: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: !miniature? 16 : 10
+          }
+        },
       },
       y: {
         grid: {
           display: false
-        }
+        },
+        ticks: {
+          font: {
+            size: !miniature? 16 : 10
+          }
+        },
       },
     },
     plugins: {
@@ -141,47 +151,49 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
       {
         type: 'bar' as const,
         label: 'Cativo',
-        backgroundColor: '#C2D5FB',
         data: chartData?.map(value => {
           if (!value.dad_estimado)
           return parseInt(value.custo_cativo)
         }),
+        borderRadius: 8,
+        backgroundColor: '#C2D5FB',
+        stack: 'cativo'
       },
       {
         type: 'bar' as const,
         label: 'Livre',
-        backgroundColor: '#255488',
         data: chartData?.filter(value => !value.dad_estimad? true : false).map(value => {
           if (!value.dad_estimado)
           return parseInt(value.custo_livre)
         }),
+        borderRadius: 8,
+        backgroundColor: '#255488',
+        stack: 'livre'
       },
       {
         type: 'bar',
         label: 'Est. Cativo',
-        backgroundColor: pattern.draw('diagonal', '#C2D5FB'),
         data: chartData?.map(value => {
           if (value.dad_estimado)
           return parseInt(value.custo_cativo)
         }),
+        borderRadius: 8,
+        backgroundColor: pattern.draw('diagonal', '#C2D5FB'),
+        stack: 'cativo'
       },
       {
         type: 'bar',
         label: 'Est. Livre',
-        backgroundColor: pattern.draw('diagonal', '#255488'),
         data: chartData?.map(value => {
           if (value.dad_estimado)
           return parseInt(value.custo_livre)
         }),
+        borderRadius: 8,
+        backgroundColor: pattern.draw('diagonal', '#255488'),
+        stack: 'livre'
       }
     ],
   }
-
-  useEffect(() => {
-    const chart = chartRef.current;
-
-    // triggerTooltip(chart);
-  }, []);
 
   return (
     <CativoXLivreChartView>

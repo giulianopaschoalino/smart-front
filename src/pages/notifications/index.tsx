@@ -12,28 +12,30 @@ import Banner from '../../components/banner/Banner'
 
 export default function Notifications({notificationData, userName}: any) {
   return (
-    <FaqView>
+    <main style={{width: '100%'}}>
       <Head>
         <title>Smart Energia - Notificações</title>
       </Head>
       <Header name={userName}>
         <PageTitle title='Notificações' subtitle='Aqui estão as notificações publicadas para você!'/>
       </Header>
-      {/* <Banner title='Notificações' subtitle='Aqui estão as notificações publicadas para você!' imgSource='/assets/banners/notificacoes.jpg'/> */}
-      <section className='CommonQuestionsSection' >
-      {
-        notificationData.length!=0?
-        notificationData.map((value, index ) => {
-          return <>
-            <NotificationQuestionsCard key={index} title={value.title} body={value.body}/>
-            <hr />
-          </>
-        })
-          :
-        <p style={{alignSelf: 'center'}}>Você não tem notificações!</p>
-      }
-      </section>
-    </FaqView>
+      <FaqView>
+        {/* <Banner title='Notificações' subtitle='Aqui estão as notificações publicadas para você!' imgSource='/assets/banners/notificacoes.jpg'/> */}
+        <section className='CommonQuestionsSection' >
+        {
+          notificationData.length!=0?
+          notificationData.map((value, index ) => {
+            return <>
+              <NotificationQuestionsCard key={index} title={value.title} body={value.body}/>
+              <hr />
+            </>
+          })
+            :
+          <p style={{alignSelf: 'center'}}>Você não tem notificações!</p>
+        }
+        </section>
+      </FaqView>
+    </main>
   )
 }
 
