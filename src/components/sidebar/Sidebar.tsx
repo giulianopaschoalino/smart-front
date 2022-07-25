@@ -23,14 +23,14 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  height: 500,
-  width: 680,
+  height: 400,
+  width: 500,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: '0px solid #000',
   boxShadow: 24,
   p: 4,
 
-  borderRadius: 1
+  borderRadius: 3
 };
 
 export default function Sidebar() {
@@ -120,23 +120,11 @@ export default function Sidebar() {
           <ul>
             <Link href='/dashboard'><li className={router.pathname=='/dashboard'? 'actualPath' : null} ><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Visão Geral'}</li></Link>
             <Link href='/economy'><li onClick={() => setEconomiaDrawer(!economiaDrawer)} className={router.pathname=='/economy'? 'actualPath' : null } ><Image src='/assets/sidebar/economyIcon.svg' width={25} height={25} />{'Economia'}</li></Link>
-              {/* <div className='economiaDrawer drawer'>
-                <Link href='/economy'><li onClick={() => setEconomyMenu(0)} className={economyMenu===0? 'actualPathDrawer' : null}>Economia Bruta Anual</li></Link>
-                <Link href='/economy'><li onClick={() => setEconomyMenu(1)} className={economyMenu===1? 'actualPathDrawer' : null}>Economia Bruta Mensal</li></Link>
-                <Link href='/economy'><li onClick={() => setEconomyMenu(2)} className={economyMenu===2? 'actualPathDrawer' : null}>Cativo x Livre Mensal</li></Link>
-                <Link href='/economy'><li onClick={() => setEconomyMenu(3)} className={economyMenu===3? 'actualPathDrawer' : null}>Custo R$/MWh</li></Link>
-              </div> */}
             <Link href='/telemetria'><li className={router.pathname=='/telemetria'? 'actualPath' : null}><Image src='/assets/sidebar/telemetryIcon.svg' width={25} height={25} />{'Telemetria'}</li></Link>
             <Link href='/resumoOperacao'><li className={router.pathname=='/resumoOperacao'? 'actualPath' : null} ><Image src='/assets/sidebar/summaryOperationsIcon.svg' width={25} height={25} />{'Resumo de Op. '}</li></Link>
             <Link href='/news'><li className={router.pathname=='/news'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'Notícias'}</li></Link>
             <Link href='/pld'><li onClick={() => setPldDrawer(!pldDrawer)} className={router.pathname=='/pld'? 'actualPath' : null}><Image src='/assets/sidebar/newsIcon.svg' width={25} height={25} />{'PLD'}</li></Link>
-              {/* <div className='pldDrawer drawer'>
-                <Link href='/pld'><li onClick={() => setPldMenu(0)} className={pldMenu==0? 'actualPathDrawer' : null}>PLD Histórico</li></Link>
-                <Link href='/pld'><li onClick={() => setPldMenu(1)} className={pldMenu===1? 'actualPathDrawer' : null}>Valores Diários</li></Link>
-                <Link href='/pld'><li onClick={() => setPldMenu(2)} className={pldMenu===2? 'actualPathDrawer' : null}>Valores Horários</li></Link>
-              </div> */}
             <Link href='/industryInfo'><li className={router.pathname=='/industryInfo'? 'actualPath' : null}><Image src='/assets/sidebar/sectorialInfoIcon.svg' width={25} height={25} />{'Info Setorial'}</li></Link>
-            {/* <Link href='/consumption'><li className={router.pathname=='/consumption'? 'actualPath' : null} ><Image src='/assets/sidebar/consumptionIcon.svg' width={25} height={25} />{'Consumo'}</li></Link> */}
             <Link href='/notifications'><li className={router.pathname=='/notifications'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificações'}<div className='notification' style={{display: notificationsCount<=0||notificationsCount===undefined? 'none' : 'inherit'}}><p>{notificationsCount}</p></div></li></Link>
             <Link href='/aboutUs'><li className={router.pathname=='/aboutUs'? 'actualPath' : null}><Image src='/assets/sidebar/aboutUs.svg' width={25} height={25} />{'Sobre Nós'}</li></Link>
             <Link href='/faq'><li className={router.pathname=='/faq'? 'actualPath' : null}><Image src='/assets/sidebar/saqIcon.svg' width={25} height={25} />{'FAQ'}</li></Link>
@@ -149,8 +137,8 @@ export default function Sidebar() {
             >
               <Box sx={style}>
                 <ModalContainer>
-                  <Image src='/assets/marca1.png' width={250} height={200}/>
-                  <Typography id="modal-modal-title" variant="subtitle2" component="p" style={{color: 'gray'}}>
+                  <Image src='/assets/marca1.png' width={210} height={160}/>
+                  <Typography id="modal-modal-title" variant="subtitle2" component="p" style={{color: 'gray', marginTop: '15px'}}>
                     Deseja realmente sair ?
                   </Typography>
                   <article>
