@@ -17,7 +17,6 @@ import { api } from '../../services/api';
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import getAPIClient from '../../services/ssrApi';
-import router from 'next/router';
 import { DemRegXDemConChart } from '../../components/graph/DemRegXDemConChart';
 
 import Tabs from '@mui/material/Tabs';
@@ -29,7 +28,6 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
 import { DiscretizedConsumptionChart } from '../../components/graph/DiscretizedConsumptionChart';
-import DiscretizedConsumptionChartLine from '../../components/graph/DiscretizedConsumptionChartLine';
 import FatorPotenciaChart from '../../components/graph/fatorPotenciaChart';
 import { getDiscretization } from '../../services/charts/telemetry/getDiscretization';
 import { getPowerFactorData } from '../../services/charts/telemetry/getPowerFactor';
@@ -103,6 +101,8 @@ export default function Telemetria({userName, clients}: any) {
 
   const [tableData, setTableData] = useState(null)
 
+  const [loader, setLoader] = useState(false)
+
   const [menu, setMenu] = useState(0);
 
   const [showChart, setShowChart] = useState(false);
@@ -136,9 +136,11 @@ export default function Telemetria({userName, clients}: any) {
         setOpenSnackError(false)
         setOpenSnackSuccess(true)
         setOpen(false)
+        setLoader(true)
         htmlToCSV(html, "telemetria.csv")
       }).catch(res => {
         setSend(false)
+        setLoader(false)
         setException(true)
         setOpenSnackError(true)
         setOpenSnackSuccess(false)
@@ -155,10 +157,8 @@ export default function Telemetria({userName, clients}: any) {
       }).then(res => {
         setDemRegXDemCon2(res.data.data)
         htmlToCSV(html, "telemetria.csv")
-      }).catch(res => {
-        // console.log(res)
-        // router.push('/telemetria')
       })
+      setLoader(true)
   }
 
   const [filters, setFilters] = useState()
@@ -326,10 +326,10 @@ export default function Telemetria({userName, clients}: any) {
               </LocalizationProvider>
               <div className='select'>
                 <BasicButton title='Selecionar!' onClick={() => {
-                  setSend(true)
+                  setLoader(true)
                   getDiscretization(unity, startDate, endDate, discretization)
-                    .then(result => {setDiscretizedConsumptionData(result); setSend(false)})
-                    .catch(exception => {setSend(false); setOpenSnackFields(true)})
+                    .then(result => {setDiscretizedConsumptionData(result); setSend(false); setLoader(false)})
+                    .catch(exception => {setSend(false); setOpenSnackFields(true); setLoader(false)})
                 }}/>
               </div>
             </ChartFilters>
@@ -423,10 +423,10 @@ export default function Telemetria({userName, clients}: any) {
               </LocalizationProvider>
               <div className='select'>
                 <BasicButton title='Selecionar!' onClick={() => {
-                  setSend(true)
+                  setLoader(true)
                   getDemand(unity, startDate, endDate, discretization)
-                    .then(result => {setDemRegXDemCon(result); setSend(false)})
-                    .catch(exception => {setSend(false); setOpenSnackFields(true)})
+                    .then(result => {setDemRegXDemCon(result); setSend(false); setLoader(false)})
+                    .catch(exception => {setSend(false); setOpenSnackFields(true); setLoader(false)})
                 }}/>
               </div>
             </ChartFilters>
@@ -516,10 +516,10 @@ export default function Telemetria({userName, clients}: any) {
               </LocalizationProvider>
               <div className='select'>
                 <BasicButton title='Selecionar!' onClick={() => {
-                  setSend(true)
+                  setLoader(true)
                   getPowerFactorData(unity, startDate, endDate, discretization)
-                    .then(result => {setFatorPotenciaData(result); setSend(false)})
-                    .catch(exception => {setSend(false); setOpenSnackFields(true)})
+                    .then(result => {setFatorPotenciaData(result); setSend(false); setLoader(false)})
+                    .catch(exception => {setSend(false); setOpenSnackFields(true); setLoader(false)})
                 }}/>
               </div>
             </ChartFilters>
@@ -578,10 +578,9 @@ export default function Telemetria({userName, clients}: any) {
               </div>
               <div style={{marginBottom: '8px'}}>
                 <BasicButton title='Selecionar!' onClick={() => {
+                  setLoader(true)
                   setSend(true)
-                  getDemand(unity, startDate, endDate, discretization)
-                    .then(result => {setDiscretizedConsumptionData(result); setSend(false)})
-                    .catch(exception => {setSend(false); setOpenSnackFields(true)})
+                  getChartData()
                 }}/>
               </div>
             </ChartFilters>
@@ -591,7 +590,7 @@ export default function Telemetria({userName, clients}: any) {
           </RenderIf>
         </RenderIf>
 
-        <RenderIf isTrue={startDate.toLocaleDateString()!=='' && endDate.toLocaleDateString()!=='' && tableData===null && exception === false && send}>
+        <RenderIf isTrue={loader}>
           <div className='modal'>
             <div id="preloader_1">
               <span></span>

@@ -10,7 +10,7 @@ export const FaqQuestionsCardHeader = styled.div`
 
   flex-direction: row;
 
-  margin-top: 53px;
+  /* margin-bottom: 53px; */
 
   width: 100%;
   cursor: pointer;

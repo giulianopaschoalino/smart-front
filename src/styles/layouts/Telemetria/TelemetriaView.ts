@@ -14,11 +14,9 @@ export const TelemetriaView = styled.main`
   box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
   -webkit-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
   -moz-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
-  border-radius: 20px;
+  border-radius: 10px;
 
   background-color: #FFFFFF;
-
-  /* margin-top: 10px; */
 
   .modal {
     position: absolute;
@@ -34,7 +32,7 @@ export const TelemetriaView = styled.main`
     left: 0;
 
     width: 100%;
-    height: 100vh;
+    height: 150vh;
 
     z-index: 999;
   }
