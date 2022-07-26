@@ -13,7 +13,7 @@ export default function getAPIClient(ctx?: Pick<next.NextPageContext, 'req'> | {
   const { '@smartAuth-token': token } = parseCookies(ctx)
 
   const api = axios.create({
-    baseURL: "https://smart-energia-api.herokuapp.com/api",
+    baseURL: "https://smartenergiaapi.klupp.com.br/api",
   });
 
   api.interceptors.request.use(config => {

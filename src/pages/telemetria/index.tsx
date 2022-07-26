@@ -136,14 +136,16 @@ export default function Telemetria({userName, clients}: any) {
         setOpenSnackError(false)
         setOpenSnackSuccess(true)
         setOpen(false)
-        setLoader(true)
+        setLoader(false)
         htmlToCSV(html, "telemetria.csv")
+        console.log('then')
       }).catch(res => {
         setSend(false)
         setLoader(false)
         setException(true)
         setOpenSnackError(true)
         setOpenSnackSuccess(false)
+        console.log('catch')
       })
   }
   async function getChartData() {
@@ -156,9 +158,11 @@ export default function Telemetria({userName, clients}: any) {
       ]
       }).then(res => {
         setDemRegXDemCon2(res.data.data)
+        setTableData(res.data.data)
         htmlToCSV(html, "telemetria.csv")
+        setLoader(false)
       })
-      setLoader(true)
+      setLoader(false)
   }
 
   const [filters, setFilters] = useState()
