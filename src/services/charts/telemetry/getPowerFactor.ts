@@ -8,7 +8,7 @@ export async function getPowerFactorData(
     endDate: Date,
     discretization: string
   ) {
-  const { data } = await api.post('http://smart-energia-api.herokuapp.com/api/telemetry/powerFactor', {
+  const { data } = await api.post('/telemetry/powerFactor', {
     "type": discretization,
 		"filters": [
 			{"type" : "=", "field": "med_5min.ponto", "value": unity},
