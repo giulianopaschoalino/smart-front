@@ -20,7 +20,7 @@ export const AboutUsView = styled.main`
 
     aside {
       position: relative;
-      bottom: 220px;
+      /* bottom: 220px; */
       display: flex;
       justify-content: center;
       align-items: center;
