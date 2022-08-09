@@ -528,7 +528,7 @@ export default function Telemetria({userName, clients}: any) {
               </div>
             </ChartFilters>
             <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData}
-              data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={fatorPotenciaData.map(value => parseFloat(value.dia_num))} />
+              data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={fatorPotenciaData.map(value => (value.day_formatted))} />
           </RenderIf>
 
           <RenderIf isTrue={menu===3}>
