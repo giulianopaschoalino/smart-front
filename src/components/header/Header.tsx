@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image';
 
-import Avatar from '@mui/material/Avatar';
-import TextField from '@mui/material/TextField';
-
 import { HeaderView } from './HeaderView'
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
@@ -27,11 +24,13 @@ export default function Header({name, admin, children}: headerInterface) {
       <section>
         {
           !admin && profile_picture?
-          <Image src={profile_picture} height={100} width={108}/>
+          <div className='logoContainer'>
+            <img src={profile_picture} alt=''/>
+          </div>
           :
           <Image src='/assets/marca1.png' height={75} width={108}/>
         }
-        <div className='icon' >
+        <div className='icon'>
           <p>
             olá, {name}
           </p>

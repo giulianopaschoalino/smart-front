@@ -15,9 +15,6 @@ import DiscretizedConsumptionChartLine from '../../components/graph/DiscretizedC
 import { useRouter } from 'next/router'
 import { DemRegXDemConChart } from '../../components/graph/DemRegXDemConChart'
 import RenderIf from '../../utils/renderIf'
-import { getPowerFactorData } from '../../services/charts/telemetry/getPowerFactor'
-import { getDemand } from '../../services/charts/telemetry/getDemand'
-import { getDiscretization } from '../../services/charts/telemetry/getDiscretization'
 
 export default function chartTelemetry({userName}) {
   const [fatorPotenciaData, setFatorPotenciaData] = useState([]);
@@ -31,30 +28,10 @@ export default function chartTelemetry({userName}) {
 
   const {startDate, endDate, unity, discretization} = router.query
 
-  const { '@smartAuth-token': token } = parseCookies()
-
   function getChartsData() {
-    console.log(token)
     // getPowerFactorData("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
     //   .then(result => setFatorPotenciaData(result))
     //   .catch(exception => console.log('exeption', exception))
-
-    // getDiscretization("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
-    //   .then(result => setDiscretizedConsumptionDataReativa(result))
-    //   .catch(exception => console.log(exception))
-
-    // getDiscretization("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
-    //   .then(result => setDiscretizedConsumptionData(result))
-    //   .catch(exception => console.log(exception))
-
-    // getDemand("PRAXCUENTR101P", "2022-01-01", "2022-01-31", "med_5min")
-    //   .then(result => setDemRegXDemCon(result))
-    //   .catch(exception => console.log(exception))
-
-    // setFatorPotenciaData(res.data.data)
-    // setDiscretizedConsumptionDataReativa(res.data.data)
-    // setDiscretizedConsumptionData(res.data.data)
-    // setDemRegXDemCon(res.data.data)
   }
 
   useEffect(() => {

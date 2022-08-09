@@ -28,4 +28,19 @@ export const EconomyView = styled.main`
 
   .chartBox {
   }
+
+  article {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    p {
+      :first-child {
+        margin-left: '3%'
+      }
+      :last-child {
+        color: #254F7F;
+      }
+    }
+  }
 `

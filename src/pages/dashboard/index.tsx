@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { DashboardView } from '../../styles/layouts/dashboard/DashboardView'
 
@@ -7,26 +7,15 @@ import GraphCard from '../../components/graph/graphCard/ChartCard'
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle'
 import Link from 'next/link'
-import LineChart from '../../components/graph/LineChart'
-import { SingleBar } from '../../components/graph/SingleBar'
 
-import { dataEconomiaBruta } from '../../services/economiaBruta'
-import { dataEconomiaIndicador } from '../../services/economiaIndicador'
-import { EconomiaAcumulada } from '../../services/economiaAcumulada'
-import Chart from '../../components/graph/Chart'
-import { LineBarChart } from '../../components/graph/LineBarChart'
-import { LineBarChart2 } from '../../components/graph/LineBarChart2'
-import { ConsumoEstimado } from '../../services/consumoEstimado'
-import Head from 'next/head'
-import recoverUserInformation from '../../services/auth'
 import { parseCookies } from 'nookies'
 import { GetServerSideProps } from 'next'
 import getAPIClient from '../../services/ssrApi'
-import Chart2 from '../../components/graph/Chart2'
 import { GrossAnualChart } from '../../components/graph/grossAnualChart/GrossAnualChart'
 import CostIndicatorChart from '../../components/graph/costIndicatorChart'
 import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart'
 import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensalChart'
+import Head from 'next/head'
 
 export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears, acumulatedGraph, mapsInfo, userName, costIndicator} : any) {
   const months = [
@@ -43,6 +32,27 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
     'Nov',
     'Dez'
   ]
+
+  const [lastDataBrutaMensalS, setLastDataBrutaMensal] = useState('')
+  const [lastDataBrutaAnualS, setLastDataBrutaAnual] = useState('')
+  useEffect(() => {
+    let lastDataMensal = '0'
+    let lastDataAnual = '0'
+    let index=0
+      while (index < grossMensalGraph.length) {
+        if (!grossMensalGraph[index].dad_estimado && grossMensalGraph[index].economia_acumulada!==null)
+          lastDataMensal=grossMensalGraph[index].economia_acumulada
+        index++
+      }
+      setLastDataBrutaMensal(`economia acumulada: R$ ${parseFloat(lastDataMensal).toFixed(3)}`)
+      index=0
+      while (index < grossAnualGraph.length) {
+        if (!grossAnualGraph[index].dad_estimado)
+          lastDataAnual=grossAnualGraph[index].economia_acumulada
+        index++
+      }
+      setLastDataBrutaAnual(`economia acumulada: R$ ${parseFloat(lastDataAnual).toFixed(3)}`)
+  }, [])
 
   return (
     <DashboardView>
@@ -69,6 +79,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
         <>
           <section className='dashboard'>
             <GraphCard title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada Anual - Valores em R$ x mil'>
+              <p style={{color: '#254F7F'}}>{lastDataBrutaAnualS}</p>
               <GrossAnualChart title='' subtitle=''
                 dataset='Consolidada'
                 dataProps={grossAnualGraph}
@@ -76,18 +87,19 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
             </GraphCard>
 
             <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ x mil'>
-            <GrossMensalChart title='' subtitle=''
-              data1={grossMensalGraph}
-              data2={grossMensalGraph}
-              label={grossMensalGraph.map((value) => value.mes)}
-              miniature
-            />
+              <p style={{color: '#254F7F'}}>{lastDataBrutaMensalS}</p>
+              <GrossMensalChart title='' subtitle=''
+                data1={grossMensalGraph}
+                data2={grossMensalGraph}
+                label={grossMensalGraph.map((value) => value.mes)}
+                miniature
+              />
             </GraphCard>
 
             <GraphCard title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - Valores em R$ x mil'>
               <CativoXLivreChart chartData={acumulatedGraph}
                 dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
-                label={ConsumoEstimado.label} title='' subtitle='' barLabel hashurado miniature/>
+                label={['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']} title='' subtitle='' barLabel hashurado miniature/>
             </GraphCard>
 
             <GraphCard title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'>

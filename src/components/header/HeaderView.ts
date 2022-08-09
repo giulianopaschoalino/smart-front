@@ -30,6 +30,19 @@ export const HeaderView = styled.header`
     }
   }
 
+  .logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40%;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
   section {
     display: flex;
     align-items: center;

@@ -12,7 +12,6 @@ import Select from '@mui/material/Select';
 
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle'
-import { ConsumoEstimado } from '../../services/consumoEstimado'
 import getAPIClient from '../../services/ssrApi'
 import { EstimatedCostView } from '../../styles/layouts/economy/estimatedCost/EstimatedCostView'
 
@@ -65,7 +64,7 @@ export default function EstimatedCost({graphData, userName, clients}: any) {
       <section>
         <CativoXLivreChart chartData={unity!==null? graphDataState : graphData}
         dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
-        label={ConsumoEstimado.label} title='' subtitle='' barLabel hashurado/>
+        label={['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']} title='' subtitle='' barLabel hashurado/>
       </section>
     </EstimatedCostView>
   )

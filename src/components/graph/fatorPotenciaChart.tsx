@@ -53,7 +53,7 @@ export default function FatorPotenciaChart({ title, subtitle, data1, data2, labe
         },
         ticks: {
           font: {
-            size: 16
+            size: window.innerWidth/80
           }
         },
       },
@@ -63,7 +63,7 @@ export default function FatorPotenciaChart({ title, subtitle, data1, data2, labe
         },
         ticks: {
           font: {
-            size: 16
+            size: window.innerWidth/80
           }
         },
       },
