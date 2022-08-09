@@ -138,9 +138,20 @@ export function DemRegXDemConChart({
     datasets: [
       {
         type: 'line' as const,
-        label: 'Demanda Contratada',
+        label: 'Tolerância',
         borderColor: red?
         '#f00' : '#0c9200',
+        borderWidth: 2,
+        fill: false,
+        borderDash: [5, 5],
+        data: data1?.map(value => value.dem_tolerancia),
+        pointBorderColor: 'rgba(255, 145, 0, 0)',
+      },
+      {
+        type: 'line' as const,
+        label: 'Demanda Contratada',
+        borderColor: red?
+        '#000' : '#0c9200',
         borderWidth: 2,
         fill: false,
         borderDash: [5, 5],

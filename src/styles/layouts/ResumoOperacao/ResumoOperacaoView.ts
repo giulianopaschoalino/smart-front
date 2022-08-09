@@ -13,10 +13,6 @@ export const TableView = styled.div`
   height: 100%;
 
 
-  img{
-    margin-left:30rem;
-  }
-
   .btn{
     margin-top: 10px;
   }

@@ -64,7 +64,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
         index++
       }
     }
-    setLastDataBrutaMensal(`economia acumulada: R$ ${parseFloat(lastData).toFixed(3)}`)
+    setLastDataBrutaMensal(`${parseFloat(lastData).toFixed(3)}`)
   }, [economyMenu])
 
   useEffect(() => {
@@ -115,7 +115,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
           }
           <p>{
             economyMenu===0 || economyMenu===1?
-              lastDataBrutaMensalS
+              <><b>Economia Acumulada:</b> R${lastDataBrutaMensalS}</>
               :
               null
           }</p>

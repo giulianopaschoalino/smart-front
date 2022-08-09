@@ -44,14 +44,14 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
           lastDataMensal=grossMensalGraph[index].economia_acumulada
         index++
       }
-      setLastDataBrutaMensal(`economia acumulada: R$ ${parseFloat(lastDataMensal).toFixed(3)}`)
+      setLastDataBrutaMensal(`${parseFloat(lastDataMensal).toFixed(3)}`)
       index=0
       while (index < grossAnualGraph.length) {
         if (!grossAnualGraph[index].dad_estimado)
           lastDataAnual=grossAnualGraph[index].economia_acumulada
         index++
       }
-      setLastDataBrutaAnual(`economia acumulada: R$ ${parseFloat(lastDataAnual).toFixed(3)}`)
+      setLastDataBrutaAnual(`${parseFloat(lastDataAnual).toFixed(3)}`)
   }, [])
 
   return (
@@ -79,7 +79,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
         <>
           <section className='dashboard'>
             <GraphCard title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada Anual - Valores em R$ x mil'>
-              <p style={{color: '#254F7F'}}>{lastDataBrutaAnualS}</p>
+              <p style={{color: '#254F7F'}}><b>Economia Acumulada:</b> R${lastDataBrutaAnualS}</p>
               <GrossAnualChart title='' subtitle=''
                 dataset='Consolidada'
                 dataProps={grossAnualGraph}
@@ -87,7 +87,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
             </GraphCard>
 
             <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ x mil'>
-              <p style={{color: '#254F7F'}}>{lastDataBrutaMensalS}</p>
+              <p style={{color: '#254F7F'}}><b>Economia Acumulada:</b> R${lastDataBrutaMensalS}</p>
               <GrossMensalChart title='' subtitle=''
                 data1={grossMensalGraph}
                 data2={grossMensalGraph}
