@@ -7,18 +7,13 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { parseCookies } from 'nookies';
 import React, { useEffect, useState } from 'react';
-// import Teste from '../files/teste.csv';
-import { CSVDownload, CSVLink } from "react-csv";
 
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
 import Header from '../../components/header/Header';
 import PageTitle from '../../components/pageTitle/PageTitle';
-import Sidebar from '../../components/sidebar/Sidebar';
 import { api } from '../../services/api';
-// import { dados } from '../services/DadosTabelaResumoOperacao';
-import data from '../../services/dados.json'
 import getAPIClient from '../../services/ssrApi';
-import { Pagination, TableBodyView, TableHeader, TableView } from '../../styles/layouts/ResumoOperacao/ResumoOperacaoView';
+import { TableBodyView, TableHeader, TableView } from '../../styles/layouts/ResumoOperacao/ResumoOperacaoView';
 
 import Fab from '@mui/material/Fab';
 

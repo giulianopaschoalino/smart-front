@@ -43,22 +43,24 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
     responsive: true,
     scales: {
       x: {
+        // stacked: false,
         grid: {
           display: false
         },
         ticks: {
           font: {
-            size: !miniature? 16 : 10
+            size: !miniature? window.innerWidth/80 : window.innerWidth/100
           }
         },
       },
       y: {
+        stacked: false,
         grid: {
           display: false
         },
         ticks: {
           font: {
-            size: !miniature? 16 : 10
+            size: !miniature? window.innerWidth/80 : window.innerWidth/100
           }
         },
       },
@@ -101,6 +103,12 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
         label: '2021',
         data: data1?.map(value => value.custo_unit>0? value.custo_unit : null),
         borderRadius: 8,
+        datalabels: {
+          backgroundColor: 'white',
+          borderRadius: 8,
+          opacity: .8,
+          offset: -5
+        },
         backgroundColor: (value, ctx) => {
           if (value.dad_estimado)
             return draw('diagonal-right-left', '#C2d5fb');

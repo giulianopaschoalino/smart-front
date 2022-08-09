@@ -1,39 +1,26 @@
-import Fab from '@mui/material/Fab';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 import { parseCookies } from 'nookies';
 import React, { useContext, useEffect, useState } from 'react'
 
-import BasicButton from '../../components/buttons/basicButton/BasicButton';
-import { LineBarChart } from '../../components/graph/LineBarChart';
-import LineChart from '../../components/graph/LineChart';
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle';
 import { api } from '../../services/api';
-import { EvolucaoPld } from '../../services/evolucaoPld';
 import getAPIClient from '../../services/ssrApi';
-import { GoBack, PldGraphView, PldTableView, TableHeader } from '../../styles/layouts/pld/PldView'
+import { TableHeader } from '../../styles/layouts/pld/PldView'
 import RenderIf from '../../utils/renderIf'
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
-import NavigationIcon from '@mui/icons-material/Navigation';
-
-import TextField from '@mui/material/TextField';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MenuContext } from '../../contexts/menu/MenuContext';
 import { GrossAnualChart } from '../../components/graph/grossAnualChart/GrossAnualChart';
 import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensalChart';
 import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart';
-import { ConsumoEstimado } from '../../services/consumoEstimado';
 import CostIndicatorChart from '../../components/graph/costIndicatorChart';
 import { EconomyView } from '../../styles/layouts/economy/economy';
 
@@ -60,6 +47,26 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
     'Dez'
   ]
 
+  const [lastDataBrutaMensalS, setLastDataBrutaMensal] = useState('')
+  useEffect(() => {
+    let lastData = '0'
+    let index=0
+    if (economyMenu) {
+      while (index < brutaMensal.length) {
+        if (!brutaMensal[index].dad_estimado)
+          lastData=brutaMensal[index].economia_acumulada
+        index++
+      }
+    } else {
+      while (index < anual.length) {
+        if (!anual[index].dad_estimado)
+          lastData=brutaMensal[index].economia_acumulada
+        index++
+      }
+    }
+    setLastDataBrutaMensal(`economia acumulada: R$ ${parseFloat(lastData).toFixed(3)}`)
+  }, [economyMenu])
+
   useEffect(() => {
     api.post('/economy/estimates', unity!==''?{
       "filters": [
@@ -67,21 +74,14 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
       ]
     }:{}).then(res => {
       setCatLivDataState(res.data.data)
-    }).catch(res => {
-      // console.log(res)
     })
-  }, [unity])
 
-  useEffect(() => {
     api.post('/economy/MWh', unity!==''?{
       "filters": [
         {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity!=="default"? null : unity}
       ]
     }:{}).then(res => {
       setIndicatorDataState(res.data.data)
-      console.log('res', res.data.data)
-    }).catch(res => {
-      // console.log(res)
     })
   }, [unity])
 
@@ -103,18 +103,23 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
             <Tab label="Custo R$/MWh"/>
           </Tabs>
         </TableHeader>
-        {
-          economyMenu === 0?
-          <p style={{marginLeft: '3%'}}>Economia Bruta Estimada e Acumulada Anual - Valores em R$ x mil</p>
-          :
-          economyMenu === 1?
-          <p style={{marginLeft: '3%'}}>Economia Bruta Estimada e Acumulada Anual - Valores em R$ x mil</p>
-          :
-          economyMenu === 2?
-          <p style={{marginLeft: '3%'}}>Comparativo de Custo Estimado - Valores em R$ x mil</p>
-          :
-          <p style={{marginLeft: '3%'}}>Indicador de Custo - Valores em R$/MWh</p>
-        }
+        <article>
+          {
+            economyMenu === 0 || economyMenu === 1?
+            <p>Economia Bruta Estimada e Acumulada Anual - Valores em R$ x mil</p>
+            :
+            economyMenu === 2?
+            <p>Comparativo de Custo Estimado - Valores em R$ x mil</p>
+            :
+            <p>Indicador de Custo - Valores em R$/MWh</p>
+          }
+          <p>{
+            economyMenu===0 || economyMenu===1?
+              lastDataBrutaMensalS
+              :
+              null
+          }</p>
+        </article>
         {
           typeof window === 'undefined' || typeof window === undefined? null :
           <>
@@ -165,7 +170,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
               <section>
                 <CativoXLivreChart chartData={unity!==''? catLivDataState : catLiv}
                 dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
-                label={ConsumoEstimado.label} title='' subtitle='' barLabel hashurado/>
+                label={['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']} title='' subtitle='' barLabel hashurado/>
               </section>
             </RenderIf>
 

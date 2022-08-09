@@ -95,7 +95,7 @@ export function DemRegXDemConChart({
         },
         ticks: {
           font: {
-            size: 16
+            size: window.innerWidth/80
           }
         },
       },
@@ -105,7 +105,7 @@ export function DemRegXDemConChart({
         },
         ticks: {
           font: {
-            size: 16
+            size: window.innerWidth/80
           }
         },
       },

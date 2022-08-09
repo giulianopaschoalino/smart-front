@@ -5,7 +5,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 import { parseCookies } from 'nookies';
 import React, { useContext, useEffect, useState } from 'react'
 
@@ -15,9 +14,8 @@ import LineChart from '../../components/graph/LineChart';
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle';
 import { api } from '../../services/api';
-import { EvolucaoPld } from '../../services/evolucaoPld';
 import getAPIClient from '../../services/ssrApi';
-import { GoBack, PldGraphView, PldTableMinMaxView, PldTableView, TableHeader } from '../../styles/layouts/pld/PldView'
+import { PldGraphView, PldTableMinMaxView, PldTableView, TableHeader } from '../../styles/layouts/pld/PldView'
 import RenderIf from '../../utils/renderIf'
 
 import Tabs from '@mui/material/Tabs';

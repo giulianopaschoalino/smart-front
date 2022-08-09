@@ -45,7 +45,7 @@ export default function Telemetria({userName, clients}: any) {
   const [unity, setUnity] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [discretization, setDiscretization] = useState('');
+  const [discretization, setDiscretization] = useState('1_hora');
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
   const [openSnackError, setOpenSnackError] = useState<boolean>(false)

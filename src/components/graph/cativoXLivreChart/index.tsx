@@ -85,7 +85,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
         },
         ticks: {
           font: {
-            size: !miniature? 16 : 10
+            size: !miniature? window.innerWidth/80 : window.innerWidth/100
           }
         },
       },
@@ -95,7 +95,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
         },
         ticks: {
           font: {
-            size: !miniature? 16 : 10
+            size: !miniature? window.innerWidth/80 : window.innerWidth/100
           }
         },
       },
