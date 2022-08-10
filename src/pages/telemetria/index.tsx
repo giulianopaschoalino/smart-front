@@ -33,6 +33,7 @@ import { getDiscretization } from '../../services/charts/telemetry/getDiscretiza
 import { getPowerFactorData } from '../../services/charts/telemetry/getPowerFactor';
 import { getDemand } from '../../services/charts/telemetry/getDemand';
 import PageTitle from '../../components/pageTitle/PageTitle';
+import { format } from 'date-fns';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -42,7 +43,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 })
 
 export default function Telemetria({userName, clients}: any) {
-  const [unity, setUnity] = useState('');
+  const [unity, setUnity] = useState(clients[0].codigo_scde);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [discretization, setDiscretization] = useState('1_hora');
@@ -165,8 +166,6 @@ export default function Telemetria({userName, clients}: any) {
       setLoader(false)
   }
 
-  const [filters, setFilters] = useState()
-
   const [fatorPotenciaData, setFatorPotenciaData] = useState([]);
   const [demRegXDemCon, setDemRegXDemCon] = useState([]);
   const [discretizedConsumptionData, setDiscretizedConsumptionData] = useState([]);
@@ -179,6 +178,24 @@ export default function Telemetria({userName, clients}: any) {
     if (send===true)
       getChartData()
   }, [send])
+
+  useEffect(() => {
+    const firstOfTheMonth = format(new Date(startDate).setDate(1), 'yyyy-MM-dd')
+    const lastOfTheMonth = format(new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0), 'yyyy-MM-dd')
+
+    setLoader(true)
+    getDiscretization(unity, new Date(firstOfTheMonth), new Date(lastOfTheMonth), discretization)
+    .then(result => {setDiscretizedConsumptionData(result); setSend(false); setLoader(false)})
+    .catch(() => {setSend(false); setOpenSnackFields(true)})
+
+    getDemand(unity, startDate, endDate, discretization)
+      .then(result => {setDemRegXDemCon(result); setSend(false)})
+      .catch(() => {setSend(false); setOpenSnackFields(true); setLoader(false)})
+
+    getPowerFactorData(unity, startDate, endDate, discretization)
+      .then(result => {setFatorPotenciaData(result); setSend(false); setLoader(false)})
+      .catch(() => {setSend(false); setOpenSnackFields(true); setLoader(false)})
+  }, [])
 
   return(
     <main style={{width: '100%'}}>
@@ -245,10 +262,10 @@ export default function Telemetria({userName, clients}: any) {
                     'Consumo discretizado em 1 dia'}/>
               <Tab label="Demanda"/>
               <Tab label="Fator Potencia"/>
-              <Tab label="Mês Atual"/>
             </Tabs>
           </TableHeader>
 
+          {/* discretization chart */}
           <RenderIf isTrue={menu===0}>
             <ChartFilters>
               <div className='input'>
@@ -337,15 +354,13 @@ export default function Telemetria({userName, clients}: any) {
                 }}/>
               </div>
             </ChartFilters>
-            {/* <RenderIf isTrue={discretization!=='1_dia' && discretization!=='1_mes'}> */}
             <DiscretizedConsumptionChart title={
                 discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
                 discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
               } subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
-                {/* <p style={{alignSelf: 'center', textAlign: 'center'}}>{`Mês - ${startDate}`}</p> */}
-            {/* </RenderIf> */}
           </RenderIf>
 
+          {/* demand chart */}
           <RenderIf isTrue={menu===1}>
             <ChartFilters>
               <div className='input'>
@@ -439,6 +454,7 @@ export default function Telemetria({userName, clients}: any) {
               label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
           </RenderIf>
 
+          {/* power factor chart */}
           <RenderIf isTrue={menu===2}>
             <ChartFilters>
               <div className='input'>
@@ -529,68 +545,6 @@ export default function Telemetria({userName, clients}: any) {
             </ChartFilters>
             <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData}
               data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={fatorPotenciaData.map(value => (value.day_formatted))} />
-          </RenderIf>
-
-          <RenderIf isTrue={menu===3}>
-            <ChartFilters>
-              <div className='input'>
-                <FormControl sx={{ minWidth: 100, width: 200 }} size="small">
-                  <InputLabel>Unidade</InputLabel>
-                  <Select
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    value={unity}
-                    label="Unidade"
-                    onChange={value => setUnity(value.target.value)}
-                    sx={{height: 63, mb: 0.5}}
-                    fullWidth
-                  >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
-                    {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
-                    {
-                      clients.map((value) => {
-                        return <MenuItem key={1} value={value.codigo_scde}>{value.unidade}</MenuItem>
-                      })
-                    }
-                  </Select>
-                </FormControl>
-              </div>
-              <div className='input'>
-                <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
-                  <InputLabel>Discretização</InputLabel>
-                  <Select
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    value={discretization}
-                    label="Discretização"
-                    onChange={value => setDiscretization(value.target.value)}
-                    sx={{height: 63, mb: 0.5}}
-                    fullWidth
-                  >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
-                    <MenuItem value="5_min">5 minutos</MenuItem>
-                    <MenuItem value="15_min">15 minutos</MenuItem>
-                    <MenuItem value="1_hora">1 hora</MenuItem>
-                    <MenuItem value="1_dia">1 dia</MenuItem>
-                    <MenuItem value="1_mes">1 mês</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <div style={{marginBottom: '8px'}}>
-                <BasicButton title='Selecionar!' onClick={() => {
-                  setLoader(true)
-                  setSend(true)
-                  getChartData()
-                }}/>
-              </div>
-            </ChartFilters>
-            <DemRegXDemConChart data1={demRegXDemCon2} data2={demRegXDemCon2}
-              dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'}
-              label={demRegXDemCon2?.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
           </RenderIf>
         </RenderIf>
 

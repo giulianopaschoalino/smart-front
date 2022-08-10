@@ -78,16 +78,16 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
         typeof window === 'undefined' || typeof window === undefined? null :
         <>
           <section className='dashboard'>
-            <GraphCard title='Economia Bruta Anual' subtitle='Economia Bruta Estimada e Acumulada Anual - Valores em R$ x mil'>
-              <p style={{color: '#254F7F'}}><b>Economia Acumulada:</b> R${lastDataBrutaAnualS}</p>
+            <GraphCard title='Economia Anual' subtitle='Economia Bruta Estimada e Acumulada Anual - Valores em R$ x mil'>
+            <b>Economia Acumulada: <p>R${lastDataBrutaMensalS}</p></b>
               <GrossAnualChart title='' subtitle=''
                 dataset='Consolidada'
                 dataProps={grossAnualGraph}
                 label={grossAnualYears} barLabel bruta miniature/>
             </GraphCard>
 
-            <GraphCard title='Economia Bruta Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ x mil'>
-              <p style={{color: '#254F7F'}}><b>Economia Acumulada:</b> R${lastDataBrutaMensalS}</p>
+            <GraphCard title='Economia Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ x mil'>
+              <b>Economia Acumulada: <p>R${lastDataBrutaMensalS}</p></b>
               <GrossMensalChart title='' subtitle=''
                 data1={grossMensalGraph}
                 data2={grossMensalGraph}
@@ -96,7 +96,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
               />
             </GraphCard>
 
-            <GraphCard title='Cativo x Livre Mensal' subtitle='Comparativo de Custo Estimado - Valores em R$ x mil'>
+            <GraphCard title='Custo Mensal Cativo x Livre' subtitle='Comparativo de Custo Estimado - Valores em R$ x mil'>
               <CativoXLivreChart chartData={acumulatedGraph}
                 dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
                 label={['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']} title='' subtitle='' barLabel hashurado miniature/>

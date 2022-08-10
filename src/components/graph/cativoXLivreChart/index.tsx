@@ -85,7 +85,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
         },
         ticks: {
           font: {
-            size: !miniature? window.innerWidth/80 : window.innerWidth/100
+            size: !miniature? window.innerWidth/90 : window.innerWidth/110
           }
         },
       },
@@ -95,7 +95,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
         },
         ticks: {
           font: {
-            size: !miniature? window.innerWidth/80 : window.innerWidth/100
+            size: !miniature? window.innerWidth/90 : window.innerWidth/110
           }
         },
       },
@@ -109,7 +109,8 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
         offset: -20,
         align: "start",
         font: {
-          size: !miniature? 15 : 10
+          weight: 'bold',
+          size: !miniature? window.innerWidth/80 : window.innerWidth/105
         },
         formatter: (value, ctx) => {
           let sum = 0;

@@ -13,6 +13,16 @@ export const AboutUsView = styled.main`
 
   background-color: #FFFFFF;
 
+  .image {
+    position: absolute;
+    right: 75px;
+    transform: translateY(-190px);
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
   article {
     display: flex;
     justify-content: flex-end;

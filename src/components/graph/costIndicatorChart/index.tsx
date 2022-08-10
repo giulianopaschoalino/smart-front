@@ -49,7 +49,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
         },
         ticks: {
           font: {
-            size: !miniature? window.innerWidth/80 : window.innerWidth/100
+            size: !miniature? window.innerWidth/90 : window.innerWidth/110
           }
         },
       },
@@ -60,7 +60,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
         },
         ticks: {
           font: {
-            size: !miniature? window.innerWidth/80 : window.innerWidth/100
+            size: !miniature? window.innerWidth/90 : window.innerWidth/110
           }
         },
       },
@@ -75,14 +75,15 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
           dataArr.map(data => {
               sum += data;
           });
-          const result = `${parseInt((parseInt(value)/10).toLocaleString('pt-br'))}`
+          const result = `${parseFloat((parseFloat(value)).toLocaleString('pt-br'))}`
 
           return value==null? null : result
         },
         anchor: "end",
         align: "end",
         font: {
-          size: !miniature? 15 : 10,
+          weight: 'bold',
+          size: !miniature? window.innerWidth/80 : window.innerWidth/105
         }
       },
       legend: {

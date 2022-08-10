@@ -34,6 +34,18 @@ export const EconomyView = styled.main`
     align-items: center;
     justify-content: space-between;
 
+    b {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 17px;
+      p {
+        font-size: 20px;
+        text-decoration: underline;
+      }
+    }
+
     p {
       :first-child {
         margin-left: '3%'

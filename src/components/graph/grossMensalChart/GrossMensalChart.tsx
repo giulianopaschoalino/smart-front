@@ -67,7 +67,7 @@ export default function GrossMensalChart({ title, data1, data2, label, subtitle,
         },
         ticks: {
           font: {
-            size: !miniature? window.innerWidth/80 : window.innerWidth/100
+            size: !miniature? window.innerWidth/90 : window.innerWidth/110
           }
         },
       },
@@ -77,7 +77,7 @@ export default function GrossMensalChart({ title, data1, data2, label, subtitle,
         },
         ticks: {
           font: {
-            size: !miniature? window.innerWidth/80 : window.innerWidth/100
+            size: !miniature? window.innerWidth/90 : window.innerWidth/110
           }
         },
       },
@@ -101,7 +101,8 @@ export default function GrossMensalChart({ title, data1, data2, label, subtitle,
         offset: 0,
         align: "end",
         font: {
-          size: !miniature? 18 : 10,
+          weight: 'bold',
+          size: !miniature? window.innerWidth/80 : window.innerWidth/120,
         }
       },
       legend: {
