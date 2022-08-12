@@ -9,7 +9,7 @@ export const PldTableMinMaxView = styled.div`
   border-style:solid;
   border-width: 1px;
 
-  background-color: #EFEFEF;
+  background-color: #FFFFFF;
 
   margin-top: 15px;
 
@@ -218,7 +218,7 @@ export const PldTableView = styled.div<{display?: boolean}>`
   border-style:solid;
   border-width: 1px;
 
-  background-color: #EFEFEF;
+  background-color: #FFFFFF;
 
   margin-top: 38px;
 

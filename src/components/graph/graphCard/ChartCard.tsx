@@ -11,7 +11,7 @@ interface ChartCardInterface {
   children?: React.ReactNode
 }
 
-export default function ChartCard({ title, subtitle, consumption, className, children }: ChartCardInterface) {
+export default function GraphCard({ title, subtitle, consumption, className, children }: ChartCardInterface) {
   return (
     <ChartCardView className={className} >
       <div className='content' >

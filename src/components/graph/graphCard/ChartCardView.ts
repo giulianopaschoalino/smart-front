@@ -36,7 +36,8 @@ export const ChartCardView = styled.article`
     color: #254F7F;
     p {
       font-size: 20px;
-      text-decoration: underline;
+      color: #018A8A;
+      margin-left: 5px
     }
   }
 
