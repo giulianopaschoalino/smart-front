@@ -71,7 +71,6 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
 
   const handleChangeDate = (newValue: Date | null) => {
     setDate(newValue)
-
   };
 
   function getDataByDay() {
