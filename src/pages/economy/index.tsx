@@ -115,7 +115,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
           }
           <p>{
             economyMenu===0 || economyMenu===1?
-              <><b>Economia Acumulada: <p>R${lastDataBrutaMensalS}</p></b></>
+              <><b>Economia Acumulada: <p style={{color: '#018A8A', marginLeft: '5px'}}>R${lastDataBrutaMensalS}</p></b></>
               :
               null
           }</p>
