@@ -52,8 +52,6 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
       },
       y: {
         stacked: false,
-        min: 0,
-        max: 1100,
         grid: {
           display: false
         },
@@ -84,14 +82,14 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         },
         display: true,
         anchor: "end",
-        offset: !miniature? 0 : -60,
+        offset: !miniature? 0 : -5,
         align: "start",
         font: {
           weight: 'bold',
           size: !miniature? window.innerWidth/70 : window.innerWidth/90,
         },
         color: (value) => {
-          return value.dataset.label==='Consolidada'? '#000' : '#000'
+          return value.dataset.label==='Consolidada'? '#fff' : '#255488'
         },
       },
       legend: {
@@ -110,8 +108,6 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
   } else {
     labels = label
   }
-
-  console.log(dataProps)
 
   const data: any = {
     labels,
