@@ -12,6 +12,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { useRouter } from 'next/router'
 import Banner from '../../components/banner/Banner'
+import Image from 'next/image'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -62,8 +63,14 @@ export default function industryInfo({userName}: any) {
         <PageTitle title='Info setorial' subtitle='Baixe o pdf para ver o info setorial'/>
       </Header>
       <IndustryInfoView>
-        {/* <Banner title='Info setorial' subtitle='Baixe o pdf para ver o info setorial' imgSource='/assets/banners/infoSetorial.jpg'/> */}
-        <p>Um resumo das atualizações gerais do Setor Elétrico, com dados sobre geração consumo, demanda, meteorologia baseadas em informações do ONS, CCEE, ANEEL, 10 Maiores Jornais e Revistas e CPTEC</p>
+        <section>
+          <article>
+            <p>A Smart é uma empresa de vanguarda na informação sobre o Setor Elétrico Brasileiro e mantém sólidos relacionamentos com os agentes e entidades do setor,
+              a informação precisa aliada à mais de 21 anos de experiência torna a sua consultoria estratégica para consumidores e geradores</p>
+            <Image src='/assets/banners/sectoriaInf.jpg' width={200} height={200}/>
+          </article>
+          <p>Um resumo das atualizações gerais do Setor Elétrico, com dados sobre geração consumo, demanda, meteorologia baseadas em informações do ONS, CCEE, ANEEL, 10 Maiores Jornais e Revistas e CPTEC</p>
+        </section>
         <button onClick={() => handleDownloadPdf()}>Clique aqui para baixar o arquivo em PDF</button>
 
       </IndustryInfoView>

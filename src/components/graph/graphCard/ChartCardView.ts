@@ -26,6 +26,20 @@ export const ChartCardView = styled.article`
     margin-bottom: 10px;
   }
 
+  b {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+
+    color: #254F7F;
+    p {
+      font-size: 20px;
+      text-decoration: underline;
+    }
+  }
+
   a {
     font-family: 'Poppins';
     font-style: normal;

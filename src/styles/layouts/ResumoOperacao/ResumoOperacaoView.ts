@@ -12,7 +12,6 @@ export const TableView = styled.div`
   width: 100%;
   height: 100%;
 
-
   .btn{
     margin-top: 10px;
   }
@@ -168,7 +167,7 @@ export const NewTableLine = styled.section`
 export const TableBodyView = styled.section`
   border-radius: 8px;
 
-  background-color: #EFEFEF;
+  background-color: #fff;
 
   width: 100%;
 

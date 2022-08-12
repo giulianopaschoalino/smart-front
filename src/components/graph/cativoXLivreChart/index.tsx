@@ -85,7 +85,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
         },
         ticks: {
           font: {
-            size: !miniature? window.innerWidth/80 : window.innerWidth/100
+            size: !miniature? window.innerWidth/90 : window.innerWidth/110
           }
         },
       },
@@ -95,7 +95,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
         },
         ticks: {
           font: {
-            size: !miniature? window.innerWidth/80 : window.innerWidth/100
+            size: !miniature? window.innerWidth/90 : window.innerWidth/110
           }
         },
       },
@@ -109,7 +109,8 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
         offset: -20,
         align: "start",
         font: {
-          size: !miniature? 15 : 10
+          weight: 'bold',
+          size: !miniature? window.innerWidth/80 : window.innerWidth/105
         },
         formatter: (value, ctx) => {
           let sum = 0;
@@ -155,9 +156,9 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           if (!value.dad_estimado)
           return parseInt(value.custo_cativo)
         }),
+        skipNull: true,
         borderRadius: 8,
         backgroundColor: '#C2D5FB',
-        stack: 'cativo'
       },
       {
         type: 'bar' as const,
@@ -166,9 +167,9 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           if (!value.dad_estimado)
           return parseInt(value.custo_livre)
         }),
+        skipNull: true,
         borderRadius: 8,
         backgroundColor: '#255488',
-        stack: 'livre'
       },
       {
         type: 'bar',
@@ -177,9 +178,9 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           if (value.dad_estimado)
           return parseInt(value.custo_cativo)
         }),
+        skipNull: true,
         borderRadius: 8,
         backgroundColor: pattern.draw('diagonal', '#C2D5FB'),
-        stack: 'cativo'
       },
       {
         type: 'bar',
@@ -188,9 +189,9 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           if (value.dad_estimado)
           return parseInt(value.custo_livre)
         }),
+        skipNull: true,
         borderRadius: 8,
         backgroundColor: pattern.draw('diagonal', '#255488'),
-        stack: 'livre'
       }
     ],
   }

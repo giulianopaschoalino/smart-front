@@ -174,7 +174,7 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
               <th className='tg-8oo6'>Contraparte</th>
               <th className='tg-8oo6'>Montante (MWh)</th>
               <th className='tg-8oo6'>Preço(R$/MWh)</th>
-              <th className='tg-8oo6'>ValorNF/Crédito(R$)</th>
+              <th className='tg-8oo6'>Nota Fiscal (R$)</th>
             </tr>
           </thead>
           <tbody>

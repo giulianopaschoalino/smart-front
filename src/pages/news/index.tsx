@@ -26,12 +26,11 @@ export default function aboutUs({userName, news}: any) {
 
         {
           news.slice(0, 3).map(data => {
-
             return <>
               <section>
-                <h2 dangerouslySetInnerHTML={{__html: data.pubDate.slice(0, -8)}} />
-                <strong dangerouslySetInnerHTML={{__html: data.title}} />
-                <strong>ANEEL APROVA REAJUSTE TARIFÁRIO ANUAL DA ENERGISA SERGIPE DE 16,46 % PARA O CONSUMIDOR RESIDENCIAL</strong>
+                <h2 dangerouslySetInnerHTML={{__html: data.title}} />
+                <strong dangerouslySetInnerHTML={{__html: data.pubDate.slice(0, -8)}} />
+                {/* <strong>ANEEL APROVA REAJUSTE TARIFÁRIO ANUAL DA ENERGISA SERGIPE DE 16,46 % PARA O CONSUMIDOR RESIDENCIAL</strong> */}
                 <br />
                 <br />
                 {

@@ -17,6 +17,10 @@ export const IndustryInfoView = styled.main`
     margin-bottom: 50px;
   }
 
+  p {
+    text-align: justify;
+  }
+
   button{
     height: 70px;
     width: 30%;
@@ -54,4 +58,13 @@ export const IndustryInfoView = styled.main`
     border-radius: 6px;
   }
 
+  article {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+
+    p {
+      width: 75%
+    }
+  }
 `

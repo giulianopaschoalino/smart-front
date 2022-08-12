@@ -19,11 +19,14 @@ export const NewsView = styled.main`
 
   background-color: #FFFFFF;
 
+  text-align: justify;
+
   .description {
     a {
       display: none;
     }
     p {
+      /* text-align: justify; */
       :last-child {
         display: none;
       }
