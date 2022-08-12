@@ -15,6 +15,7 @@ import {
 
 import { CostIndicatorChartView } from './CostIndicatorChartView';
 import ChartTitle from '../ChartTitle';
+import { Stack } from '@mui/material';
 
 ChartJS.register(
   CategoryScale,
@@ -43,7 +44,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
     responsive: true,
     scales: {
       x: {
-        // stacked: false,
+        stacked: false,
         grid: {
           display: false
         },
@@ -104,6 +105,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
         label: '2021',
         data: data1?.map(value => value.custo_unit>0? value.custo_unit : null),
         borderRadius: 8,
+        skipNull: true,
         datalabels: {
           backgroundColor: 'white',
           borderRadius: 8,
@@ -116,11 +118,11 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
           else
             return '#C2d5fb'
         },
-        stack: '0'
       },
       {
         label: '2022',
         data: data2?.map(value => value.custo_unit>0? value.custo_unit : null),
+        skipNull: true,
         borderRadius: 8,
         backgroundColor: (value, ctx) => {
           if (value.dad_estimado)
@@ -128,7 +130,6 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
           else
             return '#255488'
         },
-        stack: '0'
       }
     ],
   }

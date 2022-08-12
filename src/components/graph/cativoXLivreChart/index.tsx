@@ -156,9 +156,9 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           if (!value.dad_estimado)
           return parseInt(value.custo_cativo)
         }),
+        skipNull: true,
         borderRadius: 8,
         backgroundColor: '#C2D5FB',
-        stack: 'cativo'
       },
       {
         type: 'bar' as const,
@@ -167,9 +167,9 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           if (!value.dad_estimado)
           return parseInt(value.custo_livre)
         }),
+        skipNull: true,
         borderRadius: 8,
         backgroundColor: '#255488',
-        stack: 'livre'
       },
       {
         type: 'bar',
@@ -178,9 +178,9 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           if (value.dad_estimado)
           return parseInt(value.custo_cativo)
         }),
+        skipNull: true,
         borderRadius: 8,
         backgroundColor: pattern.draw('diagonal', '#C2D5FB'),
-        stack: 'cativo'
       },
       {
         type: 'bar',
@@ -189,9 +189,9 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           if (value.dad_estimado)
           return parseInt(value.custo_livre)
         }),
+        skipNull: true,
         borderRadius: 8,
         backgroundColor: pattern.draw('diagonal', '#255488'),
-        stack: 'livre'
       }
     ],
   }
