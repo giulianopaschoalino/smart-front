@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { parseCookies } from 'nookies'
 import React from 'react'
 
-import Chart2 from '../../components/graph/Chart2'
+// import Chart2 from '../../components/graph/Chart2'
 import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensalChart'
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle'
