@@ -13,6 +13,7 @@ import { Chart } from 'react-chartjs-2';
 import { CativoXLivreChartView } from './CativoXLivreChartView';
 import ChartTitle from '../ChartTitle';
 import pattern from 'patternomaly'
+import { config } from '../config';
 
 ChartJS.register(
   LinearScale,
@@ -76,62 +77,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
 
   const labels = label
 
-  const options: any = {
-    responsive: true,
-    scales: {
-      x: {
-        grid: {
-          display: false
-        },
-        ticks: {
-          font: {
-            size: !miniature? window.innerWidth/90 : window.innerWidth/110
-          }
-        },
-      },
-      y: {
-        grid: {
-          display: false
-        },
-        ticks: {
-          font: {
-            size: !miniature? window.innerWidth/90 : window.innerWidth/110
-          }
-        },
-      },
-    },
-    plugins: {
-      datalabels: {
-        display: true,
-        color: '#255488',
-        // backgroundColor: '#255488',
-        anchor: "end",
-        offset: -20,
-        align: "start",
-        font: {
-          weight: 'bold',
-          size: !miniature? window.innerWidth/80 : window.innerWidth/105
-        },
-        formatter: (value, ctx) => {
-          let sum = 0;
-          const dataArr = ctx.chart.data.datasets[0].data;
-          dataArr.map(data => {
-              sum += data;
-          });
-          const result = `${(parseInt(value)).toLocaleString('pt-br')}`
-
-          return value==null? null : result
-        }
-      },
-      legend: {
-        position: 'bottom' as const,
-      },
-      title: {
-        display: true,
-        text: '',
-      },
-    },
-  };
+  const options: any = config(miniature)
 
   const data: any = {
     labels,

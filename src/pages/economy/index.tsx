@@ -33,6 +33,9 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
   const [catLivDataState, setCatLivDataState] = useState(null);
   const [indicatorDataState, setIndicatorDataState] = useState(null);
 
+  const currentYear = new Date().getUTCFullYear()
+  const previousYear = new Date().getUTCFullYear()-1
+
   const months = [
     'Jan',
     'Fev',
@@ -159,7 +162,6 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
                     fullWidth
                   >
                     <MenuItem value="default">Todas</MenuItem>
-                    {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> !!OPÇAO COM DADOS TESTES!! */}
                     {
                       clients.map((value) => {
                         return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
@@ -200,8 +202,8 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
               </div>
               <section>
                 <CostIndicatorChart title='' subtitle=''
-                  data1={indicatorDataState?.filter((value, index) => value.mes.slice(0, 4).includes('2021'))}
-                  data2={indicatorDataState?.filter((value, index) => value.mes.slice(0, 4).includes('2022'))}
+                  data1={indicatorDataState?.filter(value => value?.mes.slice(0, 4).includes(previousYear)).map(value => value?.custo_unit && !!parseInt(value?.custo_unit)? value.custo_unit : null)}
+                  data2={indicatorDataState?.filter(value => value?.mes.slice(0, 4).includes(currentYear)).map(value => value?.custo_unit && !!parseInt(value?.custo_unit)? value.custo_unit : null)}
                   label={months}
                 />
               </section>

@@ -15,7 +15,6 @@ import {
 
 import { CostIndicatorChartView } from './CostIndicatorChartView';
 import ChartTitle from '../ChartTitle';
-import { Stack } from '@mui/material';
 import { config } from '../config';
 
 ChartJS.register(
@@ -43,7 +42,8 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
 
   const options: any = config(miniature)
 
-  console.log(data1?.map(value => value))
+  console.log(data1)
+  console.log(data2)
 
   const data = {
     labels,
@@ -51,7 +51,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
       {
         label: '2021',
         data: data1?.map(value => value),
-        skipNull: true,
+        skipNull: data2?.map(value => value)?.includes(null),
         borderRadius: 8,
         datalabels: {
           backgroundColor: 'white',
@@ -68,8 +68,8 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
       },
       {
         label: '2022',
-        data: data2?.map(value => value?.custo_unit),
-        skipNull: true,
+        data: data2?.map(value => value),
+        skipNull: data1?.map(value => value)?.includes(null),
         borderRadius: 8,
         backgroundColor: (value, ctx) => {
           if (value?.dad_estimado)

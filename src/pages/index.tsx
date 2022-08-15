@@ -19,6 +19,8 @@ import { api } from '../services/api';
 import { LoginContainer, LoginView } from  '../styles/layouts/login/LoginView';
 import Dashboard from './dashboard';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -164,4 +166,17 @@ export default function Home() {
       </LoginContainer>
     </LoginView>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['@smartAuth-token']: token } = parseCookies(ctx)
+
+  if (token) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false
+      }
+    }
+  }
 }
