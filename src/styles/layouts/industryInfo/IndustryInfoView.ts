@@ -18,7 +18,7 @@ export const IndustryInfoView = styled.main`
   }
 
   p {
-    text-align: justify;
+    text-align: justify!important;
   }
 
   button{
@@ -64,6 +64,7 @@ export const IndustryInfoView = styled.main`
     flex-direction: row;
 
     p {
+      text-align: justify;
       width: 75%
     }
   }

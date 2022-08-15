@@ -9,6 +9,12 @@ export const PldTableMinMaxView = styled.div`
   border-style:solid;
   border-width: 1px;
 
+  background: #F8F8F8;
+	box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+	-webkit-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+	-moz-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  border-radius: 10px;
+
   background-color: #FFFFFF;
 
   margin-top: 15px;
@@ -217,6 +223,12 @@ export const PldTableView = styled.div<{display?: boolean}>`
   border-color:#DDDFE1;
   border-style:solid;
   border-width: 1px;
+
+  background: #F8F8F8;
+	box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+	-webkit-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+	-moz-box-shadow: 0 0 11px rgba(0, 0, 0, 0.2)  ;
+  border-radius: 10px;
 
   background-color: #FFFFFF;
 

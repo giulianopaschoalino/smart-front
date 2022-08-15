@@ -3,7 +3,6 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { parseCookies } from 'nookies'
 import React from 'react'
-import Banner from '../../components/banner/Banner'
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle'
 import getAPIClient from '../../services/ssrApi'
@@ -38,7 +37,7 @@ export default function aboutUs({userName, text}) {
           </ul>
         </section>
         <div className='image'>
-          <Image src='/assets/banners/aboutUs.jpg' width={280} height={180}/>
+          <Image src='/assets/banners/aboutUs.jpg' width={310} height={210}/>
         </div>
         <article>
           <aside>

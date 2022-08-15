@@ -19,7 +19,12 @@ export const AboutUsView = styled.main`
     transform: translateY(-190px);
   }
 
+  p {
+    text-align: justify;
+  }
+
   h2 {
+    margin-top: 40px;
     font-size: 16px;
   }
 

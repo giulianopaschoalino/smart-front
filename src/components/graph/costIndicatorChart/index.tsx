@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import { draw } from 'patternomaly'
 
@@ -16,6 +16,7 @@ import {
 import { CostIndicatorChartView } from './CostIndicatorChartView';
 import ChartTitle from '../ChartTitle';
 import { Stack } from '@mui/material';
+import { config } from '../config';
 
 ChartJS.register(
   CategoryScale,
@@ -40,72 +41,18 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
 
   const labels = label;
 
-  const options: any = {
-    responsive: true,
-    scales: {
-      x: {
-        stacked: false,
-        grid: {
-          display: false
-        },
-        ticks: {
-          font: {
-            size: !miniature? window.innerWidth/90 : window.innerWidth/110
-          }
-        },
-      },
-      y: {
-        stacked: false,
-        grid: {
-          display: false
-        },
-        ticks: {
-          font: {
-            size: !miniature? window.innerWidth/90 : window.innerWidth/110
-          }
-        },
-      },
-    },
-    plugins: {
-      datalabels: {
-        display: true,
-        color: '#255488',
-        formatter: (value, ctx) => {
-          let sum = 0;
-          const dataArr = ctx.chart.data.datasets[0].data;
-          dataArr.map(data => {
-              sum += data;
-          });
-          const result = `${parseFloat((parseFloat(value)).toLocaleString('pt-br'))}`
+  const options: any = config(miniature)
 
-          return value==null? null : result
-        },
-        anchor: "end",
-        align: "end",
-        font: {
-          weight: 'bold',
-          size: !miniature? window.innerWidth/80 : window.innerWidth/105
-        }
-      },
-      legend: {
-        position: 'bottom' as const,
-
-      },
-      title: {
-        display: true,
-        text: '',
-      },
-    },
-  };
+  console.log(data1?.map(value => value))
 
   const data = {
     labels,
     datasets: [
       {
         label: '2021',
-        data: data1?.map(value => value.custo_unit>0? value.custo_unit : null),
-        borderRadius: 8,
+        data: data1?.map(value => value),
         skipNull: true,
+        borderRadius: 8,
         datalabels: {
           backgroundColor: 'white',
           borderRadius: 8,
@@ -113,7 +60,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
           offset: -5
         },
         backgroundColor: (value, ctx) => {
-          if (value.dad_estimado)
+          if (value?.dad_estimado)
             return draw('diagonal-right-left', '#C2d5fb');
           else
             return '#C2d5fb'
@@ -121,11 +68,11 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
       },
       {
         label: '2022',
-        data: data2?.map(value => value.custo_unit>0? value.custo_unit : null),
+        data: data2?.map(value => value?.custo_unit),
         skipNull: true,
         borderRadius: 8,
         backgroundColor: (value, ctx) => {
-          if (value.dad_estimado)
+          if (value?.dad_estimado)
             return draw('diagonal-right-left', '#255488');
           else
             return '#255488'

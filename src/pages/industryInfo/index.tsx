@@ -65,9 +65,9 @@ export default function industryInfo({userName}: any) {
       <IndustryInfoView>
         <section>
           <article>
-            <p>A Smart é uma empresa de vanguarda na informação sobre o Setor Elétrico Brasileiro e mantém sólidos relacionamentos com os agentes e entidades do setor,
+            <p style={{marginRight: '10px'}}>A Smart é uma empresa de vanguarda na informação sobre o Setor Elétrico Brasileiro e mantém sólidos relacionamentos com os agentes e entidades do setor,
               a informação precisa aliada à mais de 21 anos de experiência torna a sua consultoria estratégica para consumidores e geradores</p>
-            <Image src='/assets/banners/sectoriaInf.jpg' width={200} height={200}/>
+            <Image src='/assets/banners/sectoriaInf.jpg' width={350} height={250}/>
           </article>
           <p>Um resumo das atualizações gerais do Setor Elétrico, com dados sobre geração consumo, demanda, meteorologia baseadas em informações do ONS, CCEE, ANEEL, 10 Maiores Jornais e Revistas e CPTEC</p>
         </section>

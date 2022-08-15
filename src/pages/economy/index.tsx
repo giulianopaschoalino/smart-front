@@ -23,8 +23,9 @@ import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensa
 import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart';
 import CostIndicatorChart from '../../components/graph/costIndicatorChart';
 import { EconomyView } from '../../styles/layouts/economy/economy';
+import AccumulatedEconomyTitle from '../../components/accumulatedEconomyTitle/AccumulatedEconomyTitle';
 
-export default function economy({userName, anual, years, brutaMensal, yearsBrutaMensal, catLiv, clients, indicatorCost}: any) {
+export default function economy({userName, anual, years, brutaMensal, catLiv, clients, indicatorCost}: any) {
   const {economyMenu, setEconomyMenu} = useContext(MenuContext)
 
   const [unity, setUnity] = useState<string>('');
@@ -47,7 +48,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
     'Dez'
   ]
 
-  const [lastDataBrutaMensalS, setLastDataBrutaMensal] = useState('')
+  const [lastDataBruta, setLastDataBruta] = useState('')
   useEffect(() => {
     let lastData = '0'
     let index=0
@@ -60,11 +61,11 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
     } else {
       while (index < anual.length) {
         if (!anual[index].dad_estimado)
-          lastData=brutaMensal[index].economia_acumulada
+        lastData=anual[index].economia_acumulada
         index++
       }
     }
-    setLastDataBrutaMensal(`${parseFloat(lastData).toFixed(3)}`)
+    setLastDataBruta(`${parseFloat(lastData).toFixed(3)}`)
   }, [economyMenu])
 
   useEffect(() => {
@@ -113,12 +114,12 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
             :
             <p>Indicador de Custo - Valores em R$/MWh</p>
           }
-          <p>{
+          {
             economyMenu===0 || economyMenu===1?
-              <><b>Economia Acumulada: <p style={{color: '#018A8A', marginLeft: '5px'}}>R${lastDataBrutaMensalS}</p></b></>
+              <AccumulatedEconomyTitle value={lastDataBruta}/>
               :
               null
-          }</p>
+          }
         </article>
         {
           typeof window === 'undefined' || typeof window === undefined? null :
@@ -139,7 +140,7 @@ export default function economy({userName, anual, years, brutaMensal, yearsBruta
                 <GrossMensalChart title='' subtitle=''
                   data1={brutaMensal}
                   data2={brutaMensal}
-                  label={yearsBrutaMensal}
+                  label={months}
                 />
               </section>
             </RenderIf>
@@ -222,8 +223,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/economy/grossAnnual').then(res => {
     anual = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   const years = anual.map((value) => value.ano)
@@ -232,9 +231,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/economy/grossMonthly').then(res => {
     brutaMensal = res.data.data
-    // console.log(graphData[0].mes)
-  }).catch(res => {
-    // console.log(res)
   })
 
   const yearsBrutaMensal = brutaMensal.map((value) => value.mes)
@@ -252,26 +248,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 			"cod_smart_unidade",
 			"codigo_scde"],
 		"distinct": true
-}).then(res => {
+  }).then(res => {
     clients = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
-
   await apiClient.post('/economy/estimates').then(res => {
     catLiv = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
-
   let indicatorCost = []
 
   await apiClient.post('/economy/MWh').then(res => {
     indicatorCost = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
-
   if (!token) {
     return {
       redirect: {

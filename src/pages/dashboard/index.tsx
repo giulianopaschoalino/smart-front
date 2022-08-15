@@ -16,6 +16,7 @@ import CostIndicatorChart from '../../components/graph/costIndicatorChart'
 import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart'
 import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensalChart'
 import Head from 'next/head'
+import AccumulatedEconomyTitle from '../../components/accumulatedEconomyTitle/AccumulatedEconomyTitle'
 
 export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears, acumulatedGraph, mapsInfo, userName, costIndicator} : any) {
   const months = [
@@ -79,7 +80,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
         <>
           <section className='dashboard'>
             <GraphCard title='Economia Anual' subtitle='Economia Bruta Estimada e Acumulada Anual - Valores em R$ x mil'>
-              <b>Economia Acumulada:<p>R${lastDataBrutaMensalS}</p></b>
+              <AccumulatedEconomyTitle value={lastDataBrutaAnualS}/>
               <GrossAnualChart title='' subtitle=''
                 dataset='Consolidada'
                 dataProps={grossAnualGraph}
@@ -87,7 +88,7 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
             </GraphCard>
 
             <GraphCard title='Economia Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ x mil'>
-              <b>Economia Acumulada:<p>{` R$${lastDataBrutaMensalS}`}</p></b>
+              <AccumulatedEconomyTitle value={lastDataBrutaMensalS}/>
               <GrossMensalChart title='' subtitle=''
                 data1={grossMensalGraph}
                 data2={grossMensalGraph}
@@ -104,9 +105,9 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
 
             <GraphCard title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'>
               <CostIndicatorChart title='' subtitle=''
-                data1={costIndicator.filter((value, index) => value.mes.slice(0, 4).includes('2021'))}
+                data1={costIndicator?.filter((value, index) => value?.mes.slice(0, 4).includes('2021')).map(value => value?.custo_unit? value.custo_unit : null)}
                 // data1={graphData}
-                data2={costIndicator.filter((value, index) => value.mes.slice(0, 4).includes('2022'))}
+                data2={costIndicator?.filter((value, index) => value?.mes.slice(0, 4).includes('2022'))}
                 label={months}
                 miniature
               />
@@ -114,7 +115,6 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
           </section>
         </>
       }
-
     </DashboardView>
   )
 }
