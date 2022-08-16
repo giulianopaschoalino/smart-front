@@ -55,7 +55,7 @@ export default function GrossMensalChart({ title, data1, data2, label, subtitle,
     while (index < data1.length) {
       data1[index].dad_estimado? lastData=data1[index].economia_acumulada : null
       index++
-      setLastData(`economia acumulada: R$ ${parseFloat(lastData).toFixed(3)}`)
+      setLastData(`economia acumulada: R$ ${parseFloat(lastData).toLocaleString('pt-br', {minimumFractionDigits: 2})}`)
     }
   }, [data1])
 
