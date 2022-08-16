@@ -128,7 +128,8 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         type: 'bar',
         stacked: true,
         label: 'Estimado',
-        data: [0].concat(dataProps.filter(value => value.dad_estimado === true).map((value, index) => {
+        spanGaps: true,
+        data: [null].concat(dataProps.filter(value => value.dad_estimado === true).map((value, index) => {
           if (value.dad_estimado)
             return parseFloat(value.economia_acumulada)
           else 
