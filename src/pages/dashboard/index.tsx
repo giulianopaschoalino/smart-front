@@ -92,7 +92,8 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
               <GrossMensalChart title='' subtitle=''
                 data1={grossMensalGraph}
                 data2={grossMensalGraph}
-                label={grossMensalGraph.map((value) => value.mes)}
+                //label={grossMensalGraph.map((value) => value.mes)}
+                label={months}
                 miniature
               />
             </GraphCard>
