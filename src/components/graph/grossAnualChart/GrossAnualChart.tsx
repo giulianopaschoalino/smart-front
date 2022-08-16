@@ -102,11 +102,11 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
     },
   };
 
-  let labels: string[];
+  const labels: string[] = label;
   //if (bruta) {
   //  labels = [`Até ${new Date().getFullYear()-1}`, `${new Date().getFullYear()}`]
   //} else {
-    labels = label;
+  //  labels = label;
   //}
 
   const data: any = {
