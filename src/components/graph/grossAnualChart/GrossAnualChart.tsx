@@ -46,7 +46,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         },
         ticks: {
           font: {
-            size: !miniature? window.innerWidth/90 : window.innerWidth/130
+            size: !miniature? window.innerWidth/90 : window.innerWidth/125
           }
         },
       },
@@ -57,7 +57,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         },
         ticks: {
           font: {
-            size: !miniature? window.innerWidth/90 : window.innerWidth/130
+            size: !miniature? window.innerWidth/90 : window.innerWidth/125
           }
         },
       },
@@ -86,7 +86,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         align: "start",
         font: {
           weight: 'bold',
-          size: !miniature? window.innerWidth/80 : window.innerWidth/130,
+          size: !miniature? window.innerWidth/80 : window.innerWidth/125,
         },
         color: (value) => {
           return value.dataset.label==='Consolidada'? '#fff' : '#255488'
