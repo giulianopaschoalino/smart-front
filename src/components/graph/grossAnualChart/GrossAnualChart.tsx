@@ -102,7 +102,9 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
     },
   };
 
-  const labels: string[] = label;
+  const labels: string[] = label.filter(function(item, pos) {
+      return label.indexOf(item) == pos;
+  });
   //if (bruta) {
   //  labels = [`Até ${new Date().getFullYear()-1}`, `${new Date().getFullYear()}`]
   //} else {
@@ -126,10 +128,12 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         type: 'bar',
         stacked: true,
         label: 'Estimado',
-        data: dataProps.filter(value => value.dad_estimado === true).map((value, index) => {
+        data: [0].concat(dataProps.filter(value => value.dad_estimado === true).map((value, index) => {
           if (value.dad_estimado)
-          return parseFloat(value.economia_acumulada)
-        }),
+            return parseFloat(value.economia_acumulada)
+          else 
+            return 0
+        })),
         borderRadius: 10,
         backgroundColor: draw('diagonal-right-left', '#C2d5fb'),
       },
