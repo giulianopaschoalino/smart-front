@@ -74,7 +74,7 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
   useEffect(() => {
     api.post('/economy/estimates', unity!==''?{
       "filters": [
-        {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity === "default" ? null : unity}
+        {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity === "default" ? unity : unity}
       ]
     }:{}).then(res => {
       setCatLivDataState(res.data.data)
@@ -82,7 +82,7 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
 
     api.post('/economy/MWh', unity!==''?{
       "filters": [
-        {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity === "default"? null : unity}
+        {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity === "default"? unity : unity}
       ]
     }:{}).then(res => {
       setIndicatorDataState(res.data.data)
