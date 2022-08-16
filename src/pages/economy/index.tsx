@@ -161,7 +161,7 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
                     onChange={value => setUnity(value.target.value)}
                     fullWidth
                   >
-                    <MenuItem value="default">Todas</MenuItem>
+                    <MenuItem value="">Todas</MenuItem>
                     {
                       clients.map((value) => {
                         return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
@@ -190,7 +190,7 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
                     onChange={value => setUnity(value.target.value)}
                     fullWidth
                   >
-                    <MenuItem value="default">Todas</MenuItem>
+                    <MenuItem value="">Todas</MenuItem>
                     {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
                     {
                       clients.map((value) => {
