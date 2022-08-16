@@ -36,6 +36,8 @@ export const HeaderView = styled.header`
     justify-content: center;
 
     width: 40%;
+    max-width: 120px;
+    max-height: 100px;
 
     img {
       width: 100%;

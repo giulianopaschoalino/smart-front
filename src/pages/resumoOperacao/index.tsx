@@ -184,7 +184,7 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
                 return <tr>
                     <td key={value.mes} className='tg-gceh'>{value.mes}</td>
                     <td key={value.cod_smart_unidade} className='tg-gceh'>{value.unidade}</td>
-                    <td key={value.operacao} className='tg-gceh'>{value.operacao}</td>
+                    <td key={value.operacao} className='tg-gceh'>{value.nf_c_icms > 0 ? 'Compra' : 'Cessão'}</td>
                     <td key={value.contraparte} className='tg-gceh'>{value.contraparte}</td>
                     <td key={value.montante_nf} className='tg-gceh'>{parseFloat(value.montante_nf).toLocaleString('pt-br')}</td>
                     <td key={value.preco_nf} className='tg-gceh'>{parseFloat(value.preco_nf).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>

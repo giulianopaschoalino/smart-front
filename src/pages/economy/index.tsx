@@ -74,7 +74,7 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
   useEffect(() => {
     api.post('/economy/estimates', unity!==''?{
       "filters": [
-        {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity!=="default"? null : unity}
+        {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity === "default" ? unity : unity}
       ]
     }:{}).then(res => {
       setCatLivDataState(res.data.data)
@@ -82,7 +82,7 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
 
     api.post('/economy/MWh', unity!==''?{
       "filters": [
-        {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity!=="default"? null : unity}
+        {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity === "default"? unity : unity}
       ]
     }:{}).then(res => {
       setIndicatorDataState(res.data.data)
@@ -161,7 +161,7 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
                     onChange={value => setUnity(value.target.value)}
                     fullWidth
                   >
-                    <MenuItem value="default">Todas</MenuItem>
+                    <MenuItem value="">Todas</MenuItem>
                     {
                       clients.map((value) => {
                         return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
@@ -190,7 +190,7 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
                     onChange={value => setUnity(value.target.value)}
                     fullWidth
                   >
-                    <MenuItem value="default">Todas</MenuItem>
+                    <MenuItem value="">Todas</MenuItem>
                     {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
                     {
                       clients.map((value) => {

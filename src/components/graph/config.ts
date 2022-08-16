@@ -11,7 +11,7 @@ const config = (miniature: boolean | undefined): ChartOptions<ChartType> => {
           },
           ticks: {
             font: {
-              size: !miniature? window.innerWidth/90 : window.innerWidth/110
+              size: !miniature? window.innerWidth/90 : window.innerWidth/125
             }
           },
         },
@@ -22,7 +22,7 @@ const config = (miniature: boolean | undefined): ChartOptions<ChartType> => {
           },
           ticks: {
             font: {
-              size: !miniature? window.innerWidth/90 : window.innerWidth/110
+              size: !miniature? window.innerWidth/90 : window.innerWidth/125
             }
           },
         },
@@ -45,7 +45,7 @@ const config = (miniature: boolean | undefined): ChartOptions<ChartType> => {
           align: "end",
           font: {
             weight: 'bold',
-            size: !miniature? window.innerWidth/80 : window.innerWidth/105
+            size: !miniature? window.innerWidth/80 : window.innerWidth/125
           }
         },
         legend: {

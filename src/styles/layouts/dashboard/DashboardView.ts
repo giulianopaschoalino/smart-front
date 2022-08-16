@@ -51,7 +51,7 @@ export const DashboardView = styled.main`
     }
   }
 
-  @media (max-width: 1195px) {
+  @media (max-width: 1650px) {
     width: 100%;
     padding: 30px;
     margin: 0;
