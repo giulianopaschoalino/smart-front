@@ -86,7 +86,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         align: "start",
         font: {
           weight: 'bold',
-          size: !miniature? window.innerWidth/80 : window.innerWidth/105,
+          size: !miniature? window.innerWidth/80 : window.innerWidth/120,
         },
         color: (value) => {
           return value.dataset.label==='Consolidada'? '#fff' : '#255488'
