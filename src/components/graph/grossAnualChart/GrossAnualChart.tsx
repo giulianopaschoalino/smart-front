@@ -46,7 +46,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         },
         ticks: {
           font: {
-            size: !miniature? window.innerWidth/90 : window.innerWidth/110
+            size: !miniature? window.innerWidth/90 : window.innerWidth/130
           }
         },
       },
@@ -57,7 +57,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         },
         ticks: {
           font: {
-            size: !miniature? window.innerWidth/90 : window.innerWidth/110
+            size: !miniature? window.innerWidth/90 : window.innerWidth/130
           }
         },
       },
