@@ -51,7 +51,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
       {
         label: '2021',
         data: data1?.map(value => value),
-        // skipNull: data2?.map(value => value)?.includes(null),
+        skipNull: data2?.map(value => value)?.includes(null),
         borderRadius: 8,
         datalabels: {
           backgroundColor: 'white',
