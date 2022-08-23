@@ -46,7 +46,7 @@ export default function Telemetria({userName, clients}: any) {
   const [unity, setUnity] = useState(clients[0].codigo_scde);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [discretization, setDiscretization] = useState('1_hora');
+  const [discretization, setDiscretization] = useState('5_min');
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
   const [openSnackError, setOpenSnackError] = useState<boolean>(false)
@@ -149,22 +149,6 @@ export default function Telemetria({userName, clients}: any) {
         console.log('catch')
       })
   }
-  async function getChartData() {
-    const html = document.querySelector("table")?.outerHTML;
-    await api.post('/telemetry/demand', {
-      "type": discretization,
-      "filters": [
-        {"type" : "=", "field": "med_5min.ponto", "value": unity},
-        {"type" : "between", "field": "dia_num", "value": [currentDate.slice(0, 8) + '01', currentDate]}
-      ]
-      }).then(res => {
-        setDemRegXDemCon2(res.data.data)
-        setTableData(res.data.data)
-        htmlToCSV(html, "telemetria.csv")
-        setLoader(false)
-      })
-      setLoader(false)
-  }
 
   const [fatorPotenciaData, setFatorPotenciaData] = useState([]);
   const [demRegXDemCon, setDemRegXDemCon] = useState([]);
@@ -173,11 +157,6 @@ export default function Telemetria({userName, clients}: any) {
   useEffect(() => {
     setSend(false)
   }, [startDate, endDate])
-
-  useEffect(() => {
-    if (send===true)
-      getChartData()
-  }, [send])
 
   useEffect(() => {
     const firstOfTheMonth = format(new Date(startDate).setDate(1), 'yyyy-MM-dd')
@@ -189,7 +168,7 @@ export default function Telemetria({userName, clients}: any) {
     .catch(() => {setSend(false); setOpenSnackFields(true)})
 
     getDemand(unity, startDate, endDate, discretization)
-      .then(result => {setDemRegXDemCon(result); setSend(false)})
+      .then(result => {setDemRegXDemCon(result); setSend(false); setTableData(result)})
       .catch(() => {setSend(false); setOpenSnackFields(true); setLoader(false)})
 
     getPowerFactorData(unity, startDate, endDate, discretization)
@@ -404,9 +383,9 @@ export default function Telemetria({userName, clients}: any) {
                     </MenuItem>
                     <MenuItem value="5_min">5 minutos</MenuItem>
                     <MenuItem value="15_min">15 minutos</MenuItem>
-                    <MenuItem value="1_hora">1 hora</MenuItem>
+                    {/* <MenuItem value="1_hora">1 hora</MenuItem>
                     <MenuItem value="1_dia">1 dia</MenuItem>
-                    <MenuItem value="1_mes">1 mês</MenuItem>
+                    <MenuItem value="1_mes">1 mês</MenuItem> */}
                   </Select>
                 </FormControl>
               </div>

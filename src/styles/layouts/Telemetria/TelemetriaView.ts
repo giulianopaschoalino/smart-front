@@ -101,7 +101,7 @@ export const TelemetriaView = styled.main`
   }
 
   table {
-    display: none;
+    /* display: none; */
   }
   .tg{
     border-collapse:collapse;
