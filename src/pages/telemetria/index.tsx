@@ -94,7 +94,7 @@ export default function Telemetria({userName, clients}: any) {
         row.push(cols[j].innerText);
       }
 
-      data.push(row.join(","));
+      data.push(row.join(";"));
     }
 
     downloadCSVFile(data.join("\n"), filename);

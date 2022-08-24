@@ -395,14 +395,11 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
                   <MenuItem value={'0'}>Nenhum</MenuItem>
                   {
                     clientMonth.sort((a, b) => {
-                      if (parseFloat(a.mes_ref.slice(0, 2)) < parseFloat(b.mes_ref.slice(0, 2)))
-                      if (parseFloat(a.mes_ref.slice(3, 7)) > parseFloat(b.mes_ref.slice(3, 7))) return -1
-                      else return 1
-                      if (parseFloat(a.mes_ref.slice(0, 2)) > parseFloat(b.mes_ref.slice(0, 2)))
-                      if (parseFloat(a.mes_ref.slice(3, 7)) < parseFloat(b.mes_ref.slice(3, 7))) return 1
-                      else return -1
-
-                      return 0
+                      if (a.mes_ref.split('/')[0] < b.mes_ref.split('/')[0]) return 1
+                      if (a.mes_ref.split('/')[0] > b.mes_ref.split('/')[0]) return -1
+                    }).sort((a, b) => {
+                      if (a.mes_ref.split('/')[1] < b.mes_ref.split('/')[1]) return 1
+                      if (a.mes_ref.split('/')[1] > b.mes_ref.split('/')[1]) return -1
                     }).map((data, index) => {
                       return <MenuItem key={index} value={data.mes_ref}>{data.mes_ref}</MenuItem>
                     })
