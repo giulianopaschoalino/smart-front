@@ -168,7 +168,15 @@ export default function Telemetria({userName, clients}: any) {
     .catch(() => {setSend(false); setOpenSnackFields(true)})
 
     getDemand(unity, startDate, endDate, discretization)
-      .then(result => {setDemRegXDemCon(result); setSend(false); setTableData(result)})
+      .then(result => {
+        // const html = document.querySelector("table")?.outerHTML;
+        // htmlToCSV(html, "telemetria.csv")
+
+        setDemRegXDemCon(result);
+        setSend(false);
+        console.log(result)
+        setTableData(result)
+      })
       .catch(() => {setSend(false); setOpenSnackFields(true); setLoader(false)})
 
     getPowerFactorData(unity, startDate, endDate, discretization)
@@ -225,6 +233,8 @@ export default function Telemetria({userName, clients}: any) {
       <Header name={userName}>
         <PageTitle title ='Telemetria' subtitle='Dados Coletados do Sistema de Coleta de Dados de Energia'/>
       </Header>
+      {
+          typeof window === 'undefined' || typeof window === undefined? null :
       <TelemetriaView>
         {/* <Banner title ='Telemetria' subtitle='Dados Coletados do Sistema de Coleta de Dados de Energia -
         SCDE da Câmara de Comercialização de Energia Elétrica - CCEE,
@@ -240,7 +250,7 @@ export default function Telemetria({userName, clients}: any) {
                     discretization==='1_hora'? 'Consumo discretizado em 1 hora' :
                     'Consumo discretizado em 1 dia'}/>
               <Tab label="Demanda"/>
-              <Tab label="Fator Potencia"/>
+              <Tab label="Fator Potência"/>
             </Tabs>
           </TableHeader>
 
@@ -423,7 +433,7 @@ export default function Telemetria({userName, clients}: any) {
                 <BasicButton title='Selecionar!' onClick={() => {
                   setLoader(true)
                   getDemand(unity, startDate, endDate, discretization)
-                    .then(result => {setDemRegXDemCon(result); setSend(false); setLoader(false)})
+                    .then(result => {setDemRegXDemCon(result); setSend(false); setLoader(false); setTableData(result)})
                     .catch(exception => {setSend(false); setOpenSnackFields(true); setLoader(false)})
                 }}/>
               </div>
@@ -582,14 +592,9 @@ export default function Telemetria({userName, clients}: any) {
           {/* <GradientButton title='DADOS' description='CLIQUE AQUI PARA GERAR GRÁFICO DO MÊS ATUAL' onClick={() => setShowChart(!showChart)} purple /> */}
           {/* <GradientButton title='GRÁFICO' description='CLIQUE AQUI PARA GERAR GRÁFICO DO PERÍODO SELECIONADO' onClick={() => handleVerifyFields()} orange /> */}
           <GradientButton title='DOWNLOADS' description={`CLIQUE AQUI PARA BAIXAR OS DADOS EM FORMATO EXCEL DO PERÍODO SELECIONADO`} green onClick={() => {
-            if (send) {
-              const html = document.querySelector("table")?.outerHTML;
-              htmlToCSV(html, "telemetria.csv");
-            }
-            else {
-              setSend(true)
-              getTableData()
-            }
+            console.log(send)
+            const html = document.querySelector("table")?.outerHTML;
+            htmlToCSV(html, "telemetria.csv");
           }}/>
         </Buttons>
         <p className='paragraph'>
@@ -601,8 +606,8 @@ export default function Telemetria({userName, clients}: any) {
             medição - Distribuidora.
           </i>
         </p>
-
       </TelemetriaView>
+      }
     </main>
   )
 }

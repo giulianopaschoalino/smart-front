@@ -43,7 +43,7 @@ export function DiscretizedConsumptionChart({ title, subtitle, dataProps, label,
         },
         ticks: {
           font: {
-            size: window.innerWidth/80
+            size: window?.innerWidth/80
           }
         },
       },
@@ -53,7 +53,7 @@ export function DiscretizedConsumptionChart({ title, subtitle, dataProps, label,
         },
         ticks: {
           font: {
-            size: window.innerWidth/80
+            size: window?.innerWidth/80
           }
         },
       },
