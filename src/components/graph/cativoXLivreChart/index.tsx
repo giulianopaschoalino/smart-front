@@ -79,9 +79,11 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
 
   const options: any = config(miniature)
 
+  console.log(chartData?.map(value => value.dad_estimado)?.includes(true))
+
   const data: any = {
     labels,
-    datasets: [
+    datasets: chartData?.map(value => value.dad_estimado)?.includes(true) ? [
       {
         type: 'line' as const,
         label: dataset1? dataset1 : 'Dataset 1',
@@ -102,9 +104,10 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           if (!value.dad_estimado)
           return parseInt(value.custo_cativo)
         }),
-        skipNull: true,
+        // skipNull: true,
         borderRadius: 8,
         backgroundColor: '#C2D5FB',
+        skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
       },
       {
         type: 'bar' as const,
@@ -113,9 +116,10 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           if (!value.dad_estimado)
           return parseInt(value.custo_livre)
         }),
-        skipNull: true,
+        // skipNull: true,
         borderRadius: 8,
         backgroundColor: '#255488',
+        skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
       },
       {
         type: 'bar',
@@ -124,9 +128,9 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           if (value.dad_estimado)
           return parseInt(value.custo_cativo)
         }),
-        skipNull: true,
         borderRadius: 8,
         backgroundColor: pattern.draw('diagonal', '#C2D5FB'),
+        skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
       },
       {
         type: 'bar',
@@ -135,9 +139,47 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           if (value.dad_estimado)
           return parseInt(value.custo_livre)
         }),
-        skipNull: true,
         borderRadius: 8,
         backgroundColor: pattern.draw('diagonal', '#255488'),
+        skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
+      }
+    ] : [
+      {
+        type: 'line' as const,
+        label: dataset1? dataset1 : 'Dataset 1',
+        borderColor: '#0c9200',
+        datalabels: {
+          backgroundColor: 'white',
+          borderRadius: 8,
+          opacity: .8
+        },
+        borderWidth: 2,
+        fill: false,
+        data: chartData?.map(value => parseInt(value.economia_mensal)),
+      },
+      {
+        type: 'bar' as const,
+        label: 'Cativo',
+        data: chartData?.map(value => {
+          if (!value.dad_estimado)
+          return parseInt(value.custo_cativo)
+        }),
+        // skipNull: true,
+        borderRadius: 8,
+        backgroundColor: '#C2D5FB',
+        skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
+      },
+      {
+        type: 'bar' as const,
+        label: 'Livre',
+        data: chartData?.filter(value => !value.dad_estimad? true : false).map(value => {
+          if (!value.dad_estimado)
+          return parseInt(value.custo_livre)
+        }),
+        // skipNull: true,
+        borderRadius: 8,
+        backgroundColor: '#255488',
+        skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
       }
     ],
   }
