@@ -94,7 +94,7 @@ export default function Telemetria({userName, clients}: any) {
         row.push(cols[j].innerText);
       }
 
-      data.push(row.join(","));
+      data.push(row.join(";"));
     }
 
     downloadCSVFile(data.join("\n"), filename);
@@ -383,8 +383,8 @@ export default function Telemetria({userName, clients}: any) {
                     </MenuItem>
                     <MenuItem value="5_min">5 minutos</MenuItem>
                     <MenuItem value="15_min">15 minutos</MenuItem>
-                    {/* <MenuItem value="1_hora">1 hora</MenuItem>
-                    <MenuItem value="1_dia">1 dia</MenuItem>
+                    <MenuItem value="1_hora">1 hora</MenuItem>
+                    {/* <MenuItem value="1_dia">1 dia</MenuItem>
                     <MenuItem value="1_mes">1 mês</MenuItem> */}
                   </Select>
                 </FormControl>

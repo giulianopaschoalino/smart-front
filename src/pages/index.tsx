@@ -182,15 +182,14 @@ export default function Home() {
 /*export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
 
-  if (token) {
-    return {
-      redirect: {
-        destination: '/dashboard',
-        permanent: false
-      }
-    }
-  }
-
+//   if (token) {
+//     return {
+//       redirect: {
+//         destination: '/dashboard',
+//         permanent: false
+//       }
+//     }
+//   }
   return {
     props: {}
   };
