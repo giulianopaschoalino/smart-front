@@ -71,22 +71,27 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
     setLastDataBruta(`${parseFloat(lastData).toFixed(3)}`)
   }, [economyMenu])
 
-  useEffect(() => {
-    api.post('/economy/estimates', unity!==''?{
+  async function getChartsWithUnity() {
+    await api.post('/economy/estimates', unity!==''?{
       "filters": [
         {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity === "default" ? unity : unity}
       ]
     }:{}).then(res => {
+      console.log(res.data.data)
       setCatLivDataState(res.data.data)
     })
 
-    api.post('/economy/MWh', unity!==''?{
+    await api.post('/economy/MWh', unity!==''?{
       "filters": [
         {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity === "default"? unity : unity}
       ]
     }:{}).then(res => {
       setIndicatorDataState(res.data.data)
     })
+  }
+
+  useEffect(() => {
+    getChartsWithUnity()
   }, [unity])
 
   return (
