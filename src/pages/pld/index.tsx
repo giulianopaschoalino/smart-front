@@ -38,7 +38,7 @@ interface pldInterface {
 }
 
 export default function pld({tableData, userName, clientMonth}: pldInterface) {
-  const {pldMenu, setPldMenu} = useContext(MenuContext)
+  const { pldMenu, setPldMenu } = useContext(MenuContext)
 
   const dateFormated = new Date()
 

@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 import Router from 'next/router'
 
-import { destroyCookie, setCookie } from "nookies";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
 
 import { logout, signInRequest } from "../services/auth";
 import { api } from "../services/api";
@@ -37,6 +37,7 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     destroyCookie(null, 'user-role')
     destroyCookie(null, 'user-id')
     destroyCookie(null, '@smartAuth-token')
+    destroyCookie(null, 'user-profile_picture')
 
     logout()
   }
@@ -68,6 +69,11 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
 
     if (user.profile_picture)
       setCookie(undefined, 'user-profile_picture', user.profile_picture)
+
+    const { ['terms']: terms } = parseCookies()
+
+    if (!terms)
+      setCookie(undefined, 'terms', 'false')
 
     api.defaults.headers['Authorization'] = `Bearer ${token}`
 

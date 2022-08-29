@@ -79,8 +79,6 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
 
   const options: any = config(miniature)
 
-  console.log(chartData?.map(value => value.dad_estimado)?.includes(true))
-
   const data: any = {
     labels,
     datasets: chartData?.map(value => value.dad_estimado)?.includes(true) ? [
@@ -129,7 +127,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           return parseInt(value.custo_cativo)
         }),
         borderRadius: 8,
-        backgroundColor: pattern.draw('diagonal', '#C2D5FB'),
+        backgroundColor: pattern.draw('diagonal-right-left', '#C2D5FB'),
         skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
       },
       {
@@ -140,7 +138,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
           return parseInt(value.custo_livre)
         }),
         borderRadius: 8,
-        backgroundColor: pattern.draw('diagonal', '#255488'),
+        backgroundColor: pattern.draw('diagonal-right-left', '#255488'),
         skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
       }
     ] : [

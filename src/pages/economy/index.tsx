@@ -77,7 +77,6 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
         {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity === "default" ? unity : unity}
       ]
     }:{}).then(res => {
-      console.log(res.data.data)
       setCatLivDataState(res.data.data)
     })
 

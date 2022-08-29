@@ -42,9 +42,6 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
 
   const options: any = config(miniature)
 
-  console.log(data1)
-  console.log(data2)
-
   const data = {
     labels,
     datasets: [

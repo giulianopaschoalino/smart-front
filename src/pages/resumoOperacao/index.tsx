@@ -158,7 +158,7 @@ export default function ResumoOperacao({tableData, clients, userName, clientMont
           </div>
         </article>
         <article>
-          <BasicButton title='Baixar CSV' onClick={() => {
+          <BasicButton title='Download' onClick={() => {
             const html = document.querySelector("table").outerHTML;
             htmlToCSV(html, "resumo_operacao.csv");
           }}/>
