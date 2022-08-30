@@ -24,17 +24,22 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import RenderIf from '../../utils/renderIf'
+import BasicButton from '../../components/buttons/basicButton/BasicButton'
+import ConfirmModal from '../../components/modal/ConfirmModal'
 
 const style = {
   position: 'absolute' as const,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '50%',
+  height: 600,
+  width: 500,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: '0px solid #000',
   boxShadow: 24,
   p: 4,
+
+  borderRadius: 3
 };
 
 export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears, acumulatedGraph, mapsInfo, userName, costIndicator} : any) {
@@ -164,10 +169,10 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
                 <p>
                   Ressaltamos que os resultados informados são meramente indicativos.
                 </p>
-                <button onClick={() => {
+                <BasicButton title="Aceito os termos" onClick={() => {
                   setCookie(undefined, 'terms', 'true')
                   setOpen(false)
-                }}>Aceito os termos</button>
+                }} />
               </Typography>
             </Box>
           </Modal>

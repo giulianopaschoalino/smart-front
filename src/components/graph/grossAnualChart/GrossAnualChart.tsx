@@ -29,7 +29,7 @@ interface SingleBarInterface{
   bruta?: boolean | undefined
 }
 
-export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, barLabel, miniature, bruta }: SingleBarInterface) {
+export function GrossAnualChart({ title, subtitle, dataProps=[], label, dataset, barLabel, miniature, bruta }: SingleBarInterface) {
   function spacement(string) {
     const spaces = string.length===1?'' : string.length===2? '' : string.length===3? ' ' : string.length===4? '  ' : string.length===5? '   ' : ''
 
@@ -52,7 +52,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
       },
       y: {
         stacked: false,
-        max: Number.parseInt(dataProps.reduce((prev, current) => prev.economia_acumulada < current.economia_acumulada ? prev.economia_acumulada : current.economia_acumulada)) + 350,
+        max: Number.parseInt(dataProps.reduce((prev, current) => prev.economia_acumulada < current.economia_acumulada ? prev.economia_acumulada : current.economia_acumulada,0)) + 350,
         min: 0,
         grid: {
           display: false
@@ -80,7 +80,7 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
           dataArr.map(data => {
               sum += data;
           });
-          const percentage = (dataProps[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
+          const percentage = (dataProps[ctx.dataIndex]?.econ_percentual*100).toFixed(0)+"%";
           const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}${percentage}\n${parseInt(value).toLocaleString('pt-br')}${spacement(parseInt(value).toLocaleString('pt-br'))}`
 
           return value==null? null : result
