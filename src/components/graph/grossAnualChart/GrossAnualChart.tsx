@@ -29,7 +29,7 @@ interface SingleBarInterface{
   bruta?: boolean | undefined
 }
 
-export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, barLabel, miniature, bruta }: SingleBarInterface) {
+export function GrossAnualChart({ title, subtitle, dataProps=[], label, dataset, barLabel, miniature, bruta }: SingleBarInterface) {
   function spacement(string) {
     const spaces = string.length===1?'' : string.length===2? '' : string.length===3? ' ' : string.length===4? '  ' : string.length===5? '   ' : ''
 
@@ -52,6 +52,8 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
       },
       y: {
         stacked: false,
+        max: Number.parseInt(dataProps.reduce((prev, current) => prev.economia_acumulada < current.economia_acumulada ? prev.economia_acumulada : current.economia_acumulada,0)) + 350,
+        min: 0,
         grid: {
           display: false
         },
@@ -61,6 +63,9 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
           }
         },
       },
+    },
+    axisY: {
+
     },
     series: {
       downsample: {
@@ -75,15 +80,14 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
           dataArr.map(data => {
               sum += data;
           });
-          const percentage = (dataProps[ctx.dataIndex].econ_percentual*100).toFixed(0)+"%";
+          const percentage = (dataProps[ctx.dataIndex]?.econ_percentual*100).toFixed(0)+"%";
           const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}${percentage}\n${parseInt(value).toLocaleString('pt-br')}${spacement(parseInt(value).toLocaleString('pt-br'))}`
 
           return value==null? null : result
         },
         display: true,
         anchor: "end",
-        offset: !miniature? 0 : -5,
-        align: "start",
+        align: "end",
         font: {
           weight: 'bold',
           size: !miniature? window.innerWidth/80 : window.innerWidth/125,
@@ -105,11 +109,6 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
   const labels: string[] = label.filter(function(item, pos) {
       return label.indexOf(item) == pos;
   });
-  //if (bruta) {
-  //  labels = [`Até ${new Date().getFullYear()-1}`, `${new Date().getFullYear()}`]
-  //} else {
-  //  labels = label;
-  //}
 
   const data: any = {
     labels,
@@ -121,6 +120,11 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         data: dataProps.filter(value => value.dad_estimado === false).map((value, index) => {
           return parseFloat(value.economia_acumulada)
         }),
+        datalabels: {
+          backgroundColor: '#255488',
+          borderRadius: 8,
+          opacity: .8,
+        },
         borderRadius: 10,
         backgroundColor: '#255488',
       },
@@ -129,10 +133,18 @@ export function GrossAnualChart({ title, subtitle, dataProps, label, dataset, ba
         stacked: true,
         label: 'Estimado',
         spanGaps: true,
+        datalabels: {
+          offset: dataProps.filter(value => value.dad_estimado === true).map((value, index) => {
+            if (index === 1) {
+              return 30
+            }
+            return 0
+          })
+        },
         data: [null].concat(dataProps.filter(value => value.dad_estimado === true).map((value, index) => {
           if (value.dad_estimado)
             return parseFloat(value.economia_acumulada)
-          else 
+          else
             return 0
         })),
         borderRadius: 10,

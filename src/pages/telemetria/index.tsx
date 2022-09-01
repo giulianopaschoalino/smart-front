@@ -46,13 +46,14 @@ export default function Telemetria({userName, clients}: any) {
   const [unity, setUnity] = useState(clients[0].codigo_scde);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [discretization, setDiscretization] = useState('5_min');
+  const [month, setMonth] = useState(new Date().getMonth()+1);
+  const [discretization, setDiscretization] = useState('1_hora');
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
   const [openSnackError, setOpenSnackError] = useState<boolean>(false)
   const [openSnackFields, setOpenSnackFields] = useState<boolean>(false)
 
-  const currentDate = new Date().toLocaleDateString().split('/').reverse().join('-')
+  const months=['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
 
   const handleCloseSnack = (
     event?: React.SyntheticEvent | Event,
@@ -68,7 +69,13 @@ export default function Telemetria({userName, clients}: any) {
   }
 
   function downloadCSVFile(csv, filename) {
-    const csv_file = new Blob([csv], {type: "text/csv"});
+    /*exemplo caso mudar o type do blob não resolva
+
+    var csvContent = 'éà; ça; 12\nà@€; çï; 13',
+    textEncoder = new TextEncoder('windows-1252');
+    */
+
+    const csv_file = new Blob([csv], {type: "text/csv;charset=utf-8"});
 
     const download_link = document.createElement("a");
 
@@ -108,7 +115,6 @@ export default function Telemetria({userName, clients}: any) {
 
   const [showChart, setShowChart] = useState(false);
 
-  const [exception, setException] = useState(false);
   const [send, setSend] = useState(false);
 
   const [open, setOpen] = useState(false);
@@ -120,35 +126,6 @@ export default function Telemetria({userName, clients}: any) {
     setEndDate(newValue)
   };
 
-  const [demRegXDemCon2, setDemRegXDemCon2] = useState([]);
-
-  async function getTableData() {
-    const html = document.querySelector("table")?.outerHTML;
-    if (startDate.toLocaleDateString()!=='' && endDate.toLocaleDateString()!=='' && send)
-      setOpen(true)
-      await api.post('/telemetry/powerFactor', {
-        "type": discretization,
-        "filters": [
-            {"type" : "=", "field": "med_5min.ponto", "value": unity},
-            {"type" : "between", "field": "dia_num", "value": [currentDate.slice(0, 8) + '01', currentDate]}
-          ]
-      }).then(res => {
-        setTableData(res.data.data)
-        setOpenSnackError(false)
-        setOpenSnackSuccess(true)
-        setOpen(false)
-        setLoader(false)
-        htmlToCSV(html, "telemetria.csv")
-        console.log('then')
-      }).catch(res => {
-        setSend(false)
-        setLoader(false)
-        setException(true)
-        setOpenSnackError(true)
-        setOpenSnackSuccess(false)
-        console.log('catch')
-      })
-  }
 
   const [fatorPotenciaData, setFatorPotenciaData] = useState([]);
   const [demRegXDemCon, setDemRegXDemCon] = useState([]);
@@ -159,8 +136,10 @@ export default function Telemetria({userName, clients}: any) {
   }, [startDate, endDate])
 
   useEffect(() => {
-    const firstOfTheMonth = format(new Date(startDate).setDate(1), 'yyyy-MM-dd')
+    const firstOfTheMonth = format(new Date(startDate).setDate(2), 'yyyy-MM-dd')
     const lastOfTheMonth = format(new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0), 'yyyy-MM-dd')
+
+    setStartDate(new Date(firstOfTheMonth))
 
     setLoader(true)
     getDiscretization(unity, new Date(firstOfTheMonth), new Date(lastOfTheMonth), discretization)
@@ -169,12 +148,8 @@ export default function Telemetria({userName, clients}: any) {
 
     getDemand(unity, startDate, endDate, discretization)
       .then(result => {
-        // const html = document.querySelector("table")?.outerHTML;
-        // htmlToCSV(html, "telemetria.csv")
-
         setDemRegXDemCon(result);
         setSend(false);
-        console.log(result)
         setTableData(result)
       })
       .catch(() => {setSend(false); setOpenSnackFields(true); setLoader(false)})
@@ -304,41 +279,72 @@ export default function Telemetria({userName, clients}: any) {
                   </Select>
                 </FormControl>
               </div>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <div className='datePicker'>
-                  <DesktopDatePicker
-                    label="Data inicial"
-                    inputFormat="dd/MM/yyyy"
-                    value={startDate}
-                    onChange={handleChangeStartDate}
-                    renderInput={(params) => <TextField {...params} sx={{mr: 1, mb: 2}}/>}
-                  />
-                </div>
-                <div className='datePicker' style={{marginRight: 10}}>
-                  <DesktopDatePicker
-                    label="Data final"
-                    inputFormat="dd/MM/yyyy"
-                    value={endDate}
-                    maxDate={discretization === '1_mes'? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
-                      :
-                      discretization === '1_dia'?new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
-                        :
-                        discretization === '1_hora'?new Date(startDate).setUTCMonth(startDate.getUTCMonth()+1)
+                {
+                  discretization === '1_mes' ?
+                  <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
+                    <InputLabel>Discretização</InputLabel>
+                    <Select
+                      labelId="demo-select-small"
+                      id="demo-select-small"
+                      value={month}
+                      label="Mês"
+                      onChange={value => {
+                        setMonth(value.target.value as number)
+                        const firstOfTheMonth: Date = new Date(startDate.getFullYear(), (value.target.value as number)-1, 1)
+                        const lastOfTheMonth: Date = new Date(startDate.getFullYear(), firstOfTheMonth.getMonth() + 1, 0)
+                        setStartDate(firstOfTheMonth)
+                        setEndDate(lastOfTheMonth)
+                      }}
+                      sx={{height: 63, mb: 2}}
+                      fullWidth
+                    >
+                      <MenuItem value="">
+                        <em>Nenhum</em>
+                      </MenuItem>
+                      {
+                        months.slice(0, new Date().getUTCMonth()+1).map(value => {
+                          return <MenuItem key={value} value={months.indexOf(value)+1 as number}>{value}</MenuItem>
+                        })
+                      }
+                    </Select>
+                  </FormControl>
+                  :
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <div className='datePicker'>
+                      <DesktopDatePicker
+                        label="Data inicial"
+                        inputFormat="dd/MM/yyyy"
+                        value={startDate}
+                        onChange={handleChangeStartDate}
+                        renderInput={(params) => <TextField {...params} sx={{mr: 1, mb: 2}}/>}
+                      />
+                    </div>
+                    <div className='datePicker' style={{marginRight: 10}}>
+                      <DesktopDatePicker
+                        label="Data final"
+                        inputFormat="dd/MM/yyyy"
+                        value={endDate}
+                        maxDate={discretization === '1_mes'? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
                           :
-                          discretization === '15_min'?new Date(startDate).setUTCDate(startDate.getUTCDate()+7)
+                          discretization === '1_dia'?new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
                             :
-                            new Date(startDate).setUTCDate(startDate.getUTCDate()+1)
-                        }
-                    onChange={(newValue: any) => handleChangeEndDate(newValue)}
-                    renderInput={(params) => <TextField {...params} sx={{mb: 2}}/>}
-                  />
-                </div>
-              </LocalizationProvider>
+                            discretization === '1_hora'?new Date(startDate).setUTCMonth(startDate.getUTCMonth()+1)
+                              :
+                              discretization === '15_min'?new Date(startDate).setUTCDate(startDate.getUTCDate()+7)
+                                :
+                                new Date(startDate).setUTCDate(startDate.getUTCDate()+1)
+                            }
+                        onChange={(newValue: any) => handleChangeEndDate(newValue)}
+                        renderInput={(params) => <TextField {...params} sx={{mb: 2}}/>}
+                      />
+                    </div>
+                  </LocalizationProvider>
+                }
               <div className='select'>
                 <BasicButton title='Selecionar!' onClick={() => {
                   setLoader(true)
                   getDiscretization(unity, startDate, endDate, discretization)
-                    .then(result => {setDiscretizedConsumptionData(result); setSend(false); setLoader(false)})
+                    .then(result => {setDiscretizedConsumptionData(result); setSend(false); setLoader(false); setTableData(result)})
                     .catch(exception => {setSend(false); setOpenSnackFields(true); setLoader(false)})
                 }}/>
               </div>
@@ -527,7 +533,7 @@ export default function Telemetria({userName, clients}: any) {
                 <BasicButton title='Selecionar!' onClick={() => {
                   setLoader(true)
                   getPowerFactorData(unity, startDate, endDate, discretization)
-                    .then(result => {setFatorPotenciaData(result); setSend(false); setLoader(false)})
+                    .then(result => {setFatorPotenciaData(result); setSend(false); setLoader(false); setTableData(result)})
                     .catch(exception => {setSend(false); setOpenSnackFields(true); setLoader(false)})
                 }}/>
               </div>
@@ -548,7 +554,86 @@ export default function Telemetria({userName, clients}: any) {
             </div>
           </div>
         </RenderIf>
-        <RenderIf isTrue={true}>
+
+        <RenderIf isTrue={menu===2}>
+          <table className="tg">
+            <thead>
+              <tr>
+                <th className='tg-8oo6'>Ponto</th>
+                <th className='tg-8oo6'>Numero do dia</th>
+                <th className='tg-8oo6'>Dia formatado</th>
+                <th className='tg-8oo6'>Hora</th>
+                <th className='tg-8oo6'>f_ref</th>
+                <th className='tg-8oo6'>Consumo</th>
+                <th className='tg-8oo6'>Reativa</th>
+                <th className='tg-8oo6'>fp</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                fatorPotenciaData!==null?
+                fatorPotenciaData?.map((value, index) => {
+                  return <>
+                    <tr>
+                      <td key={index} className='tg-gceh'>{value.ponto}</td>
+                      <td key={index} className='tg-gceh'>{parseFloat(value.dia_num)}</td>
+                      <td key={index} className='tg-uulg'>{value.day_formatted}</td>
+                      <td key={index} className='tg-gceh'>{value.hora}</td>
+                      <td key={index} className='tg-gceh'>{value.f_ref}</td>
+                      <td key={index} className='tg-uulg'>{parseFloat(value.consumo).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td key={index} className='tg-gceh'>{parseFloat(value.reativa).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td key={index} className='tg-gceh'>{parseFloat(value.fp)}</td>
+                    </tr>
+                  </>
+                })
+                :
+                null
+              }
+            </tbody>
+          </table>
+        </RenderIf>
+        <RenderIf isTrue={menu===1}>
+          <table className="tg">
+            <thead>
+              <tr>
+                <th className='tg-8oo6'>Ponto</th>
+                <th className='tg-8oo6'>Numero do dia</th>
+                <th className='tg-8oo6'>Dia formatado</th>
+                <th className='tg-8oo6'>Hora</th>
+                {/* <th className='tg-8oo6'>Minuto</th> não temos */}
+                <th className='tg-8oo6'>Consumo</th>
+                <th className='tg-8oo6'>Reativa</th>
+                <th className='tg-8oo6'>dem contratada</th>
+                <th className='tg-8oo6'>dem registrada</th>
+                <th className='tg-8oo6'>dem tolerancia</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                demRegXDemCon!==null?
+                demRegXDemCon?.map((value, index) => {
+                  return <>
+                    <tr>
+                      <td key={index} className='tg-gceh'>{value.ponto}</td>
+                      <td key={index} className='tg-gceh'>{parseFloat(value.dia_num)}</td>
+                      <td key={index} className='tg-uulg'>{value.day_formatted}</td>
+                      <td key={index} className='tg-gceh'>{value.hora}</td>
+                      {/* <td key={index} className='tg-gceh'>{value.minut}</td> */}
+                      <td key={index} className='tg-uulg'>{parseFloat(value.consumo).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td key={index} className='tg-gceh'>{parseFloat(value.reativa).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                      <td key={index} className='tg-gceh'>{value.dem_cont}</td>
+                      <td key={index} className='tg-gceh'>{value.dem_reg}</td>
+                      <td key={index} className='tg-gceh'>{value.dem_tolerancia}</td>
+                    </tr>
+                  </>
+                })
+                :
+                null
+              }
+            </tbody>
+          </table>
+        </RenderIf>
+        <RenderIf isTrue={menu===0}>
           <table className="tg">
             <thead>
               <tr>
@@ -563,8 +648,8 @@ export default function Telemetria({userName, clients}: any) {
             </thead>
             <tbody>
               {
-                tableData!==null?
-                tableData?.map((value, index) => {
+                discretizedConsumptionData!==null?
+                discretizedConsumptionData?.map((value, index) => {
                   return <>
                     <tr>
                       <td key={index} className='tg-gceh'>{value.ponto}</td>
@@ -592,9 +677,8 @@ export default function Telemetria({userName, clients}: any) {
           {/* <GradientButton title='DADOS' description='CLIQUE AQUI PARA GERAR GRÁFICO DO MÊS ATUAL' onClick={() => setShowChart(!showChart)} purple /> */}
           {/* <GradientButton title='GRÁFICO' description='CLIQUE AQUI PARA GERAR GRÁFICO DO PERÍODO SELECIONADO' onClick={() => handleVerifyFields()} orange /> */}
           <GradientButton title='DOWNLOADS' description={`CLIQUE AQUI PARA BAIXAR OS DADOS EM FORMATO EXCEL DO PERÍODO SELECIONADO`} green onClick={() => {
-            console.log(send)
             const html = document.querySelector("table")?.outerHTML;
-            htmlToCSV(html, "telemetria.csv");
+            htmlToCSV(html, `${menu === 2 ? 'fator_potencia' : menu === 1 ? 'demanda' : 'consumo_discretizado'}.csv`);
           }}/>
         </Buttons>
         <p className='paragraph'>

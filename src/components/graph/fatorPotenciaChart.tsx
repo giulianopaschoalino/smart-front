@@ -58,6 +58,8 @@ export default function FatorPotenciaChart({ title, subtitle, data1, data2, labe
         },
       },
       y: {
+        max: 1,
+        min: 0,
         grid: {
           display: false
         },
