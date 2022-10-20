@@ -87,6 +87,8 @@ export default function Dashboard({grossAnualGraph, grossAnualYears, grossMensal
     setLastDataBrutaAnual(`${parseFloat(lastDataAnual).toFixed(3)}`)
   }, [])
 
+  console.log(grossAnualGraph)
+
   return (
     <DashboardView>
       <Head>
@@ -195,9 +197,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/economy/grossAnnual').then(res => {
     grossAnualGraph = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
+  .then(console.log)
+  .catch(console.log)
 
   await apiClient.post('/economy/grossMonthly').then(res => {
     grossMensalGraph = res.data.data

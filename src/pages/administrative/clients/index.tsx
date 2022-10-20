@@ -152,6 +152,12 @@ export default function clients({ clients, userName }) {
     setLogo(e.target.files[0])
   }
 
+  console.table(clients.map(client => {
+    if (Number.parseInt(client.client_id) === 59641651) return client
+    return
+  }))
+  console.table(clients[417])
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
       <Snackbar

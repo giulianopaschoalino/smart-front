@@ -91,6 +91,7 @@ export default function economy({userName, anual, years, brutaMensal, catLiv, cl
 
   useEffect(() => {
     getChartsWithUnity()
+    console.log(brutaMensal)
   }, [unity])
 
   return (

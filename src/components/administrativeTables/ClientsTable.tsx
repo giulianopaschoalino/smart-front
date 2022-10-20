@@ -12,14 +12,21 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import React, { useState, useEffect } from 'react';
 
+import Image from 'next/image'
+
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 import Modal from '@mui/material/Modal';
 
+import FormData from 'form-data'
+import { InputUploadView } from '../inputUploadImg/inputUploadView'
+import { FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
 
 import { TableView, StyledStatus } from './TableView';
 import { api } from '../../services/api';
+import FaqButton1 from '../buttons/faqButton/FaqButton1';
+import FaqButton2 from '../buttons/faqButton/FaqButton2';
 
 const style = {
   position: 'absolute' as const,
@@ -276,6 +283,65 @@ export default function ClientTable({clients, onChange}: ClientsTableInterface) 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - clients.length) : 0;
 
+    const formData = new FormData()
+
+    const [clientEdit, setClientEdit] = useState<any>({
+      name: String,
+      email: String,
+      password: String,
+      password_confirmation: String,
+      client_id: Number
+    })
+    const [logo, setLogo] = useState(false)
+    const [imageURLS, setImageURLs] = useState([])
+    const [images, setImages] = useState([] as any)
+    const [nivelAcess, setnivelAcess] = useState<any>(2);
+    const [openEditUserModal, setOpenEditUserModal] = useState<any>(2);
+
+    const [selectedClient, setSelectedClient] = useState<any>(2);
+
+    useEffect(() => {
+      if (images.length < 1) return
+      const newImageUrls: any = []
+      images.forEach((image: any) =>
+        newImageUrls.push(URL.createObjectURL(image))
+      )
+      setImageURLs(newImageUrls)
+    }, [images])
+
+    function onImageChange(e: any) {
+      setImages([...e.target.files])
+      setLogo(e.target.files[0])
+    }
+
+    const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
+
+    function handleUpdateClient({
+      name,
+      email,
+      password,
+      password_confirmation,
+      client_id
+    }, id) {
+      formData.append('name', name)
+      formData.append('email', email)
+      formData.append('password', password)
+      formData.append('password_confirmation', password_confirmation)
+      formData.append('client_id', client_id)
+      formData.append('profile_picture', logo)
+      formData.append('role', nivelAcess)
+
+      api.put(`/user/${id}`, formData)
+        .then((res) => {
+          setOpenSnackSuccess(true)
+          setOpenModalInativar(false)
+          window.location.reload()
+        })
+        .catch((res) => {
+          setOpenSnackError(true)
+        })
+    }
+
   return (
     <TableView>
       <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
@@ -332,10 +398,15 @@ export default function ClientTable({clients, onChange}: ClientsTableInterface) 
                       >
                         Client - {row.client_id}
                       </TableCell>
-                      <TableCell align="left">{row.name}</TableCell>
+                      <TableCell align="left" style={{cursor: 'pointer'}} onClick={() => {
+                        setOpenEditUserModal(true)
+                        setSelectedClient(row)
+                        setClientEdit(row)
+                      }}>{row.name}</TableCell>
                       <TableCell align="left" style={{cursor: 'pointer'}} onClick={() => {
                         setOpen(true)
                         getClientUnits(row.client_id)
+                        setSelectedClient(row)
                       }}>clique aqui para ver as unidades</TableCell>
                       <TableCell align="left"><StyledStatus status={row.deleted_at? 'inativo' : 'ativo'}> {row.deleted_at? 'inativo' : 'ativo'}</StyledStatus></TableCell>
                     </TableRow>
@@ -363,6 +434,143 @@ export default function ClientTable({clients, onChange}: ClientsTableInterface) 
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <Modal
+      open={openEditUserModal}
+      onClose={() => setOpenEditUserModal(false)}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+      >
+      <Box sx={style}>
+      <h1>Editar Cliente - {selectedClient.name}</h1>
+      <Typography
+        sx={{ color: 'gray', fontSize: 12 }}
+        variant="h5"
+        gutterBottom
+        component="div"
+      >
+        Adicionar Cliente Smart Energia
+      </Typography>
+      <br />
+      <TextField
+        id="outlined-basic"
+        label="Nome"
+        sx={{ width: 350, ml: 5 }}
+        onChange={(value) => {
+          setClientEdit({
+            ...clientEdit,
+            name: value.target.value
+          })
+        }}
+        variant="outlined"
+      />
+      <TextField
+        id="outlined-basic"
+        label="E-mail/Usuário"
+        value={clientEdit.email}
+        sx={{ width: 350, ml: 8 }}
+        onChange={(value) => {
+          setClientEdit({
+            ...clientEdit,
+            email: value.target.value.toLowerCase()
+          })
+        }}
+        variant="outlined"
+      />
+      <TextField
+        id="outlined-basic"
+        label="Senha"
+        sx={{ width: 350, ml: 5, mt: 2 }}
+        onChange={(value) => {
+          setClientEdit({
+            ...clientEdit,
+            password: value.target.value
+          })
+        }}
+        variant="outlined"
+      />
+      <TextField
+        id="outlined-basic"
+        label="Confirma Senha"
+        sx={{ width: 350, ml: 8, mt: 2 }}
+        onChange={(value) => {
+          setClientEdit({
+            ...clientEdit,
+            password_confirmation: value.target.value
+          })
+        }}
+        variant="outlined"
+      />
+      <TextField
+        id="outlined-basic"
+        label="Codigo do Cliente Smart Energia"
+        sx={{ width: 350, ml: 5, mt: 2 }}
+        onChange={(value) => {
+          setClientEdit({
+            ...clientEdit,
+            client_id: value.target.value
+          })
+        }}
+        variant="outlined"
+      />
+      <InputUploadView>
+        <div className="imgContainer">
+          <article>
+            {imageURLS.map((imageSrc, index) => {
+              return <Image
+                src={imageSrc}
+                key={index}
+                width={30}
+                height={30}
+                className="image"
+              />
+            })}
+          </article>
+        </div>
+        <div className="update">
+          <form action="">
+            <div>
+              <label htmlFor="arquivo">
+                {' '}
+                <p className="TitleButton"> Enviar foto de Perfil </p>{' '}
+              </label>
+              <input
+                type="file"
+                name="arquivo"
+                id="arquivo"
+                onChange={onImageChange}
+              />
+            </div>
+          </form>
+        </div>
+      </InputUploadView>
+
+      <div className='select'>
+
+      <FormControl sx={{ width: 350, ml: 5, mt: 2 }}>
+        <InputLabel id="demo-select-small">Nivel de acesso</InputLabel>
+        <Select
+          labelId="demo-select-small"
+          id="demo-select-small"
+          value={nivelAcess}
+          label="Unidade"
+          onChange={value => setnivelAcess(value.target.value)}
+          fullWidth
+        >
+          <MenuItem value={1}>Administrador</MenuItem>
+          <MenuItem value={2}>Cliente</MenuItem>
+
+        </Select>
+      </FormControl>
+      </div>
+
+      <FaqButton1 title="Cancelar" onClick={() => setOpenEditUserModal(false)} />
+      <FaqButton2
+        title="Salvar"
+        onClick={() => handleUpdateClient(clientEdit, selectedClient.id)}
+      />
+      </Box>
+      </Modal>
+
       <Modal
         open={open}
         onClose={handleClose}
