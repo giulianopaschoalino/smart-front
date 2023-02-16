@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { Bar, Line, Chart as ChartJs } from 'react-chartjs-2'
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
+  BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title,
+  Tooltip
 } from 'chart.js'
+import { Chart as ChartJs } from 'react-chartjs-2'
 
-import document from 'next/document'
 
-import { draw, generate } from 'patternomaly'
+import { draw } from 'patternomaly'
 
-import { GrossMensalChartView } from './GrossMensalChartView'
 import ChartTitle from '../ChartTitle'
-import { config } from '../config'
+import { GrossMensalChartView } from './GrossMensalChartView'
 // import { data } from './LineBarChart';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
@@ -48,14 +41,14 @@ export default function GrossMensalChart({
       string.length === 1
         ? ''
         : string.length === 2
-        ? ''
-        : string.length === 3
-        ? ' '
-        : string.length === 4
-        ? '  '
-        : string.length === 5
-        ? '   '
-        : ''
+          ? ''
+          : string.length === 3
+            ? ' '
+            : string.length === 4
+              ? '  '
+              : string.length === 5
+                ? '   '
+                : ''
     return spaces
   }
 
@@ -80,7 +73,7 @@ export default function GrossMensalChart({
     responsive: true,
     scales: {
       x: {
-        stacked: false,
+        stacked: true,
         grid: {
           display: false
         },
@@ -91,7 +84,7 @@ export default function GrossMensalChart({
         }
       },
       y: {
-        stacked: false,
+        stacked: true,
         grid: {
           display: false
         },
