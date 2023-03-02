@@ -41,7 +41,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 })
 
 export default function Telemetria({ userName, clients }: any) {
-  const [unity, setUnity] = useState(clients[0].codigo_scde);
+  const [unity, setUnity] = useState(clients[0]?.codigo_scde);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [month, setMonth] = useState(new Date().getMonth() + 1);

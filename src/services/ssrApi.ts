@@ -1,5 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
-import * as cookie from 'cookie';
+import axios from "axios";
 import * as express from 'express';
 import * as next from 'next';
 import { parseCookies } from "nookies";
@@ -13,7 +12,8 @@ export default function getAPIClient(ctx?: Pick<next.NextPageContext, 'req'> | {
   const { '@smartAuth-token': token } = parseCookies(ctx)
 
   const api = axios.create({
-    baseURL: "https://api.energiasmart.com.br/api",
+    // baseURL: "https://api.energiasmart.com.br/api",
+    baseURL: "https://api.energiasmart.klupp.com.br/api",
   });
 
   api.interceptors.request.use(config => {

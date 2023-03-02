@@ -1,29 +1,29 @@
+import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
+import Snackbar from '@mui/material/Snackbar'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import Snackbar from '@mui/material/Snackbar'
-import MuiAlert, { AlertProps } from '@mui/material/Alert'
+import React, { useEffect, useState } from 'react'
 import ClientsTable from '../../../components/administrativeTables/ClientsTable'
 import BasicButton from '../../../components/buttons/basicButton/BasicButton'
 import FaqButton1 from '../../../components/buttons/faqButton/FaqButton1'
 import FaqButton2 from '../../../components/buttons/faqButton/FaqButton2'
 import Header from '../../../components/header/Header'
 
-import { ClientsView } from '../../../styles/layouts/clients/ClientsView'
-import PageTitle from '../../../components/pageTitle/PageTitle'
-import ConfirmModal from '../../../components/modal/ConfirmModal'
-import { ConfirmModalView } from '../../../styles/layouts/modals/confirmModalView'
-import { api } from '../../../services/api'
-import { parseCookies } from 'nookies'
 import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
+import ConfirmModal from '../../../components/modal/ConfirmModal'
+import PageTitle from '../../../components/pageTitle/PageTitle'
+import { api } from '../../../services/api'
 import getAPIClient from '../../../services/ssrApi'
+import { ClientsView } from '../../../styles/layouts/clients/ClientsView'
+import { ConfirmModalView } from '../../../styles/layouts/modals/confirmModalView'
 
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import FormData from 'form-data'
 import { InputUploadView } from '../../../components/inputUploadImg/inputUploadView'
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
 const style = {
   position: 'absolute' as const,
@@ -70,6 +70,7 @@ export default function clients({ clients, userName }) {
   const [nivelAcess, setnivelAcess] = useState<any>(2);
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
   const [openSnackError, setOpenSnackError] = useState<boolean>(false)
+  const [openSnackWarning, setOpenSnackWarning] = useState<boolean>(false)
   const [openSnackSuccessDelete, setOpenSnackSuccessDelete] =
     useState<boolean>(false)
   const [openSnackErrorDelete, setOpenSnackErrorDelete] =
@@ -114,6 +115,9 @@ export default function clients({ clients, userName }) {
     formData.append('profile_picture', logo)
     formData.append('role', nivelAcess)
 
+    if (!name.length || !email.length || !password.length || !password_confirmation.length || !client_id.length || !logo || !nivelAcess.length)
+      setOpenSnackWarning(true)
+
     api.post('/user', formData)
       .then((res) => {
         setOpenSnackSuccess(true)
@@ -152,12 +156,6 @@ export default function clients({ clients, userName }) {
     setLogo(e.target.files[0])
   }
 
-  console.table(clients.map(client => {
-    if (Number.parseInt(client.client_id) === 59641651) return client
-    return
-  }))
-  console.table(clients[417])
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
       <Snackbar
@@ -184,6 +182,19 @@ export default function clients({ clients, userName }) {
           sx={{ width: '100%' }}
         >
           Cliente não cadastrado!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openSnackWarning}
+        autoHideDuration={4000}
+        onClose={handleCloseSnack}
+      >
+        <Alert
+          onClose={handleCloseSnack}
+          severity="warning"
+          sx={{ width: '100%' }}
+        >
+          Preencha todos os campos!
         </Alert>
       </Snackbar>
 
@@ -348,22 +359,22 @@ export default function clients({ clients, userName }) {
 
           <div className='select'>
 
-          <FormControl sx={{ width: 350, ml: 5, mt: 2 }}>
-            <InputLabel id="demo-select-small">Nivel de acesso</InputLabel>
-            <Select
-              labelId="demo-select-small"
-              id="demo-select-small"
-              value={nivelAcess}
-              label="Unidade"
-              onChange={value => setnivelAcess(value.target.value)}
-              fullWidth
-            >
-              <MenuItem value={1}>Administrador</MenuItem>
-              <MenuItem value={2}>Cliente</MenuItem>
+            <FormControl sx={{ width: 350, ml: 5, mt: 2 }}>
+              <InputLabel id="demo-select-small">Nivel de acesso</InputLabel>
+              <Select
+                labelId="demo-select-small"
+                id="demo-select-small"
+                value={nivelAcess}
+                label="Unidade"
+                onChange={value => setnivelAcess(value.target.value)}
+                fullWidth
+              >
+                <MenuItem value={1}>Administrador</MenuItem>
+                <MenuItem value={2}>Cliente</MenuItem>
 
-            </Select>
-          </FormControl>
-        </div>
+              </Select>
+            </FormControl>
+          </div>
 
           <FaqButton1 title="Cancelar" onClick={() => setOpen(false)} />
           <FaqButton2
