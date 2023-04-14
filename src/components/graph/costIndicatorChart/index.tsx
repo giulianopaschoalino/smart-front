@@ -33,9 +33,10 @@ interface ChartInterface {
   single?: any
   label: any,
   miniature?: boolean | undefined
+  years?: string[]
 }
 
-export default function CostIndicatorChart({ title, data1, data2, label, subtitle, miniature }: ChartInterface) {
+export default function CostIndicatorChart({ title, data1, data2, label, subtitle, miniature, years }: ChartInterface) {
 
   const labels = label;
 
@@ -47,7 +48,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
     labels,
     datasets: [
       {
-        label: new Date().getFullYear() - 1,
+        label: years[0],
         data: data1?.map(value => value),
         skipNull: data2?.map(value => value)?.includes(null),
         borderRadius: 8,
@@ -65,7 +66,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
         },
       },
       {
-        label: new Date().getFullYear(),
+        label: years[1],
         data: data2?.map(value => value),
         skipNull: data1?.map(value => value)?.includes(null),
         borderRadius: 8,
