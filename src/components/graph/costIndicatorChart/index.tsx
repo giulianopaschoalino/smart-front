@@ -1,21 +1,20 @@
-import React from 'react'
 
-import { draw } from 'patternomaly'
+import { draw } from 'patternomaly';
 
-import { Bar } from 'react-chartjs-2';
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
   BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
   Title,
-  Tooltip,
-  Legend
-} from 'chart.js'
+  Tooltip
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
-import { CostIndicatorChartView } from './CostIndicatorChartView';
 import ChartTitle from '../ChartTitle';
 import { config } from '../config';
+import { CostIndicatorChartView } from './CostIndicatorChartView';
 
 ChartJS.register(
   CategoryScale,
@@ -42,11 +41,13 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
 
   const options: any = config(miniature)
 
+  console.log(new Date().getFullYear())
+
   const data = {
     labels,
     datasets: [
       {
-        label: '2021',
+        label: new Date().getFullYear() - 1,
         data: data1?.map(value => value),
         skipNull: data2?.map(value => value)?.includes(null),
         borderRadius: 8,
@@ -64,7 +65,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
         },
       },
       {
-        label: '2022',
+        label: new Date().getFullYear(),
         data: data2?.map(value => value),
         skipNull: data1?.map(value => value)?.includes(null),
         borderRadius: 8,

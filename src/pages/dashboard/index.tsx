@@ -1,31 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DashboardView } from '../../styles/layouts/dashboard/DashboardView'
 
-import MapCard from '../../components/mapCard/MapCard'
+import Link from 'next/link'
 import GraphCard from '../../components/graph/graphCard/ChartCard'
 import Header from '../../components/header/Header'
+import MapCard from '../../components/mapCard/MapCard'
 import PageTitle from '../../components/pageTitle/PageTitle'
-import Link from 'next/link'
 
-import { parseCookies, setCookie } from 'nookies'
-import { GetServerSideProps } from 'next'
-import getAPIClient from '../../services/ssrApi'
-import { GrossAnualChart } from '../../components/graph/grossAnualChart/GrossAnualChart'
-import CostIndicatorChart from '../../components/graph/costIndicatorChart'
-import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart'
-import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensalChart'
-import Head from 'next/head'
-import AccumulatedEconomyTitle from '../../components/accumulatedEconomyTitle/AccumulatedEconomyTitle'
 import { format } from 'date-fns'
+import { GetServerSideProps } from 'next'
+import Head from 'next/head'
+import { parseCookies, setCookie } from 'nookies'
+import AccumulatedEconomyTitle from '../../components/accumulatedEconomyTitle/AccumulatedEconomyTitle'
+import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart'
+import CostIndicatorChart from '../../components/graph/costIndicatorChart'
+import { GrossAnualChart } from '../../components/graph/grossAnualChart/GrossAnualChart'
+import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensalChart'
+import getAPIClient from '../../services/ssrApi'
 
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import RenderIf from '../../utils/renderIf'
+import Box from '@mui/material/Box'
+import Modal from '@mui/material/Modal'
+import Typography from '@mui/material/Typography'
 import BasicButton from '../../components/buttons/basicButton/BasicButton'
-import ConfirmModal from '../../components/modal/ConfirmModal'
 
 const style = {
   position: 'absolute' as const,
@@ -141,8 +138,8 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
 
               <GraphCard title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'>
                 <CostIndicatorChart title='' subtitle=''
-                  data1={costIndicator?.filter((value, index) => value?.mes.slice(0, 4).includes('2021')).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
-                  data2={costIndicator?.filter((value, index) => value?.mes.slice(0, 4).includes('2022')).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
+                  data1={costIndicator?.filter((value, index) => value?.mes.slice(0, 4).includes(costIndicator[0].mes.slice(0, 4))).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
+                  data2={costIndicator?.filter((value, index) => value?.mes.slice(0, 4).includes(costIndicator[costIndicator.length - 1].mes.slice(0, 4))).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
                   label={months}
                   miniature
                 />

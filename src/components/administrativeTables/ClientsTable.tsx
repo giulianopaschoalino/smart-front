@@ -334,7 +334,7 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
       .then((res) => {
         setOpenSnackSuccess(true)
         setOpenModalInativar(false)
-        window.location.reload()
+        // window.location.reload()
       })
       .catch((res) => {
         setOpenSnackError(true)
