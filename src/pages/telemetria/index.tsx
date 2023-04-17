@@ -44,7 +44,8 @@ export default function Telemetria({ userName, clients }: any) {
   const [unity, setUnity] = useState(clients[0]?.codigo_scde);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [month, setMonth] = useState(new Date().getMonth());
+  const [endMonth, setEndMonth] = useState(new Date().getMonth() + 1);
   const [discretization, setDiscretization] = useState('1_hora');
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
@@ -279,33 +280,59 @@ export default function Telemetria({ userName, clients }: any) {
                   </div>
                   {
                     discretization === '1_mes' ?
-                      <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
-                        <InputLabel>Discretização</InputLabel>
-                        <Select
-                          labelId="demo-select-small"
-                          id="demo-select-small"
-                          value={month}
-                          label="Mês"
-                          onChange={value => {
-                            setMonth(value.target.value as number)
-                            const firstOfTheMonth: Date = new Date(startDate.getFullYear(), (value.target.value as number) - 1, 1)
-                            const lastOfTheMonth: Date = new Date(startDate.getFullYear(), firstOfTheMonth.getMonth() + 1, 0)
-                            setStartDate(firstOfTheMonth)
-                            setEndDate(lastOfTheMonth)
-                          }}
-                          sx={{ height: 63, mb: 2 }}
-                          fullWidth
-                        >
-                          <MenuItem value="">
-                            <em>Nenhum</em>
-                          </MenuItem>
-                          {
-                            months.slice(0, new Date().getUTCMonth() + 1).map(value => {
-                              return <MenuItem key={value} value={months.indexOf(value) + 1 as number}>{value}</MenuItem>
-                            })
-                          }
-                        </Select>
-                      </FormControl>
+                      <>
+                        <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
+                          <InputLabel>Discretização</InputLabel>
+                          <Select
+                            labelId="demo-select-small"
+                            id="demo-select-small"
+                            value={month}
+                            label="Mês"
+                            onChange={value => {
+                              setMonth(value.target.value as number)
+                              const firstOfTheMonth: Date = new Date(startDate.getFullYear(), (value.target.value as number) - 1, 1)
+                              setStartDate(firstOfTheMonth)
+                            }}
+                            sx={{ height: 63, mb: 2 }}
+                            fullWidth
+                          >
+                            <MenuItem value="">
+                              <em>Nenhum</em>
+                            </MenuItem>
+                            {
+                              months.slice(0, new Date().getUTCMonth() + 1).map(value => {
+                                return <MenuItem key={value} value={months.indexOf(value) + 1 as number}>{value}</MenuItem>
+                              })
+                            }
+                          </Select>
+                        </FormControl>
+                        {discretization === '1_mes' && <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
+                          <InputLabel>Discretização</InputLabel>
+                          <Select
+                            labelId="demo-select-small"
+                            id="demo-select-small"
+                            value={endMonth}
+                            label="Mês"
+                            onChange={value => {
+                              setEndMonth(value.target.value as number)
+                              const firstOfTheMonth: Date = new Date(startDate.getFullYear(), (value.target.value as number) - 1, 1)
+                              const lastOfTheMonth: Date = new Date(startDate.getFullYear(), firstOfTheMonth.getMonth() + 1, 0)
+                              setEndDate(lastOfTheMonth)
+                            }}
+                            sx={{ height: 63, mb: 2 }}
+                            fullWidth
+                          >
+                            <MenuItem value="">
+                              <em>Nenhum</em>
+                            </MenuItem>
+                            {
+                              months.slice(0, new Date().getUTCMonth() + 1).map(value => {
+                                return <MenuItem key={value} value={months.indexOf(value) + 1 as number}>{value}</MenuItem>
+                              })
+                            }
+                          </Select>
+                        </FormControl>}
+                      </>
                       :
                       <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <div className='datePicker'>
