@@ -36,22 +36,6 @@ export default function GrossMensalChart({
   subtitle,
   miniature
 }: ChartInterface) {
-  function spacement(string) {
-    const spaces =
-      string.length === 1
-        ? ''
-        : string.length === 2
-          ? ''
-          : string.length === 3
-            ? ' '
-            : string.length === 4
-              ? '  '
-              : string.length === 5
-                ? '   '
-                : ''
-    return spaces
-  }
-
   const [lastDataS, setLastData] = useState('')
   useEffect(() => {
     let lastData = '0'

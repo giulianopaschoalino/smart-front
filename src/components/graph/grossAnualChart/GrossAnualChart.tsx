@@ -82,9 +82,6 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
           const percentage = (dataProps[ctx.dataIndex]?.econ_percentual * 100).toFixed(0) + "%";
           const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}${percentage}\n${parseInt(value).toLocaleString('pt-br')}${spacement(parseInt(value).toLocaleString('pt-br'))}`
 
-          console.log(value == null ? null : result)
-          console.log(dataProps)
-
           return value == null ? null : result
         },
         display: true,
@@ -143,7 +140,7 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
             return 0
           })
         },
-        data: [].concat(dataProps.filter(value => value.dad_estimado === true).map((value, index) => {
+        data: [].concat(dataProps.filter(value => value.dad_estimado === true).slice(0, 7).map((value, index) => {
           return parseFloat(value?.economia_acumulada)
         })),
         borderRadius: 10,

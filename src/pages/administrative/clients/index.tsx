@@ -156,6 +156,7 @@ export default function clients({ clients, userName }) {
     setLogo(e.target.files[0])
   }
 
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
       <Snackbar

@@ -59,6 +59,9 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
 
   const { ['terms']: terms } = parseCookies()
 
+  const currentYear = new Date().getUTCFullYear()
+  const previousYear = new Date().getUTCFullYear() - 1
+
   const [lastDataBrutaMensalS, setLastDataBrutaMensal] = useState('')
   const [lastDataBrutaAnualS, setLastDataBrutaAnual] = useState('')
 
@@ -85,8 +88,6 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
     }
     setLastDataBrutaAnual(`${parseFloat(lastDataAnual).toFixed(3)}`)
   }, [])
-
-  console.log(grossAnualGraph)
 
   return (
     <DashboardView>
@@ -140,7 +141,8 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
                 <CostIndicatorChart title='' subtitle=''
                   data1={costIndicator?.filter((value, index) => value?.mes.slice(0, 4).includes(costIndicator[0].mes.slice(0, 4))).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
                   data2={costIndicator?.filter((value, index) => value?.mes.slice(0, 4).includes(costIndicator[costIndicator.length - 1].mes.slice(0, 4))).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
-                  years={[costIndicator[0].mes.slice(0, 4), costIndicator[costIndicator.length - 1].mes.slice(0, 4)]}
+                  // years={[costIndicator[0].mes.slice(0, 4), costIndicator[costIndicator.length - 1].mes.slice(0, 4)]}
+                  years={[previousYear, currentYear]}
                   label={months}
                   miniature
                 />
@@ -155,6 +157,7 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                   Termos de uso
                 </Typography>
+                <img src='assets/smart-energia-terms-image.png' style={{ maxWidth: '100%' }} />
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                   <p>
                     Bem-vindo ao Smart Energy View, a Plataforma Web da SMART ENERGIA!
@@ -183,8 +186,6 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
                   <p>
                     A divulgação não autorizada das informações adquiridas nesta plataforma (ou seu uso), de forma integral ou parcial, é proibida, não sendo permitido o compartilhamento dos acessos e senhas ou qualquer informação que tiver acesso junto a esta plataforma, sendo que o acesso a esta plataforma é restrito e individual.
                   </p>
-
-                  ‌
 
                   <p>
                     Destacamos que os resultados informados são meramente indicativos, não vinculantes a resultados e que as premissas disponibilizadas na plataforma são as mesmas utilizadas nos Energys Reports e estudos encaminhados.

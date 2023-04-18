@@ -284,13 +284,7 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
 
   const formData = new FormData()
 
-  const [clientEdit, setClientEdit] = useState<any>({
-    name: String,
-    email: String,
-    password: String,
-    password_confirmation: String,
-    client_id: Number
-  })
+  const [clientEdit, setClientEdit] = useState<any>({})
   const [logo, setLogo] = useState(false)
   const [imageURLS, setImageURLs] = useState([])
   const [images, setImages] = useState([] as any)
@@ -298,6 +292,7 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
   const [openEditUserModal, setOpenEditUserModal] = useState<any>(false);
 
   const [selectedClient, setSelectedClient] = useState<any>(2);
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     if (images.length < 1) return
@@ -348,6 +343,7 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
           Não foi possivel encontrar unidades do client!
         </Alert>
       </Snackbar>
+      <TextField onChange={(e) => setSearch(e.target.value)} placeholder='persquisar por nome:' />
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
           <Table
@@ -365,6 +361,7 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
             />
             <TableBody>
               {stableSort(clients, getComparator(order, orderBy))
+                .filter(client => client.name.toLowerCase().includes(search.toLowerCase()))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
