@@ -1,39 +1,37 @@
 import React, { useEffect, useState } from 'react';
 
-import Banner from '../../components/banner/Banner';
-import { TelemetriaView, Buttons, TableHeader, ChartFilters} from '../../styles/layouts/Telemetria/TelemetriaView';
-import GradientButton from '../../components/buttons/gradientButton/GradientButton'
-import Header from '../../components/header/Header';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import Head from 'next/head';
+import GradientButton from '../../components/buttons/gradientButton/GradientButton';
+import Header from '../../components/header/Header';
+import { Buttons, ChartFilters, TableHeader, TelemetriaView } from '../../styles/layouts/Telemetria/TelemetriaView';
 
-import RenderIf from '../../utils/renderIf';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import { api } from '../../services/api';
-import Snackbar from '@mui/material/Snackbar'
-import MuiAlert, { AlertProps } from '@mui/material/Alert'
-import getAPIClient from '../../services/ssrApi';
 import { DemRegXDemConChart } from '../../components/graph/DemRegXDemConChart';
+import getAPIClient from '../../services/ssrApi';
+import RenderIf from '../../utils/renderIf';
 
-import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 
 import TextField from '@mui/material/TextField';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { format } from 'date-fns';
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
 import { DiscretizedConsumptionChart } from '../../components/graph/DiscretizedConsumptionChart';
 import FatorPotenciaChart from '../../components/graph/fatorPotenciaChart';
+import PageTitle from '../../components/pageTitle/PageTitle';
+import { getDemand } from '../../services/charts/telemetry/getDemand';
 import { getDiscretization } from '../../services/charts/telemetry/getDiscretization';
 import { getPowerFactorData } from '../../services/charts/telemetry/getPowerFactor';
-import { getDemand } from '../../services/charts/telemetry/getDemand';
-import PageTitle from '../../components/pageTitle/PageTitle';
-import { format } from 'date-fns';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -42,18 +40,19 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
 
-export default function Telemetria({userName, clients}: any) {
-  const [unity, setUnity] = useState(clients[0].codigo_scde);
+export default function Telemetria({ userName, clients }: any) {
+  const [unity, setUnity] = useState(clients[0]?.codigo_scde);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [month, setMonth] = useState(new Date().getMonth()+1);
+  const [month, setMonth] = useState(new Date().getMonth());
+  const [endMonth, setEndMonth] = useState(new Date().getMonth() + 1);
   const [discretization, setDiscretization] = useState('1_hora');
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
   const [openSnackError, setOpenSnackError] = useState<boolean>(false)
   const [openSnackFields, setOpenSnackFields] = useState<boolean>(false)
 
-  const months=['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+  const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
 
   const handleCloseSnack = (
     event?: React.SyntheticEvent | Event,
@@ -75,7 +74,7 @@ export default function Telemetria({userName, clients}: any) {
     textEncoder = new TextEncoder('windows-1252');
     */
 
-    const csv_file = new Blob([csv], {type: "text/csv;charset=utf-8"});
+    const csv_file = new Blob([csv], { type: "text/csv;charset=utf-8" });
 
     const download_link = document.createElement("a");
 
@@ -143,8 +142,8 @@ export default function Telemetria({userName, clients}: any) {
 
     setLoader(true)
     getDiscretization(unity, new Date(firstOfTheMonth), new Date(lastOfTheMonth), discretization)
-    .then(result => {setDiscretizedConsumptionData(result); setSend(false); setLoader(false)})
-    .catch(() => {setSend(false); setOpenSnackFields(true)})
+      .then(result => { setDiscretizedConsumptionData(result); setSend(false); setLoader(false) })
+      .catch(() => { setSend(false); setOpenSnackFields(true) })
 
     getDemand(unity, startDate, endDate, discretization)
       .then(result => {
@@ -152,15 +151,15 @@ export default function Telemetria({userName, clients}: any) {
         setSend(false);
         setTableData(result)
       })
-      .catch(() => {setSend(false); setOpenSnackFields(true); setLoader(false)})
+      .catch(() => { setSend(false); setOpenSnackFields(true); setLoader(false) })
 
     getPowerFactorData(unity, startDate, endDate, discretization)
-      .then(result => {setFatorPotenciaData(result); setSend(false); setLoader(false)})
-      .catch(() => {setSend(false); setOpenSnackFields(true); setLoader(false)})
+      .then(result => { setFatorPotenciaData(result); setSend(false); setLoader(false) })
+      .catch(() => { setSend(false); setOpenSnackFields(true); setLoader(false) })
   }, [])
 
-  return(
-    <main style={{width: '100%'}}>
+  return (
+    <main style={{ width: '100%' }}>
       <Head>
         <title>Smart Energia - Telemetria</title>
       </Head>
@@ -206,109 +205,231 @@ export default function Telemetria({userName, clients}: any) {
       </Snackbar>
 
       <Header name={userName}>
-        <PageTitle title ='Telemetria' subtitle='Dados Coletados do Sistema de Coleta de Dados de Energia'/>
+        <PageTitle title='Telemetria' subtitle='Dados Coletados do Sistema de Coleta de Dados de Energia' />
       </Header>
       {
-          typeof window === 'undefined' || typeof window === undefined? null :
-      <TelemetriaView>
-        {/* <Banner title ='Telemetria' subtitle='Dados Coletados do Sistema de Coleta de Dados de Energia -
+        typeof window === 'undefined' || typeof window === undefined ? null :
+          <TelemetriaView>
+            {/* <Banner title ='Telemetria' subtitle='Dados Coletados do Sistema de Coleta de Dados de Energia -
         SCDE da Câmara de Comercialização de Energia Elétrica - CCEE,
         sendo que as quantidades aqui informadas são de responsabilidade do agente de medição
         - Distribuidora.' imgSource='/assets/graphical.png' /> */}
 
-        <RenderIf isTrue={true}>
-          <TableHeader>
-            <Tabs value={menu} onChange={(e, nv) => setMenu(nv)} aria-label="">
-              <Tab label={
-                discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
-                  discretization==='15_min'? 'Consumo discretizado em 15 minutos' :
-                    discretization==='1_hora'? 'Consumo discretizado em 1 hora' :
-                    'Consumo discretizado em 1 dia'}/>
-              <Tab label="Demanda"/>
-              <Tab label="Fator Potência"/>
-            </Tabs>
-          </TableHeader>
+            <RenderIf isTrue={true}>
+              <TableHeader>
+                <Tabs value={menu} onChange={(e, nv) => setMenu(nv)} aria-label="">
+                  <Tab label={
+                    discretization === '5_min' ? 'Consumo discretizado em 5 minutos' :
+                      discretization === '15_min' ? 'Consumo discretizado em 15 minutos' :
+                        discretization === '1_hora' ? 'Consumo discretizado em 1 hora' :
+                          'Consumo discretizado em 1 dia'} />
+                  <Tab label="Demanda" />
+                  <Tab label="Fator Potência" />
+                </Tabs>
+              </TableHeader>
 
-          {/* discretization chart */}
-          <RenderIf isTrue={menu===0}>
-            <ChartFilters>
-              <div className='input'>
-                <FormControl style={{ minWidth: 100, width: 200}} size="small">
-                  <InputLabel>Unidade</InputLabel>
-                  <Select
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    value={unity}
-                    label="Unidade"
-                    onChange={value => setUnity(value.target.value)}
-                    sx={{height: 63, mb: 2}}
-                    fullWidth
-                  >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
-                    {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
-                    {
-                      clients.map((value) => {
-                        return <MenuItem key={1} value={value.codigo_scde}>{value.unidade}</MenuItem>
-                      })
-                    }
-                  </Select>
-                </FormControl>
-              </div>
-              <div className='input'>
-                <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
-                  <InputLabel>Discretização</InputLabel>
-                  <Select
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    value={discretization}
-                    label="Discretização"
-                    onChange={value => setDiscretization(value.target.value)}
-                    sx={{height: 63, mb: 2}}
-                    fullWidth
-                  >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
-                    <MenuItem value="5_min">5 minutos</MenuItem>
-                    <MenuItem value="15_min">15 minutos</MenuItem>
-                    <MenuItem value="1_hora">1 hora</MenuItem>
-                    <MenuItem value="1_dia">1 dia</MenuItem>
-                    <MenuItem value="1_mes">1 mês</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-                {
-                  discretization === '1_mes' ?
-                  <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
-                    <InputLabel>Discretização</InputLabel>
-                    <Select
-                      labelId="demo-select-small"
-                      id="demo-select-small"
-                      value={month}
-                      label="Mês"
-                      onChange={value => {
-                        setMonth(value.target.value as number)
-                        const firstOfTheMonth: Date = new Date(startDate.getFullYear(), (value.target.value as number)-1, 1)
-                        const lastOfTheMonth: Date = new Date(startDate.getFullYear(), firstOfTheMonth.getMonth() + 1, 0)
-                        setStartDate(firstOfTheMonth)
-                        setEndDate(lastOfTheMonth)
-                      }}
-                      sx={{height: 63, mb: 2}}
-                      fullWidth
-                    >
-                      <MenuItem value="">
-                        <em>Nenhum</em>
-                      </MenuItem>
-                      {
-                        months.slice(0, new Date().getUTCMonth()+1).map(value => {
-                          return <MenuItem key={value} value={months.indexOf(value)+1 as number}>{value}</MenuItem>
-                        })
-                      }
-                    </Select>
-                  </FormControl>
-                  :
+              {/* discretization chart */}
+              <RenderIf isTrue={menu === 0}>
+                <ChartFilters>
+                  <div className='input'>
+                    <FormControl style={{ minWidth: 100, width: 200 }} size="small">
+                      <InputLabel>Unidade</InputLabel>
+                      <Select
+                        labelId="demo-select-small"
+                        id="demo-select-small"
+                        value={unity}
+                        label="Unidade"
+                        onChange={value => setUnity(value.target.value)}
+                        sx={{ height: 63, mb: 2 }}
+                        fullWidth
+                      >
+                        <MenuItem value="">
+                          <em>Nenhum</em>
+                        </MenuItem>
+                        {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
+                        {
+                          clients.map((value) => {
+                            return <MenuItem key={1} value={value.codigo_scde}>{value.unidade}</MenuItem>
+                          })
+                        }
+                      </Select>
+                    </FormControl>
+                  </div>
+                  <div className='input'>
+                    <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
+                      <InputLabel>Discretização</InputLabel>
+                      <Select
+                        labelId="demo-select-small"
+                        id="demo-select-small"
+                        value={discretization}
+                        label="Discretização"
+                        onChange={value => setDiscretization(value.target.value)}
+                        sx={{ height: 63, mb: 2 }}
+                        fullWidth
+                      >
+                        <MenuItem value="">
+                          <em>Nenhum</em>
+                        </MenuItem>
+                        <MenuItem value="5_min">5 minutos</MenuItem>
+                        <MenuItem value="15_min">15 minutos</MenuItem>
+                        <MenuItem value="1_hora">1 hora</MenuItem>
+                        <MenuItem value="1_dia">1 dia</MenuItem>
+                        <MenuItem value="1_mes">1 mês</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                  {
+                    discretization === '1_mes' ?
+                      <>
+                        <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
+                          <InputLabel>Discretização</InputLabel>
+                          <Select
+                            labelId="demo-select-small"
+                            id="demo-select-small"
+                            value={month}
+                            label="Mês"
+                            onChange={value => {
+                              setMonth(value.target.value as number)
+                              const firstOfTheMonth: Date = new Date(startDate.getFullYear(), (value.target.value as number) - 1, 1)
+                              setStartDate(firstOfTheMonth)
+                            }}
+                            sx={{ height: 63, mb: 2 }}
+                            fullWidth
+                          >
+                            <MenuItem value="">
+                              <em>Nenhum</em>
+                            </MenuItem>
+                            {
+                              months.slice(0, new Date().getUTCMonth() + 1).map(value => {
+                                return <MenuItem key={value} value={months.indexOf(value) + 1 as number}>{value}</MenuItem>
+                              })
+                            }
+                          </Select>
+                        </FormControl>
+                        {discretization === '1_mes' && <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
+                          <InputLabel>Discretização</InputLabel>
+                          <Select
+                            labelId="demo-select-small"
+                            id="demo-select-small"
+                            value={endMonth}
+                            label="Mês"
+                            onChange={value => {
+                              setEndMonth(value.target.value as number)
+                              const firstOfTheMonth: Date = new Date(startDate.getFullYear(), (value.target.value as number) - 1, 1)
+                              const lastOfTheMonth: Date = new Date(startDate.getFullYear(), firstOfTheMonth.getMonth() + 1, 0)
+                              setEndDate(lastOfTheMonth)
+                            }}
+                            sx={{ height: 63, mb: 2 }}
+                            fullWidth
+                          >
+                            <MenuItem value="">
+                              <em>Nenhum</em>
+                            </MenuItem>
+                            {
+                              months.slice(0, new Date().getUTCMonth() + 1).map(value => {
+                                return <MenuItem key={value} value={months.indexOf(value) + 1 as number}>{value}</MenuItem>
+                              })
+                            }
+                          </Select>
+                        </FormControl>}
+                      </>
+                      :
+                      <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <div className='datePicker'>
+                          <DesktopDatePicker
+                            label="Data inicial"
+                            inputFormat="dd/MM/yyyy"
+                            value={startDate}
+                            onChange={handleChangeStartDate}
+                            renderInput={(params) => <TextField {...params} sx={{ mr: 1, mb: 2 }} />}
+                          />
+                        </div>
+                        <div className='datePicker' style={{ marginRight: 10 }}>
+                          <DesktopDatePicker
+                            label="Data final"
+                            inputFormat="dd/MM/yyyy"
+                            value={endDate}
+                            maxDate={discretization === '1_mes' ? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear() + 2)
+                              :
+                              discretization === '1_dia' ? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear() + 2)
+                                :
+                                discretization === '1_hora' ? new Date(startDate).setUTCMonth(startDate.getUTCMonth() + 1)
+                                  :
+                                  discretization === '15_min' ? new Date(startDate).setUTCDate(startDate.getUTCDate() + 7)
+                                    :
+                                    new Date(startDate).setUTCDate(startDate.getUTCDate() + 1)
+                            }
+                            onChange={(newValue: any) => handleChangeEndDate(newValue)}
+                            renderInput={(params) => <TextField {...params} sx={{ mb: 2 }} />}
+                          />
+                        </div>
+                      </LocalizationProvider>
+                  }
+                  <div className='select'>
+                    <BasicButton title='Selecionar!' onClick={() => {
+                      setLoader(true)
+                      getDiscretization(unity, startDate, endDate, discretization)
+                        .then(result => { setDiscretizedConsumptionData(result); setSend(false); setLoader(false); setTableData(result) })
+                        .catch(exception => { setSend(false); setOpenSnackFields(true); setLoader(false) })
+                    }} />
+                  </div>
+                </ChartFilters>
+                <DiscretizedConsumptionChart title={
+                  discretization === '5_min' ? 'Consumo discretizado em 5 minutos' :
+                    discretization === '15_min' ? 'Consumo discretizado em 15 minutos' : discretization === '1_hora' ? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
+                } subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month />
+              </RenderIf>
+
+              {/* demand chart */}
+              <RenderIf isTrue={menu === 1}>
+                <ChartFilters>
+                  <div className='input'>
+                    <FormControl style={{ minWidth: 100, width: 200 }} size="small">
+                      <InputLabel>Unidade</InputLabel>
+                      <Select
+                        labelId="demo-select-small"
+                        id="demo-select-small"
+                        value={unity}
+                        label="Unidade"
+                        onChange={value => setUnity(value.target.value)}
+                        sx={{ height: 63, mb: 2 }}
+                        fullWidth
+                      >
+                        <MenuItem value="">
+                          <em>Nenhum</em>
+                        </MenuItem>
+                        {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
+                        {
+                          clients.map((value) => {
+                            return <MenuItem key={1} value={value.codigo_scde}>{value.unidade}</MenuItem>
+                          })
+                        }
+                      </Select>
+                    </FormControl>
+                  </div>
+                  <div className='input'>
+                    <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
+                      <InputLabel>Discretização</InputLabel>
+                      <Select
+                        labelId="demo-select-small"
+                        id="demo-select-small"
+                        value={discretization}
+                        label="Discretização"
+                        onChange={value => setDiscretization(value.target.value)}
+                        sx={{ height: 63, mb: 2 }}
+                        fullWidth
+                      >
+                        <MenuItem value="">
+                          <em>Nenhum</em>
+                        </MenuItem>
+                        <MenuItem value="5_min">5 minutos</MenuItem>
+                        <MenuItem value="15_min">15 minutos</MenuItem>
+                        <MenuItem value="1_hora">1 hora</MenuItem>
+                        {/* <MenuItem value="1_dia">1 dia</MenuItem>
+                    <MenuItem value="1_mes">1 mês</MenuItem> */}
+                      </Select>
+                    </FormControl>
+                  </div>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <div className='datePicker'>
                       <DesktopDatePicker
@@ -316,381 +437,217 @@ export default function Telemetria({userName, clients}: any) {
                         inputFormat="dd/MM/yyyy"
                         value={startDate}
                         onChange={handleChangeStartDate}
-                        renderInput={(params) => <TextField {...params} sx={{mr: 1, mb: 2}}/>}
+                        renderInput={(params) => <TextField {...params} sx={{ mr: 1, mb: 2 }} />}
                       />
                     </div>
-                    <div className='datePicker' style={{marginRight: 10}}>
+                    <div className='datePicker' style={{ marginRight: 10 }}>
                       <DesktopDatePicker
                         label="Data final"
                         inputFormat="dd/MM/yyyy"
                         value={endDate}
-                        maxDate={discretization === '1_mes'? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
+                        maxDate={discretization === '1_mes' ? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear() + 2)
                           :
-                          discretization === '1_dia'?new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
+                          discretization === '1_dia' ? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear() + 2)
                             :
-                            discretization === '1_hora'?new Date(startDate).setUTCMonth(startDate.getUTCMonth()+1)
+                            discretization === '1_hora' ? new Date(startDate).setUTCMonth(startDate.getUTCMonth() + 1)
                               :
-                              discretization === '15_min'?new Date(startDate).setUTCDate(startDate.getUTCDate()+7)
+                              discretization === '15_min' ? new Date(startDate).setUTCDate(startDate.getUTCDate() + 7)
                                 :
-                                new Date(startDate).setUTCDate(startDate.getUTCDate()+1)
-                            }
+                                new Date(startDate).setUTCDate(startDate.getUTCDate() + 1)
+                        }
                         onChange={(newValue: any) => handleChangeEndDate(newValue)}
-                        renderInput={(params) => <TextField {...params} sx={{mb: 2}}/>}
+                        renderInput={(params) => <TextField {...params} sx={{ mb: 2 }} />}
                       />
                     </div>
                   </LocalizationProvider>
+                  <div className='select'>
+                    <BasicButton title='Selecionar!' onClick={() => {
+                      setLoader(true)
+                      getDemand(unity, startDate, endDate, discretization)
+                        .then(result => { setDemRegXDemCon(result); setSend(false); setLoader(false); setTableData(result) })
+                        .catch(exception => { setSend(false); setOpenSnackFields(true); setLoader(false) })
+                    }} />
+                  </div>
+                </ChartFilters>
+                <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon}
+                  dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'}
+                  label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red />
+              </RenderIf>
+
+              {/* power factor chart */}
+              <RenderIf isTrue={menu === 2}>
+                <ChartFilters>
+                  <div className='input'>
+                    <FormControl style={{ minWidth: 100, width: 200 }} size="small">
+                      <InputLabel>Unidade</InputLabel>
+                      <Select
+                        labelId="demo-select-small"
+                        id="demo-select-small"
+                        value={unity}
+                        label="Unidade"
+                        onChange={value => setUnity(value.target.value)}
+                        sx={{ height: 63, mb: 2 }}
+                        fullWidth
+                      >
+                        <MenuItem value="">
+                          <em>Nenhum</em>
+                        </MenuItem>
+                        {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
+                        {
+                          clients.map((value) => {
+                            return <MenuItem key={1} value={value.codigo_scde}>{value.unidade}</MenuItem>
+                          })
+                        }
+                      </Select>
+                    </FormControl>
+                  </div>
+                  <div className='input'>
+                    <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
+                      <InputLabel>Discretização</InputLabel>
+                      <Select
+                        labelId="demo-select-small"
+                        id="demo-select-small"
+                        value={discretization}
+                        label="Discretização"
+                        onChange={value => setDiscretization(value.target.value)}
+                        sx={{ height: 63, mb: 2 }}
+                        fullWidth
+                      >
+                        <MenuItem value="">
+                          <em>Nenhum</em>
+                        </MenuItem>
+                        <MenuItem value="5_min">5 minutos</MenuItem>
+                        <MenuItem value="15_min">15 minutos</MenuItem>
+                        <MenuItem value="1_hora">1 hora</MenuItem>
+                        <MenuItem value="1_dia">1 dia</MenuItem>
+                        <MenuItem value="1_mes">1 mês</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <div className='datePicker'>
+                      <DesktopDatePicker
+                        label="Data inicial"
+                        inputFormat="dd/MM/yyyy"
+                        value={startDate}
+                        onChange={handleChangeStartDate}
+                        renderInput={(params) => <TextField {...params} sx={{ mr: 1, mb: 2 }} />}
+                      />
+                    </div>
+                    <div className='datePicker' style={{ marginRight: 10 }}>
+                      <DesktopDatePicker
+                        label="Data final"
+                        inputFormat="dd/MM/yyyy"
+                        value={endDate}
+                        maxDate={discretization === '1_mes' ? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear() + 2)
+                          :
+                          discretization === '1_dia' ? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear() + 2)
+                            :
+                            discretization === '1_hora' ? new Date(startDate).setUTCMonth(startDate.getUTCMonth() + 1)
+                              :
+                              discretization === '15_min' ? new Date(startDate).setUTCDate(startDate.getUTCDate() + 7)
+                                :
+                                new Date(startDate).setUTCDate(startDate.getUTCDate() + 1)
+                        }
+                        onChange={(newValue: any) => handleChangeEndDate(newValue)}
+                        renderInput={(params) => <TextField {...params} sx={{ mb: 2 }} />}
+                      />
+                    </div>
+                  </LocalizationProvider>
+                  <div className='select'>
+                    <BasicButton title='Selecionar!' onClick={() => {
+                      setLoader(true)
+                      getPowerFactorData(unity, startDate, endDate, discretization)
+                        .then(result => { setFatorPotenciaData(result); setSend(false); setLoader(false); setTableData(result) })
+                        .catch(exception => { setSend(false); setOpenSnackFields(true); setLoader(false) })
+                    }} />
+                  </div>
+                </ChartFilters>
+                <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData}
+                  data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={fatorPotenciaData.map(value => (value.day_formatted))} />
+              </RenderIf>
+            </RenderIf>
+
+            <RenderIf isTrue={loader}>
+              <div className='modal'>
+                <div id="preloader_1">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </RenderIf>
+
+            <table className="tg">
+              <thead>
+                <tr>
+                  <th className='tg-8oo6'>Unidade</th>
+                  <th className='tg-8oo6'>Ponto</th>
+                  <th className='tg-8oo6'>Numero do dia</th>
+                  <th className='tg-8oo6'>Dia formatado</th>
+                  <th className='tg-8oo6'>Hora</th>
+                  <th className='tg-8oo6'>Minuto</th>
+                  <th className='tg-8oo6'>f_ref</th>
+                  <th className='tg-8oo6'>Consumo</th>
+                  <th className='tg-8oo6'>Reativa</th>
+                  <th className='tg-8oo6'>fp</th>
+                  <th className='tg-8oo6'>dem contratada</th>
+                  <th className='tg-8oo6'>dem registrada</th>
+                  <th className='tg-8oo6'>dem tolerancia</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  fatorPotenciaData !== null ?
+                    fatorPotenciaData?.map((value, index) => {
+                      return <>
+                        <tr>
+                          <td key={index} className='tg-gceh'>{unity}</td>
+                          <td key={index} className='tg-gceh'>{value?.ponto}</td>
+                          <td key={index} className='tg-gceh'>{parseFloat(value?.dia_num)}</td>
+                          <td key={index} className='tg-uulg'>{value?.day_formatted}</td>
+                          <td key={index} className='tg-gceh'>{value?.hora}</td>
+                          <td key={index} className='tg-gceh'>{value.minut}</td>
+                          <td key={index} className='tg-gceh'>{value?.f_ref}</td>
+                          <td key={index} className='tg-uulg'>{parseFloat(value?.consumo).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 })}</td>
+                          <td key={index} className='tg-gceh'>{parseFloat(value?.reativa).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 })}</td>
+                          <td key={index} className='tg-gceh'>{parseFloat(value?.fp)}</td>
+                          <td key={index} className='tg-gceh'>{value?.dem_cont}</td>
+                          <td key={index} className='tg-gceh'>{value?.dem_reg}</td>
+                          <td key={index} className='tg-gceh'>{value?.dem_tolerancia}</td>
+                        </tr>
+                      </>
+                    })
+                    :
+                    null
                 }
-              <div className='select'>
-                <BasicButton title='Selecionar!' onClick={() => {
-                  setLoader(true)
-                  getDiscretization(unity, startDate, endDate, discretization)
-                    .then(result => {setDiscretizedConsumptionData(result); setSend(false); setLoader(false); setTableData(result)})
-                    .catch(exception => {setSend(false); setOpenSnackFields(true); setLoader(false)})
-                }}/>
-              </div>
-            </ChartFilters>
-            <DiscretizedConsumptionChart title={
-                discretization==='5_min'? 'Consumo discretizado em 5 minutos' :
-                discretization==='15_min'? 'Consumo discretizado em 15 minutos' : discretization==='1_hora'? 'Consumo discretizado em 1 hora' : 'Consumo discretizado em 1 dia'
-              } subtitle='' dataProps={discretizedConsumptionData} label={discretizedConsumptionData.map(value => value.minut)} dataset={'Consumo'} dataset1='Estimado' month/>
-          </RenderIf>
+              </tbody>
+            </table>
 
-          {/* demand chart */}
-          <RenderIf isTrue={menu===1}>
-            <ChartFilters>
-              <div className='input'>
-                <FormControl style={{ minWidth: 100, width: 200}} size="small">
-                  <InputLabel>Unidade</InputLabel>
-                  <Select
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    value={unity}
-                    label="Unidade"
-                    onChange={value => setUnity(value.target.value)}
-                    sx={{height: 63, mb: 2}}
-                    fullWidth
-                  >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
-                    {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
-                    {
-                      clients.map((value) => {
-                        return <MenuItem key={1} value={value.codigo_scde}>{value.unidade}</MenuItem>
-                      })
-                    }
-                  </Select>
-                </FormControl>
-              </div>
-              <div className='input'>
-                <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
-                  <InputLabel>Discretização</InputLabel>
-                  <Select
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    value={discretization}
-                    label="Discretização"
-                    onChange={value => setDiscretization(value.target.value)}
-                    sx={{height: 63, mb: 2}}
-                    fullWidth
-                  >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
-                    <MenuItem value="5_min">5 minutos</MenuItem>
-                    <MenuItem value="15_min">15 minutos</MenuItem>
-                    <MenuItem value="1_hora">1 hora</MenuItem>
-                    {/* <MenuItem value="1_dia">1 dia</MenuItem>
-                    <MenuItem value="1_mes">1 mês</MenuItem> */}
-                  </Select>
-                </FormControl>
-              </div>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <div className='datePicker'>
-                  <DesktopDatePicker
-                    label="Data inicial"
-                    inputFormat="dd/MM/yyyy"
-                    value={startDate}
-                    onChange={handleChangeStartDate}
-                    renderInput={(params) => <TextField {...params} sx={{mr: 1, mb: 2}}/>}
-                  />
-                </div>
-                <div className='datePicker' style={{marginRight: 10}}>
-                  <DesktopDatePicker
-                    label="Data final"
-                    inputFormat="dd/MM/yyyy"
-                    value={endDate}
-                    maxDate={discretization === '1_mes'? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
-                      :
-                      discretization === '1_dia'?new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
-                        :
-                        discretization === '1_hora'?new Date(startDate).setUTCMonth(startDate.getUTCMonth()+1)
-                          :
-                          discretization === '15_min'?new Date(startDate).setUTCDate(startDate.getUTCDate()+7)
-                            :
-                            new Date(startDate).setUTCDate(startDate.getUTCDate()+1)
-                        }
-                    onChange={(newValue: any) => handleChangeEndDate(newValue)}
-                    renderInput={(params) => <TextField {...params} sx={{mb: 2}}/>}
-                  />
-                </div>
-              </LocalizationProvider>
-              <div className='select'>
-                <BasicButton title='Selecionar!' onClick={() => {
-                  setLoader(true)
-                  getDemand(unity, startDate, endDate, discretization)
-                    .then(result => {setDemRegXDemCon(result); setSend(false); setLoader(false); setTableData(result)})
-                    .catch(exception => {setSend(false); setOpenSnackFields(true); setLoader(false)})
-                }}/>
-              </div>
-            </ChartFilters>
-            <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon}
-              dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'}
-              label={demRegXDemCon.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
-          </RenderIf>
+            <RenderIf isTrue={showChart}>
+              <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'} label={demRegXDemCon?.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red />
+            </RenderIf>
 
-          {/* power factor chart */}
-          <RenderIf isTrue={menu===2}>
-            <ChartFilters>
-              <div className='input'>
-                <FormControl style={{ minWidth: 100, width: 200}} size="small">
-                  <InputLabel>Unidade</InputLabel>
-                  <Select
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    value={unity}
-                    label="Unidade"
-                    onChange={value => setUnity(value.target.value)}
-                    sx={{height: 63, mb: 2}}
-                    fullWidth
-                  >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
-                    {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
-                    {
-                      clients.map((value) => {
-                        return <MenuItem key={1} value={value.codigo_scde}>{value.unidade}</MenuItem>
-                      })
-                    }
-                  </Select>
-                </FormControl>
-              </div>
-              <div className='input'>
-                <FormControl sx={{ minWidth: 120, width: 200, ml: 1, mr: 1 }} size="small">
-                  <InputLabel>Discretização</InputLabel>
-                  <Select
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    value={discretization}
-                    label="Discretização"
-                    onChange={value => setDiscretization(value.target.value)}
-                    sx={{height: 63, mb: 2}}
-                    fullWidth
-                  >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
-                    <MenuItem value="5_min">5 minutos</MenuItem>
-                    <MenuItem value="15_min">15 minutos</MenuItem>
-                    <MenuItem value="1_hora">1 hora</MenuItem>
-                    <MenuItem value="1_dia">1 dia</MenuItem>
-                    <MenuItem value="1_mes">1 mês</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <div className='datePicker'>
-                  <DesktopDatePicker
-                    label="Data inicial"
-                    inputFormat="dd/MM/yyyy"
-                    value={startDate}
-                    onChange={handleChangeStartDate}
-                    renderInput={(params) => <TextField {...params} sx={{mr: 1, mb: 2}}/>}
-                  />
-                </div>
-                <div className='datePicker' style={{marginRight: 10}}>
-                  <DesktopDatePicker
-                    label="Data final"
-                    inputFormat="dd/MM/yyyy"
-                    value={endDate}
-                    maxDate={discretization === '1_mes'? new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
-                      :
-                      discretization === '1_dia'?new Date(startDate).setUTCFullYear(startDate.getUTCFullYear()+2)
-                        :
-                        discretization === '1_hora'?new Date(startDate).setUTCMonth(startDate.getUTCMonth()+1)
-                          :
-                          discretization === '15_min'?new Date(startDate).setUTCDate(startDate.getUTCDate()+7)
-                            :
-                            new Date(startDate).setUTCDate(startDate.getUTCDate()+1)
-                        }
-                    onChange={(newValue: any) => handleChangeEndDate(newValue)}
-                    renderInput={(params) => <TextField {...params} sx={{mb: 2}}/>}
-                  />
-                </div>
-              </LocalizationProvider>
-              <div className='select'>
-                <BasicButton title='Selecionar!' onClick={() => {
-                  setLoader(true)
-                  getPowerFactorData(unity, startDate, endDate, discretization)
-                    .then(result => {setFatorPotenciaData(result); setSend(false); setLoader(false); setTableData(result)})
-                    .catch(exception => {setSend(false); setOpenSnackFields(true); setLoader(false)})
-                }}/>
-              </div>
-            </ChartFilters>
-            <FatorPotenciaChart title='Fator de Potencia' subtitle='' data1={fatorPotenciaData}
-              data2={fatorPotenciaData} dataset1='Fator de Potencia' dataset2='Fator ref' label={fatorPotenciaData.map(value => (value.day_formatted))} />
-          </RenderIf>
-        </RenderIf>
-
-        <RenderIf isTrue={loader}>
-          <div className='modal'>
-            <div id="preloader_1">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-        </RenderIf>
-
-        <RenderIf isTrue={menu===2}>
-          <table className="tg">
-            <thead>
-              <tr>
-                <th className='tg-8oo6'>Ponto</th>
-                <th className='tg-8oo6'>Numero do dia</th>
-                <th className='tg-8oo6'>Dia formatado</th>
-                <th className='tg-8oo6'>Hora</th>
-                <th className='tg-8oo6'>f_ref</th>
-                <th className='tg-8oo6'>Consumo</th>
-                <th className='tg-8oo6'>Reativa</th>
-                <th className='tg-8oo6'>fp</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                fatorPotenciaData!==null?
-                fatorPotenciaData?.map((value, index) => {
-                  return <>
-                    <tr>
-                      <td key={index} className='tg-gceh'>{value.ponto}</td>
-                      <td key={index} className='tg-gceh'>{parseFloat(value.dia_num)}</td>
-                      <td key={index} className='tg-uulg'>{value.day_formatted}</td>
-                      <td key={index} className='tg-gceh'>{value.hora}</td>
-                      <td key={index} className='tg-gceh'>{value.f_ref}</td>
-                      <td key={index} className='tg-uulg'>{parseFloat(value.consumo).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                      <td key={index} className='tg-gceh'>{parseFloat(value.reativa).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                      <td key={index} className='tg-gceh'>{parseFloat(value.fp)}</td>
-                    </tr>
-                  </>
-                })
-                :
-                null
-              }
-            </tbody>
-          </table>
-        </RenderIf>
-        <RenderIf isTrue={menu===1}>
-          <table className="tg">
-            <thead>
-              <tr>
-                <th className='tg-8oo6'>Ponto</th>
-                <th className='tg-8oo6'>Numero do dia</th>
-                <th className='tg-8oo6'>Dia formatado</th>
-                <th className='tg-8oo6'>Hora</th>
-                {/* <th className='tg-8oo6'>Minuto</th> não temos */}
-                <th className='tg-8oo6'>Consumo</th>
-                <th className='tg-8oo6'>Reativa</th>
-                <th className='tg-8oo6'>dem contratada</th>
-                <th className='tg-8oo6'>dem registrada</th>
-                <th className='tg-8oo6'>dem tolerancia</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                demRegXDemCon!==null?
-                demRegXDemCon?.map((value, index) => {
-                  return <>
-                    <tr>
-                      <td key={index} className='tg-gceh'>{value.ponto}</td>
-                      <td key={index} className='tg-gceh'>{parseFloat(value.dia_num)}</td>
-                      <td key={index} className='tg-uulg'>{value.day_formatted}</td>
-                      <td key={index} className='tg-gceh'>{value.hora}</td>
-                      {/* <td key={index} className='tg-gceh'>{value.minut}</td> */}
-                      <td key={index} className='tg-uulg'>{parseFloat(value.consumo).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                      <td key={index} className='tg-gceh'>{parseFloat(value.reativa).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                      <td key={index} className='tg-gceh'>{value.dem_cont}</td>
-                      <td key={index} className='tg-gceh'>{value.dem_reg}</td>
-                      <td key={index} className='tg-gceh'>{value.dem_tolerancia}</td>
-                    </tr>
-                  </>
-                })
-                :
-                null
-              }
-            </tbody>
-          </table>
-        </RenderIf>
-        <RenderIf isTrue={menu===0}>
-          <table className="tg">
-            <thead>
-              <tr>
-                <th className='tg-8oo6'>Ponto</th>
-                <th className='tg-8oo6'>Numero do dia</th>
-                <th className='tg-8oo6'>Dia formatado</th>
-                <th className='tg-8oo6'>Hora</th>
-                <th className='tg-8oo6'>Minuto</th>
-                <th className='tg-8oo6'>Consumo</th>
-                <th className='tg-8oo6'>Reativa</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                discretizedConsumptionData!==null?
-                discretizedConsumptionData?.map((value, index) => {
-                  return <>
-                    <tr>
-                      <td key={index} className='tg-gceh'>{value.ponto}</td>
-                      <td key={index} className='tg-gceh'>{parseFloat(value.dia_num)}</td>
-                      <td key={index} className='tg-uulg'>{value.day_formatted}</td>
-                      <td key={index} className='tg-gceh'>{value.hora}</td>
-                      <td key={index} className='tg-gceh'>{value.minut}</td>
-                      <td key={index} className='tg-uulg'>{parseFloat(value.consumo).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                      <td key={index} className='tg-gceh'>{parseFloat(value.reativa).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                    </tr>
-                  </>
-                })
-                :
-                null
-              }
-            </tbody>
-          </table>
-        </RenderIf>
-
-        <RenderIf isTrue={showChart}>
-          <DemRegXDemConChart data1={demRegXDemCon} data2={demRegXDemCon} dataset1={'Demanda contratada + 5%'} dataset2={'barra1'} dataset3={'Demanda Registrada'} label={demRegXDemCon?.map(value => value.hora)} title='Demanda Contratada X Registrada' subtitle='' red/>
-        </RenderIf>
-
-        <Buttons>
-          {/* <GradientButton title='DADOS' description='CLIQUE AQUI PARA GERAR GRÁFICO DO MÊS ATUAL' onClick={() => setShowChart(!showChart)} purple /> */}
-          {/* <GradientButton title='GRÁFICO' description='CLIQUE AQUI PARA GERAR GRÁFICO DO PERÍODO SELECIONADO' onClick={() => handleVerifyFields()} orange /> */}
-          <GradientButton title='DOWNLOADS' description={`CLIQUE AQUI PARA BAIXAR OS DADOS EM FORMATO EXCEL DO PERÍODO SELECIONADO`} green onClick={() => {
-            const html = document.querySelector("table")?.outerHTML;
-            htmlToCSV(html, `${menu === 2 ? 'fator_potencia' : menu === 1 ? 'demanda' : 'consumo_discretizado'}.csv`);
-          }}/>
-        </Buttons>
-        <p className='paragraph'>
-          <i>
-            Fonte: Dados coletados do Sistema de Coleta de Dados
-            de Energia - SCDE da Câmara de Comercialização <br/>
-            Energia Elétrica – CCEE, sendo que as quantidades aqui
-            informadas são de responsabilidade <br/>do agente de
-            medição - Distribuidora.
-          </i>
-        </p>
-      </TelemetriaView>
+            <Buttons>
+              {/* <GradientButton title='DADOS' description='CLIQUE AQUI PARA GERAR GRÁFICO DO MÊS ATUAL' onClick={() => setShowChart(!showChart)} purple /> */}
+              {/* <GradientButton title='GRÁFICO' description='CLIQUE AQUI PARA GERAR GRÁFICO DO PERÍODO SELECIONADO' onClick={() => handleVerifyFields()} orange /> */}
+              <GradientButton title='DOWNLOADS' description={`CLIQUE AQUI PARA BAIXAR OS DADOS EM FORMATO EXCEL DO PERÍODO SELECIONADO`} green onClick={() => {
+                const html = document.querySelector("table")?.outerHTML;
+                htmlToCSV(html, `${menu === 2 ? 'fator_potencia' : menu === 1 ? 'demanda' : 'consumo_discretizado'}.csv`);
+              }} />
+            </Buttons>
+            <p className='paragraph'>
+              <i>
+                Fonte: Dados coletados do Sistema de Coleta de Dados
+                de Energia - SCDE da Câmara de Comercialização <br />
+                Energia Elétrica – CCEE, sendo que as quantidades aqui
+                informadas são de responsabilidade <br />do agente de
+                medição - Distribuidora.
+              </i>
+            </p>
+          </TelemetriaView>
       }
     </main>
   )
@@ -706,15 +663,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   let clients = []
 
   await apiClient.post('/units', {
-		"filters": [
-			{"type" : "=", "field": "dados_cadastrais.cod_smart_cliente", "value": client_id},
-			{"type" : "not_in", "field": "dados_cadastrais.codigo_scde", "value":["0P"]}
-		],
-		"fields": [
-			"unidade",
-			"cod_smart_unidade",
-			"codigo_scde"],
-		"distinct": true
+    "filters": [
+      { "type": "=", "field": "dados_cadastrais.cod_smart_cliente", "value": client_id },
+      { "type": "not_in", "field": "dados_cadastrais.codigo_scde", "value": ["0P"] }
+    ],
+    "fields": [
+      "unidade",
+      "cod_smart_unidade",
+      "codigo_scde"],
+    "distinct": true
   }).then(res => {
     console.log(res.data)
     clients = res.data.data

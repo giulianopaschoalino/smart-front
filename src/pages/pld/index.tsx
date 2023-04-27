@@ -76,7 +76,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
   function getDataByDay() {
     api.post('/pld/daily', {
       "filters": [
-          {"type" : "=", "field" : "year_month_formatted", "value": month},
+          {"type" : "=", "field" : "year_month_formatted", "value": month, "row": true},
           {"type" : "=", "field" : "submarket", "value": select}
         ],
       "order": [{ "field": "day_calc", "direction": "asc" }]
