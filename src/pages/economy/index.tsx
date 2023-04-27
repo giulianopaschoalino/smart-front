@@ -211,7 +211,7 @@ export default function economy({ userName, anual, years, brutaMensal, catLiv, c
                   <CostIndicatorChart title='' subtitle=''
                     data1={indicatorDataState?.filter(value => value?.mes.slice(0, 4).includes(previousYear)).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
                     data2={indicatorDataState?.filter(value => value?.mes.slice(0, 4).includes(currentYear)).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
-                    years={[previousYear, currentYear]}
+                    years={[previousYear+'', currentYear+'']}
                     label={months}
                   />
                 </section>
