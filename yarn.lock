@@ -4394,6 +4394,11 @@ react-is@^16.13.1, react-is@^16.7.0:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
 
+react-loading@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/react-loading/-/react-loading-2.0.3.tgz#e8138fb0c3e4674e481b320802ac7048ae14ffb9"
+  integrity sha512-Vdqy79zq+bpeWJqC+xjltUjuGApyoItPgL0vgVfcJHhqwU7bAMKzysfGW/ADu6i0z0JiOCRJjo+IkFNkRNbA3A==
+
 react-pdf-thumbnail@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-pdf-thumbnail/-/react-pdf-thumbnail-0.1.0.tgz#6b8ddf861252acb2b137dfd42007f545fde52ef9"
