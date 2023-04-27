@@ -28,6 +28,8 @@ import FaqButton1 from '../buttons/faqButton/FaqButton1';
 import FaqButton2 from '../buttons/faqButton/FaqButton2';
 import { StyledStatus, TableView } from './TableView';
 
+import ReactLoading from 'react-loading';
+
 const style = {
   position: 'absolute' as const,
   top: '50%',
@@ -284,7 +286,7 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
 
   const formData = new FormData()
 
-  const [clientEdit, setClientEdit] = useState<any>({})
+  const [clientEdit, setClientEdit] = useState<any>()
   const [logo, setLogo] = useState(false)
   const [imageURLS, setImageURLs] = useState([])
   const [images, setImages] = useState([] as any)
@@ -309,31 +311,31 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
   }
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
-  function handleUpdateClient({
-    name,
-    email,
-    password,
-    password_confirmation,
-    client_id
-  }, id) {
-    formData.append('name', name)
-    formData.append('email', email)
-    formData.append('password', password)
-    formData.append('password_confirmation', password_confirmation)
-    formData.append('client_id', client_id)
-    formData.append('profile_picture', logo)
-    formData.append('role', nivelAcess)
+  async function handleUpdateClient(props, id) {
+    logo && formData.append('file', logo)
+    let new_profile_picture
 
-    api.put(`/user/${id}`, formData)
-      .then((res) => {
-        setOpenSnackSuccess(true)
-        setOpenModalInativar(false)
-        // window.location.reload()
+    try {
+      setLoading(true)
+      if (logo) {
+        const { data } = await api.post('/sendFile', formData)
+        new_profile_picture = data.url
+      }
+      await api.put(`/user/${id}`, {
+        ...props,
+        profile_picture: new_profile_picture
       })
-      .catch((res) => {
-        setOpenSnackError(true)
-      })
+
+      setOpenSnackSuccess(true)
+      setOpenModalInativar(false)
+      // window.location.reload()
+    } catch (err) {
+      setOpenSnackError(true)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -397,7 +399,7 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
                       <TableCell align="left" style={{ cursor: 'pointer' }} onClick={() => {
                         setOpenEditUserModal(true)
                         setSelectedClient(row)
-                        setClientEdit(row)
+                        setClientEdit({ email: row.email, name: row.name, client_id: row.client_id, profile_picture: row.profile_picture })
                       }}>{row.name}</TableCell>
                       <TableCell align="left" style={{ cursor: 'pointer' }} onClick={() => {
                         setOpen(true)
@@ -457,12 +459,13 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
                 name: value.target.value
               })
             }}
+            value={clientEdit?.name}
             variant="outlined"
           />
           <TextField
             id="outlined-basic"
             label="E-mail/Usuário"
-            value={clientEdit.email}
+            value={clientEdit?.email}
             sx={{ width: 350, ml: 8 }}
             onChange={(value) => {
               setClientEdit({
@@ -500,6 +503,7 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
             id="outlined-basic"
             label="Codigo do Cliente Smart Energia"
             sx={{ width: 350, ml: 5, mt: 2 }}
+            value={clientEdit?.client_id}
             onChange={(value) => {
               setClientEdit({
                 ...clientEdit,
@@ -541,7 +545,6 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
           </InputUploadView>
 
           <div className='select'>
-
             <FormControl sx={{ width: 350, ml: 5, mt: 2 }}>
               <InputLabel id="demo-select-small">Nivel de acesso</InputLabel>
               <Select
@@ -559,11 +562,14 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
             </FormControl>
           </div>
 
-          <FaqButton1 title="Cancelar" onClick={() => setOpenEditUserModal(false)} />
-          <FaqButton2
-            title="Salvar"
-            onClick={() => handleUpdateClient(clientEdit, selectedClient.id)}
-          />
+          {!loading && <FaqButton1 title="Cancelar" onClick={() => setOpenEditUserModal(false)} />}
+          {!loading
+            ? <FaqButton2
+              title="Salvar"
+              onClick={() => handleUpdateClient(clientEdit, selectedClient.id)}
+            />
+            : <ReactLoading type='spin' color='#254f7f' height='5%' width='5%' />
+          }
         </Box>
       </Modal>
 
