@@ -142,7 +142,7 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
                   data1={costIndicator?.filter((value, index) => value?.mes.slice(0, 4).includes(costIndicator[0].mes.slice(0, 4))).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
                   data2={costIndicator?.filter((value, index) => value?.mes.slice(0, 4).includes(costIndicator[costIndicator.length - 1].mes.slice(0, 4))).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
                   // years={[costIndicator[0].mes.slice(0, 4), costIndicator[costIndicator.length - 1].mes.slice(0, 4)]}
-                  years={[previousYear, currentYear]}
+                  years={[previousYear+'', currentYear+'']}
                   label={months}
                   miniature
                 />
