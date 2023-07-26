@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { FaqButtonView1 } from './FaqButtonView1'
 
 interface FaqButtonInterface {

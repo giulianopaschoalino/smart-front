@@ -8,7 +8,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
-import React, { useContext, useState, useEffect,useCallback, useRef } from 'react'
+import { useContext, useState, useEffect, useCallback, useRef, forwardRef } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import RenderIf from '../utils/renderIf';
 import Snackbar from '@mui/material/Snackbar';
@@ -22,7 +22,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
 ) {
@@ -77,8 +77,8 @@ export default function Home() {
             setOpenSnackError(true)
           }
         })
-      } catch (exception){
-        // console.log(exception)
+      } catch (exception) {
+        console.log(exception)
       }
     }
   }

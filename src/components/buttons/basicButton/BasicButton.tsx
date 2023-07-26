@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { BasicButtonView } from './BasicButtonView'
 
 interface BasicButtonInterface {

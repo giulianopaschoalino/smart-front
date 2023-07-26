@@ -6,7 +6,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { parseCookies } from 'nookies';
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
 import { LineBarChart } from '../../components/graph/LineBarChart';
@@ -460,8 +460,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/pld/list').then(res => {
     tableData = res.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   await apiClient.post('/pld', {
@@ -470,8 +468,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     "distinct": true
   }).then(res => {
     clientMonth = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   if (!token) {

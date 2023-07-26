@@ -1,7 +1,6 @@
 import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { draw, generate } from 'patternomaly'
-import React from 'react';
 import { Bar, Chart } from 'react-chartjs-2';
 // import Chart from './Chart';
 

@@ -42,8 +42,6 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
 
   const options: any = config(miniature)
 
-  console.log(new Date().getFullYear())
-
   const data = {
     labels,
     datasets: [

@@ -2,7 +2,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { Editor } from '@tinymce/tinymce-react'
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import React, { useRef, useState } from 'react'
+import { forwardRef, useRef, useState } from 'react'
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
 import Header from '../../components/header/Header';
 import PageTitle from '../../components/pageTitle/PageTitle';
@@ -12,7 +12,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar';
 import getAPIClient from '../../services/ssrApi';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
 ) {
@@ -119,9 +119,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.get('/aboutUs').then(res => {
     initialText = res.data.data
-    // console.log(res.data.data)
-  }).catch(res => {
-    // console.log(res)
   })
 
   if (!token) {

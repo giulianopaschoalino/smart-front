@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import { InputUploadView } from './inputUploadView'
 
@@ -16,7 +16,6 @@ export default function InputUploadPdf() {
 
   function onImageChange(e: any) {
     setImages([...e.target.files]);
-    // console.log(e);
   }
 
   return (

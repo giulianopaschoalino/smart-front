@@ -8,7 +8,7 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Head from 'next/head'
-import React, { useEffect, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 
 import NotificationsTable from '../../../components/administrativeTables/NotificationsTable'
 import FaqButton1 from '../../../components/buttons/faqButton/FaqButton1';
@@ -44,7 +44,7 @@ const style = {
   overflowY: 'scroll',
 };
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
 ) {
@@ -257,14 +257,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.get('/user').then(res => {
     clients = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
-
   await apiClient.get('/notification').then(res => {
     notifications = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   if (!token) {

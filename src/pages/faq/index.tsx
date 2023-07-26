@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import React from 'react'
+
 import Banner from '../../components/banner/Banner'
 import CommonQuestionsCard from '../../components/faqQuestionsCard/FaqQuestionsCard'
 import Header from '../../components/header/Header'
@@ -48,8 +48,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.get('/faq').then(res => {
     faqData = res.data.data
-  }).catch(res => {
-    console.log(res)
   })
 
   if (!token) {

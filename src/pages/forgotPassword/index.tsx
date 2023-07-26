@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image';
 import { useRouter } from 'next/router'
 import FormData from 'form-data';
@@ -54,9 +54,7 @@ export default function ForgotPassword() {
     formData.append('email', email)
     api.post('/auth/forgot-password', formData).then(res => {
       setOpenSnackSuccess(true)
-    }).catch(res => {
-      setOpenSnackError(true)
-    })
+    }).catch(() => setOpenSnackError(true))
   }
 
   return (

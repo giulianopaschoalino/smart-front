@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Image from 'next/image';
 
 import { HeaderView } from './HeaderView'
@@ -50,8 +50,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.get('/user').then(res => {
     userData = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   if (!token) {

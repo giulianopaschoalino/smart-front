@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // material ui imports
 import MenuItem from '@mui/material/MenuItem';
@@ -43,8 +43,6 @@ export default function CostIndicator({graphData, userName, clients}: any) {
       ]
     }:{}).then(res => {
       setGraphDataState(res.data.data)
-    }).catch(res => {
-      // console.log(res)
     })
   }, [unity])
 
@@ -112,15 +110,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 			"codigo_scde"],
 		"distinct": true
 }).then(res => {
-    clients = res.data.data
-  }).catch(res => {
-    // console.log(res)
-  })
+  clients = res.data.data
+})
 
   await apiClient.post('/economy/MWh').then(res => {
     graphData = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   if (!token) {

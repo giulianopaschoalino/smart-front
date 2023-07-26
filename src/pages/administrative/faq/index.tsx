@@ -8,7 +8,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { api } from '../../../services/api';
 import ConfirmModal from '../../../components/modal/ConfirmModal';
 import { ConfirmModalView } from '../../../styles/layouts/modals/confirmModalView';
@@ -40,7 +40,7 @@ const style = {
   p: 4,
 };
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
 ) {
@@ -106,7 +106,7 @@ export default function Sidebar({faqData, userName} : any ) {
     }).catch(res => setOpenSnackError(true))
   }
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -190,8 +190,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.get('/faq').then(res => {
     faqData = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   if (!token) {

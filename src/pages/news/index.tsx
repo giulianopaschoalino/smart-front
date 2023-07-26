@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link'
 import { Router } from 'next/router';
 import { parseCookies } from 'nookies';
-import React from 'react'
+
 
 import Banner from '../../components/banner/Banner'
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
@@ -63,8 +63,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.get('/news').then(res => {
     news = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   if (!token) {

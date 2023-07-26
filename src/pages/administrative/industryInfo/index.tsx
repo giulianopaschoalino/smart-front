@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import React, { useEffect, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import BasicButton from '../../../components/buttons/basicButton/BasicButton'
 import Header from '../../../components/header/Header'
 import PageTitle from '../../../components/pageTitle/PageTitle'
@@ -13,7 +13,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import getAPIClient from '../../../services/ssrApi'
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
 ) {
@@ -45,16 +45,12 @@ export default function industryInfo({userName, pdfUrl}: any) {
 
     api.post('/updateFile', formData).then(res => {
       setOpenSnackSuccess(true)
-    }).catch(res => {
-      setOpenSnackError(true)
-    })
+    }).catch(() => setOpenSnackError(true))
   }
 
   function handleDownloadPdf() {
     api.get('/download').then(res => {
       window.open(res.data.path);
-    }).catch(res => {
-      // console.log(res)
     })
   }
 
@@ -86,12 +82,6 @@ export default function industryInfo({userName, pdfUrl}: any) {
       <BasicButton onClick={() => handleDownloadPdf()} title='Visualizar arquivo mais recente'/>
       <BasicButton onClick={() => console.log('')} title='Excluir último arquivo enviado'/>
 
-      {/* <PDFViewer
-          document={{
-            url: pdfUrl,
-          }}
-        /> */}
-
     </IndustryInfoView>
   )
 }
@@ -105,8 +95,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   apiClient.get('/download').then(res => {
     pdfUrl = res.data.path
-  }).catch(res => {
-    // console.log('exception', res)
   })
 
   if (!token) {

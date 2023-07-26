@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import { createContext, useState } from "react";
 import Router from 'next/router'
 
 import { destroyCookie, parseCookies, setCookie } from "nookies";

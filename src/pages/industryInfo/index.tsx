@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import React, { useState } from 'react'
+import { forwardRef, useState } from 'react'
 import BasicButton from '../../components/buttons/basicButton/BasicButton'
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle'
@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 import Banner from '../../components/banner/Banner'
 import Image from 'next/image'
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
 ) {
@@ -39,9 +39,7 @@ export default function industryInfo({userName}: any) {
     api.get('/download').then(res => {
       window.open(res.data.path);
       setOpenSnackSuccess(true)
-    }).catch(res => {
-      setOpenSnackError(true)
-    })
+    }).catch(() => setOpenSnackError(true))
   }
 
   return (

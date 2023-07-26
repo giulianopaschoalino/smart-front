@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image';
 
 
@@ -18,7 +18,6 @@ export default function InputUploadPdf() {
 
   function onImageChange(e: any) {
     setImages([...e.target.files]);
-    // console.log(e);
   }
 
   return (

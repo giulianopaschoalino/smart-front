@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import AdministrativeHeader from '../../components/administrativeHeader/AdministrativeHeader';
 import ClientsTable from '../../components/administrativeTables/ClientsTable';

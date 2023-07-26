@@ -1,11 +1,10 @@
-import React from 'react'
-
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { ButtonGroupView } from './ButtonGroupView';
+import { useState } from 'react';
 
 export default function ButtonGroup() {
-  const [timeCourse, setTimeCourse] = React.useState<string | null>('Mensal');
+  const [timeCourse, setTimeCourse] = useState<string | null>('Mensal');
 
   const handleAlignment = (
     event: React.MouseEvent<HTMLElement>,
