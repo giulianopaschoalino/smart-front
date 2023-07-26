@@ -242,26 +242,18 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.post('/economy/grossMonthly').then(res => {
     grossMensalGraph = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   await apiClient.post('/economy/estimates').then(res => {
     acumulatedGraph = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   await apiClient.post('/economy/MWh').then(res => {
     costIndicator = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   await apiClient.post('/pld/overview').then(res => {
     mapsInfo = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   const grossMensalYears = grossMensalGraph.map((value) => value.mes)

@@ -3,8 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const style = {
   // eslint-disable-next-line @typescript-eslint/prefer-as-const
@@ -27,7 +26,7 @@ interface ConfirmModalInterface{
 }
 
 export default function ConfirmModal({open, handleIsClose, children}: ConfirmModalInterface) {
-  const [openState, setOpenState] = React.useState(false);
+  const [openState, setOpenState] = useState(false);
   const handleOpen = () => setOpenState(true);
   const handleClose = () => {setOpenState(false); handleIsClose(false)}
 

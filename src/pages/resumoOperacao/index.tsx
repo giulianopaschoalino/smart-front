@@ -6,7 +6,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { parseCookies } from 'nookies';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import BasicButton from '../../components/buttons/basicButton/BasicButton';
 import Header from '../../components/header/Header';
@@ -243,8 +243,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 		"distinct": true
   }).then(res => {
     clients = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   if (!token) {

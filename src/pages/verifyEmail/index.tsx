@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import Image from 'next/image';
 import { useRouter } from 'next/router'
 import FormData from 'form-data';
@@ -15,7 +15,7 @@ import { api } from '../../services/api';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
 ) {
@@ -61,9 +61,7 @@ export default function VerifyEmail() {
     }).then(res => {
       setSent(true)
       setOpenSnackSuccess(true)
-    }).catch(res => {
-      setOpenSnackError(true)
-    })
+    }).catch(() => setOpenSnackError(true))
   }
 
   function verifyConfirmationCode() {
@@ -78,9 +76,7 @@ export default function VerifyEmail() {
       setTimeout(() => {
         router.push('/')
       }, 2000);
-    }).catch(res => {
-      setOpenSnackErrorPassword(true)
-    })
+    }).catch(() => setOpenSnackErrorPassword(true))
   }
 
   useEffect(() => {

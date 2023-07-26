@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { PageTitleView } from './PageTitleView'
 
 interface PageTitleInterface {

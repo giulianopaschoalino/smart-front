@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import React from 'react'
+
 
 import { GrossAnualChart } from '../../components/graph/grossAnualChart/GrossAnualChart'
 import Header from '../../components/header/Header'
@@ -41,8 +41,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await apiClient.post('/economy/grossAnnual').then(res => {
     graphData = res.data.data
     // console.log(graphData[0])
-  }).catch(res => {
-    // console.log(res)
   })
 
   const years = graphData.map((value) => value.ano)

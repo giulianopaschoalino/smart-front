@@ -2,7 +2,7 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import Home from '.'
 // import Footer from '../components/footer/Footer'
@@ -79,11 +79,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   let notificationsCount
 
-  await apiClient.post('/download').then(res => {
-    // console.log(res)
-  }).catch(res => {
-    // console.log(res)
-  })
+  await apiClient.post('/download').then(console.log)
 
   if (!token) {
     return {

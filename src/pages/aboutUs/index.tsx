@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { parseCookies } from 'nookies'
-import React from 'react'
+
 import Header from '../../components/header/Header'
 import PageTitle from '../../components/pageTitle/PageTitle'
 import getAPIClient from '../../services/ssrApi'
@@ -62,8 +62,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   await apiClient.get('/aboutUs').then(res => {
     text = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   if (!token) {

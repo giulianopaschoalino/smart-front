@@ -89,7 +89,6 @@ export default function GrossMensalChart({
           const percentage =
             (data1[ctx?.dataIndex]?.econ_percentual * 100).toFixed(0) + '%'
 
-          console.log(percentage)
           dataArr.map((data) => {
             sum += data
           })

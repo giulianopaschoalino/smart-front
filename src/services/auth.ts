@@ -19,23 +19,26 @@ type UserObjectType = {
 export async function signInRequest(data: SignInRequestData) {
   let user: UserObjectType, token: string, exception: any = null
 
-  await api.post('/auth/login', {
-    "email": data.email,
-    "password": data.password,
-    "device_name": "test"
-  }).then(res => {
-    token = res.data.token
-    user = {
-      name: res.data.user.name,
-      email: res.data.user.email,
-      client_id: res.data.user.client_id,
-      id: res.data.user.id,
-      role: res.data.user.roles[0].pivot.role_id,
-      profile_picture: res.data.user.profile_picture
-    }
-  }).catch(res => {
-    exception = res
-  })
+  await api
+    .post('/auth/login', {
+      email: data.email,
+      password: data.password,
+      device_name: 'test'
+    })
+    .then((res) => {
+      token = res.data.token
+      user = {
+        name: res.data.user.name,
+        email: res.data.user.email,
+        client_id: res.data.user.client_id,
+        id: res.data.user.id,
+        role: res.data.user.roles[0].pivot.role_id,
+        profile_picture: res.data.user.profile_picture
+      }
+    })
+    .catch((res) => {
+      exception = res
+    })
 
   return {
     token,
@@ -63,8 +66,6 @@ export default async function recoverUserInformation(id) {
       role: res.data.user.roles[0].pivot.role_id,
       profile_picture: res.data.user.profile_picture
     }
-  }).catch(res => {
-    // console.log(res)
   })
 
   return {

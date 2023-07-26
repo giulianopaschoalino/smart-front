@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CativoXLivreChart } from '../../components/graph/cativoXLivreChart'
 
 // material ui imports
@@ -29,8 +29,6 @@ export default function EstimatedCost({graphData, userName, clients}: any) {
       ]
     }:{}).then(res => {
       setGraphDataState(res.data.data)
-    }).catch(res => {
-      // console.log(res)
     })
   }, [unity])
 
@@ -90,15 +88,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 			"codigo_scde"],
 		"distinct": true
 }).then(res => {
-    clients = res.data.data
-  }).catch(res => {
-    // console.log(res)
-  })
-
+  clients = res.data.data
+})
   await apiClient.post('/economy/estimates').then(res => {
     graphData = res.data.data
-  }).catch(res => {
-    // console.log(res)
   })
 
   if (!token) {

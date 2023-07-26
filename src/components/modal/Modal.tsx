@@ -1,8 +1,7 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const style = {
   // eslint-disable-next-line @typescript-eslint/prefer-as-const
@@ -25,7 +24,7 @@ interface BasicModalInterface{
 }
 
 export default function BasicModal({open, handleIsClose, children}: BasicModalInterface) {
-  const [openState, setOpenState] = React.useState(false);
+  const [openState, setOpenState] = useState(false);
   const handleOpen = () => setOpenState(true);
   const handleClose = () => {setOpenState(false); handleIsClose(false)}
 

@@ -19,7 +19,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { visuallyHidden } from '@mui/utils';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { TableView, StyledStatus } from './TableView';
 

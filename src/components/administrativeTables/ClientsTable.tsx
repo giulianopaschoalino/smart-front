@@ -10,7 +10,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
-import React, { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -43,7 +43,7 @@ const style = {
   p: 4,
   overflowY: 'scroll'
 };
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
 ) {
@@ -213,9 +213,8 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
       ],
       "fields": ["unidade"],
       "distinct": true
-    }).then(res => setUnits(res.data.data)).catch(res => {
-      setOpenSnackError(true)
-    })
+    }).then(res => setUnits(res.data.data))
+      .catch(() => setOpenSnackError(true))
 
     return units
   }

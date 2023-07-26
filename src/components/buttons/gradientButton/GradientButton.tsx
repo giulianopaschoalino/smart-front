@@ -1,5 +1,4 @@
 import { Router } from 'next/router'
-import React from 'react'
 import { GradientButtonView } from './GradientButtonView'
 import { useRouter } from 'next/router'
 

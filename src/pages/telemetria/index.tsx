@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
@@ -38,7 +38,7 @@ import { getDemand } from '../../services/charts/telemetry/getDemand'
 import { getDiscretization } from '../../services/charts/telemetry/getDiscretization'
 import { getPowerFactorData } from '../../services/charts/telemetry/getPowerFactor'
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
 ) {
@@ -917,9 +917,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     .then((res) => {
       console.log(res.data)
       clients = res.data.data
-    })
-    .catch((res) => {
-      // console.log(res)
     })
 
   if (!token) {

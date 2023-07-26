@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 import { useRouter } from 'next/router'
 import { parseCookies } from 'nookies';
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { MenuContext } from '../../contexts/menu/MenuContext';
@@ -60,8 +60,6 @@ export default function Sidebar() {
   useEffect(() => {
     api.post('/notify').then(res => {
       setNotificationsCount(res.data)
-    }).catch(res => {
-      // console.log(res)
     })
   }, [])
 
