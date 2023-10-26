@@ -17,9 +17,9 @@ export function sortedString<T = any>(field: string = "", optionsSorts: Intl.Col
     if (!field) return Intl.Collator(locale, optionsSorts).compare;
 
     return (a: T, b: T): number =>
-        (a[field as keyof T] as string)?.localeCompare(
-            (b[field as keyof T] as string) ?? "",
-            locale,
-            optionsSorts
-        );
+      (a[field as keyof T] as unknown as string)?.localeCompare(
+        (b[field as keyof T] as unknown as string) ?? '',
+        locale,
+        optionsSorts
+      )
 }
