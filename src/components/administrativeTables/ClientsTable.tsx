@@ -1,34 +1,43 @@
-import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import { visuallyHidden } from '@mui/utils';
-import { forwardRef, useEffect, useState } from 'react';
+import Box from '@mui/material/Box'
+import Checkbox from '@mui/material/Checkbox'
+import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TablePagination from '@mui/material/TablePagination'
+import TableRow from '@mui/material/TableRow'
+import TableSortLabel from '@mui/material/TableSortLabel'
+import { visuallyHidden } from '@mui/utils'
+import { forwardRef, useDeferredValue, useEffect, useState } from 'react'
 
-import Image from 'next/image';
+import Image from 'next/image'
 
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert'
+import Snackbar from '@mui/material/Snackbar'
 
-import Modal from '@mui/material/Modal';
+import Modal from '@mui/material/Modal'
 
-import { FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
-import FormData from 'form-data';
-import { InputUploadView } from '../inputUploadImg/inputUploadView';
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography
+} from '@mui/material'
+import FormData from 'form-data'
+import { InputUploadView } from '../inputUploadImg/inputUploadView'
 
-import { api } from '../../services/api';
-import FaqButton1 from '../buttons/faqButton/FaqButton1';
-import FaqButton2 from '../buttons/faqButton/FaqButton2';
-import { StyledStatus, TableView } from './TableView';
+import { api } from '../../services/api'
+import FaqButton1 from '../buttons/faqButton/FaqButton1'
+import FaqButton2 from '../buttons/faqButton/FaqButton2'
+import { StyledStatus, TableView } from './TableView'
 
-import ReactLoading from 'react-loading';
+import ReactLoading from 'react-loading'
+import { sanitizeStringSearch } from '../../utils/stringHelper'
+import { stableSort } from '../../utils/stableSort'
 
 const style = {
   position: 'absolute' as const,
@@ -42,62 +51,50 @@ const style = {
   boxShadow: 24,
   p: 4,
   overflowY: 'scroll'
-};
+}
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
-  ref,
+  ref
 ) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
 interface Data {
-  clientCode: number,
-  name: string,
-  unity: string,
-  status: string,
+  clientCode: number
+  name: string
+  unity: string
+  status: string
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
-    return -1;
+    return -1
   }
   if (b[orderBy] > a[orderBy]) {
-    return 1;
+    return 1
   }
-  return 0;
+  return 0
 }
 
-type Order = 'asc' | 'desc';
+type Order = 'asc' | 'desc'
 
 function getComparator<Key extends keyof any>(
   order: Order,
-  orderBy: any,
+  orderBy: any
 ): (
   a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string },
+    b: { [key in Key]: number | string }
 ) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort<T>(array: any, comparator: (a: T, b: T) => number) {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
+    : (a, b) => -descendingComparator(a, b, orderBy)
 }
 
 interface HeadCell {
-  disablePadding: boolean;
-  id: keyof Data | string;
-  label: string;
-  numeric: boolean;
+  disablePadding: boolean
+  id: keyof Data | string
+  label: string
+  numeric: boolean
 }
 
 const headCells: readonly HeadCell[] = [
@@ -105,44 +102,70 @@ const headCells: readonly HeadCell[] = [
     id: 'clientCode',
     numeric: false,
     disablePadding: true,
-    label: 'código do cliente',
+    label: 'código do cliente'
   },
   {
     id: 'name',
     numeric: false,
     disablePadding: false,
-    label: 'name',
+    label: 'name'
   },
   {
     id: 'unity',
     numeric: false,
     disablePadding: false,
-    label: 'unity',
+    label: 'unity'
   },
   {
     id: 'status',
     numeric: false,
     disablePadding: false,
-    label: 'status',
-  },
-];
+    label: 'status'
+  }
+]
 
 interface EnhancedTableProps {
-  numSelected: number;
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
-  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  order: Order;
-  orderBy: string;
-  rowCount: number;
+  numSelected: number
+  onRequestSort: (
+    event: React.MouseEvent<unknown>,
+    property: keyof Data
+  ) => void
+  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void
+  order: Order
+  orderBy: string
+  rowCount: number
+}
+
+interface ClientsTableInterface {
+  clients: any
+  onChange: any
+}
+
+function sortedClients(client, search: string) {
+  search = sanitizeStringSearch(search)
+
+  return client
+    .map(client => ({
+      ...client,
+      name: sanitizeStringSearch(client.name),
+      client_id: sanitizeStringSearch(String(client.client_id))
+    }))
+    .filter((client) => client.name.includes(search) || client.client_id.includes(search))
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort
+  } = props
   const createSortHandler =
     (property: any) => (event: React.MouseEvent<unknown>) => {
-      onRequestSort(event, property);
-    };
+      onRequestSort(event, property)
+    }
 
   return (
     <TableHead>
@@ -154,14 +177,14 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              'aria-label': 'select all desserts',
+              'aria-label': 'select all desserts'
             }}
           />
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align='left'
+            align="left"
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -181,136 +204,135 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         ))}
       </TableRow>
     </TableHead>
-  );
+  )
 }
 
-interface ClientsTableInterface {
-  clients: any,
-  onChange: any
-}
+export default function ClientTable({
+  clients,
+  onChange
+}: ClientsTableInterface) {
+  const [order, setOrder] = useState<Order>('asc')
+  const [orderBy, setOrderBy] = useState<keyof Data | string>('asc')
+  const [selected, setSelected] = useState<readonly string[]>([])
+  const [page, setPage] = useState<number>(0)
+  const [dense, setDense] = useState<boolean>(false)
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5)
 
-export default function ClientTable({ clients, onChange }: ClientsTableInterface) {
-  const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof Data | string>('asc');
-  const [selected, setSelected] = useState<readonly string[]>([]);
-  const [page, setPage] = useState<number>(0);
-  const [dense, setDense] = useState<boolean>(false);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+  const [openSnackError, setOpenSnackError] = useState<boolean>(false)
 
-  const [openSnackError, setOpenSnackError] = useState<boolean>(false);
-
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
   const [openModalInativar, setOpenModalInativar] = useState(false)
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [clientEdit, setClientEdit] = useState<any>()
+  const [logo, setLogo] = useState(false)
+  const [imageURLS, setImageURLs] = useState([])
+  const [images, setImages] = useState([] as any)
+  const [nivelAcess, setnivelAcess] = useState<any>(2)
+  const [openEditUserModal, setOpenEditUserModal] = useState<any>(false)
+  const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
+  const [selectedClient, setSelectedClient] = useState<any>(2)
+  const [search, setSearch] = useState('')
   const [units, setUnits] = useState([])
 
+  // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - clients.length) : 0
+
+  const formData = new FormData()
+
+  const listClients = useDeferredValue(
+    sortedClients(stableSort(clients, getComparator(order, orderBy)), search)
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+  )
+
+  // const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
   function getClientUnits(client_id: number) {
-    api.post('/units', {
-      "filters": [
-        { "type": "=", "field": "dados_cadastrais.cod_smart_cliente", "value": client_id }
-      ],
-      "fields": ["unidade"],
-      "distinct": true
-    }).then(res => setUnits(res.data.data))
+    api
+      .post('/units', {
+        filters: [
+          {
+            type: '=',
+            field: 'dados_cadastrais.cod_smart_cliente',
+            value: client_id
+          }
+        ],
+        fields: ['unidade'],
+        distinct: true
+      })
+      .then((res) => setUnits(res.data.data))
       .catch(() => setOpenSnackError(true))
 
     return units
   }
 
-  const handleCloseSnack = (event?: React.SyntheticEvent | Event, reason?: string) => {
+  const handleCloseSnack = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
     if (reason === 'clickaway') {
-      return;
+      return
     }
-    setOpenSnackError(false);
-  };
+    setOpenSnackError(false)
+  }
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof Data,
+    property: keyof Data
   ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+    const isAsc = orderBy === property && order === 'asc'
+    setOrder(isAsc ? 'desc' : 'asc')
+    setOrderBy(property)
+  }
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = clients.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
+      const newSelecteds = clients.map((n) => n.name)
+      setSelected(newSelecteds)
+      return
     }
-    setSelected([]);
-  };
+    setSelected([])
+  }
 
   const handleClick = (event: React.MouseEvent<unknown>, code: string) => {
-    const selectedIndex = selected.indexOf(code);
-    let newSelected: readonly string[] = [];
+    const selectedIndex = selected.indexOf(code)
+    let newSelected: readonly string[] = []
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, code);
+      newSelected = newSelected.concat(selected, code)
     } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
+      newSelected = newSelected.concat(selected.slice(1))
     } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
+      newSelected = newSelected.concat(selected.slice(0, -1))
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
+        selected.slice(selectedIndex + 1)
+      )
     }
 
-    setSelected(newSelected);
-  };
+    setSelected(newSelected)
+  }
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
 
-  const isSelected = (code: any) => selected.indexOf(code.toString()) !== -1;
-
-  useEffect(() => {
-    onChange(selected)
-  }, [selected])
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - clients.length) : 0;
-
-  const formData = new FormData()
-
-  const [clientEdit, setClientEdit] = useState<any>()
-  const [logo, setLogo] = useState(false)
-  const [imageURLS, setImageURLs] = useState([])
-  const [images, setImages] = useState([] as any)
-  const [nivelAcess, setnivelAcess] = useState<any>(2);
-  const [openEditUserModal, setOpenEditUserModal] = useState<any>(false);
-
-  const [selectedClient, setSelectedClient] = useState<any>(2);
-  const [search, setSearch] = useState('')
-
-  useEffect(() => {
-    if (images.length < 1) return
-    const newImageUrls: any = []
-    images.forEach((image: any) =>
-      newImageUrls.push(URL.createObjectURL(image))
-    )
-    setImageURLs(newImageUrls)
-  }, [images])
+  const isSelected = (code: any) => selected.indexOf(code.toString()) !== -1
 
   function onImageChange(e: any) {
     setImages([...e.target.files])
     setLogo(e.target.files[0])
   }
-
-  const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
-  const [loading, setLoading] = useState<boolean>(false)
 
   async function handleUpdateClient(props, id) {
     logo && formData.append('file', logo)
@@ -337,14 +359,40 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
     }
   }
 
+  useEffect(() => {
+    onChange(selected)
+  }, [selected])
+
+  useEffect(() => {
+    if (images.length < 1) return
+    const newImageUrls: any = []
+    images.forEach((image: any) =>
+      newImageUrls.push(URL.createObjectURL(image))
+    )
+    setImageURLs(newImageUrls)
+  }, [images])
+
   return (
     <TableView>
-      <Snackbar open={openSnackError} autoHideDuration={4000} onClose={handleCloseSnack}>
-        <Alert onClose={handleCloseSnack} severity="error" sx={{ width: '100%' }}>
+      <Snackbar
+        open={openSnackError}
+        autoHideDuration={4000}
+        onClose={handleCloseSnack}
+      >
+        <Alert
+          onClose={handleCloseSnack}
+          severity="error"
+          sx={{ width: '100%' }}
+        >
           Não foi possivel encontrar unidades do client!
         </Alert>
       </Snackbar>
-      <TextField onChange={(e) => setSearch(e.target.value)} placeholder='persquisar por nome:' />
+
+      <TextField
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Pesquisar por nome:"
+      />
+
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
           <Table
@@ -361,58 +409,81 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
               rowCount={clients.length}
             />
             <TableBody>
-              {stableSort(clients, getComparator(order, orderBy))
-                .filter(client => client.name.toLowerCase().includes(search.toLowerCase()))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+              {listClients.map((row, index) => {
+                const isItemSelected = isSelected(row.id)
+                const labelId = `enhanced-table-checkbox-${index}`
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.id.toString())}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.id}
-                      selected={isItemSelected}
+                return (
+                  <TableRow
+                    hover
+                    onClick={(event) => handleClick(event, row.id.toString())}
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={row.id}
+                    selected={isItemSelected}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        color="primary"
+                        checked={isItemSelected}
+                        inputProps={{ 'aria-labelledby': labelId }}
+                      />
+                    </TableCell>
+
+                    <TableCell
+                      component="th"
+                      id={labelId}
+                      scope="row"
+                      padding="none"
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                      >
-                        Client - {row.client_id}
-                      </TableCell>
-                      <TableCell align="left" style={{ cursor: 'pointer' }} onClick={() => {
+                      Client - {row.client_id}
+                    </TableCell>
+
+                    <TableCell
+                      align="left"
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
                         setOpenEditUserModal(true)
                         setSelectedClient(row)
-                        setClientEdit({ email: row.email, name: row.name, client_id: row.client_id, profile_picture: row.profile_picture })
-                      }}>{row.name}</TableCell>
-                      <TableCell align="left" style={{ cursor: 'pointer' }} onClick={() => {
+                        setClientEdit({
+                          email: row.email,
+                          name: row.name,
+                          client_id: row.client_id,
+                          profile_picture: row.profile_picture
+                        })
+                      }}
+                    >
+                      {row.name}
+                    </TableCell>
+
+                    <TableCell
+                      align="left"
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
                         setOpen(true)
                         getClientUnits(row.client_id)
                         setSelectedClient(row)
-                      }}>clique aqui para ver as unidades</TableCell>
-                      <TableCell align="left"><StyledStatus status={row.deleted_at ? 'inativo' : 'ativo'}> {row.deleted_at ? 'inativo' : 'ativo'}</StyledStatus></TableCell>
-                    </TableRow>
-                  );
-                })}
+                      }}
+                    >
+                      clique aqui para ver as unidades
+                    </TableCell>
+
+                    <TableCell align="left">
+                      <StyledStatus
+                        status={row.deleted_at ? 'inativo' : 'ativo'}
+                      >
+                        {' '}
+                        {row.deleted_at ? 'inativo' : 'ativo'}
+                      </StyledStatus>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (dense ? 33 : 53) * emptyRows,
+                    height: (dense ? 33 : 53) * emptyRows
                   }}
                 >
                   <TableCell colSpan={6} />
@@ -421,6 +492,7 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
             </TableBody>
           </Table>
         </TableContainer>
+
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
@@ -431,6 +503,7 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+
       <Modal
         open={openEditUserModal}
         onClose={() => setOpenEditUserModal(false)}
@@ -515,13 +588,15 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
             <div className="imgContainer">
               <article>
                 {imageURLS.map((imageSrc, index) => {
-                  return <Image
-                    src={imageSrc}
-                    key={index}
-                    width={30}
-                    height={30}
-                    className="image"
-                  />
+                  return (
+                    <Image
+                      src={imageSrc}
+                      key={index}
+                      width={30}
+                      height={30}
+                      className="image"
+                    />
+                  )
                 })}
               </article>
             </div>
@@ -543,7 +618,7 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
             </div>
           </InputUploadView>
 
-          <div className='select'>
+          <div className="select">
             <FormControl sx={{ width: 350, ml: 5, mt: 2 }}>
               <InputLabel id="demo-select-small">Nivel de acesso</InputLabel>
               <Select
@@ -551,24 +626,29 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
                 id="demo-select-small"
                 value={nivelAcess}
                 label="Unidade"
-                onChange={value => setnivelAcess(value.target.value)}
+                onChange={(value) => setnivelAcess(value.target.value)}
                 fullWidth
               >
                 <MenuItem value={1}>Administrador</MenuItem>
                 <MenuItem value={2}>Cliente</MenuItem>
-
               </Select>
             </FormControl>
           </div>
 
-          {!loading && <FaqButton1 title="Cancelar" onClick={() => setOpenEditUserModal(false)} />}
-          {!loading
-            ? <FaqButton2
+          {!loading && (
+            <FaqButton1
+              title="Cancelar"
+              onClick={() => setOpenEditUserModal(false)}
+            />
+          )}
+          {!loading ? (
+            <FaqButton2
               title="Salvar"
               onClick={() => handleUpdateClient(clientEdit, selectedClient.id)}
             />
-            : <ReactLoading type='spin' color='#254f7f' height='5%' width='5%' />
-          }
+          ) : (
+            <ReactLoading type="spin" color="#254f7f" height="5%" width="5%" />
+          )}
         </Box>
       </Modal>
 
@@ -579,18 +659,23 @@ export default function ClientTable({ clients, onChange }: ClientsTableInterface
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {
-            units.map((units, index) => {
-              return <>
-                <li style={{
-                  listStyle: 'none'
-                }} key={index}>{units.unidade}</li>
+          {units.map((units, index) => {
+            return (
+              <>
+                <li
+                  style={{
+                    listStyle: 'none'
+                  }}
+                  key={index}
+                >
+                  {units.unidade}
+                </li>
                 <hr />
               </>
-            })
-          }
+            )
+          })}
         </Box>
       </Modal>
     </TableView>
-  );
+  )
 }
