@@ -148,7 +148,7 @@ function sortedClients(client, search: string) {
     .map(client => ({
       ...client,
       name: sanitizeStringSearch(client.name),
-      client_id: sanitizeStringSearch(String(client.client_id))
+      client_id: sanitizeStringSearch(String(client.client_id ?? ""))
     }))
     .filter((client) => client.name.includes(search) || client.client_id.includes(search))
 }
