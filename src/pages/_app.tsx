@@ -26,7 +26,7 @@ export function MyApp({ Component, pageProps, notificationsCount }: AppProps | a
   const rota = router.pathname
 
   useEffect(() => {
-    const handleStart = (url) => {
+    const handleStart = () => {
       NProgress.start()
     }
     const handleStop = () => {
@@ -79,7 +79,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   let notificationsCount
 
-  await apiClient.post('/download').then(console.log)
+  await apiClient.post('/download')
 
   if (!token) {
     return {
