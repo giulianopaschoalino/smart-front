@@ -18,9 +18,9 @@ export default function getAPIClient(
   const { '@smartAuth-token': token } = parseCookies(ctx)
 
   const api = axios.create({
-    baseURL: 'https://api.energiasmart.com.br/api'
+    // baseURL: 'https://api.energiasmart.com.br/api'
     // baseURL: 'https://api.energiasmart.klupp.com.br/api'
-    // baseURL: 'http://api-smart.test/api'
+    baseURL: 'http://api-smart.test/api'
   })
 
   api.interceptors.request.use((config) => {

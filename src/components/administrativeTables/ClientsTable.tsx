@@ -10,7 +10,7 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
-import { forwardRef, useDeferredValue, useEffect, useState } from 'react'
+import { ChangeEvent, forwardRef, useDeferredValue, useEffect, useState } from 'react'
 
 import Image from 'next/image'
 
@@ -145,12 +145,11 @@ function sortedClients(client, search: string) {
   search = sanitizeStringSearch(search)
 
   return client
-    .map(client => ({
-      ...client,
-      name: sanitizeStringSearch(client.name),
-      client_id: sanitizeStringSearch(String(client.client_id ?? ""))
-    }))
-    .filter((client) => client.name.includes(search) || client.client_id.includes(search))
+    .filter(
+      (client) => sanitizeStringSearch(client.name).includes(search) ||
+        sanitizeStringSearch(String(client.client_id ?? "")).includes(search) ||
+        sanitizeStringSearch(client.email).includes(search)
+    )
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
@@ -224,7 +223,6 @@ export default function ClientTable({
   const [openModalInativar, setOpenModalInativar] = useState(false)
   const [clientEdit, setClientEdit] = useState<any>()
   const [logo, setLogo] = useState(false)
-  const [imageURLS, setImageURLs] = useState([])
   const [images, setImages] = useState([] as any)
   const [nivelAcess, setnivelAcess] = useState<any>(2)
   const [openEditUserModal, setOpenEditUserModal] = useState<any>(false)
@@ -246,6 +244,8 @@ export default function ClientTable({
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
   )
 
+  const imageURLS = images.map((img) => URL.createObjectURL(img))
+
   // const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
@@ -266,6 +266,11 @@ export default function ClientTable({
       .catch(() => setOpenSnackError(true))
 
     return units
+  }
+
+  function handleSearch(e: ChangeEvent<HTMLInputElement>) {
+    setSearch(e.target.value)
+    setPage(0);
   }
 
   const handleCloseSnack = (
@@ -363,15 +368,6 @@ export default function ClientTable({
     onChange(selected)
   }, [selected])
 
-  useEffect(() => {
-    if (images.length < 1) return
-    const newImageUrls: any = []
-    images.forEach((image: any) =>
-      newImageUrls.push(URL.createObjectURL(image))
-    )
-    setImageURLs(newImageUrls)
-  }, [images])
-
   return (
     <TableView>
       <Snackbar
@@ -389,7 +385,7 @@ export default function ClientTable({
       </Snackbar>
 
       <TextField
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={handleSearch}
         placeholder="Pesquisar por nome:"
       />
 
@@ -587,17 +583,15 @@ export default function ClientTable({
           <InputUploadView>
             <div className="imgContainer">
               <article>
-                {imageURLS.map((imageSrc, index) => {
-                  return (
-                    <Image
-                      src={imageSrc}
-                      key={index}
-                      width={30}
-                      height={30}
-                      className="image"
-                    />
-                  )
-                })}
+                {imageURLS.map((imageSrc, index) => (
+                  <Image
+                    src={imageSrc}
+                    key={index}
+                    width={30}
+                    height={30}
+                    className="image"
+                  />
+                ))}
               </article>
             </div>
             <div className="update">
