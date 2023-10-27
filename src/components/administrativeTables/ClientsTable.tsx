@@ -233,9 +233,6 @@ export default function ClientTable({
   const [search, setSearch] = useState('')
   const [units, setUnits] = useState([])
 
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - clients.length) : 0
 
   const formData = new FormData()
 
@@ -243,6 +240,10 @@ export default function ClientTable({
     sortedClients(stableSort(clients, getComparator(order, orderBy)), search)
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
   )
+
+  // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - listClients.length) : 0
 
   const imageURLS = images.map((img) => URL.createObjectURL(img))
 
@@ -402,7 +403,7 @@ export default function ClientTable({
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={clients.length}
+              rowCount={listClients.length}
             />
             <TableBody>
               {listClients.map((row, index) => {
@@ -492,7 +493,7 @@ export default function ClientTable({
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={clients.length}
+          count={listClients.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
