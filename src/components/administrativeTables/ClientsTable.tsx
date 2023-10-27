@@ -493,7 +493,7 @@ export default function ClientTable({
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={listClients.length}
+          count={clients.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
