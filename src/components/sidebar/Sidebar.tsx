@@ -58,9 +58,7 @@ export default function Sidebar() {
   }, [router.pathname])
 
   useEffect(() => {
-    api.post('/notify').then(res => {
-      setNotificationsCount(res.data)
-    })
+    api.post('/notify').then(({ data: { data: notifyCount } }) => setNotificationsCount(notifyCount))
   }, [])
 
   return (

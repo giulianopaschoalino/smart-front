@@ -61,7 +61,7 @@ const months = [
 ]
 
 export default function Telemetria({ userName, clients }: any) {
-  const [unity, setUnity] = useState(clients[0]?.codigo_scde)
+  const [unity, setUnity] = useState(clients?.[0]?.codigo_scde ?? 0)
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
   const [month, setMonth] = useState(new Date().getMonth())
@@ -915,7 +915,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       distinct: true
     })
     .then((res) => {
-      console.log(res.data)
       clients = res.data.data
     })
 

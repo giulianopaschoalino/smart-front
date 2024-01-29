@@ -37,12 +37,12 @@ interface pldInterface {
   clientMonth: any
 }
 
-export default function pld({tableData, userName, clientMonth}: pldInterface) {
+export default function pld({ tableData, userName, clientMonth }: pldInterface) {
   const { pldMenu, setPldMenu } = useContext(MenuContext)
 
   const dateFormated = new Date()
 
-  const year_Month = `0${dateFormated.getMonth()+1}/${dateFormated.getFullYear()}`
+  const year_Month = `0${dateFormated.getMonth() + 1}/${dateFormated.getFullYear()}`
 
   const [date, setDate] = useState<any>(new Date());
   const [select, setSelect] = useState('SUDESTE');
@@ -56,9 +56,11 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
   const [norte, setNorte] = useState([])
   const [sudeste, setSudeste] = useState([])
   const [nordeste, setNordeste] = useState([])
-  const [ pageYPosition, setPageYPosition ] = useState(0);
+  const [pageYPosition, setPageYPosition] = useState(0);
 
-  function getPageYAfterScroll(){
+  console.log(tableData?.data)
+
+  function getPageYAfterScroll() {
     setPageYPosition(window.scrollY);
   }
 
@@ -76,9 +78,9 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
   function getDataByDay() {
     api.post('/pld/daily', {
       "filters": [
-          {"type" : "=", "field" : "year_month_formatted", "value": month, "row": true},
-          {"type" : "=", "field" : "submarket", "value": select}
-        ],
+        { "type": "=", "field": "year_month_formatted", "value": month, "row": true },
+        { "type": "=", "field": "submarket", "value": select }
+      ],
       "order": [{ "field": "day_calc", "direction": "asc" }]
     }).then(res => {
       setDataByDay(res.data.data)
@@ -92,9 +94,9 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       "limit": 20,
       "offset": 0,
       "filters": [
-          {"type" : "=", "field" : "dia_num", "value": date.toLocaleDateString().split('/').reverse().join('-'), "row": true},
-          {"type" : "=", "field" : "submercado", "value": "SUL"}
-        ],
+        { "type": "=", "field": "dia_num", "value": date.toLocaleDateString().split('/').reverse().join('-'), "row": true },
+        { "type": "=", "field": "submercado", "value": "SUL" }
+      ],
       "order": [{ "field": "hour", "direction": "asc" }]
     }).then(res => {
       setSul(res.data.data)
@@ -106,9 +108,9 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       "limit": 20,
       "offset": 0,
       "filters": [
-          {"type" : "=", "field" : "dia_num", "value": date.toLocaleDateString().split('/').reverse().join('-'), "row": true},
-          {"type" : "=", "field" : "submercado", "value": "SUDESTE"}
-        ],
+        { "type": "=", "field": "dia_num", "value": date.toLocaleDateString().split('/').reverse().join('-'), "row": true },
+        { "type": "=", "field": "submercado", "value": "SUDESTE" }
+      ],
       "order": [{ "field": "hour", "direction": "asc" }]
     }).then(res => {
       setSudeste(res.data.data)
@@ -120,9 +122,9 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       "limit": 20,
       "offset": 0,
       "filters": [
-          {"type" : "=", "field" : "dia_num", "value": date.toLocaleDateString().split('/').reverse().join('-'), "row": true},
-          {"type" : "=", "field" : "submercado", "value": "NORTE"}
-        ],
+        { "type": "=", "field": "dia_num", "value": date.toLocaleDateString().split('/').reverse().join('-'), "row": true },
+        { "type": "=", "field": "submercado", "value": "NORTE" }
+      ],
       "order": [{ "field": "hour", "direction": "asc" }]
     }).then(res => {
       setNorte(res.data.data)
@@ -134,9 +136,9 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       "limit": 20,
       "offset": 0,
       "filters": [
-          {"type" : "=", "field" : "dia_num", "value": date.toLocaleDateString().split('/').reverse().join('-'), "row": true},
-          {"type" : "=", "field" : "submercado", "value": "NORDESTE"}
-        ],
+        { "type": "=", "field": "dia_num", "value": date.toLocaleDateString().split('/').reverse().join('-'), "row": true },
+        { "type": "=", "field": "submercado", "value": "NORDESTE" }
+      ],
       "order": [{ "field": "hour", "direction": "asc" }]
     }).then(res => {
       setNordeste(res.data.data)
@@ -150,14 +152,14 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       return ''
     else if (value >= tableData.result[0][`${region}_max`])
       return ''
-    else if (tableData.result[0][`${region}_max`] - value > tableData.result[0][`${region}_max`]/2)
+    else if (tableData.result[0][`${region}_max`] - value > tableData.result[0][`${region}_max`] / 2)
       return ''
     else if (tableData.result[1][`${region}_min`] - value <= tableData.result[1][`${region}_min`])
       return ''
   }
 
   function downloadCSVFile(csv, filename) {
-    const csv_file = new Blob(["\ufeff",csv], {type: "text/csv"});
+    const csv_file = new Blob(["\ufeff", csv], { type: "text/csv" });
 
     const download_link = document.createElement("a");
 
@@ -177,7 +179,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
     const rows = document.querySelectorAll("table tr");
     // const rows = document.getElementsByClassName('tabela');
 
-    for (let i = rows.length/2; i < rows.length; i++) {
+    for (let i = rows.length / 2; i < rows.length; i++) {
       const row = [], cols: any = rows[i].querySelectorAll("td, th");
 
       for (let j = 0; j < cols.length; j++) {
@@ -200,31 +202,31 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
   }, [])
 
   return (
-    <main style={{width: '100%'}}>
+    <main style={{ width: '100%' }}>
       <Head>
         <title>Smart Energia - PLD</title>
       </Head>
-      <div id='title'/>
+      <div id='title' />
       <Header name={userName}>
-        <PageTitle title='PLD' subtitle='Evolução PLD - Valores em R$/MWh'/>
+        <PageTitle title='PLD' subtitle='Evolução PLD - Valores em R$/MWh' />
       </Header>
       <TableHeader>
         <Tabs value={pldMenu} onChange={(e, nv) => setPldMenu(nv)} aria-label="">
-          <Tab label="Pld Histórico"/>
-          <Tab label="Valores Diários"/>
-          <Tab label="Valores Horários"/>
+          <Tab label="Pld Histórico" />
+          <Tab label="Valores Diários" />
+          <Tab label="Valores Horários" />
         </Tabs>
         <div className='btnDownload'>
           <RenderIf isTrue={pldMenu === 0}>
             <BasicButton onClick={() => {
               const html = document.querySelector("table").outerHTML;
               htmlToCSV(html, "tabela_PLD.csv");
-            }} title='Download'/>
+            }} title='Download' />
           </RenderIf>
         </div>
       </TableHeader>
 
-      <RenderIf isTrue={pldMenu===0}>
+      <RenderIf isTrue={pldMenu === 0}>
         <PldTableView>
           <table className='tg'>
             <thead>
@@ -238,17 +240,17 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
             </thead>
             <tbody>
               {
-                tableData.data.map(data => {
-                  return <>
-                    <tr className={data.year_month_formatted==year_Month? 'actual' : ''}>
+                tableData?.data?.map(data => (
+                  <>
+                    <tr className={data.year_month_formatted == year_Month ? 'actual' : ''}>
                       <td className='tg-gceh'>{data.year_month_formatted}</td>
-                      <td className={`tg-uulg`}>{parseFloat(data.nordeste).toLocaleString('pt-br',{currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                      <td className={`tg-gceh`}>{parseFloat(data.norte).toLocaleString('pt-br',{currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                      <td className={`tg-gceh`}>{parseFloat(data.sudeste).toLocaleString('pt-br',{currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                      <td className={`tg-uulg`}>{parseFloat(data.sul).toLocaleString('pt-br',{currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                      <td className={`tg-uulg`}>{parseFloat(data.nordeste).toLocaleString('pt-br', { currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                      <td className={`tg-gceh`}>{parseFloat(data.norte).toLocaleString('pt-br', { currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                      <td className={`tg-gceh`}>{parseFloat(data.sudeste).toLocaleString('pt-br', { currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                      <td className={`tg-uulg`}>{parseFloat(data.sul).toLocaleString('pt-br', { currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     </tr>
                   </>
-                })
+                ))
               }
             </tbody>
           </table>
@@ -261,31 +263,31 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
                   if (index === 0) {
                     return <>
                       <tr>
-                        <td style={{borderTopLeftRadius: 8}} className='tg-gceh'>Máximo</td>
-                        <td className='tg-uulg'>{parseFloat(data.nordeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                        <td className='tg-gceh'>{parseFloat(data.norte_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                        <td className='tg-gceh'>{parseFloat(data.sudeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                        <td className='tg-uulg'>{parseFloat(data.sul_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td style={{ borderTopLeftRadius: 8 }} className='tg-gceh'>Máximo</td>
+                        <td className='tg-uulg'>{parseFloat(data.nordeste_max).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td className='tg-gceh'>{parseFloat(data.norte_max).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td className='tg-gceh'>{parseFloat(data.sudeste_max).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td className='tg-uulg'>{parseFloat(data.sul_max).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                       </tr>
                     </>
-                  } else if (index===1) {
+                  } else if (index === 1) {
                     return <>
                       <tr>
                         <td className='tg-gceh'>Mínimo</td>
-                        <td className='tg-uulg'>{parseFloat(data.nordeste_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                        <td className='tg-gceh'>{parseFloat(data.norte_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                        <td className='tg-gceh'>{parseFloat(data.sudeste_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                        <td className='tg-uulg'>{parseFloat(data.sul_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td className='tg-uulg'>{parseFloat(data.nordeste_min).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td className='tg-gceh'>{parseFloat(data.norte_min).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td className='tg-gceh'>{parseFloat(data.sudeste_min).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td className='tg-uulg'>{parseFloat(data.sul_min).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                       </tr>
                     </>
-                  } else if (index===2) {
+                  } else if (index === 2) {
                     return <>
                       <tr>
-                        <td className='tg-gceh' style={{borderBottomColor: 'transparent'}}>Desv. Padrão</td>
-                        <td className='tg-uulg' style={{borderBottomColor: 'transparent'}}>{parseFloat(data.nordeste_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                        <td className='tg-gceh' style={{borderBottomColor: 'transparent'}}>{parseFloat(data.norte_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                        <td className='tg-gceh' style={{borderBottomColor: 'transparent'}}>{parseFloat(data.sudeste_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                        <td className='tg-uulg' style={{borderBottomColor: 'transparent'}}>{parseFloat(data.sul_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-gceh' style={{ borderBottomColor: 'transparent' }}>Desv. Padrão</td>
+                        <td className='tg-uulg' style={{ borderBottomColor: 'transparent' }}>{parseFloat(data.nordeste_desv_pad).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 })}</td>
+                        <td className='tg-gceh' style={{ borderBottomColor: 'transparent' }}>{parseFloat(data.norte_desv_pad).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 })}</td>
+                        <td className='tg-gceh' style={{ borderBottomColor: 'transparent' }}>{parseFloat(data.sudeste_desv_pad).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 })}</td>
+                        <td className='tg-uulg' style={{ borderBottomColor: 'transparent' }}>{parseFloat(data.sul_desv_pad).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 })}</td>
                       </tr>
                     </>
                   }
@@ -296,7 +298,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
         </PldTableMinMaxView>
 
         <PldTableView display={false}>
-          <table className="tg tabela" style={{display: 'none'}}>
+          <table className="tg tabela" style={{ display: 'none' }}>
             <thead>
               <tr className='tr'>
                 <th className='tg-8oo6'>Mês</th>
@@ -308,14 +310,14 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
             </thead>
             <tbody>
               {
-                tableData.data.map(data => {
+                tableData?.data?.map(data => {
                   return <>
-                    <tr className={`${data.year_month_formatted==year_Month? 'actual' : ''} tr`}>
+                    <tr className={`${data.year_month_formatted == year_Month ? 'actual' : ''} tr`}>
                       <td className='tg-gceh'>{data.year_month_formatted}</td>
-                      <td className={`tg-uulg`}>{parseFloat(data.nordeste).toLocaleString('pt-br',{currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                      <td className={`tg-gceh`}>{parseFloat(data.norte).toLocaleString('pt-br',{currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                      <td className={`tg-gceh`}>{parseFloat(data.sudeste).toLocaleString('pt-br',{currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                      <td className={`tg-uulg`}>{parseFloat(data.sul).toLocaleString('pt-br',{currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                      <td className={`tg-uulg`}>{parseFloat(data.nordeste).toLocaleString('pt-br', { currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                      <td className={`tg-gceh`}>{parseFloat(data.norte).toLocaleString('pt-br', { currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                      <td className={`tg-gceh`}>{parseFloat(data.sudeste).toLocaleString('pt-br', { currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                      <td className={`tg-uulg`}>{parseFloat(data.sul).toLocaleString('pt-br', { currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     </tr>
                   </>
                 })
@@ -325,31 +327,31 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
                   if (index === 0) {
                     return <>
                       <tr className='tr'>
-                        <td style={{borderTopLeftRadius: 8}} className='tg-gceh'>Máximo</td>
-                        <td className='tg-uulg'>{parseFloat(data.nordeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                        <td className='tg-gceh'>{parseFloat(data.norte_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                        <td className='tg-gceh'>{parseFloat(data.sudeste_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                        <td className='tg-uulg'>{parseFloat(data.sul_max).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td style={{ borderTopLeftRadius: 8 }} className='tg-gceh'>Máximo</td>
+                        <td className='tg-uulg'>{parseFloat(data.nordeste_max).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td className='tg-gceh'>{parseFloat(data.norte_max).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td className='tg-gceh'>{parseFloat(data.sudeste_max).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td className='tg-uulg'>{parseFloat(data.sul_max).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                       </tr>
                     </>
-                  } else if (index===1) {
+                  } else if (index === 1) {
                     return <>
                       <tr className='tr'>
                         <td className='tg-gceh'>Mínimo</td>
-                        <td className='tg-uulg'>{parseFloat(data.nordeste_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                        <td className='tg-gceh'>{parseFloat(data.norte_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                        <td className='tg-gceh'>{parseFloat(data.sudeste_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                        <td className='tg-uulg'>{parseFloat(data.sul_min).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                        <td className='tg-uulg'>{parseFloat(data.nordeste_min).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td className='tg-gceh'>{parseFloat(data.norte_min).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td className='tg-gceh'>{parseFloat(data.sudeste_min).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td className='tg-uulg'>{parseFloat(data.sul_min).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                       </tr>
                     </>
-                  } else if (index===2) {
+                  } else if (index === 2) {
                     return <>
                       <tr className='tr'>
-                        <td className='tg-gceh' style={{borderBottomColor: 'transparent'}}>Desv. Padrão</td>
-                        <td className='tg-uulg' style={{borderBottomColor: 'transparent'}}>{parseFloat(data.nordeste_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                        <td className='tg-gceh' style={{borderBottomColor: 'transparent'}}>{parseFloat(data.norte_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                        <td className='tg-gceh' style={{borderBottomColor: 'transparent'}}>{parseFloat(data.sudeste_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
-                        <td className='tg-uulg' style={{borderBottomColor: 'transparent'}}>{parseFloat(data.sul_desv_pad).toLocaleString('pt-br',{style: 'currency', currency: 'BRL', minimumFractionDigits: 2})}</td>
+                        <td className='tg-gceh' style={{ borderBottomColor: 'transparent' }}>Desv. Padrão</td>
+                        <td className='tg-uulg' style={{ borderBottomColor: 'transparent' }}>{parseFloat(data.nordeste_desv_pad).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 })}</td>
+                        <td className='tg-gceh' style={{ borderBottomColor: 'transparent' }}>{parseFloat(data.norte_desv_pad).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 })}</td>
+                        <td className='tg-gceh' style={{ borderBottomColor: 'transparent' }}>{parseFloat(data.sudeste_desv_pad).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 })}</td>
+                        <td className='tg-uulg' style={{ borderBottomColor: 'transparent' }}>{parseFloat(data.sul_desv_pad).toLocaleString('pt-br', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 })}</td>
                       </tr>
                     </>
                   }
@@ -361,24 +363,24 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
       </RenderIf>
 
       {/* grafico de grafico por seleção de data (mês) (diario)*/}
-      <RenderIf isTrue={pldMenu===1}>
+      <RenderIf isTrue={pldMenu === 1}>
         <PldGraphView>
           <section className='toolsbar2'>
             <FormControl sx={{
               width: '320px'
             }}>
               <InputLabel id="demo-simple-select-label">Região</InputLabel>
-                <Select
-                  value={select}
-                  onChange={handleChange}
-                  displayEmpty
-                  label='Região'
-                >
-                  <MenuItem value={'NORTE'}>Norte</MenuItem>
-                  <MenuItem value={'NORDESTE'}>Nordeste</MenuItem>
-                  <MenuItem value={'SUL'}>Sul</MenuItem>
-                  <MenuItem value={'SUDESTE'}>Sudeste</MenuItem>
-                </Select>
+              <Select
+                value={select}
+                onChange={handleChange}
+                displayEmpty
+                label='Região'
+              >
+                <MenuItem value={'NORTE'}>Norte</MenuItem>
+                <MenuItem value={'NORDESTE'}>Nordeste</MenuItem>
+                <MenuItem value={'SUL'}>Sul</MenuItem>
+                <MenuItem value={'SUDESTE'}>Sudeste</MenuItem>
+              </Select>
             </FormControl>
             <FormControl sx={{
               width: '320px',
@@ -386,39 +388,39 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
             }}>
               <InputLabel id="demo-simple-select-label">Mês</InputLabel>
               <Select
-                  value={month}
-                  onChange={handleChangeDay}
-                  displayEmpty
-                  placeholder='dia'
-                  label="Age"
-                >
-                  <MenuItem value={'0'}>Nenhum</MenuItem>
-                  {
-                    clientMonth.sort((a, b) => {
-                      if (a.mes_ref.split('/')[0] < b.mes_ref.split('/')[0]) return 1
-                      if (a.mes_ref.split('/')[0] > b.mes_ref.split('/')[0]) return -1
-                    }).sort((a, b) => {
-                      if (a.mes_ref.split('/')[1] < b.mes_ref.split('/')[1]) return 1
-                      if (a.mes_ref.split('/')[1] > b.mes_ref.split('/')[1]) return -1
-                    }).map((data, index) => {
-                      return <MenuItem key={index} value={data.mes_ref}>{data.mes_ref}</MenuItem>
-                    })
-                  }
+                value={month}
+                onChange={handleChangeDay}
+                displayEmpty
+                placeholder='dia'
+                label="Age"
+              >
+                <MenuItem value={'0'}>Nenhum</MenuItem>
+                {
+                  clientMonth.sort((a, b) => {
+                    if (a.mes_ref.split('/')[0] < b.mes_ref.split('/')[0]) return 1
+                    if (a.mes_ref.split('/')[0] > b.mes_ref.split('/')[0]) return -1
+                  }).sort((a, b) => {
+                    if (a.mes_ref.split('/')[1] < b.mes_ref.split('/')[1]) return 1
+                    if (a.mes_ref.split('/')[1] > b.mes_ref.split('/')[1]) return -1
+                  }).map((data, index) => {
+                    return <MenuItem key={index} value={data.mes_ref}>{data.mes_ref}</MenuItem>
+                  })
+                }
               </Select>
             </FormControl>
           </section>
           <LineBarChart
-          data1={dataByDay.map(value => value.mmovel)} data3={dataByDay}
-          dataset1={'Média'} dataset2={'barra1'} dataset3={'Diario'}
-          label={dataByDay.map((value, index) => {
-            return value.day_formatted
-          })}
-          title='' subtitle='' />
+            data1={dataByDay.map(value => value.mmovel)} data3={dataByDay}
+            dataset1={'Média'} dataset2={'barra1'} dataset3={'Diario'}
+            label={dataByDay.map((value, index) => {
+              return value.day_formatted
+            })}
+            title='' subtitle='' />
         </PldGraphView>
       </RenderIf>
 
       {/* grafico de grafico por seleção de data INTEIRA (horario)*/}
-      <RenderIf isTrue={pldMenu===2}>
+      <RenderIf isTrue={pldMenu === 2}>
         <PldGraphView>
           <section className='toolsbar2'>
             {/* <p>Selecione a data: </p> */}
@@ -429,7 +431,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
                   inputFormat="dd/MM/yyyy"
                   value={date}
                   onChange={handleChangeDate}
-                  renderInput={(params) => <TextField {...params} style={{minWidth: '320px'}}/>}
+                  renderInput={(params) => <TextField {...params} style={{ minWidth: '320px' }} />}
                 />
               </div>
             </LocalizationProvider>
@@ -441,7 +443,7 @@ export default function pld({tableData, userName, clientMonth}: pldInterface) {
           />
         </PldGraphView>
       </RenderIf>
-      {pageYPosition > 300 && <a href="#title" style={{position: 'fixed', right: '50px', bottom: '100px'}}>
+      {pageYPosition > 300 && <a href="#title" style={{ position: 'fixed', right: '50px', bottom: '100px' }}>
         <Fab aria-label="add">
           <NavigationIcon />
         </Fab>
@@ -455,11 +457,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
 
-  let tableData = [];
+  let tableData = { data: [], result: [] };
   let clientMonth = [];
 
   await apiClient.post('/pld/list').then(res => {
-    tableData = res.data
+    tableData = res.data.data
   })
 
   await apiClient.post('/pld', {

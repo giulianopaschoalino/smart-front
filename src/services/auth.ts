@@ -1,23 +1,23 @@
-import { api } from "./api";
+import { api } from './api'
 
-export const TOKEN_KEY = "@smartAuth-token";
+export const TOKEN_KEY = '@smartAuth-token'
 
 interface SignInRequestData {
-  email: string,
+  email: string
   password: string
 }
 
 type UserObjectType = {
-  name: string;
-  email: string;
-  client_id: number;
-  id: number;
-  role: number;
+  name: string
+  email: string
+  client_id: number
+  id: number
+  role: number
   profile_picture?: string
 }
 
 export async function signInRequest(data: SignInRequestData) {
-  let user: UserObjectType, token: string, exception: any = null
+  let user: UserObjectType, token: string
 
   await api
     .post('/auth/login', {
@@ -36,9 +36,6 @@ export async function signInRequest(data: SignInRequestData) {
         profile_picture: res.data.user.profile_picture
       }
     })
-    .catch((res) => {
-      exception = res
-    })
 
   return {
     token,
@@ -49,15 +46,14 @@ export async function signInRequest(data: SignInRequestData) {
       id: user?.id,
       role: user?.role,
       profile_picture: user?.profile_picture
-    },
-    exception
+    }
   }
 }
 
 export default async function recoverUserInformation(id) {
   let user: UserObjectType
 
-  await api.get(`/user/${id}`).then(res => {
+  await api.get(`/user/${id}`).then((res) => {
     user = {
       name: res.data.user.name,
       email: res.data.user.email,
@@ -80,7 +76,8 @@ export default async function recoverUserInformation(id) {
 }
 
 export async function logout() {
-  await api.post('/auth/logout', {})
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  .then(res => {})
+  await api
+    .post('/auth/logout', {})
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    .then((res) => {})
 }

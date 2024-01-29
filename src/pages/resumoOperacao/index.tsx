@@ -30,7 +30,7 @@ export default function ResumoOperacao({
   clientMonth
 }: any) {
   const [month, setMonth] = useState('')
-  const [unidade, setUnidade] = useState(clients[0].cod_smart_unidade)
+  const [unidade, setUnidade] = useState(clients?.[0]?.cod_smart_unidade ?? 0)
   const [tableDataState, setTableDataState] = useState<any>([])
 
   const { ['user-id']: id } = parseCookies()

@@ -42,9 +42,7 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     logout()
   }
 
-  async function signIn({email, password}: SignInData) {
-    signOut()
-
+  async function signIn({ email, password }: SignInData) {
     const { token, user, exception }: any = await signInRequest({
       email,
       password
