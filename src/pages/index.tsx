@@ -155,7 +155,7 @@ export default function Home() {
           value={email}
           variant="outlined"
           onKeyDown={(e) => e.key === 'Enter' && field.current.children[0].focus()}
-          onChange={(value) => setEmail(value.target.value.toLowerCase())}
+          onChange={(value) => setEmail(value.target.value.trim())}
         />
         <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
