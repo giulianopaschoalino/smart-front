@@ -17,7 +17,7 @@ export default function commonQuestions({faqData, userName}) {
         <title>Smart Energia - FAQ</title>
       </Head>
       <Header name={userName}>
-        <PageTitle title='Perguntas Frequentes' subtitle='Aqui estão algumas das perguntas que mais recebemos!'/>
+        <PageTitle title='Perguntas Frequentes!!' subtitle='Aqui estão algumas das perguntas que mais recebemos!'/>
       </Header>
       <FaqView>
         {/* <Banner title='Perguntas Frequentes' subtitle='Aqui estão algumas das perguntas que mais recebemos!' imgSource='/assets/banners/faq1.png'/> */}

@@ -23,7 +23,7 @@ export default function getAPIClient(
     baseURL:
       process.env.NODE_ENV === 'production'
         ? 'https://api.energiasmart.com.br/api'
-        : 'http://api-smart.test/api'
+        : 'http://127.0.0.1:8000/api'
   })
 
   api.interceptors.request.use((config) => {
