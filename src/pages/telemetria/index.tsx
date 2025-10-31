@@ -85,8 +85,23 @@ export default function Telemetria({ userName, clients }: any) {
     setOpenSnackFields(false)
   }
 
+  // Helpers
+  const currencyBRL = (v: any) =>
+    Number(v ?? 0)
+      .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+      .replace(/\u00A0/g, ' '); // remove NBSP
+
+  const numberBR = (v: any, min = 2, max = 2) =>
+    Number(v ?? 0).toLocaleString('pt-BR', {
+      minimumFractionDigits: min,
+      maximumFractionDigits: max
+    });
+
   function downloadCSVFile(csv, filename) {
-    const csv_file = new Blob([csv], { type: 'text/csv;charset=utf-8' })
+    const BOM = '\uFEFF'; // Excel-friendly UTF-8 BOM
+    const csv_file = new Blob([BOM, csv.replace(/\u00A0/g, ' ')], {
+      type: 'text/csv;charset=utf-8;'
+    })
 
     const download_link = document.createElement('a')
 
@@ -102,21 +117,23 @@ export default function Telemetria({ userName, clients }: any) {
   }
 
   function htmlToCSV(filename) {
-    const data = []
-    const rows = document.querySelectorAll('table tr')
+    const data = [];
+    const rows = document.querySelectorAll('table tr');
 
     for (let i = 0; i < rows.length; i++) {
       const row = [],
-        cols: any = rows[i].querySelectorAll('td, th')
+        cols: any = rows[i].querySelectorAll('td, th');
 
       for (let j = 0; j < cols.length; j++) {
-        row.push(cols[j].innerText)
+        row.push(
+          cols[j].innerText.replace(/\u00A0/g, ' ') // sanitize NBSP
+        );
       }
 
-      data.push(row.join(';'))
+      data.push(row.join(';'));
     }
 
-    downloadCSVFile(data.join('\n'), filename)
+    downloadCSVFile(data.join('\n'), filename);
   }
 
   const [tableData, setTableData] = useState(null)
@@ -170,6 +187,7 @@ export default function Telemetria({ userName, clients }: any) {
       .catch(() => {
         setSend(false)
         setOpenSnackFields(true)
+        setLoader(false) // ensure the overlay doesn’t hide the table
       })
 
     getDemand(unity, startDate, endDate, discretization)
@@ -805,41 +823,29 @@ export default function Telemetria({ userName, clients }: any) {
               </tr>
             </thead>
             <tbody>
-              {fatorPotenciaData !== null
-                ? fatorPotenciaData?.map((value, index) => {
-                  return (
-                    <tr key={index}>
-                      <td className="tg-gceh">{unity}</td>
-                      <td className="tg-gceh">{value?.ponto}</td>
-                      <td className="tg-gceh">
-                        {parseFloat(value?.dia_num)}
-                      </td>
-                      <td className="tg-uulg">{value?.day_formatted}</td>
-                      <td className="tg-gceh">{value?.hora}</td>
-                      <td className="tg-gceh">{value.minut}</td>
-                      <td className="tg-gceh">{value?.f_ref}</td>
-                      <td className="tg-uulg">
-                        {parseFloat(value?.consumo).toLocaleString('pt-br', {
-                          style: 'currency',
-                          currency: 'BRL',
-                          minimumFractionDigits: 2
-                        })}
-                      </td>
-                      <td className="tg-gceh">
-                        {parseFloat(value?.reativa).toLocaleString('pt-br', {
-                          style: 'currency',
-                          currency: 'BRL',
-                          minimumFractionDigits: 2
-                        })}
-                      </td>
-                      <td className="tg-gceh">{parseFloat(value?.fp)}</td>
-                      <td className="tg-gceh">{value?.dem_cont}</td>
-                      <td className="tg-gceh">{value?.dem_reg}</td>
-                      <td className="tg-gceh">{value?.dem_tolerancia}</td>
-                    </tr>
-                  )
-                })
-                : null}
+              {Array.isArray(fatorPotenciaData) && fatorPotenciaData.length > 0 ? (
+                fatorPotenciaData.map((value, index) => (
+                  <tr key={index}>
+                    <td className="tg-gceh">{unity}</td>
+                    <td className="tg-gceh">{value?.ponto}</td>
+                    <td className="tg-gceh">{Number(value?.dia_num)}</td>
+                    <td className="tg-uulg">{value?.day_formatted}</td>
+                    <td className="tg-gceh">{value?.hora}</td>
+                    <td className="tg-gceh">{value?.minut}</td>
+                    <td className="tg-gceh">{numberBR(value?.f_ref, 2, 2)}</td>
+                    <td className="tg-uulg">{numberBR(value?.consumo, 2, 5)}</td>
+                    <td className="tg-gceh">{numberBR(value?.reativa, 2, 5)}</td>
+                    <td className="tg-gceh">{numberBR(value?.fp, 0, 5)}</td>
+                    <td className="tg-gceh">{numberBR(value?.dem_cont, 0, 0)}</td>
+                    <td className="tg-gceh">{numberBR(value?.dem_reg, 0, 0)}</td>
+                    <td className="tg-gceh">{numberBR(value?.dem_tolerancia, 0, 0)}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td className="tg-gceh" colSpan={13}>Sem dados no período selecionado.</td>
+                </tr>
+              )}
             </tbody>
           </table>
 

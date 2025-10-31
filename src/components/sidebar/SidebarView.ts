@@ -245,13 +245,14 @@ export const ModalContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
+  margin-top: 2em;
   flex-direction: column;
 
   article {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
 
     width: 50%;
 
