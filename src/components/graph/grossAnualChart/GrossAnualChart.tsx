@@ -1,4 +1,4 @@
-import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
+import { BarElement, CategoryScale, Chart as ChartJS, layouts, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import 'chartjs-plugin-style';
 import { draw } from 'patternomaly';
@@ -37,6 +37,12 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
 
   const options: any = {
     responsive: true,
+    // maintainAspectRatio: false,
+    layout: {
+      padding: {
+        top: 50,
+      }
+    },
     scales: {
       x: {
         stacked: true,
@@ -51,7 +57,7 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
       },
       y: {
         stacked: false,
-        max: Number.parseInt(dataProps.reduce((prev, current) => prev.economia_acumulada < current.economia_acumulada ? prev.economia_acumulada : current.economia_acumulada, 0)) + 350,
+        //max: Number.parseInt(dataProps.reduce((prev, current) => prev.economia_acumulada < current.economia_acumulada ? prev.economia_acumulada : current.economia_acumulada, 0)) + 350,
         min: 0,
         grid: {
           display: false
@@ -74,11 +80,6 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
     plugins: {
       datalabels: {
         formatter: (value, ctx) => {
-          let sum = 0;
-          const dataArr = ctx.chart.data.datasets[0].data;
-          dataArr.map(data => {
-            sum += data;
-          });
           const percentage = (dataProps[ctx.dataIndex]?.econ_percentual * 100).toFixed(0) + "%";
           const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}${percentage}\n${parseInt(value).toLocaleString('pt-br')}${spacement(parseInt(value).toLocaleString('pt-br'))}`
 
@@ -91,9 +92,7 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
           weight: 'bold',
           size: !miniature ? window.innerWidth / 80 : window.innerWidth / 125,
         },
-        color: (value) => {
-          return value.dataset.label === 'Consolidada' ? '#fff' : '#255488'
-        },
+        color: '#255488',
       },
       legend: {
         position: 'bottom' as const,
@@ -109,6 +108,18 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
     return label.indexOf(item) == pos;
   });
 
+  // Build dataset arrays aligned to `labels` (years). This avoids index misalignment
+  // when `dataProps` is not in the same order or has missing/extra items
+  const consolidatedData = labels.map((lbl) => {
+    const match = dataProps.find((d) => String(d.ano) === String(lbl) && d.dad_estimado === false)
+    return match ? parseFloat(match.economia_acumulada) : null
+  })
+
+  const estimatedData = labels.map((lbl) => {
+    const match = dataProps.find((d) => String(d.ano) === String(lbl) && d.dad_estimado === true)
+    return match ? parseFloat(match.economia_acumulada) : null
+  })
+
   const data: any = {
     labels,
     datasets: [
@@ -116,13 +127,12 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
         type: 'bar',
         label: dataset,
         stacked: true,
-        data: dataProps.filter(value => value.dad_estimado === false).map((value, index) => {
-          return parseFloat(value.economia_acumulada)
-        }),
+        data: consolidatedData,
         datalabels: {
-          backgroundColor: '#255488',
-          borderRadius: 8,
-          opacity: .8,
+          // backgroundColor: '#255488',
+          // borderRadius: 8,
+          // opacity: .8,
+          display: (ctx) => ctx.dataIndex === 0, // Exibe apenas o primeiro
         },
         borderRadius: 10,
         backgroundColor: '#255488',
@@ -133,16 +143,9 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
         label: 'Estimado',
         spanGaps: true,
         datalabels: {
-          offset: dataProps.filter(value => value.dad_estimado === true).map((value, index) => {
-            if (index === 1) {
-              return 30
-            }
-            return 0
-          })
+          // keep the previous behaviour of offsetting the second estimated bar if needed
         },
-        data: [].concat(dataProps.filter(value => value.dad_estimado === true).slice(0, 7).map((value, index) => {
-          return parseFloat(value?.economia_acumulada)
-        })),
+        data: estimatedData,
         borderRadius: 10,
         backgroundColor: draw('diagonal-right-left', '#C2d5fb'),
       },
@@ -151,7 +154,7 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
 
   return (
     <GrossAnualChartView>
-      <ChartTitle title={title} subtitle={subtitle} />
+
       <Chart options={options} data={data} type='bar' height={150} />
     </GrossAnualChartView>
   )
