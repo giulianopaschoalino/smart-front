@@ -29,7 +29,6 @@ import TextField from '@mui/material/TextField'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { format } from 'date-fns'
 import BasicButton from '../../components/buttons/basicButton/BasicButton'
 import { DiscretizedConsumptionChart } from '../../components/graph/DiscretizedConsumptionChart'
 import FatorPotenciaChart from '../../components/graph/fatorPotenciaChart'
@@ -62,10 +61,12 @@ const months = [
 
 export default function Telemetria({ userName, clients }: any) {
   const [unity, setUnity] = useState(clients?.[0]?.codigo_scde ?? 0)
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
-  const [month, setMonth] = useState(new Date().getMonth())
-  const [endMonth, setEndMonth] = useState(new Date().getMonth() + 1)
+  const today = new Date()
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1)
+  const [startDate, setStartDate] = useState(firstDayOfMonth)
+  const [endDate, setEndDate] = useState(today)
+  const [month, setMonth] = useState(today.getMonth())
+  const [endMonth, setEndMonth] = useState(today.getMonth() + 1)
   const [discretization, setDiscretization] = useState('1_hora')
 
   const [openSnackSuccess, setOpenSnackSuccess] = useState<boolean>(false)
@@ -89,16 +90,16 @@ export default function Telemetria({ userName, clients }: any) {
   const currencyBRL = (v: any) =>
     Number(v ?? 0)
       .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-      .replace(/\u00A0/g, ' '); // remove NBSP
+      .replace(/\u00A0/g, ' ') // remove NBSP
 
   const numberBR = (v: any, min = 2, max = 2) =>
     Number(v ?? 0).toLocaleString('pt-BR', {
       minimumFractionDigits: min,
       maximumFractionDigits: max
-    });
+    })
 
   function downloadCSVFile(csv, filename) {
-    const BOM = '\uFEFF'; // Excel-friendly UTF-8 BOM
+    const BOM = '\uFEFF' // Excel-friendly UTF-8 BOM
     const csv_file = new Blob([BOM, csv.replace(/\u00A0/g, ' ')], {
       type: 'text/csv;charset=utf-8;'
     })
@@ -117,23 +118,23 @@ export default function Telemetria({ userName, clients }: any) {
   }
 
   function htmlToCSV(filename) {
-    const data = [];
-    const rows = document.querySelectorAll('table tr');
+    const data = []
+    const rows = document.querySelectorAll('table tr')
 
     for (let i = 0; i < rows.length; i++) {
       const row = [],
-        cols: any = rows[i].querySelectorAll('td, th');
+        cols: any = rows[i].querySelectorAll('td, th')
 
       for (let j = 0; j < cols.length; j++) {
         row.push(
           cols[j].innerText.replace(/\u00A0/g, ' ') // sanitize NBSP
-        );
+        )
       }
 
-      data.push(row.join(';'));
+      data.push(row.join(';'))
     }
 
-    downloadCSVFile(data.join('\n'), filename);
+    downloadCSVFile(data.join('\n'), filename)
   }
 
   const [tableData, setTableData] = useState(null)
@@ -155,65 +156,68 @@ export default function Telemetria({ userName, clients }: any) {
 
   const [fatorPotenciaData, setFatorPotenciaData] = useState([])
   const [demRegXDemCon, setDemRegXDemCon] = useState([])
-  const [discretizedConsumptionData, setDiscretizedConsumptionData] = useState(
-    []
-  )
+  const [discretizedConsumptionData, setDiscretizedConsumptionData] = useState([])
 
   useEffect(() => {
     setSend(false)
   }, [startDate, endDate])
 
+  // Auto-update discretization data when parameters change
   useEffect(() => {
-    const firstOfTheMonth = format(new Date(startDate).setDate(2), 'yyyy-MM-dd')
-    const lastOfTheMonth = format(
-      new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0),
-      'yyyy-MM-dd'
-    )
+    if (menu === 0 && unity) {
+      setLoader(true)
+      getDiscretization(unity, startDate, endDate, discretization)
+        .then((result) => {
+          setDiscretizedConsumptionData(result)
+          setSend(false)
+          setLoader(false)
+          setTableData(result)
+        })
+        .catch(() => {
+          setSend(false)
+          setOpenSnackFields(true)
+          setLoader(false)
+        })
+    }
+  }, [unity, startDate, endDate, discretization, menu])
 
-    setStartDate(new Date(firstOfTheMonth))
+  // Auto-update demand data when parameters change
+  useEffect(() => {
+    if (menu === 1 && unity) {
+      setLoader(true)
+      getDemand(unity, startDate, endDate, discretization)
+        .then((result) => {
+          setDemRegXDemCon(result)
+          setSend(false)
+          setLoader(false)
+          setTableData(result)
+        })
+        .catch(() => {
+          setSend(false)
+          setOpenSnackFields(true)
+          setLoader(false)
+        })
+    }
+  }, [unity, startDate, endDate, discretization, menu])
 
-    setLoader(true)
-    getDiscretization(
-      unity,
-      new Date(firstOfTheMonth),
-      new Date(lastOfTheMonth),
-      discretization
-    )
-      .then((result) => {
-        setDiscretizedConsumptionData(result)
-        setSend(false)
-        setLoader(false)
-      })
-      .catch(() => {
-        setSend(false)
-        setOpenSnackFields(true)
-        setLoader(false) // ensure the overlay doesn’t hide the table
-      })
-
-    getDemand(unity, startDate, endDate, discretization)
-      .then((result) => {
-        setDemRegXDemCon(result)
-        setSend(false)
-        setTableData(result)
-      })
-      .catch(() => {
-        setSend(false)
-        setOpenSnackFields(true)
-        setLoader(false)
-      })
-
-    getPowerFactorData(unity, startDate, endDate, discretization)
-      .then((result) => {
-        setFatorPotenciaData(result)
-        setSend(false)
-        setLoader(false)
-      })
-      .catch(() => {
-        setSend(false)
-        setOpenSnackFields(true)
-        setLoader(false)
-      })
-  }, [])
+  // Auto-update power factor data when parameters change
+  useEffect(() => {
+    if (menu === 2 && unity) {
+      setLoader(true)
+      getPowerFactorData(unity, startDate, endDate, discretization)
+        .then((result) => {
+          setFatorPotenciaData(result)
+          setTableData(result)
+          setSend(false)
+          setLoader(false)
+        })
+        .catch(() => {
+          setSend(false)
+          setOpenSnackFields(true)
+          setLoader(false)
+        })
+    }
+  }, [unity, startDate, endDate, discretization, menu])
 
   return (
     <main style={{ width: '100%' }}>
@@ -283,10 +287,10 @@ export default function Telemetria({ userName, clients }: any) {
                   discretization === '5_min'
                     ? 'Consumo discretizado em 5 minutos'
                     : discretization === '15_min'
-                      ? 'Consumo discretizado em 15 minutos'
-                      : discretization === '1_hora'
-                        ? 'Consumo discretizado em 1 hora'
-                        : 'Consumo discretizado em 1 dia'
+                    ? 'Consumo discretizado em 15 minutos'
+                    : discretization === '1_hora'
+                    ? 'Consumo discretizado em 1 hora'
+                    : 'Consumo discretizado em 1 dia'
                 }
               />
               <Tab label="Demanda" />
@@ -436,74 +440,54 @@ export default function Telemetria({ userName, clients }: any) {
                 </>
               ) : (
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <div className="datePicker">
-                      <DesktopDatePicker
-                        label="Data inicial"
-                        inputFormat="dd/MM/yyyy"
-                        value={startDate}
-                        onChange={handleChangeStartDate}
-                        renderInput={(params) => (
-                          <TextField {...params} sx={{ mr: 1, mb: 2 }} />
-                        )}
-                      />
-                    </div>
-                    <div className="datePicker" style={{ marginRight: 10 }}>
-                      <DesktopDatePicker
-                        label="Data final"
-                        inputFormat="dd/MM/yyyy"
-                        value={endDate}
-                        minDate={startDate}
-                        maxDate={
-                          discretization === '1_mes'
-                            ? new Date(startDate).setUTCFullYear(
+                  <div className="datePicker">
+                    <DesktopDatePicker
+                      label="Data inicial"
+                      inputFormat="dd/MM/yyyy"
+                      value={startDate}
+                      onChange={handleChangeStartDate}
+                      renderInput={(params) => (
+                        <TextField {...params} sx={{ mr: 1, mb: 2 }} />
+                      )}
+                    />
+                  </div>
+                  <div className="datePicker" style={{ marginRight: 10 }}>
+                    <DesktopDatePicker
+                      label="Data final"
+                      inputFormat="dd/MM/yyyy"
+                      value={endDate}
+                      minDate={startDate}
+                      maxDate={
+                        discretization === '1_mes'
+                          ? new Date(startDate).setUTCFullYear(
                               startDate.getUTCFullYear() + 2
                             )
-                            : discretization === '1_dia'
-                              ? new Date(startDate).setUTCFullYear(
-                                startDate.getUTCFullYear() + 2
-                              )
-                              : discretization === '1_hora'
-                                ? new Date(startDate).setUTCMonth(
-                                  startDate.getUTCMonth() + 1
-                                )
-                                : discretization === '15_min'
-                                  ? new Date(startDate).setUTCDate(
-                                    startDate.getUTCDate() + 7
-                                  )
-                                  : new Date(startDate).setUTCDate(
-                                    startDate.getUTCDate() + 1
-                                  )
-                        }
-                        onChange={(newValue: any) =>
-                          handleChangeEndDate(newValue)
-                        }
-                        renderInput={(params) => (
-                          <TextField {...params} sx={{ mb: 2 }} />
-                        )}
-                      />
-                    </div>
-                  </LocalizationProvider>
+                          : discretization === '1_dia'
+                          ? new Date(startDate).setUTCFullYear(
+                              startDate.getUTCFullYear() + 2
+                            )
+                          : discretization === '1_hora'
+                          ? new Date(startDate).setUTCMonth(
+                              startDate.getUTCMonth() + 1
+                            )
+                          : discretization === '15_min'
+                          ? new Date(startDate).setUTCDate(
+                              startDate.getUTCDate() + 7
+                            )
+                          : new Date(startDate).setUTCDate(
+                              startDate.getUTCDate() + 1
+                            )
+                      }
+                      onChange={(newValue: any) =>
+                        handleChangeEndDate(newValue)
+                      }
+                      renderInput={(params) => (
+                        <TextField {...params} sx={{ mb: 2 }} />
+                      )}
+                    />
+                  </div>
+                </LocalizationProvider>
               )}
-              <div className="select">
-                <BasicButton
-                  title="Selecionar!"
-                  onClick={() => {
-                    setLoader(true)
-                    getDiscretization(unity, startDate, endDate, discretization)
-                      .then((result) => {
-                        setDiscretizedConsumptionData(result)
-                        setSend(false)
-                        setLoader(false)
-                        setTableData(result)
-                      })
-                      .catch((exception) => {
-                        setSend(false)
-                        setOpenSnackFields(true)
-                        setLoader(false)
-                      })
-                  }}
-                />
-              </div>
             </ChartFilters>
 
             <DiscretizedConsumptionChart
@@ -511,10 +495,10 @@ export default function Telemetria({ userName, clients }: any) {
                 discretization === '5_min'
                   ? 'Consumo discretizado em 5 minutos'
                   : discretization === '15_min'
-                    ? 'Consumo discretizado em 15 minutos'
-                    : discretization === '1_hora'
-                      ? 'Consumo discretizado em 1 hora'
-                      : 'Consumo discretizado em 1 dia'
+                  ? 'Consumo discretizado em 15 minutos'
+                  : discretization === '1_hora'
+                  ? 'Consumo discretizado em 1 hora'
+                  : 'Consumo discretizado em 1 dia'
               }
               subtitle=""
               dataProps={discretizedConsumptionData}
@@ -598,23 +582,23 @@ export default function Telemetria({ userName, clients }: any) {
                     maxDate={
                       discretization === '1_mes'
                         ? new Date(startDate).setUTCFullYear(
-                          startDate.getUTCFullYear() + 2
-                        )
-                        : discretization === '1_dia'
-                          ? new Date(startDate).setUTCFullYear(
                             startDate.getUTCFullYear() + 2
                           )
-                          : discretization === '1_hora'
-                            ? new Date(startDate).setUTCMonth(
-                              startDate.getUTCMonth() + 1
-                            )
-                            : discretization === '15_min'
-                              ? new Date(startDate).setUTCDate(
-                                startDate.getUTCDate() + 7
-                              )
-                              : new Date(startDate).setUTCDate(
-                                startDate.getUTCDate() + 1
-                              )
+                        : discretization === '1_dia'
+                        ? new Date(startDate).setUTCFullYear(
+                            startDate.getUTCFullYear() + 2
+                          )
+                        : discretization === '1_hora'
+                        ? new Date(startDate).setUTCMonth(
+                            startDate.getUTCMonth() + 1
+                          )
+                        : discretization === '15_min'
+                        ? new Date(startDate).setUTCDate(
+                            startDate.getUTCDate() + 7
+                          )
+                        : new Date(startDate).setUTCDate(
+                            startDate.getUTCDate() + 1
+                          )
                     }
                     onChange={(newValue: any) => handleChangeEndDate(newValue)}
                     renderInput={(params) => (
@@ -623,26 +607,6 @@ export default function Telemetria({ userName, clients }: any) {
                   />
                 </div>
               </LocalizationProvider>
-              <div className="select">
-                <BasicButton
-                  title="Selecionar!"
-                  onClick={() => {
-                    setLoader(true)
-                    getDemand(unity, startDate, endDate, discretization)
-                      .then((result) => {
-                        setDemRegXDemCon(result)
-                        setSend(false)
-                        setLoader(false)
-                        setTableData(result)
-                      })
-                      .catch((exception) => {
-                        setSend(false)
-                        setOpenSnackFields(true)
-                        setLoader(false)
-                      })
-                  }}
-                />
-              </div>
             </ChartFilters>
             <DemRegXDemConChart
               data1={demRegXDemCon}
@@ -730,23 +694,23 @@ export default function Telemetria({ userName, clients }: any) {
                     maxDate={
                       discretization === '1_mes'
                         ? new Date(startDate).setUTCFullYear(
-                          startDate.getUTCFullYear() + 2
-                        )
-                        : discretization === '1_dia'
-                          ? new Date(startDate).setUTCFullYear(
                             startDate.getUTCFullYear() + 2
                           )
-                          : discretization === '1_hora'
-                            ? new Date(startDate).setUTCMonth(
-                              startDate.getUTCMonth() + 1
-                            )
-                            : discretization === '15_min'
-                              ? new Date(startDate).setUTCDate(
-                                startDate.getUTCDate() + 7
-                              )
-                              : new Date(startDate).setUTCDate(
-                                startDate.getUTCDate() + 1
-                              )
+                        : discretization === '1_dia'
+                        ? new Date(startDate).setUTCFullYear(
+                            startDate.getUTCFullYear() + 2
+                          )
+                        : discretization === '1_hora'
+                        ? new Date(startDate).setUTCMonth(
+                            startDate.getUTCMonth() + 1
+                          )
+                        : discretization === '15_min'
+                        ? new Date(startDate).setUTCDate(
+                            startDate.getUTCDate() + 7
+                          )
+                        : new Date(startDate).setUTCDate(
+                            startDate.getUTCDate() + 1
+                          )
                     }
                     onChange={(newValue: any) => handleChangeEndDate(newValue)}
                     renderInput={(params) => (
@@ -755,31 +719,6 @@ export default function Telemetria({ userName, clients }: any) {
                   />
                 </div>
               </LocalizationProvider>
-              <div className="select">
-                <BasicButton
-                  title="Selecionar!"
-                  onClick={() => {
-                    setLoader(true)
-                    getPowerFactorData(
-                      unity,
-                      startDate,
-                      endDate,
-                      discretization
-                    )
-                      .then((result) => {
-                        setFatorPotenciaData(result)
-                        setSend(false)
-                        setLoader(false)
-                        setTableData(result)
-                      })
-                      .catch((exception) => {
-                        setSend(false)
-                        setOpenSnackFields(true)
-                        setLoader(false)
-                      })
-                  }}
-                />
-              </div>
             </ChartFilters>
             <FatorPotenciaChart
               title="Fator de Potencia"
@@ -823,8 +762,8 @@ export default function Telemetria({ userName, clients }: any) {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(fatorPotenciaData) && fatorPotenciaData.length > 0 ? (
-                fatorPotenciaData.map((value, index) => (
+              {Array.isArray(tableData) && tableData.length > 0 ? (
+                tableData.map((value, index) => (
                   <tr key={index}>
                     <td className="tg-gceh">{unity}</td>
                     <td className="tg-gceh">{value?.ponto}</td>
@@ -833,17 +772,29 @@ export default function Telemetria({ userName, clients }: any) {
                     <td className="tg-gceh">{value?.hora}</td>
                     <td className="tg-gceh">{value?.minut}</td>
                     <td className="tg-gceh">{numberBR(value?.f_ref, 2, 2)}</td>
-                    <td className="tg-uulg">{numberBR(value?.consumo, 2, 5)}</td>
-                    <td className="tg-gceh">{numberBR(value?.reativa, 2, 5)}</td>
+                    <td className="tg-uulg">
+                      {numberBR(value?.consumo, 2, 5)}
+                    </td>
+                    <td className="tg-gceh">
+                      {numberBR(value?.reativa, 2, 5)}
+                    </td>
                     <td className="tg-gceh">{numberBR(value?.fp, 0, 5)}</td>
-                    <td className="tg-gceh">{numberBR(value?.dem_cont, 0, 0)}</td>
-                    <td className="tg-gceh">{numberBR(value?.dem_reg, 0, 0)}</td>
-                    <td className="tg-gceh">{numberBR(value?.dem_tolerancia, 0, 0)}</td>
+                    <td className="tg-gceh">
+                      {numberBR(value?.dem_cont, 0, 0)}
+                    </td>
+                    <td className="tg-gceh">
+                      {numberBR(value?.dem_reg, 0, 0)}
+                    </td>
+                    <td className="tg-gceh">
+                      {numberBR(value?.dem_tolerancia, 0, 0)}
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td className="tg-gceh" colSpan={13}>Sem dados no período selecionado.</td>
+                  <td className="tg-gceh" colSpan={13}>
+                    Sem dados no período selecionado.
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -872,9 +823,10 @@ export default function Telemetria({ userName, clients }: any) {
               green
               onClick={() => {
                 htmlToCSV(
-                  `${menu === 2
-                    ? 'fator_potencia'
-                    : menu === 1
+                  `${
+                    menu === 2
+                      ? 'fator_potencia'
+                      : menu === 1
                       ? 'demanda'
                       : 'consumo_discretizado'
                   }.csv`
