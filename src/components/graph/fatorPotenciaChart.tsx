@@ -44,6 +44,19 @@ interface ChartInterface {
 }
 
 export default function FatorPotenciaChart({ title, subtitle, data1, data2, label, dataset1, dataset2, dataset3, dataset4, barLabel }: ChartInterface) {
+  const referenceValue = 0.92;
+
+  // Gera cores dos pontos: amarelo se abaixo da referência, cor padrão caso contrário
+  const getPointColors = (dataArray: any[], fieldName: string) => {
+    return dataArray.map((value) => {
+      const fpValue = value[fieldName];
+      return (fpValue !== null && fpValue !== undefined && fpValue < referenceValue) ? 'rgba(255, 193, 7, 1)' : 'rgba(0, 0, 0, 0)';
+    });
+  };
+
+  const inducivePointColors = getPointColors(data1, 'fp_indutivo');
+  const capacitivePointColors = getPointColors(data1, 'fp_capacitivo');
+
   const options: any = {
     responsive: true,
     scales: {
@@ -98,19 +111,32 @@ export default function FatorPotenciaChart({ title, subtitle, data1, data2, labe
     labels,
     datasets: [
       {
-        label: dataset1? dataset1 : 'Dataset 1',
-        data: data1.map(value => value.fp),
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0)',
+        label: 'FP Indutivo',
+        data: data1.map(value => value.fp_indutivo),
+        borderColor: '#254f7f',
+        backgroundColor: 'rgba(231, 153, 47, 0)',
+        pointBackgroundColor: inducivePointColors,
+        pointRadius: 4,
+        pointHoverRadius: 6,
       },
       {
-        label: dataset2? dataset2 : '',
+        label: 'FP Capacitivo',
+        data: data1.map(value => value.fp_capacitivo),
+        borderColor: '#e7992f',
+        backgroundColor: 'rgba(37, 79, 127, 0)',
+        pointBackgroundColor: capacitivePointColors,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+      },
+      {
+        label: dataset2? dataset2 : 'Fator ref',
         data: data2.map(value => value.f_ref),
         borderColor: 'rgb(0, 0, 0)' ,
         fill: false,
         borderDash: [5, 5],
         backgroundColor: 'rgba(255, 145, 0, 0)' ,
         pointBorderColor: 'rgba(255, 145, 0, 0)',
+        pointRadius: 0,
       },
     ],
   }
