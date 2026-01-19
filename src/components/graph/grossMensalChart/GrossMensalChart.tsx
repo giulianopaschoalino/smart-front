@@ -55,6 +55,11 @@ export default function GrossMensalChart({
 
   const options: any = {
     responsive: true,
+    layout: {
+      padding: {
+        top: 0
+      }
+    },
     scales: {
       x: {
         stacked: true,
@@ -83,6 +88,7 @@ export default function GrossMensalChart({
       datalabels: {
         display: true,
         color: '#255488',
+        clip: true,
         formatter: (value, ctx) => {
           let sum = 0
           const dataArr = ctx.chart.data.datasets[0].data
@@ -100,6 +106,7 @@ export default function GrossMensalChart({
         },
         anchor: 'end',
         align: 'end',
+        offset: 5,
         font: {
           weight: 'bold',
           size: !miniature ? window.innerWidth / 80 : window.innerWidth / 125

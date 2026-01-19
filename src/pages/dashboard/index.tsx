@@ -38,7 +38,9 @@ const style = {
 
   borderRadius: 3,
 
-  overflow: 'scroll'
+  overflow: 'hidden',
+  display: 'flex',
+  flexDirection: 'column'
 };
 
 export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensalGraph, grossMensalYears, acumulatedGraph, mapsInfo, userName, costIndicator }: any) {
@@ -157,64 +159,51 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                   Termos de uso
                 </Typography>
-                <img src='assets/smart-energia-terms-image.png' style={{ maxWidth: '100%' }} />
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  <p>
-                    Bem-vindo ao Smart Energy View, a Plataforma Web da SMART ENERGIA!
-                  </p>
+                <Box sx={{ overflow: 'auto', flex: 1 }}>
+                  <img src='assets/smart-energia-terms-image.png' style={{ maxWidth: '100%' }} />
+                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    <p>
+                      Bem-vindo ao Smart Energy View, a Plataforma Web da SMART ENERGIA!
+                    </p>
 
-                  <p>
-                    Agora você terá a Gestão da sua Energia na palma da sua mão!!!!
-                  </p>
+                    <p>
+                      Agora você terá a Gestão da sua Energia na palma da sua mão!!!!
+                    </p>
 
-                  <p>
-                    Visualize os principais indicadores, dados de economia, resumo de operações, PLD, notícias além de acompanhar o consumo de energia em intervalos mínimos de 5 minutos.
-                  </p>
+                    <p>
+                      Visualize os principais indicadores, dados de economia, resumo de operações, PLD, notícias além de acompanhar o consumo de energia em intervalos mínimos de 5 minutos.
+                    </p>
 
-                  <p>
-                    Estamos na última fase de testes da plataforma e em breve também iremos disponibilizar os aplicativos para seu celular, nos sistemas operacionais IOS e Android.
-                  </p>
+                    <p>
+                      Estamos na última fase de testes da plataforma e em breve também iremos disponibilizar os aplicativos para seu celular, nos sistemas operacionais IOS e Android.
+                    </p>
 
-                  <p>
-                    Encontrando qualquer dificuldade, eventuais inconsistências ou dúvidas, nos contate!
-                  </p>
+                    <p>
+                      Encontrando qualquer dificuldade, eventuais inconsistências ou dúvidas, nos contate!
+                    </p>
 
-                  <p>
-                    Lembrando que conforme nosso contrato de serviços vigente, todas as informações entregues são estritamente privadas, sendo seu sigilo protegido por lei, não podendo ser compartilhadas com terceiros sendo destinadas a seu uso exclusivo.
-                  </p>
+                    <p>
+                      Lembrando que conforme nosso contrato de serviços vigente, todas as informações entregues são estritamente privadas, sendo seu sigilo protegido por lei, não podendo ser compartilhadas com terceiros sendo destinadas a seu uso exclusivo.
+                    </p>
 
-                  <p>
-                    A divulgação não autorizada das informações adquiridas nesta plataforma (ou seu uso), de forma integral ou parcial, é proibida, não sendo permitido o compartilhamento dos acessos e senhas ou qualquer informação que tiver acesso junto a esta plataforma, sendo que o acesso a esta plataforma é restrito e individual.
-                  </p>
+                    <p>
+                      A divulgação não autorizada das informações adquiridas nesta plataforma (ou seu uso), de forma integral ou parcial, é proibida, não sendo permitido o compartilhamento dos acessos e senhas ou qualquer informação que tiver acesso junto a esta plataforma, sendo que o acesso a esta plataforma é restrito e individual.
+                    </p>
 
-                  <p>
-                    Destacamos que os resultados informados são meramente indicativos, não vinculantes a resultados e que as premissas disponibilizadas na plataforma são as mesmas utilizadas nos Energys Reports e estudos encaminhados.
-                  </p>
+                    <p>
+                      Destacamos que os resultados informados são meramente indicativos, não vinculantes a resultados e que as premissas disponibilizadas na plataforma são as mesmas utilizadas nos Energys Reports e estudos encaminhados.
+                    </p>
 
 
-                  <p>
-                    <strong>Aproveite essa nova ferramenta de acompanhar sua Gestão de Energia!</strong>
-                  </p>
-                  {/* <p>
-                            Bem-vindo a Plataforma Web – SMART ENERGIA!
-                          </p>
-                          <p>
-                            Visualize os principais indicadores, dados de economia, resumo de operações, PLD, notícias além de acompanhar o consumo de energia em intervalos mínimos de 5 minutos.
-                          </p>
-                          <p>
-                            Conforme nosso contrato de serviços vigente, todas as informações entregues são estritamente privadas, sendo seu sigilo protegido por lei, não podendo ser compartilhadas com terceiros.
-                          </p>
-                          <p>
-                            A divulgação não autorizada das informações adquiridas nesta plataforma (ou seu uso), de forma integral ou parcial, é proibida, não sendo permitido o compartilhamento dos acessos e senhas ou qualquer informação que tiver acesso junto a esta plataforma, sendo que o acesso a esta plataforma é restrito e individual.
-                          </p>
-                          <p>
-                            Ressaltamos que os resultados informados são meramente indicativos.
-                          </p> */}
-                  <BasicButton title="Aceito os termos" onClick={() => {
-                    setCookie(undefined, 'terms', 'true')
-                    setOpen(false)
-                  }} />
-                </Typography>
+                    <p>
+                      <strong>Aproveite essa nova ferramenta de acompanhar sua Gestão de Energia!</strong>
+                    </p>
+                  </Typography>
+                </Box>
+                <BasicButton title="Aceito os termos" onClick={() => {
+                  setCookie(undefined, 'terms', 'true')
+                  setOpen(false)
+                }} />
               </Box>
             </Modal>
           </>
