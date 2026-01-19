@@ -15,6 +15,7 @@ import PageTitle from '../../components/pageTitle/PageTitle'
 import getAPIClient from '../../services/ssrApi'
 import { CostIndicatorView } from '../../styles/layouts/economy/costIndicator/CostIndicatorView'
 import { api } from '../../services/api';
+import { getLastConsolidatedYear, populateGraphDataForYear } from '../../utils/dataProcessing'
 
 export default function CostIndicator({graphData, userName, clients}: any) {
   const [unity, setUnity] = useState('');
@@ -35,6 +36,18 @@ export default function CostIndicator({graphData, userName, clients}: any) {
   ]
 
   const [graphDataState, setGraphDataState] = useState([]);
+  const [processedGraphData, setProcessedGraphData] = useState(graphData)
+  const [lastConsolidatedYear, setLastConsolidatedYear] = useState<number | null>(null)
+
+  useEffect(() => {
+    // Calculate the last consolidated year
+    const lastYear = getLastConsolidatedYear(graphData, true)
+    setLastConsolidatedYear(lastYear)
+
+    // Populate graph data with consolidated and estimated data for that year
+    const populatedData = populateGraphDataForYear(graphData, lastYear)
+    setProcessedGraphData(populatedData)
+  }, [graphData])
 
   useEffect(() => {
     api.post('/economy/estimates', unity!==''?{
@@ -42,7 +55,14 @@ export default function CostIndicator({graphData, userName, clients}: any) {
         {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity}
       ]
     }:{}).then(res => {
-      setGraphDataState(res.data.data)
+      // Apply data processing to filtered result
+      if (res.data.data && res.data.data.length > 0) {
+        const lastYear = getLastConsolidatedYear(res.data.data, true)
+        const populatedData = populateGraphDataForYear(res.data.data, lastYear)
+        setGraphDataState(populatedData)
+      } else {
+        setGraphDataState(res.data.data)
+      }
     })
   }, [unity])
 
@@ -75,12 +95,16 @@ export default function CostIndicator({graphData, userName, clients}: any) {
       </FormControl>
       <section>
         <CostIndicatorChart title='' subtitle=''
-          data1={unity!==''? graphDataState.filter((value, index) => value.mes.slice(4, 8).includes('2021'))
+          data1={unity!==''? graphDataState.filter((value, index) => value.mes.slice(0, 4).includes(lastConsolidatedYear?.toString() || ''))
+            .map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)
             :
-          graphData.filter((value, index) => value.mes.slice(4, 8).includes('2021'))}
-          data2={unity!==''? graphDataState.filter((value, index) => value.mes.slice(4, 8).includes('2022'))
+          processedGraphData.filter((value, index) => value.mes.slice(0, 4).includes(lastConsolidatedYear?.toString() || ''))
+            .map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
+          data2={unity!==''? graphDataState.filter((value, index) => value.mes.slice(0, 4).includes(lastConsolidatedYear?.toString() || ''))
+            .map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)
             :
-          graphData.filter((value, index) => value.mes.slice(4, 8).includes('2022'))}
+          processedGraphData.filter((value, index) => value.mes.slice(0, 4).includes(lastConsolidatedYear?.toString() || ''))
+            .map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
           label={months}
         />
       </section>

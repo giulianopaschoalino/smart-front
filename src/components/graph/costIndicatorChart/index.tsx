@@ -80,7 +80,7 @@ export default function CostIndicatorChart({ title, data1, data2, label, subtitl
 
   return (
     <CostIndicatorChartView>
-      <ChartTitle title={title} subtitle={subtitle} />
+      {/* <ChartTitle title={title} subtitle={subtitle} /> */}
       <Bar
         options={options}
         data={data}

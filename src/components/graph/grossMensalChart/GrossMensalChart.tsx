@@ -88,7 +88,7 @@ export default function GrossMensalChart({
       datalabels: {
         display: true,
         color: '#255488',
-        clip: true,
+        clip: false,
         formatter: (value, ctx) => {
           let sum = 0
           const dataArr = ctx.chart.data.datasets[0].data
@@ -152,7 +152,7 @@ export default function GrossMensalChart({
 
   return (
     <GrossMensalChartView>
-      <ChartTitle title={title} subtitle={subtitle} />
+      {/* <ChartTitle title={title} subtitle={subtitle} /> */}
       <ChartJs options={options} data={data} type={'bar'} height={'156'} />
     </GrossMensalChartView>
   )

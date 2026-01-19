@@ -1,10 +1,9 @@
-import { BarElement, CategoryScale, Chart as ChartJS, layouts, Legend, LinearScale, Title, Tooltip } from 'chart.js';
+import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import 'chartjs-plugin-style';
 import { draw } from 'patternomaly';
 import { Chart } from 'react-chartjs-2';
 
-import ChartTitle from '../ChartTitle';
 import { GrossAnualChartView } from './GrossAnualChartView';
 
 ChartJS.register(
@@ -40,7 +39,7 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
     // maintainAspectRatio: false,
     layout: {
       padding: {
-        top: 50,
+        top: 0,
       }
     },
     scales: {
@@ -56,7 +55,7 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
         },
       },
       y: {
-        stacked: false,
+        stacked: true,
         //max: Number.parseInt(dataProps.reduce((prev, current) => prev.economia_acumulada < current.economia_acumulada ? prev.economia_acumulada : current.economia_acumulada, 0)) + 350,
         min: 0,
         grid: {
@@ -79,26 +78,28 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
     },
     plugins: {
       datalabels: {
+        display: true,
+        color: '#255488',
+        clip: false,
         formatter: (value, ctx) => {
           const percentage = (dataProps[ctx.dataIndex]?.econ_percentual * 100).toFixed(0) + "%";
           const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}${percentage}\n${parseInt(value).toLocaleString('pt-br')}${spacement(parseInt(value).toLocaleString('pt-br'))}`
 
           return value == null ? null : result
         },
-        display: true,
-        anchor: "end",
-        align: "end",
+        anchor: 'end',
+        align: 'end',
+        offset: 5,
         font: {
           weight: 'bold',
           size: !miniature ? window.innerWidth / 80 : window.innerWidth / 125,
         },
-        color: '#255488',
       },
       legend: {
         position: 'bottom' as const,
       },
       title: {
-        display: false,
+        display: true,
         text: '',
       },
     },
@@ -126,7 +127,7 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
       {
         type: 'bar',
         label: dataset,
-        stacked: true,
+        // stacked: true,
         data: consolidatedData,
         datalabels: {
           // backgroundColor: '#255488',
@@ -134,19 +135,19 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
           // opacity: .8,
           display: (ctx) => ctx.dataIndex === 0, // Exibe apenas o primeiro
         },
-        borderRadius: 10,
+        skipNull: true,
+        borderRadius: 8,
         backgroundColor: '#255488',
       },
       {
         type: 'bar',
-        stacked: true,
         label: 'Estimado',
-        spanGaps: true,
         datalabels: {
           // keep the previous behaviour of offsetting the second estimated bar if needed
         },
         data: estimatedData,
-        borderRadius: 10,
+        skipNull: true,
+        borderRadius: 8,
         backgroundColor: draw('diagonal-right-left', '#C2d5fb'),
       },
     ],
@@ -154,8 +155,7 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
 
   return (
     <GrossAnualChartView>
-
-      <Chart options={options} data={data} type='bar' height={150} />
+      <Chart options={options} data={data} type='bar' height={'156'} />
     </GrossAnualChartView>
   )
 }

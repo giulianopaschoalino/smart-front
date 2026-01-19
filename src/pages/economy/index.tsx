@@ -13,6 +13,7 @@ import { api } from '../../services/api';
 import getAPIClient from '../../services/ssrApi';
 import { TableHeader } from '../../styles/layouts/pld/PldView';
 import RenderIf from '../../utils/renderIf';
+import { getLastConsolidatedYear, populateGraphDataForYear } from '../../utils/dataProcessing';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -32,6 +33,8 @@ export default function economy({ userName, anual, years, brutaMensal, catLiv, c
 
   const [catLivDataState, setCatLivDataState] = useState(null);
   const [indicatorDataState, setIndicatorDataState] = useState(null);
+  const [processedBrutaMensal, setProcessedBrutaMensal] = useState(brutaMensal)
+  const [lastConsolidatedYear, setLastConsolidatedYear] = useState<number | null>(null)
 
   const currentYear = new Date().getUTCFullYear()
   const previousYear = new Date().getUTCFullYear() - 1
@@ -52,13 +55,24 @@ export default function economy({ userName, anual, years, brutaMensal, catLiv, c
   ]
 
   const [lastDataBruta, setLastDataBruta] = useState('')
+  
+  useEffect(() => {
+    // Calculate the last consolidated year
+    const lastYear = getLastConsolidatedYear(brutaMensal, true)
+    setLastConsolidatedYear(lastYear)
+
+    // Populate graph data with consolidated and estimated data for that year
+    const populatedData = populateGraphDataForYear(brutaMensal, lastYear)
+    setProcessedBrutaMensal(populatedData)
+  }, [brutaMensal])
+
   useEffect(() => {
     let lastData = '0'
     let index = 0
     if (economyMenu) {
-      while (index < brutaMensal.length) {
-        if (!brutaMensal[index].dad_estimado)
-          lastData = brutaMensal[index].economia_acumulada
+      while (index < processedBrutaMensal.length) {
+        if (!processedBrutaMensal[index].dad_estimado)
+          lastData = processedBrutaMensal[index].economia_acumulada
         index++
       }
     } else {
@@ -69,7 +83,7 @@ export default function economy({ userName, anual, years, brutaMensal, catLiv, c
       }
     }
     setLastDataBruta(`${parseFloat(lastData).toFixed(3)}`)
-  }, [economyMenu])
+  }, [economyMenu, processedBrutaMensal])
   useEffect(() => {
     console.log(indicatorDataState)
   }, [indicatorDataState])
@@ -148,8 +162,8 @@ export default function economy({ userName, anual, years, brutaMensal, catLiv, c
               <RenderIf isTrue={economyMenu === 1}>
                 <section>
                   <GrossMensalChart title='' subtitle=''
-                    data1={brutaMensal}
-                    data2={brutaMensal}
+                    data1={processedBrutaMensal}
+                    data2={processedBrutaMensal}
                     label={months}
                   />
                 </section>

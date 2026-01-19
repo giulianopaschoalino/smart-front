@@ -18,6 +18,7 @@ import CostIndicatorChart from '../../components/graph/costIndicatorChart'
 import { GrossAnualChart } from '../../components/graph/grossAnualChart/GrossAnualChart'
 import GrossMensalChart from '../../components/graph/grossMensalChart/GrossMensalChart'
 import getAPIClient from '../../services/ssrApi'
+import { getLastConsolidatedYear, populateGraphDataForYear } from '../../utils/dataProcessing'
 
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
@@ -66,30 +67,41 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
 
   const [lastDataBrutaMensalS, setLastDataBrutaMensal] = useState('')
   const [lastDataBrutaAnualS, setLastDataBrutaAnual] = useState('')
+  const [processedMensalData, setProcessedMensalData] = useState(grossMensalGraph)
+  const [lastConsolidatedYear, setLastConsolidatedYear] = useState<number | null>(null)
 
   const [open, setOpen] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
+    // Calculate the last consolidated year
+    const lastYear = getLastConsolidatedYear(grossMensalGraph, true)
+    setLastConsolidatedYear(lastYear)
+
+    // Populate graph data with consolidated and estimated data for that year
+    const populatedData = populateGraphDataForYear(grossMensalGraph, lastYear)
+    setProcessedMensalData(populatedData)
+
+    // Calculate last data values
     let lastDataMensal = '0'
     let lastDataAnual = '0'
     let index = 0
 
-    while (index < grossMensalGraph.length) {
-      if (!grossMensalGraph[index].dad_estimado && grossMensalGraph[index].economia_acumulada !== null)
-        lastDataMensal = grossMensalGraph[index].economia_acumulada
+    while (index < populatedData.length) {
+      if (!populatedData[index].dad_estimado && populatedData[index].economia_acumulada !== null)
+        lastDataMensal = String(populatedData[index].economia_acumulada)
       index++
     }
     setLastDataBrutaMensal(`${parseFloat(lastDataMensal).toFixed(3)}`)
     index = 0
     while (index < grossAnualGraph.length) {
       if (!grossAnualGraph[index].dad_estimado)
-        lastDataAnual = grossAnualGraph[index].economia_acumulada
+        lastDataAnual = String(grossAnualGraph[index].economia_acumulada)
       index++
     }
     setLastDataBrutaAnual(`${parseFloat(lastDataAnual).toFixed(3)}`)
-  }, [])
+  }, [grossMensalGraph, grossAnualGraph])
 
   return (
     <DashboardView>
@@ -126,8 +138,8 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
               <GraphCard title='Economia Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ x mil'>
                 <AccumulatedEconomyTitle value={lastDataBrutaMensalS} />
                 <GrossMensalChart title='' subtitle=''
-                  data1={grossMensalGraph}
-                  data2={grossMensalGraph}
+                  data1={processedMensalData}
+                  data2={processedMensalData}
                   label={months}
                   miniature
                 />

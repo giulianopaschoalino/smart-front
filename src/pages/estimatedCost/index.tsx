@@ -16,11 +16,24 @@ import getAPIClient from '../../services/ssrApi'
 import { EstimatedCostView } from '../../styles/layouts/economy/estimatedCost/EstimatedCostView'
 
 import { api } from '../../services/api'
+import { getLastConsolidatedYear, populateGraphDataForYear } from '../../utils/dataProcessing'
 
 export default function EstimatedCost({graphData, userName, clients}: any) {
   const [unity, setUnity] = useState<string>(null);
 
   const [graphDataState, setGraphDataState] = useState(null);
+  const [processedGraphData, setProcessedGraphData] = useState(graphData)
+  const [lastConsolidatedYear, setLastConsolidatedYear] = useState<number | null>(null)
+
+  useEffect(() => {
+    // Calculate the last consolidated year
+    const lastYear = getLastConsolidatedYear(graphData, true)
+    setLastConsolidatedYear(lastYear)
+
+    // Populate graph data with consolidated and estimated data for that year
+    const populatedData = populateGraphDataForYear(graphData, lastYear)
+    setProcessedGraphData(populatedData)
+  }, [graphData])
 
   useEffect(() => {
     api.post('/economy/estimates', unity!==''?{
@@ -28,7 +41,14 @@ export default function EstimatedCost({graphData, userName, clients}: any) {
         {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity}
       ]
     }:{}).then(res => {
-      setGraphDataState(res.data.data)
+      // Apply data processing to filtered result
+      if (res.data.data && res.data.data.length > 0) {
+        const lastYear = getLastConsolidatedYear(res.data.data, true)
+        const populatedData = populateGraphDataForYear(res.data.data, lastYear)
+        setGraphDataState(populatedData)
+      } else {
+        setGraphDataState(res.data.data)
+      }
     })
   }, [unity])
 
@@ -60,7 +80,7 @@ export default function EstimatedCost({graphData, userName, clients}: any) {
         </Select>
       </FormControl>
       <section>
-        <CativoXLivreChart chartData={unity!==null? graphDataState : graphData}
+        <CativoXLivreChart chartData={unity!==null? graphDataState : processedGraphData}
         dataset1="Economia (R$)" dataset2='Est. Cativo' dataset3='Est. Livre'
         label={['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']} title='' subtitle='' barLabel hashurado/>
       </section>

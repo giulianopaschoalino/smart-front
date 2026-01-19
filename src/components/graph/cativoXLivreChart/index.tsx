@@ -79,6 +79,8 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
 
   const options: any = config(miniature)
 
+  const hasEstimated = chartData?.some((value) => value.dad_estimado)
+
   const data: any = {
     labels,
     datasets: chartData?.map(value => value.dad_estimado)?.includes(true) ? [
@@ -184,7 +186,7 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
 
   return (
     <CativoXLivreChartView>
-      <ChartTitle title={title} subtitle={subtitle}/>
+      {/* <ChartTitle title={title} subtitle={subtitle}/> */}
       <div>
         <Chart ref={chartRef} type='bar' options={options} data={data} />
       </div>
