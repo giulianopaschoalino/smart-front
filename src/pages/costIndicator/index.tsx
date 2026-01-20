@@ -42,11 +42,12 @@ export default function CostIndicator({graphData, userName, clients}: any) {
   useEffect(() => {
     // Calculate the last consolidated year
     const lastYear = getLastConsolidatedYear(graphData, true)
+    console.log('Last Consolidated Year:', lastYear)
+    console.log('Graph Data:', graphData)
     setLastConsolidatedYear(lastYear)
 
-    // Populate graph data with consolidated and estimated data for that year
-    const populatedData = populateGraphDataForYear(graphData, lastYear)
-    setProcessedGraphData(populatedData)
+    // Keep the full dataset to show both years
+    setProcessedGraphData(graphData)
   }, [graphData])
 
   useEffect(() => {
@@ -55,11 +56,11 @@ export default function CostIndicator({graphData, userName, clients}: any) {
         {"type" : "=", "field":"dados_cadastrais.cod_smart_unidade", "value": unity}
       ]
     }:{}).then(res => {
-      // Apply data processing to filtered result
+      // Keep full dataset without filtering by year
       if (res.data.data && res.data.data.length > 0) {
         const lastYear = getLastConsolidatedYear(res.data.data, true)
-        const populatedData = populateGraphDataForYear(res.data.data, lastYear)
-        setGraphDataState(populatedData)
+        setLastConsolidatedYear(lastYear)
+        setGraphDataState(res.data.data)
       } else {
         setGraphDataState(res.data.data)
       }
@@ -94,17 +95,24 @@ export default function CostIndicator({graphData, userName, clients}: any) {
         </Select>
       </FormControl>
       <section>
-        <CostIndicatorChart title='' subtitle=''
-          data1={unity!==''? graphDataState.filter((value, index) => value.mes.slice(0, 4).includes(lastConsolidatedYear?.toString() || ''))
-            .map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)
+        <CostIndicatorChart title={lastConsolidatedYear?.toLocaleString()} subtitle=''
+          data1={unity!==''? 
+            graphDataState
+              .filter(value => value.mes?.slice(0, 4) === (lastConsolidatedYear && lastConsolidatedYear - 1)?.toString() && value.custo_unit !== undefined)
+              .map(value => value?.custo_unit && !!parseFloat(value?.custo_unit) ? value.custo_unit : null)
             :
-          processedGraphData.filter((value, index) => value.mes.slice(0, 4).includes(lastConsolidatedYear?.toString() || ''))
-            .map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
-          data2={unity!==''? graphDataState.filter((value, index) => value.mes.slice(0, 4).includes(lastConsolidatedYear?.toString() || ''))
-            .map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)
+            processedGraphData
+              .filter(value => value.mes?.slice(0, 4) === (lastConsolidatedYear && lastConsolidatedYear - 1)?.toString() && value.custo_unit !== undefined)
+              .map(value => value?.custo_unit && !!parseFloat(value?.custo_unit) ? value.custo_unit : null)}
+          data2={unity!==''? 
+            graphDataState
+              .filter(value => value.mes?.slice(0, 4) === lastConsolidatedYear?.toString() && value.custo_unit !== undefined)
+              .map(value => value?.custo_unit && !!parseFloat(value?.custo_unit) ? value.custo_unit : null)
             :
-          processedGraphData.filter((value, index) => value.mes.slice(0, 4).includes(lastConsolidatedYear?.toString() || ''))
-            .map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
+            processedGraphData
+              .filter(value => value.mes?.slice(0, 4) === lastConsolidatedYear?.toString() && value.custo_unit !== undefined)
+              .map(value => value?.custo_unit && !!parseFloat(value?.custo_unit) ? value.custo_unit : null)}
+          years={[lastConsolidatedYear ? (lastConsolidatedYear - 1).toString() : '', lastConsolidatedYear?.toString() || '']}
           label={months}
         />
       </section>

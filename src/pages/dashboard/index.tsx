@@ -69,6 +69,7 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
   const [lastDataBrutaAnualS, setLastDataBrutaAnual] = useState('')
   const [processedMensalData, setProcessedMensalData] = useState(grossMensalGraph)
   const [lastConsolidatedYear, setLastConsolidatedYear] = useState<number | null>(null)
+  const [lastConsolidatedYearIndicator, setLastConsolidatedYearIndicator] = useState<number | null>(null)
 
   const [open, setOpen] = useState(true);
   const handleOpen = () => setOpen(true);
@@ -102,6 +103,13 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
     }
     setLastDataBrutaAnual(`${parseFloat(lastDataAnual).toFixed(3)}`)
   }, [grossMensalGraph, grossAnualGraph])
+
+  useEffect(() => {
+    if (costIndicator && costIndicator.length > 0) {
+      const lastYear = getLastConsolidatedYear(costIndicator, true)
+      setLastConsolidatedYearIndicator(lastYear)
+    }
+  }, [costIndicator])
 
   return (
     <DashboardView>
@@ -153,10 +161,13 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
 
               <GraphCard title='Indicador de Custo' subtitle='Indicador de Custo - Valores em R$/MWh'>
                 <CostIndicatorChart title='' subtitle=''
-                  data1={costIndicator?.filter((value, index) => value?.mes.slice(0, 4).includes(costIndicator[0].mes.slice(0, 4))).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
-                  data2={costIndicator?.filter((value, index) => value?.mes.slice(0, 4).includes(costIndicator[costIndicator.length - 1].mes.slice(0, 4))).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
-                  // years={[costIndicator[0].mes.slice(0, 4), costIndicator[costIndicator.length - 1].mes.slice(0, 4)]}
-                  years={[previousYear+'', currentYear+'']}
+                  data1={costIndicator
+                    ?.filter(value => value?.mes?.slice(0, 4) === (lastConsolidatedYearIndicator ? (lastConsolidatedYearIndicator - 1).toString() : ''))
+                    .map(value => value?.custo_unit && !!parseFloat(value?.custo_unit) ? value.custo_unit : null)}
+                  data2={costIndicator
+                    ?.filter(value => value?.mes?.slice(0, 4) === (lastConsolidatedYearIndicator ? lastConsolidatedYearIndicator.toString() : ''))
+                    .map(value => value?.custo_unit && !!parseFloat(value?.custo_unit) ? value.custo_unit : null)}
+                  years={[lastConsolidatedYearIndicator ? (lastConsolidatedYearIndicator - 1).toString() : '', lastConsolidatedYearIndicator?.toString() || '']}
                   label={months}
                   miniature
                 />

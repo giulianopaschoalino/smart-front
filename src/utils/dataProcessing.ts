@@ -49,8 +49,21 @@ export function getLastConsolidatedYear(data: EconomyData[], isMonthly: boolean 
     return new Date().getFullYear();
   }
 
-  // Filter only consolidated data (dad_estimado === false)
-  const consolidatedData = data.filter(item => !item.dad_estimado);
+  // Filter only consolidated data (dad_estimado === false explicitly)
+  // Also ensure the entry has valid data (not just a date placeholder)
+  // For cost indicator data, also check that custo_unit is not zero
+  const consolidatedData = data.filter(item => {
+    if (item.dad_estimado !== false) return false;
+    
+    // If custo_unit exists, it must be > 0 to be considered consolidated
+    if (item.custo_unit !== undefined) {
+      const costValue = parseFloat(item.custo_unit);
+      return !isNaN(costValue) && costValue > 0;
+    }
+    
+    // For other data types, check if they have valid data fields
+    return item.economia_acumulada !== undefined || item.economia_mensal !== undefined;
+  });
 
   // Extract all years present in the dataset (consolidated + estimated)
   const allYears = data

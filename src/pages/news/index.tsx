@@ -45,7 +45,7 @@ export default function aboutUs({userName, news}: any) {
             </>
           })
         }
-        <a href='https://www.energiasmart.com.br/noticias/'
+        <a href='https://www.smartenergia.com.br/noticias/'
         target={"_blank"}
         rel={"noreferrer"}>Ver todas as notícias</a>
 

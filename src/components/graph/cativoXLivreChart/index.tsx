@@ -14,6 +14,7 @@ import { CativoXLivreChartView } from './CativoXLivreChartView';
 import ChartTitle from '../ChartTitle';
 import pattern from 'patternomaly'
 import { config } from '../config';
+import { getLastConsolidatedYear } from '../../../utils/dataProcessing';
 
 ChartJS.register(
   LinearScale,
@@ -75,15 +76,45 @@ interface LineBarChartInterface {
 export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1, dataset2, dataset3, barLabel, hashurado, miniature }: LineBarChartInterface) {
   const chartRef = useRef<ChartJS>(null);
 
-  const labels = label
+  // Filter data by last consolidated year
+  const lastConsolidatedYear = getLastConsolidatedYear(chartData || [], true);
+  
+  // Helper function to extract year from mes field
+  const extractYear = (mes: string): number => {
+    if (!mes) return lastConsolidatedYear;
+    const mesStr = mes.toString();
+    if (mesStr.includes('-')) {
+      return parseInt(mesStr.split('-')[0]);
+    }
+    if (mesStr.includes('/')) {
+      return parseInt(mesStr.split('/')[1]);
+    }
+    return lastConsolidatedYear;
+  };
+
+  // Filter data and labels together to keep them in sync
+  const filteredData: { chartData: any[], labels: any[] } = { chartData: [], labels: [] };
+  
+  chartData?.forEach((value, index) => {
+    const year = extractYear(value.mes);
+    if (year === lastConsolidatedYear) {
+      filteredData.chartData.push(value);
+      if (label && label[index]) {
+        filteredData.labels.push(label[index]);
+      }
+    }
+  });
+
+  const filteredChartData = filteredData.chartData.length > 0 ? filteredData.chartData : chartData;
+  const labels = filteredData.labels.length > 0 ? filteredData.labels : label;
 
   const options: any = config(miniature)
 
-  const hasEstimated = chartData?.some((value) => value.dad_estimado)
+  const hasEstimated = filteredChartData?.some((value) => value.dad_estimado)
 
   const data: any = {
     labels,
-    datasets: chartData?.map(value => value.dad_estimado)?.includes(true) ? [
+    datasets: filteredChartData?.map(value => value.dad_estimado)?.includes(true) ? [
       {
         type: 'line' as const,
         label: dataset1? dataset1 : 'Dataset 1',
@@ -95,53 +126,53 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
         },
         borderWidth: 2,
         fill: false,
-        data: chartData?.map(value => parseInt(value.economia_mensal)),
+        data: filteredChartData?.map(value => parseInt(value.economia_mensal)),
       },
       {
         type: 'bar' as const,
         label: 'Cativo',
-        data: chartData?.map(value => {
+        data: filteredChartData?.map(value => {
           if (!value.dad_estimado)
           return parseInt(value.custo_cativo)
         }),
         // skipNull: true,
         borderRadius: 8,
         backgroundColor: '#C2D5FB',
-        skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
+        skipNull: filteredChartData?.map(value => value.dad_estimado)?.includes(true)
       },
       {
         type: 'bar' as const,
         label: 'Livre',
-        data: chartData?.filter(value => !value.dad_estimad? true : false).map(value => {
+        data: filteredChartData?.filter(value => !value.dad_estimad? true : false).map(value => {
           if (!value.dad_estimado)
           return parseInt(value.custo_livre)
         }),
         // skipNull: true,
         borderRadius: 8,
         backgroundColor: '#255488',
-        skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
+        skipNull: filteredChartData?.map(value => value.dad_estimado)?.includes(true)
       },
       {
         type: 'bar',
         label: 'Est. Cativo',
-        data: chartData?.map(value => {
+        data: filteredChartData?.map(value => {
           if (value.dad_estimado)
           return parseInt(value.custo_cativo)
         }),
         borderRadius: 8,
         backgroundColor: pattern.draw('diagonal-right-left', '#C2D5FB'),
-        skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
+        skipNull: filteredChartData?.map(value => value.dad_estimado)?.includes(true)
       },
       {
         type: 'bar',
         label: 'Est. Livre',
-        data: chartData?.map(value => {
+        data: filteredChartData?.map(value => {
           if (value.dad_estimado)
           return parseInt(value.custo_livre)
         }),
         borderRadius: 8,
         backgroundColor: pattern.draw('diagonal-right-left', '#255488'),
-        skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
+        skipNull: filteredChartData?.map(value => value.dad_estimado)?.includes(true)
       }
     ] : [
       {
@@ -155,31 +186,31 @@ export function CativoXLivreChart({ title, subtitle, chartData, label, dataset1,
         },
         borderWidth: 2,
         fill: false,
-        data: chartData?.map(value => parseInt(value.economia_mensal)),
+        data: filteredChartData?.map(value => parseInt(value.economia_mensal)),
       },
       {
         type: 'bar' as const,
         label: 'Cativo',
-        data: chartData?.map(value => {
+        data: filteredChartData?.map(value => {
           if (!value.dad_estimado)
           return parseInt(value.custo_cativo)
         }),
         // skipNull: true,
         borderRadius: 8,
         backgroundColor: '#C2D5FB',
-        skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
+        skipNull: filteredChartData?.map(value => value.dad_estimado)?.includes(true)
       },
       {
         type: 'bar' as const,
         label: 'Livre',
-        data: chartData?.filter(value => !value.dad_estimad? true : false).map(value => {
+        data: filteredChartData?.filter(value => !value.dad_estimad? true : false).map(value => {
           if (!value.dad_estimado)
           return parseInt(value.custo_livre)
         }),
         // skipNull: true,
         borderRadius: 8,
         backgroundColor: '#255488',
-        skipNull: chartData?.map(value => value.dad_estimado)?.includes(true)
+        skipNull: filteredChartData?.map(value => value.dad_estimado)?.includes(true)
       }
     ],
   }

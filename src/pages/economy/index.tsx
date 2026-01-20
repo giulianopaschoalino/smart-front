@@ -33,6 +33,7 @@ export default function economy({ userName, anual, years, brutaMensal, catLiv, c
 
   const [catLivDataState, setCatLivDataState] = useState(null);
   const [indicatorDataState, setIndicatorDataState] = useState(null);
+  const [lastConsolidatedYearIndicator, setLastConsolidatedYearIndicator] = useState<number | null>(null);
   const [processedBrutaMensal, setProcessedBrutaMensal] = useState(brutaMensal)
   const [lastConsolidatedYear, setLastConsolidatedYear] = useState<number | null>(null)
 
@@ -109,6 +110,14 @@ export default function economy({ userName, anual, years, brutaMensal, catLiv, c
   useEffect(() => {
     getChartsWithUnity()
   }, [unity])
+
+  useEffect(() => {
+    if (indicatorDataState && indicatorDataState.length > 0) {
+      // Determine last consolidated year for cost indicator data (requires dad_estimado === false and custo_unit > 0)
+      const lastYear = getLastConsolidatedYear(indicatorDataState, true)
+      setLastConsolidatedYearIndicator(lastYear)
+    }
+  }, [indicatorDataState])
 
   return (
     <main style={{ width: '100%' }}>
@@ -223,9 +232,13 @@ export default function economy({ userName, anual, years, brutaMensal, catLiv, c
                 </div>
                 <section>
                   <CostIndicatorChart title='' subtitle=''
-                    data1={indicatorDataState?.filter(value => value?.mes.slice(0, 4).includes(previousYear)).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
-                    data2={indicatorDataState?.filter(value => value?.mes.slice(0, 4).includes(currentYear)).map(value => value?.custo_unit && !!parseInt(value?.custo_unit) ? value.custo_unit : null)}
-                    years={[previousYear+'', currentYear+'']}
+                    data1={indicatorDataState?.
+                      filter(value => value?.mes?.slice(0, 4) === (lastConsolidatedYearIndicator ? (lastConsolidatedYearIndicator - 1).toString() : ''))
+                      .map(value => value?.custo_unit && !!parseFloat(value?.custo_unit) ? value.custo_unit : null)}
+                    data2={indicatorDataState?.
+                      filter(value => value?.mes?.slice(0, 4) === (lastConsolidatedYearIndicator ? lastConsolidatedYearIndicator.toString() : ''))
+                      .map(value => value?.custo_unit && !!parseFloat(value?.custo_unit) ? value.custo_unit : null)}
+                    years={[lastConsolidatedYearIndicator ? (lastConsolidatedYearIndicator - 1).toString() : '', lastConsolidatedYearIndicator?.toString() || '']}
                     label={months}
                   />
                 </section>
