@@ -68,7 +68,10 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
   const [lastDataBrutaMensalS, setLastDataBrutaMensal] = useState('')
   const [lastDataBrutaAnualS, setLastDataBrutaAnual] = useState('')
   const [processedMensalData, setProcessedMensalData] = useState(grossMensalGraph)
+  const [processedAnualData, setProcessedAnualData] = useState(grossAnualGraph)
+  const [processedAnualYears, setProcessedAnualYears] = useState(grossAnualYears)
   const [lastConsolidatedYear, setLastConsolidatedYear] = useState<number | null>(null)
+  const [lastConsolidatedYearAnual, setLastConsolidatedYearAnual] = useState<number | null>(null)
   const [lastConsolidatedYearIndicator, setLastConsolidatedYearIndicator] = useState<number | null>(null)
 
   const [open, setOpen] = useState(true);
@@ -76,7 +79,7 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    // Calculate the last consolidated year
+    // Calculate the last consolidated year for monthly data
     const lastYear = getLastConsolidatedYear(grossMensalGraph, true)
     setLastConsolidatedYear(lastYear)
 
@@ -95,11 +98,35 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
       index++
     }
     setLastDataBrutaMensal(`${parseFloat(lastDataMensal).toFixed(3)}`)
-    index = 0
-    while (index < grossAnualGraph.length) {
-      if (!grossAnualGraph[index].dad_estimado)
-        lastDataAnual = String(grossAnualGraph[index].economia_acumulada)
-      index++
+    
+    // Process annual data - limit to last consolidated year + next 6 years
+    const lastYearAnual = getLastConsolidatedYear(grossAnualGraph, false)
+    setLastConsolidatedYearAnual(lastYearAnual)
+    
+    if (lastYearAnual !== null) {
+      // Filter to show only last consolidated year and next 6 years (7 years total)
+      const filteredAnualData = grossAnualGraph.filter((item) => {
+        const year = parseInt(item.ano)
+        return year >= lastYearAnual && year <= lastYearAnual + 6
+      })
+      setProcessedAnualData(filteredAnualData)
+      setProcessedAnualYears(filteredAnualData.map((value) => value.ano))
+      
+      // Calculate last consolidated annual value from filtered data
+      index = 0
+      while (index < filteredAnualData.length) {
+        if (!filteredAnualData[index].dad_estimado)
+          lastDataAnual = String(filteredAnualData[index].economia_acumulada)
+        index++
+      }
+    } else {
+      // Fallback if no consolidated year found
+      index = 0
+      while (index < grossAnualGraph.length) {
+        if (!grossAnualGraph[index].dad_estimado)
+          lastDataAnual = String(grossAnualGraph[index].economia_acumulada)
+        index++
+      }
     }
     setLastDataBrutaAnual(`${parseFloat(lastDataAnual).toFixed(3)}`)
   }, [grossMensalGraph, grossAnualGraph])
@@ -139,8 +166,8 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
                 <AccumulatedEconomyTitle value={lastDataBrutaAnualS} />
                 <GrossAnualChart title='' subtitle=''
                   dataset='Consolidada'
-                  dataProps={grossAnualGraph}
-                  label={grossAnualYears} barLabel bruta miniature />
+                  dataProps={processedAnualData}
+                  label={processedAnualYears} barLabel bruta miniature />
               </GraphCard>
 
               <GraphCard title='Economia Mensal' subtitle='Economia Bruta Estimada e Acumulada Mensal - Valores em R$ x mil'>
