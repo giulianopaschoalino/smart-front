@@ -157,7 +157,11 @@ export default function Telemetria({ userName, clients }: any) {
   const [fatorPotenciaData, setFatorPotenciaData] = useState([])
   const [demRegXDemCon, setDemRegXDemCon] = useState([])
   const [discretizedConsumptionData, setDiscretizedConsumptionData] = useState([])
-
+  const [discretizedConsumptionDataReativa, setDiscretizedConsumptionDataReativa] = useState([])
+  
+  // Get the selected unity name for display
+  const selectedUnityName = clients.find((client) => client.codigo_scde === unity)?.unidade || ""
+  
   useEffect(() => {
     setSend(false)
   }, [startDate, endDate])
@@ -168,7 +172,7 @@ export default function Telemetria({ userName, clients }: any) {
       setLoader(true)
       getDiscretization(unity, startDate, endDate, discretization)
         .then((result) => {
-          setDiscretizedConsumptionData(result)
+          setDiscretizedConsumptionData(result);
           setSend(false)
           setLoader(false)
           setTableData(result)
@@ -187,7 +191,7 @@ export default function Telemetria({ userName, clients }: any) {
       setLoader(true)
       getDemand(unity, startDate, endDate, discretization)
         .then((result) => {
-          setDemRegXDemCon(result)
+          setDemRegXDemCon(result);
           setSend(false)
           setLoader(false)
           setTableData(result)
@@ -206,10 +210,11 @@ export default function Telemetria({ userName, clients }: any) {
       setLoader(true)
       getPowerFactorData(unity, startDate, endDate, discretization)
         .then((result) => {
-          setFatorPotenciaData(result)
-          setTableData(result)
+          setDiscretizedConsumptionDataReativa(result);
+          setFatorPotenciaData(result);
           setSend(false)
           setLoader(false)
+          setTableData(result)
         })
         .catch(() => {
           setSend(false)
@@ -754,7 +759,9 @@ export default function Telemetria({ userName, clients }: any) {
                 <th className="tg-8oo6">Minuto</th>
                 <th className="tg-8oo6">f_ref</th>
                 <th className="tg-8oo6">Consumo</th>
-                <th className="tg-8oo6">Reativa</th>
+                <th className="tg-8oo6">Geracao</th>
+                <th className="tg-8oo6">Reativa Capacitiva</th>
+                <th className="tg-8oo6">Reativa Indutiva</th>
                 <th className="tg-8oo6">fp</th>
                 <th className="tg-8oo6">dem contratada</th>
                 <th className="tg-8oo6">dem registrada</th>
@@ -765,7 +772,7 @@ export default function Telemetria({ userName, clients }: any) {
               {Array.isArray(tableData) && tableData.length > 0 ? (
                 tableData.map((value, index) => (
                   <tr key={index}>
-                    <td className="tg-gceh">{unity}</td>
+                    <td className="tg-gceh">{selectedUnityName}</td>
                     <td className="tg-gceh">{value?.ponto}</td>
                     <td className="tg-gceh">{Number(value?.dia_num)}</td>
                     <td className="tg-uulg">{value?.day_formatted}</td>
@@ -776,7 +783,13 @@ export default function Telemetria({ userName, clients }: any) {
                       {numberBR(value?.consumo, 2, 5)}
                     </td>
                     <td className="tg-gceh">
-                      {numberBR(value?.reativa, 2, 5)}
+                      {numberBR(value?.geracao, 2, 5)}
+                    </td>
+                    <td className="tg-gceh">
+                      {numberBR(value?.reativa_capacitiva, 2, 5)}
+                    </td>
+                    <td className="tg-gceh">
+                      {numberBR(value?.reativa_indutiva, 2, 5)}
                     </td>
                     <td className="tg-gceh">{numberBR(value?.fp, 0, 5)}</td>
                     <td className="tg-gceh">
@@ -792,7 +805,7 @@ export default function Telemetria({ userName, clients }: any) {
                 ))
               ) : (
                 <tr>
-                  <td className="tg-gceh" colSpan={13}>
+                  <td className="tg-gceh" colSpan={15}>
                     Sem dados no período selecionado.
                   </td>
                 </tr>
