@@ -39,7 +39,10 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
     // maintainAspectRatio: false,
     layout: {
       padding: {
-        top: 0,
+        top: 10,
+        bottom: 0,
+        left: 0,
+        right: 0,
       }
     },
     scales: {
