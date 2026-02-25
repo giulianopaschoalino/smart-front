@@ -85,10 +85,16 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
         color: '#255488',
         clip: false,
         formatter: (value, ctx) => {
-          const percentage = (dataProps[ctx.dataIndex]?.econ_percentual * 100).toFixed(0) + "%";
-          const result = `${spacement(parseInt(value).toLocaleString('pt-br'))}${percentage}\n${parseInt(value).toLocaleString('pt-br')}${spacement(parseInt(value).toLocaleString('pt-br'))}`
-
-          return value == null ? null : result
+          if (value == null) return null
+          const year = labels[ctx.dataIndex]
+          const estimatedEntry = dataProps.find((d) => String(d.ano) === String(year) && d.dad_estimado === true)
+          const consolidatedEntry = dataProps.find((d) => String(d.ano) === String(year) && d.dad_estimado === false)
+          const topEntry = estimatedEntry || consolidatedEntry
+          if (!topEntry) return null
+          const totalValue = parseFloat(topEntry.economia_acumulada)
+          const percentage = (parseFloat(topEntry.econ_percentual) * 100).toFixed(0) + "%"
+          const formatted = parseInt(String(totalValue)).toLocaleString('pt-br')
+          return `${spacement(formatted)}${percentage}\n${formatted}${spacement(formatted)}`
         },
         anchor: 'end',
         align: 'end',
@@ -115,13 +121,15 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
   // Build dataset arrays aligned to `labels` (years). This avoids index misalignment
   // when `dataProps` is not in the same order or has missing/extra items
   const consolidatedData = labels.map((lbl) => {
+    const hasEstimated = dataProps.some((d) => String(d.ano) === String(lbl) && d.dad_estimado === true)
+    if (hasEstimated) return null
     const match = dataProps.find((d) => String(d.ano) === String(lbl) && d.dad_estimado === false)
     return match ? parseFloat(match.economia_acumulada) : null
   })
 
   const estimatedData = labels.map((lbl) => {
-    const match = dataProps.find((d) => String(d.ano) === String(lbl) && d.dad_estimado === true)
-    return match ? parseFloat(match.economia_acumulada) : null
+    const estimated = dataProps.find((d) => String(d.ano) === String(lbl) && d.dad_estimado === true)
+    return estimated ? parseFloat(estimated.economia_acumulada) : null
   })
 
   const data: any = {
@@ -133,10 +141,11 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
         // stacked: true,
         data: consolidatedData,
         datalabels: {
-          // backgroundColor: '#255488',
-          // borderRadius: 8,
-          // opacity: .8,
-          display: (ctx) => ctx.dataIndex === 0, // Exibe apenas o primeiro
+          display: (ctx) => {
+            const year = labels[ctx.dataIndex]
+            const hasEstimated = dataProps.some((d) => String(d.ano) === String(year) && d.dad_estimado === true)
+            return !hasEstimated
+          },
         },
         skipNull: true,
         borderRadius: 8,
@@ -146,7 +155,7 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
         type: 'bar',
         label: 'Estimado',
         datalabels: {
-          // keep the previous behaviour of offsetting the second estimated bar if needed
+          display: true,
         },
         data: estimatedData,
         skipNull: true,

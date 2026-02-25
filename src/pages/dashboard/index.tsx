@@ -104,10 +104,10 @@ export default function Dashboard({ grossAnualGraph, grossAnualYears, grossMensa
     setLastConsolidatedYearAnual(lastYearAnual)
     
     if (lastYearAnual !== null) {
-      // Filter to show only last consolidated year and next 6 years (7 years total)
+      const minYearAnual = Math.min(...grossAnualGraph.map((item) => parseInt(item.ano)))
       const filteredAnualData = grossAnualGraph.filter((item) => {
         const year = parseInt(item.ano)
-        return year >= lastYearAnual && year <= lastYearAnual + 6
+        return year >= minYearAnual && year <= minYearAnual + 6
       })
       setProcessedAnualData(filteredAnualData)
       setProcessedAnualYears(filteredAnualData.map((value) => value.ano))
