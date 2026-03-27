@@ -7,7 +7,7 @@ jobs:
     runs-on: windows
     steps:
       - run: echo "[Info] Conectando ao ssh..."
-      - run: ssh ubuntu@app.dev.smartenergia.com.br
+      - run: ssh ubuntu@app.dev.smartenergia.com.br "echo 'oi'"
       - run: cd /var/www/frontend
       - run: git pull origin dev
       - run: yarn build
