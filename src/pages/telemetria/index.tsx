@@ -319,9 +319,7 @@ export default function Telemetria({ userName, clients }: any) {
                     sx={{ height: 63, mb: 2 }}
                     fullWidth
                   >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
+                      {/* empty placeholder removed */}
 
                     {clients.map(({ codigo_scde, unidade }) => (
                       <MenuItem key={codigo_scde} value={codigo_scde}>
@@ -346,9 +344,7 @@ export default function Telemetria({ userName, clients }: any) {
                     sx={{ height: 63, mb: 2 }}
                     fullWidth
                   >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
+                    {/* empty placeholder removed */}
                     <MenuItem value="5_min">5 minutos</MenuItem>
                     <MenuItem value="15_min">15 minutos</MenuItem>
                     <MenuItem value="1_hora">1 hora</MenuItem>
@@ -382,9 +378,7 @@ export default function Telemetria({ userName, clients }: any) {
                       sx={{ height: 63, mb: 2 }}
                       fullWidth
                     >
-                      <MenuItem value="">
-                        <em>Nenhum</em>
-                      </MenuItem>
+                      {/* empty placeholder removed */}
                       {months
                         .slice(0, new Date().getUTCMonth() + 1)
                         .map((value, index) => {
@@ -424,9 +418,7 @@ export default function Telemetria({ userName, clients }: any) {
                         sx={{ height: 63, mb: 2 }}
                         fullWidth
                       >
-                        <MenuItem value="">
-                          <em>Nenhum</em>
-                        </MenuItem>
+                          {/* empty placeholder removed */}
                         {months
                           .slice(0, new Date().getUTCMonth() + 1)
                           .map((value, index) => {
@@ -529,9 +521,7 @@ export default function Telemetria({ userName, clients }: any) {
                     sx={{ height: 63, mb: 2 }}
                     fullWidth
                   >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
+                      {/* empty placeholder removed */}
 
                     {clients.map(({ codigo_scde, unidade }) => (
                       <MenuItem key={codigo_scde} value={codigo_scde}>
@@ -556,9 +546,7 @@ export default function Telemetria({ userName, clients }: any) {
                     sx={{ height: 63, mb: 2 }}
                     fullWidth
                   >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
+                    {/* empty placeholder removed */}
                     <MenuItem value="5_min">5 minutos</MenuItem>
                     <MenuItem value="15_min">15 minutos</MenuItem>
                     <MenuItem value="1_hora">1 hora</MenuItem>
@@ -641,9 +629,7 @@ export default function Telemetria({ userName, clients }: any) {
                     sx={{ height: 63, mb: 2 }}
                     fullWidth
                   >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
+                        {/* empty placeholder removed */}
 
                     {clients.map(({ codigo_scde, unidade }) => (
                       <MenuItem key={codigo_scde} value={codigo_scde}>
@@ -668,9 +654,7 @@ export default function Telemetria({ userName, clients }: any) {
                     sx={{ height: 63, mb: 2 }}
                     fullWidth
                   >
-                    <MenuItem value="">
-                      <em>Nenhum</em>
-                    </MenuItem>
+                          {/* empty placeholder removed */}
                     <MenuItem value="5_min">5 minutos</MenuItem>
                     <MenuItem value="15_min">15 minutos</MenuItem>
                     <MenuItem value="1_hora">1 hora</MenuItem>
@@ -791,7 +775,7 @@ export default function Telemetria({ userName, clients }: any) {
                     <td className="tg-gceh">
                       {numberBR(value?.reativa_indutiva, 2, 5)}
                     </td>
-                    <td className="tg-gceh">{numberBR(value?.fp, 0, 5)}</td>
+                    <td className="tg-gceh">{numberBR(value?.fp_indutivo, 5, 5)}</td>
                     <td className="tg-gceh">
                       {numberBR(value?.dem_cont, 0, 0)}
                     </td>
