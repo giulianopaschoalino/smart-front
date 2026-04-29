@@ -16,14 +16,15 @@ export default function getAPIClient(
     | undefined
 ) {
   const { '@smartAuth-token': token } = parseCookies(ctx)
+  const requestHost =
+    ctx && 'req' in ctx ? ctx.req.headers.host : typeof window !== 'undefined' ? window.location.host : ''
+
+  const apiBaseUrl = requestHost?.includes('app.dev.smartenergia.com.br')
+    ? process.env.NEXT_PUBLIC_API_URL_DEV ?? 'https://app.dev.smartenergia.com.br/api'
+    : process.env.NEXT_PUBLIC_API_URL_PROD ?? 'https://app.smartenergia.com.br/api'
 
   const api = axios.create({
-    baseURL: 'https://app.dev.smartenergia.com.br/api'
-    // baseURL: 'https://api.dev.smartenergia.klupp.com.br/api'
-    // baseURL:
-    //   process.env.NODE_ENV === 'production'
-    //     ? 'https://api.dev.smartenergia.com.br/api'
-    //     : 'http://127.0.0.1:8000/api'
+    baseURL: apiBaseUrl
   })
 
   api.interceptors.request.use((config) => {
