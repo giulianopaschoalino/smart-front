@@ -79,7 +79,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   let notificationsCount
 
-  await apiClient.post('/download')
+  try {
+    await apiClient.post('/download')
+  } catch (err) {
+    // ignore errors (e.g. 401) during server-side warm-up so dev server doesn't crash
+    // notificationsCount remains undefined and pages will handle missing data.
+  }
 
   if (!token) {
     return {
