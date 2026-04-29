@@ -34,6 +34,11 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
     return spaces
   }
 
+  function getPreferredYearEntry(year: string) {
+    return dataProps.find((d) => String(d.ano) === String(year) && d.dad_estimado === true)
+      || dataProps.find((d) => String(d.ano) === String(year) && d.dad_estimado === false)
+  }
+
   const options: any = {
     responsive: true,
     // maintainAspectRatio: false,
@@ -47,7 +52,7 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
     },
     scales: {
       x: {
-        stacked: true,
+        stacked: false,
         grid: {
           display: false
         },
@@ -58,7 +63,7 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
         },
       },
       y: {
-        stacked: true,
+        stacked: false,
         //max: Number.parseInt(dataProps.reduce((prev, current) => prev.economia_acumulada < current.economia_acumulada ? prev.economia_acumulada : current.economia_acumulada, 0)) + 350,
         min: 0,
         grid: {
@@ -87,9 +92,7 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
         formatter: (value, ctx) => {
           if (value == null) return null
           const year = labels[ctx.dataIndex]
-          const estimatedEntry = dataProps.find((d) => String(d.ano) === String(year) && d.dad_estimado === true)
-          const consolidatedEntry = dataProps.find((d) => String(d.ano) === String(year) && d.dad_estimado === false)
-          const topEntry = estimatedEntry || consolidatedEntry
+          const topEntry = getPreferredYearEntry(year)
           if (!topEntry) return null
           const totalValue = parseFloat(topEntry.economia_acumulada)
           const percentage = (parseFloat(topEntry.econ_percentual) * 100).toFixed(0) + "%"
@@ -118,11 +121,9 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
     return label.indexOf(item) == pos;
   });
 
-  // Build dataset arrays aligned to `labels` (years). This avoids index misalignment
-  // when `dataProps` is not in the same order or has missing/extra items
+  // Build dataset arrays aligned to `labels` (years). Both records can exist for the same
+  // year so the estimated bar can render behind the consolidated one.
   const consolidatedData = labels.map((lbl) => {
-    const hasEstimated = dataProps.some((d) => String(d.ano) === String(lbl) && d.dad_estimado === true)
-    if (hasEstimated) return null
     const match = dataProps.find((d) => String(d.ano) === String(lbl) && d.dad_estimado === false)
     return match ? parseFloat(match.economia_acumulada) : null
   })
@@ -137,30 +138,35 @@ export function GrossAnualChart({ title, subtitle, dataProps = [], label, datase
     datasets: [
       {
         type: 'bar',
-        label: dataset,
-        // stacked: true,
-        data: consolidatedData,
+        label: 'Estimado',
+        order: 1,
         datalabels: {
           display: (ctx) => {
             const year = labels[ctx.dataIndex]
-            const hasEstimated = dataProps.some((d) => String(d.ano) === String(year) && d.dad_estimado === true)
-            return !hasEstimated
+            return dataProps.some((d) => String(d.ano) === String(year) && d.dad_estimado === true)
           },
-        },
-        skipNull: true,
-        borderRadius: 8,
-        backgroundColor: '#255488',
-      },
-      {
-        type: 'bar',
-        label: 'Estimado',
-        datalabels: {
-          display: true,
         },
         data: estimatedData,
         skipNull: true,
         borderRadius: 8,
         backgroundColor: draw('diagonal-right-left', '#C2d5fb'),
+        grouped: false,
+      },
+      {
+        type: 'bar',
+        label: dataset,
+        order: 0,
+        data: consolidatedData,
+        datalabels: {
+          display: (ctx) => {
+            const year = labels[ctx.dataIndex]
+            return !dataProps.some((d) => String(d.ano) === String(year) && d.dad_estimado === true)
+          },
+        },
+        skipNull: true,
+        borderRadius: 8,
+        backgroundColor: '#255488',
+        grouped: false,
       },
     ],
   }

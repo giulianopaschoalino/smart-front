@@ -44,7 +44,7 @@ function extractYearFromMes(mesValue: string): number {
  * @param isMonthly - If true, extract year from 'mes' field; if false, use 'ano' field
  * @returns The year with the last consolidated data
  */
-export function getLastConsolidatedYear(data: EconomyData[], isMonthly: boolean = false): number {
+export function getLastConsolidatedYear(data: EconomyData[], isMonthly = false): number {
   if (!data || data.length === 0) {
     return new Date().getFullYear();
   }
@@ -110,8 +110,6 @@ export function populateGraphDataForYear(data: EconomyData[], targetYear: number
   }
 
   const year = parseInt(targetYear.toString());
-  const currentMonth = new Date().getMonth() + 1; // 1-12
-  const currentYear = new Date().getFullYear();
 
   // Filter data for the target year
   const yearData = data.filter(item => {
@@ -137,6 +135,7 @@ export function populateGraphDataForYear(data: EconomyData[], targetYear: number
   }
 
   // Create a map of months for quick lookup
+  // For duplicate month entries, prefer consolidated data and higher accumulated values.
   const dataMap = new Map<number, EconomyData>();
   yearData.forEach(item => {
     if (item.mes) {
@@ -161,7 +160,8 @@ export function populateGraphDataForYear(data: EconomyData[], targetYear: number
       }
       
       if (month > 0) {
-        dataMap.set(month, item);
+        const existingItem = dataMap.get(month);
+        dataMap.set(month, resolveMonthEntry(existingItem, item));
       }
     }
   });
@@ -169,62 +169,29 @@ export function populateGraphDataForYear(data: EconomyData[], targetYear: number
   // Build complete year data (1-12 months)
   const completeYearData: EconomyData[] = [];
   for (let month = 1; month <= 12; month++) {
-    if (dataMap.has(month)) {
-      completeYearData.push(dataMap.get(month)!);
-    } else {
-      // Fill missing months with estimated data
-      // Find the last consolidated data or use the last available data as base
-      const lastConsolidated = Array.from(dataMap.values())
-        .filter(item => !item.dad_estimado)
-        .sort((a, b) => {
-          const mesA = a.mes?.toString() || '';
-          const mesB = b.mes?.toString() || '';
-          
-          let monthA = 0, monthB = 0;
-          
-          if (mesA.includes('-')) {
-            monthA = parseInt(mesA.split('-')[1]);
-          } else if (mesA.includes('/')) {
-            const part = mesA.split('/')[0];
-            monthA = parseInt(part) || getMonthNumber(part);
-          }
-          
-          if (mesB.includes('-')) {
-            monthB = parseInt(mesB.split('-')[1]);
-          } else if (mesB.includes('/')) {
-            const part = mesB.split('/')[0];
-            monthB = parseInt(part) || getMonthNumber(part);
-          }
-          
-          return monthB - monthA;
-        })[0];
+    const monthData = dataMap.get(month);
 
-      if (lastConsolidated) {
-        const lastConsolidatedMonth = extractMonthFromMes(lastConsolidated.mes || '');
-        if (month > lastConsolidatedMonth) {
-          // Create estimated data entry for future months
-          completeYearData.push({
-            ...lastConsolidated,
-            mes: `${month < 10 ? '0' : ''}${month}/${year}`,
-            dad_estimado: true
-          });
-        } else if (dataMap.size > 0) {
-          // Use the first available data as template for earlier months
-          const firstData = Array.from(dataMap.values())[0];
+    if (monthData) {
+      completeYearData.push(monthData);
+    } else {
+      // Fill missing months using the latest known value in progression order.
+      const lastKnownData = completeYearData[completeYearData.length - 1];
+      if (lastKnownData) {
+        completeYearData.push({
+          ...lastKnownData,
+          mes: `${month < 10 ? '0' : ''}${month}/${year}`,
+          dad_estimado: true
+        });
+      } else if (dataMap.size > 0) {
+        const firstAvailableMonth = Math.min(...Array.from(dataMap.keys()));
+        const firstData = dataMap.get(firstAvailableMonth);
+        if (firstData) {
           completeYearData.push({
             ...firstData,
             mes: `${month < 10 ? '0' : ''}${month}/${year}`,
             dad_estimado: true
           });
         }
-      } else if (dataMap.size > 0) {
-        // Use the first available data as template
-        const firstData = Array.from(dataMap.values())[0];
-        completeYearData.push({
-          ...firstData,
-          mes: `${month < 10 ? '0' : ''}${month}/${year}`,
-          dad_estimado: true
-        });
       }
     }
   }
@@ -234,6 +201,26 @@ export function populateGraphDataForYear(data: EconomyData[], targetYear: number
     const monthB = extractMonthFromMes(b.mes || '');
     return monthA - monthB;
   });
+}
+
+function resolveMonthEntry(existingItem: EconomyData | undefined, incomingItem: EconomyData): EconomyData {
+  if (!existingItem) {
+    return incomingItem;
+  }
+
+  if (existingItem.dad_estimado !== incomingItem.dad_estimado) {
+    return existingItem.dad_estimado ? incomingItem : existingItem;
+  }
+
+  const existingValue = getEconomyValue(existingItem);
+  const incomingValue = getEconomyValue(incomingItem);
+  return incomingValue >= existingValue ? incomingItem : existingItem;
+}
+
+function getEconomyValue(item: EconomyData): number {
+  const rawValue = item.economia_acumulada ?? item.economia_mensal ?? 0;
+  const parsedValue = typeof rawValue === 'number' ? rawValue : parseFloat(String(rawValue));
+  return Number.isFinite(parsedValue) ? parsedValue : 0;
 }
 
 /**
