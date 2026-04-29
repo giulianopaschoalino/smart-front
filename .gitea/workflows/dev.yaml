@@ -1,9 +1,9 @@
-name: Gitea Actions Demo
-run-name: ${{ gitea.actor }} is testing out Gitea Actions 🚀
+name: Gitea Actions
+run-name: ${{ gitea.actor }} is pushing to Gitea Actions 🚀
 on: [push]
 
 jobs:
-  Explore-Gitea-Actions:
+  Update-App:
     runs-on: windows
     steps:
       - run: echo "[Info] Conectando ao ssh..."
