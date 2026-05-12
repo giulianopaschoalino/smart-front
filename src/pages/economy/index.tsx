@@ -194,7 +194,7 @@ export default function economy({ userName, anual, years, brutaMensal, catLiv, c
                       <MenuItem value="">Todas</MenuItem>
                       {
                         clients.map((value) => {
-                          return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
+                          return <MenuItem key={value.cod_smart_unidade} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
                         })
                       }
                     </Select>
@@ -224,7 +224,7 @@ export default function economy({ userName, anual, years, brutaMensal, catLiv, c
                       {/* <MenuItem value="RSZFNAENTR101P">RSZFNAENTR101P</MenuItem> COMENTARIO DE OPÇAO COM DADOS TESTES */}
                       {
                         clients.map((value) => {
-                          return <MenuItem key={1} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
+                          return <MenuItem key={value.cod_smart_unidade} value={value.cod_smart_unidade}>{value.unidade}</MenuItem>
                         })
                       }
                     </Select>
@@ -286,7 +286,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       "codigo_scde"],
     "distinct": true
   }).then(res => {
-    clients = res.data.data
+    clients = res.data.data.sort((a, b) => a.unidade.localeCompare(b.unidade, 'pt-BR', { numeric: true, sensitivity: 'base' }))
   })
   await apiClient.post('/economy/estimates').then(res => {
     catLiv = res.data.data

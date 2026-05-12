@@ -870,7 +870,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       distinct: true
     })
     .then((res) => {
-      clients = res.data.data
+      clients = res.data.data.sort((a, b) => a.unidade.localeCompare(b.unidade, 'pt-BR', { numeric: true, sensitivity: 'base' }))
     })
 
   if (!token) {
