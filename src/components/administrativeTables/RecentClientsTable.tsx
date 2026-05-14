@@ -5,6 +5,8 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import TableSortLabel from '@mui/material/TableSortLabel'
+import { useState } from 'react'
 
 type RecentClient = {
   client_id: number
@@ -17,20 +19,120 @@ type RecentClientsTableProps = {
   clients: RecentClient[]
 }
 
+function parseDateDMY(value?: string) {
+  if (!value) return null
+  // expected format: dd/mm/YYYY HH:ii:ss
+  const [datePart, timePart] = value.split(' ')
+  if (!datePart) return null
+  const [d, m, y] = datePart.split('/').map((s) => parseInt(s, 10))
+  if (!d || !m || !y) return null
+  let hours = 0
+  let minutes = 0
+  let seconds = 0
+  if (timePart) {
+    const parts = timePart.split(':').map((s) => parseInt(s, 10))
+    hours = parts[0] || 0
+    minutes = parts[1] || 0
+    seconds = parts[2] || 0
+  }
+  return new Date(y, m - 1, d, hours, minutes, seconds)
+}
+
+type Order = 'asc' | 'desc'
+
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+  const av = (a as any)[orderBy]
+  const bv = (b as any)[orderBy]
+
+  if (orderBy === 'last_used_at') {
+    const da = parseDateDMY(av as unknown as string)
+    const db = parseDateDMY(bv as unknown as string)
+    if (!da && !db) return 0
+    if (!da) return 1
+    if (!db) return -1
+    return db.getTime() - da.getTime()
+  }
+
+  if (bv < av) {
+    return -1
+  }
+  if (bv > av) {
+    return 1
+  }
+  return 0
+}
+
+function getComparator<Key extends keyof any>(
+  order: Order,
+  orderBy: any
+): (
+  a: { [key in Key]: number | string },
+  b: { [key in Key]: number | string }
+) => number {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy)
+}
+
+function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
+  const stabilizedThis = array.map((el, index) => [el, index] as [T, number])
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0])
+    if (order !== 0) return order
+    return a[1] - b[1]
+  })
+  return stabilizedThis.map((el) => el[0])
+}
+
 export default function RecentClientsTable({ clients }: RecentClientsTableProps) {
+  const [order, setOrder] = useState<Order>('asc')
+  const [orderBy, setOrderBy] = useState<string>('name')
+
+  const handleRequestSort = (property: string) => {
+    const isAsc = orderBy === property && order === 'asc'
+    setOrder(isAsc ? 'desc' : 'asc')
+    setOrderBy(property)
+  }
+
+  const sorted = stableSort(clients, getComparator(order, orderBy as any))
+
   return (
     <TableContainer component={Paper} sx={{ mt: 4, borderRadius: 2 }}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ fontWeight: 700 }}>Cliente</TableCell>
-            <TableCell sx={{ fontWeight: 700 }}>E-mail</TableCell>
-            <TableCell sx={{ fontWeight: 700 }}>Último acesso</TableCell>
+            <TableCell sortDirection={orderBy === 'name' ? order : false}>
+              <TableSortLabel
+                active={orderBy === 'name'}
+                direction={orderBy === 'name' ? order : 'asc'}
+                onClick={() => handleRequestSort('name')}
+              >
+                Cliente
+              </TableSortLabel>
+            </TableCell>
+            <TableCell sortDirection={orderBy === 'email' ? order : false}>
+              <TableSortLabel
+                active={orderBy === 'email'}
+                direction={orderBy === 'email' ? order : 'asc'}
+                onClick={() => handleRequestSort('email')}
+              >
+                E-mail
+              </TableSortLabel>
+            </TableCell>
+            <TableCell sortDirection={orderBy === 'last_used_at' ? order : false}>
+              <TableSortLabel
+                active={orderBy === 'last_used_at'}
+                direction={orderBy === 'last_used_at' ? order : 'asc'}
+                onClick={() => handleRequestSort('last_used_at')}
+              >
+                Último acesso
+              </TableSortLabel>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {clients.length > 0 ? (
-            clients.map((client) => (
+          {sorted.length > 0 ? (
+            sorted.map((client) => (
               <TableRow key={client.client_id} hover>
                 <TableCell>{client.name}</TableCell>
                 <TableCell>{client.email}</TableCell>
