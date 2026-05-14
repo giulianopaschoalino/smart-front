@@ -6,7 +6,11 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
+import Stack from '@mui/material/Stack'
+import Button from '@mui/material/Button'
 
 type RecentClient = {
   client_id: number
@@ -87,6 +91,9 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 export default function RecentClientsTable({ clients }: RecentClientsTableProps) {
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState<string>('name')
+  const [search, setSearch] = useState<string>('')
+  const [fromDate, setFromDate] = useState<string>('')
+  const [toDate, setToDate] = useState<string>('')
 
   const handleRequestSort = (property: string) => {
     const isAsc = orderBy === property && order === 'asc'
@@ -94,10 +101,68 @@ export default function RecentClientsTable({ clients }: RecentClientsTableProps)
     setOrderBy(property)
   }
 
-  const sorted = stableSort(clients, getComparator(order, orderBy as any))
+  // Filter clients by search (name or email) and by date range (based on last_used_at)
+  const filtered = useMemo(() => {
+    const term = search.trim().toLowerCase()
+    return clients.filter((c) => {
+      if (term) {
+        const inName = c.name?.toLowerCase().includes(term)
+        const inEmail = c.email?.toLowerCase().includes(term)
+        if (!inName && !inEmail) return false
+      }
+
+      if (fromDate || toDate) {
+        const d = parseDateDMY(c.last_used_at)
+        if (!d) return false
+        if (fromDate) {
+          const from = new Date(fromDate + 'T00:00:00')
+          if (d < from) return false
+        }
+        if (toDate) {
+          const to = new Date(toDate + 'T23:59:59')
+          if (d > to) return false
+        }
+      }
+
+      return true
+    })
+  }, [clients, search, fromDate, toDate])
+
+  const sorted = stableSort(filtered, getComparator(order, orderBy as any))
 
   return (
-    <TableContainer component={Paper} sx={{ mt: 4, borderRadius: 2 }}>
+    <TableContainer component={Paper} sx={{ mt: 4, borderRadius: 2, p: 2 }}>
+      <Box sx={{ mb: 2 }}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center">
+          <TextField
+            label="Pesquisar nome ou e-mail"
+            variant="outlined"
+            size="small"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            sx={{ minWidth: 240 }}
+          />
+          <TextField
+            label="Data início"
+            type="date"
+            size="small"
+            InputLabelProps={{ shrink: true }}
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
+          />
+          <TextField
+            label="Data fim"
+            type="date"
+            size="small"
+            InputLabelProps={{ shrink: true }}
+            value={toDate}
+            onChange={(e) => setToDate(e.target.value)}
+          />
+          <Button onClick={() => { setSearch(''); setFromDate(''); setToDate('') }} size="small">
+            Limpar
+          </Button>
+        </Stack>
+      </Box>
       <Table>
         <TableHead>
           <TableRow>
