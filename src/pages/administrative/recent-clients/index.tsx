@@ -11,6 +11,7 @@ import { ClientsView } from '../../../styles/layouts/clients/ClientsView'
 type RecentClient = {
   client_id: number
   name: string
+  email: string
   last_used_at: string
 }
 

@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow'
 type RecentClient = {
   client_id: number
   name: string
+  email: string
   last_used_at: string
 }
 
@@ -31,6 +32,7 @@ export default function RecentClientsTable({ clients }: RecentClientsTableProps)
             clients.map((client) => (
               <TableRow key={client.client_id} hover>
                 <TableCell>{client.name}</TableCell>
+                <TableCell>{client.email}</TableCell>
                 <TableCell>{client.last_used_at || 'Sem registro'}</TableCell>
               </TableRow>
             ))
