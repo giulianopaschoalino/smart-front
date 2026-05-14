@@ -43,10 +43,9 @@ export default function RecentClientsPage({ userName, recentClients }: RecentCli
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
-  const { ['user-role']: role } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
 
-  if (!token || role !== '1') {
+  if (!token) {
     return {
       redirect: {
         destination: '/',
