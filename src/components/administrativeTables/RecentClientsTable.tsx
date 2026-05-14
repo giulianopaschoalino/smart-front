@@ -24,6 +24,7 @@ export default function RecentClientsTable({ clients }: RecentClientsTableProps)
         <TableHead>
           <TableRow>
             <TableCell sx={{ fontWeight: 700 }}>Cliente</TableCell>
+            <TableCell sx={{ fontWeight: 700 }}>E-mail</TableCell>
             <TableCell sx={{ fontWeight: 700 }}>Último acesso</TableCell>
           </TableRow>
         </TableHead>
@@ -38,7 +39,7 @@ export default function RecentClientsTable({ clients }: RecentClientsTableProps)
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={2} align="center">
+              <TableCell colSpan={3} align="center">
                 Nenhum cliente encontrado.
               </TableCell>
             </TableRow>

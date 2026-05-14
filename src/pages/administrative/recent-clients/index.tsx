@@ -63,11 +63,22 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         recentClients: data.data ?? []
       }
     }
-  } catch {
+  } catch (error: any) {
+    const status = error?.response?.status
+
+    if (status === 401 || status === 403) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false
+        }
+      }
+    }
+
     return {
-      redirect: {
-        destination: '/',
-        permanent: false
+      props: {
+        userName,
+        recentClients: []
       }
     }
   }
