@@ -50,8 +50,15 @@ export default function industryInfo({userName, pdfUrl}: any) {
 
   function handleDownloadPdf() {
     api.get('/download').then(res => {
-      window.open(res.data.path);
-    })
+      const pdfUrl = res.data.data
+
+      if (!pdfUrl) {
+        setOpenSnackError(true)
+        return
+      }
+
+      window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+    }).catch(() => setOpenSnackError(true))
   }
 
   return (
@@ -91,11 +98,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
 
-  let pdfUrl=[]
+  let pdfUrl = ''
 
-  apiClient.get('/download').then(res => {
-    pdfUrl = res.data.path
-  })
+  try {
+    const res = await apiClient.get('/download')
+    pdfUrl = res.data.data
+  } catch {
+    pdfUrl = ''
+  }
 
   if (!token) {
     return {

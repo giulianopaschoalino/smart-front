@@ -37,7 +37,14 @@ export default function industryInfo({userName}: any) {
 
   function handleDownloadPdf() {
     api.get('/download').then(res => {
-      window.open(res.data.path);
+      const pdfUrl = res.data.data
+
+      if (!pdfUrl) {
+        setOpenSnackError(true)
+        return
+      }
+
+      window.open(pdfUrl, '_blank', 'noopener,noreferrer');
       setOpenSnackSuccess(true)
     }).catch(() => setOpenSnackError(true))
   }
