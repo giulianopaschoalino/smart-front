@@ -90,8 +90,8 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 }
 
 export default function RecentClientsTable({ clients }: RecentClientsTableProps) {
-  const [order, setOrder] = useState<Order>('asc')
-  const [orderBy, setOrderBy] = useState<string>('name')
+  const [order, setOrder] = useState<Order>('desc')
+  const [orderBy, setOrderBy] = useState<string>('last_used_at')
   const [search, setSearch] = useState<string>('')
   const [fromDate, setFromDate] = useState<string>('')
   const [toDate, setToDate] = useState<string>('')
