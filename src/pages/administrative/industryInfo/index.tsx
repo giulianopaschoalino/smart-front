@@ -7,6 +7,7 @@ import Header from '../../../components/header/Header'
 import PageTitle from '../../../components/pageTitle/PageTitle'
 import { IndustryInfoView } from '../../../styles/layouts/industryInfo/IndustryInfoView'
 import FormData from 'form-data';
+import { api } from '../../../services/api'
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
