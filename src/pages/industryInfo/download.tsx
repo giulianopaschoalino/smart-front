@@ -1,15 +1,14 @@
 import { GetServerSideProps } from 'next'
 
-export default function IndustryInfoRedirect() {
+export default function IndustryInfoDownloadRedirect() {
   return null
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
     redirect: {
-      destination: '/info-setorial',
+      destination: '/info-setorial/download',
       permanent: false
     }
   }
 }
-
