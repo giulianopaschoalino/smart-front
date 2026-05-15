@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
+import { finished } from 'stream/promises'
 
 import getAPIClient from '../../services/ssrApi'
 
@@ -37,10 +38,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const pdfResponse = await axios.get(pdfUrl, { responseType: 'stream' })
 
     ctx.res.setHeader('Content-Type', pdfResponse.headers['content-type'] || 'application/pdf')
-    ctx.res.setHeader('Content-Disposition', 'inline; filename="informativo-setorial.pdf"')
+    ctx.res.setHeader('Content-Disposition', pdfResponse.headers['content-disposition'] || 'inline; filename="informativo-setorial.pdf"')
     ctx.res.setHeader('Cache-Control', 'no-store')
 
     pdfResponse.data.pipe(ctx.res)
+    await finished(pdfResponse.data)
 
     return {
       props: {}
