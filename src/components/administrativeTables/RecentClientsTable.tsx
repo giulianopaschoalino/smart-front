@@ -229,7 +229,7 @@ export default function RecentClientsTable({ clients }: RecentClientsTableProps)
         <TableBody>
           {sorted.length > 0 ? (
             sorted.map((client) => (
-              <TableRow key={client.client_id} hover>
+              <TableRow key={client.email} hover>
                 <TableCell>{client.name}</TableCell>
                 <TableCell>{client.email}</TableCell>
                 <TableCell>{client.last_used_at || 'Sem registro'}</TableCell>
