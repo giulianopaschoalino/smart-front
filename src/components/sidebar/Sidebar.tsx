@@ -111,6 +111,46 @@ export default function Sidebar() {
         </SidebarView>
       </RenderIf>
 
+      <RenderIf isTrue={role === '3'}>
+        <SidebarView economiaDrawer={economiaDrawer} pldDrawer={pldDrawer} modalOpen={viewModal} >
+          <div className='hamburger' onClick={() => setViewModal(!viewModal)} >
+            <Image src='/assets/hamburgerModal.svg' width={55} height={55} />
+          </div>
+          <div className='imageNext'>
+            <Image src='/assets/logo.svg' width={150} height={150} />
+          </div>
+          <ul>
+            <Link href='/managers'><li className={router.pathname=='/managers'? 'actualPath' : null} ><Image src='/assets/sidebar/dashboardIcon.svg' width={25} height={25} />{'Painel Gerente'}</li></Link>
+            <Link href='/administrative/recent-clients'><li className={router.pathname=='/administrative/recent-clients' ? 'actualPath' : null } ><Image src='/assets/sidebar/summaryOperationsIcon.svg' width={25} height={25} />{'Clientes recentes'}</li></Link>
+            <Link href='/administrative/notification'><li className={router.pathname=='/administrative/notification'? 'actualPath' : null}><Image src='/assets/sidebar/notificationsIcon.svg' width={25} height={25} />{'Notificações'}<div className='notification' style={{display: notificationsCount<=0||notificationsCount===undefined? 'inherit' : 'inherit'}}><p>{notificationsCount}</p></div></li></Link>
+            <button onClick={handleOpen}><Image src='/assets/logout.svg' width={25} height={25} />{'Sair'}</button>
+            <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            >
+            <Box sx={style}>
+              <ModalContainer>
+                <Image src='/assets/marca1.png' width={250} height={200}/>
+                <Typography id="modal-modal-title" variant="subtitle2" component="p" style={{color: 'gray'}}>
+                  Deseja realmente sair ?
+                </Typography>
+                <article>
+                  <Link href='/'><button onClick={() => signOut()}>Sair</button></Link>
+                  <button onClick={handleClose} color="error">Voltar</button>
+                </article>
+              </ModalContainer>
+            </Box>
+          </Modal>
+          </ul>
+          <aside>
+            <p>Nossos Gerentes estão prontos para atendê-los</p>
+            <div><h3>+55(41) 3012-5900</h3></div>
+          </aside>
+        </SidebarView>
+      </RenderIf>
+
       <RenderIf isTrue={role === '2'}>
         <SidebarView economiaDrawer={economiaDrawer} pldDrawer={pldDrawer} modalOpen={viewModal} >
           <div className='hamburger' onClick={() => setViewModal(!viewModal)} >
