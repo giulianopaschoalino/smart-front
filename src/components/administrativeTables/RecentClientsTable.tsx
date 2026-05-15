@@ -11,6 +11,7 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
+import FileDownloadIcon from '@mui/icons-material/FileDownload'
 
 type RecentClient = {
   client_id: number
@@ -130,6 +131,28 @@ export default function RecentClientsTable({ clients }: RecentClientsTableProps)
 
   const sorted = stableSort(filtered, getComparator(order, orderBy as any))
 
+  function exportCsv(rows: RecentClient[]) {
+    if (!rows || rows.length === 0) return
+    const headers = ['Cliente', 'E-mail', 'Último acesso']
+    const csvRows = [headers.join(',')]
+    for (const r of rows) {
+      const cols = [r.name ?? '', r.email ?? '', r.last_used_at ?? '']
+      const escaped = cols.map((c) => `"${String(c).replace(/"/g, '""')}"`)
+      csvRows.push(escaped.join(','))
+    }
+    const csvString = csvRows.join('\n')
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    const stamp = new Date().toISOString().slice(0,10)
+    a.href = url
+    a.download = `recent-clients-${stamp}.csv`
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <TableContainer component={Paper} sx={{ mt: 4, borderRadius: 2, p: 2 }}>
       <Box sx={{ mb: 2 }}>
@@ -160,6 +183,14 @@ export default function RecentClientsTable({ clients }: RecentClientsTableProps)
           />
           <Button onClick={() => { setSearch(''); setFromDate(''); setToDate('') }} size="small">
             Limpar
+          </Button>
+          <Button
+            startIcon={<FileDownloadIcon />}
+            onClick={() => exportCsv(filtered)}
+            variant="outlined"
+            size="small"
+          >
+            Exportar CSV
           </Button>
         </Stack>
       </Box>
