@@ -78,6 +78,8 @@ export function AuthProvider({children}: {children: React.ReactNode}) {
     if (!exception) {
       if (user.role == 2) {
         Router.push('/dashboard')
+      } else if (user.role == 3) {
+        Router.push('/managers')
       } else {
         Router.push('administrative/clients')
       }

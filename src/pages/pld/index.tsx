@@ -394,7 +394,7 @@ export default function pld({ tableData, userName, clientMonth }: pldInterface) 
                 placeholder='dia'
                 label="Age"
               >
-                <MenuItem value={'0'}>Nenhum</MenuItem>
+                {/* removed 'Nenhum' placeholder */}
                 {
                   clientMonth.sort((a, b) => {
                     if (a.mes_ref.split('/')[0] < b.mes_ref.split('/')[0]) return 1

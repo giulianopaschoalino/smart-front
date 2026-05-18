@@ -1,17 +1,16 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { parseCookies } from 'nookies'
-import { forwardRef, useEffect, useState } from 'react'
+import { forwardRef, useState } from 'react'
 import BasicButton from '../../../components/buttons/basicButton/BasicButton'
 import Header from '../../../components/header/Header'
 import PageTitle from '../../../components/pageTitle/PageTitle'
 import { IndustryInfoView } from '../../../styles/layouts/industryInfo/IndustryInfoView'
-import { api } from '../../../services/api'
 import FormData from 'form-data';
+import { api } from '../../../services/api'
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import getAPIClient from '../../../services/ssrApi'
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -49,9 +48,7 @@ export default function industryInfo({userName, pdfUrl}: any) {
   }
 
   function handleDownloadPdf() {
-    api.get('/download').then(res => {
-      window.open(res.data.path);
-    })
+    window.open('/info-setorial/download', '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -87,15 +84,8 @@ export default function industryInfo({userName, pdfUrl}: any) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const apiClient = getAPIClient(ctx)
   const { ['@smartAuth-token']: token } = parseCookies(ctx)
   const { ['user-name']: userName } = parseCookies(ctx)
-
-  let pdfUrl=[]
-
-  apiClient.get('/download').then(res => {
-    pdfUrl = res.data.path
-  })
 
   if (!token) {
     return {
@@ -109,7 +99,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       userName,
-      pdfUrl
+      pdfUrl: ''
     }
   }
 }

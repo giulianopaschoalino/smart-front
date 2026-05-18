@@ -11,6 +11,10 @@ export const TableView = styled.div`
 
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+
+  -webkit-overflow-scrolling: touch;
 
   .btn{
     margin-top: 10px;
@@ -21,6 +25,8 @@ export const TableView = styled.div`
     border-spacing:0;
     font-family:Poppins;
     width: 100%;
+    min-width: 920px;
+    table-layout: fixed;
   }
 
   .tg td{
@@ -32,6 +38,8 @@ export const TableView = styled.div`
     overflow:hidden;
     padding: 17px 20px;
     word-break:normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .tg th{
@@ -44,6 +52,8 @@ export const TableView = styled.div`
     overflow:hidden;
     padding:10px 5px;
     word-break:normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   .tg .tg-8oo6{
     font-size:14px;
@@ -97,32 +107,78 @@ export const TableView = styled.div`
 
     text-overflow: ellipsis;
   }
+
+  @media (max-width: 1024px) {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    .tg td,
+    .tg th {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+  }
 `;
 
 export const TableHeader = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
 
   width: 100%;
 
   margin-bottom: 25px;
 
+  article {
+    min-width: 0;
+  }
+
+  article:first-child {
+    flex: 1 1 32rem;
+  }
+
+  article:last-child {
+    flex: 0 0 auto;
+  }
+
   .select{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
 
-    width: 30rem;
+    width: 100%;
+    max-width: 42rem;
 
-    div {
+    > div {
       display: flex;
       justify-content: space-between;
 
       align-items: flex-start;
       flex-direction: column;
 
-      width: 95%;
+      flex: 1 1 16rem;
+      min-width: 0;
+      width: auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    align-items: stretch;
+
+    article:first-child,
+    article:last-child {
+      flex: 1 1 100%;
+    }
+
+    .select {
+      max-width: 100%;
     }
   }
 `

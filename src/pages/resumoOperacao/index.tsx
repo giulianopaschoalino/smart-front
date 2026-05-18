@@ -30,7 +30,7 @@ export default function ResumoOperacao({
   clientMonth
 }: any) {
   const [month, setMonth] = useState('')
-  const [unidade, setUnidade] = useState(clients?.[0]?.cod_smart_unidade ?? 0)
+  const [unidade, setUnidade] = useState('')
   const [tableDataState, setTableDataState] = useState<any>([])
 
   const { ['user-id']: id } = parseCookies()
@@ -135,17 +135,26 @@ export default function ResumoOperacao({
           <div className="select">
             <div>
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-labels">Unidades</InputLabel>
+                <InputLabel id="resumo-operacao-unidades-label">
+                  Unidades
+                </InputLabel>
 
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId="resumo-operacao-unidades-label"
+                  id="resumo-operacao-unidades-select"
                   value={unidade}
                   label="Unidade"
                   onChange={handleChangeUnidade}
                   fullWidth
+                  sx={{
+                    '& .MuiSelect-select': {
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }
+                  }}
                 >
-                  <MenuItem key={1} value={''}>
+                  <MenuItem key="todas" value={''}>
                     Todas
                   </MenuItem>
 
@@ -163,14 +172,21 @@ export default function ResumoOperacao({
 
             <div>
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Mês</InputLabel>
+                <InputLabel id="resumo-operacao-mes-label">Mês</InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId="resumo-operacao-mes-label"
+                  id="resumo-operacao-mes-select"
                   value={month}
                   label="Month"
                   onChange={handleChangeMonth}
                   fullWidth
+                  sx={{
+                    '& .MuiSelect-select': {
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }
+                  }}
                 >
                   <MenuItem value={''}>Todos</MenuItem>
                   {clientMonth
@@ -339,7 +355,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       distinct: true
     })
     .then((res) => {
-      clients = res.data.data
+      clients = res.data.data.sort((a, b) => a.unidade.localeCompare(b.unidade, 'pt-BR', { numeric: true, sensitivity: 'base' }))
     })
 
   if (!token) {

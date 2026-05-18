@@ -371,6 +371,7 @@ export default function clients({ clients, userName }) {
               >
                 <MenuItem value={1}>Administrador</MenuItem>
                 <MenuItem value={2}>Cliente</MenuItem>
+                <MenuItem value={3}>Gerente</MenuItem>
 
               </Select>
             </FormControl>

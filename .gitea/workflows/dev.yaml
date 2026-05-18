@@ -1,0 +1,13 @@
+name: Gitea Actions
+run-name: ${{ gitea.actor }} is pushing to Gitea Actions 🚀
+on: [push]
+
+jobs:
+  Update-App:
+    runs-on: windows
+    steps:
+      - run: echo "[Info] Conectando ao ssh..."
+      - run: ssh ubuntu@app.dev.smartenergia.com.br "cd /var/www/frontend && git fetch origin && git reset --hard origin/dev && sudo yarn build && sudo systemctl restart frontend"
+      - run: echo "[Info] Pull request enviado para o servidor de desenvolvimento."
+      - run: echo "[Info] Repositório ${{ gitea.repository }} online para desenvolvimento."
+      - run: echo "🍏 This job's status is ${{ job.status }}."
