@@ -23,9 +23,9 @@ export default function ManagersPage({ userName, recentClients, notifications }:
         <RecentClientsTable clients={recentClients} />
       </section>
 
-      <section style={{ marginTop: 24 }}>
+      {/* <section style={{ marginTop: 24 }}>
         <NotificationsTable notifications={notifications} onChange={() => {}} />
-      </section>
+      </section> */}
     </ClientsView>
   )
 }
